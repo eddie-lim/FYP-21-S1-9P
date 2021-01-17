@@ -1,0 +1,5 @@
+Header set Content-Security-Policy "default-src https: 'self'; style-src https: 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; worker-src blob: 'unsafe-eval' 'unsafe-inline' 'self' https: aframe.io libs.zappar.com; script-src 'unsafe-eval' 'unsafe-inline' 'self' https: m.addthis.com www.google-analytics.com www.gstatic.com www.googletagmanager.com assets.pinterest.com connect.facebook.net cdn.jsdelivr.net www.google.com s7.addthis.com platform.twitter.com log.pinterest.com; font-src 'self' data: fonts.gstatic.com use.fontawesome.com;
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
