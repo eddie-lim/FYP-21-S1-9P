@@ -1,0 +1,12 @@
+class_name: FunctionalTester
+modules:
+    enabled:
+      - Filesystem
+      - Yii2
+      # - PhpBrowser:
+      #       url: http://admin.ip.localhost
+      #       browser: firefox
+      # - tests\common\_support\FixtureHelper
+    config:
+      Yii2:
+         configFile: '../config/backend/functional.php'

@@ -1,0 +1,9 @@
+class_name: UnitTester
+bootstrap: false
+modules:
+    enabled:
+        - Asserts
+        - Yii2:
+            part: [ fixtures, orm, init ]
+            configFile: '../config/common/unit.php'
+            cleanup: true

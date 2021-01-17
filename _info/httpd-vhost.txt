@@ -1,0 +1,27 @@
+
+# ------------ #
+# FYP-21-S1-9P #
+# ------------ #
+<VirtualHost *:80>
+    ServerAdmin webmaster@openhouse.com
+    DocumentRoot "D:\www\FYP-21-S1-9P\web\site\api\web"
+    ServerName api.openhouse.localhost
+    ErrorLog "logs/api-openhouse-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@openhouse.com
+    DocumentRoot "D:\www\FYP-21-S1-9P\web\site\backend\web"
+    ServerName admin.openhouse.localhost
+    ErrorLog "logs/admin-openhouse-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@openhouse.com
+    DocumentRoot "D:\www\FYP-21-S1-9P\web\site\frontend\web"
+    ServerName openhouse.localhost
+    ErrorLog "logs/openhouse-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+</VirtualHost>

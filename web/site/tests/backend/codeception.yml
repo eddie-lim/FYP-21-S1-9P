@@ -1,0 +1,18 @@
+namespace: tests\backend
+actor: Tester
+paths:
+    tests: .
+    log: _output
+    data: _data
+    helpers: _support
+bootstrap: _bootstrap.php #_bootstrap.php inside individual file of test suit
+settings:
+    suite_class: \PHPUnit_Framework_TestSuite
+    colors: true
+    memory_limit: 1024M
+    log: true
+modules:
+    config:
+        Yii2:
+            configFile: '../config/backend/acceptance.php'   
+            

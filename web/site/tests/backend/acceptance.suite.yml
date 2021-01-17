@@ -1,0 +1,31 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        # - PhpBrowser:
+        #     url: 'http://admin.bts.localhost'
+        #     browser: chrome
+        - WebDriver:
+            url: 'http://admin.bts.localhost'
+            clear_cookies: false
+            restart: false # bring over session
+            window_size: false # disabled in ChromeDriver
+            port: 9515
+            browser: chrome
+            capabilities:
+                "goog:chromeOptions":
+                    args: ["allow-insecure-localhost", "start-maximized", "no-sandbox"]
+        - Filesystem
+        - Yii2:
+            part: orm
+            # entryScript: index-test.php
+            entryScript: index.php
+            cleanup: false
+            configFile: '../config/backend/acceptance.php'
+        # - tests\common\_support\FixtureHelper
+        - Db:
+            dsn: 'mysql:host=127.0.0.1;dbname=csit314'
+            user: 'root'
+            password: ''
+            populate: true
+            cleanup: false
+            db_charset: 'utf8mb4'
