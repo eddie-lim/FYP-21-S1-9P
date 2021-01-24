@@ -1,0 +1,44 @@
+.no-bullet{
+	list-style-type: none;
+}
+.name{
+	list-style-type: none;
+}
+.course{
+	list-style-type: none;
+}
+.job{
+	list-style-type: none;
+}
+h3{
+	display: inline-block;
+	font-weight: normal;
+}
+h3.active{
+	text-decoration: underline;
+	font-weight: bold;
+}
+.header-container{
+	text-align: center;
+}
+.header-container a{
+	color: black;
+}
+.body-contanier{
+	margin: auto;
+	width: 80%;
+}
+.person{
+	margin-bottom: 20px;
+}
+.minutes-header{
+	font-size: 22px;
+	margin-bottom: 15px;
+	font-weight: bold;
+}
+.minutes-subheader{
+	font-size: 18px;
+	margin-bottom: 5px;
+	margin-top: 15px;
+	font-weight: bold;
+}
