@@ -4,7 +4,7 @@
 	<li>23rd Jan 15:30 - 16:30</li>
 </ul>
 <div class="minutes-subheader">Attendance:</div>
-<?php include_once("attendees_with_prem.php") ?>
+<?php include("attendees_with_prem.php") ?>
 <div class="minutes-subheader">Discussed Topics:</div>
 <ul>
 	<li>
@@ -113,7 +113,7 @@
 	</li>
 </ul>
 
-<div class="minutes-subheader">Next Action Items - Project Team</div>
+<div class="minutes-subheader">Next Action Items - Project Team:</div>
 <ul>
 	<li>To submit individual weekly reflective diary in word doc</li>
 	<li>File name will be name + studentid + groupid + week (eg: EddieLim_6123456_FYP-21-S1-9P_week1.docx)</li>
@@ -122,7 +122,7 @@
 	<li>To update the website for meeting minutes, upload the individual finding documents and share the link to Prof Perm</li>
 </ul>
 
-<div class="minutes-subheader">Next Action Items - Prof Prem</div>
+<div class="minutes-subheader">Next Action Items - Prof Prem:</div>
 <ul>
 	<li>To share the sample project requirement document by 24-Jan-2021</li>
 </ul>
