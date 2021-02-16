@@ -1,0 +1,19 @@
+//jsconfig is for vscode's goto definition shortcut
+//use babel module resolver for import
+//ref: https://github.com/tleunen/babel-plugin-module-resolver/blob/master/DOCS.md
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "paths": {
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@models/*": ["./src/models/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@locales/*": ["./src/locales/*"],
+    }
+  }
+}
+
