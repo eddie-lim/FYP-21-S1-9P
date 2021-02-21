@@ -19,10 +19,16 @@
 				<div class="tab-pane fade show active" id="minutes" role="tabpanel" aria-labelledby="minutes-tab">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<!-- <li class="nav-item">
-							<a class="nav-link active" id="meeting4-tab" data-toggle="tab" href="#meeting4" role="tab" aria-controls="meeting4" aria-selected="false">Meeting 4</a>
+							<a class="nav-link active" id="meeting6-tab" data-toggle="tab" href="#meeting6" role="tab" aria-controls="meeting6" aria-selected="false">Meeting 6</a>
 						</li> -->
 						<li class="nav-item">
-							<a class="nav-link active" id="meeting3-tab" data-toggle="tab" href="#meeting3" role="tab" aria-controls="meeting3" aria-selected="false">Meeting 3</a>
+							<a class="nav-link active" id="meeting5-tab" data-toggle="tab" href="#meeting5" role="tab" aria-controls="meeting5" aria-selected="false">Meeting 5</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="meeting4-tab" data-toggle="tab" href="#meeting4" role="tab" aria-controls="meeting4" aria-selected="false">Meeting 4</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="meeting3-tab" data-toggle="tab" href="#meeting3" role="tab" aria-controls="meeting3" aria-selected="false">Meeting 3</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id="meeting2-tab" data-toggle="tab" href="#meeting2" role="tab" aria-controls="meeting2" aria-selected="false">Meeting 2</a>
@@ -32,17 +38,23 @@
 						</li>
 					</ul>
 					<div class="tab-content" id="myTabContent">
-						<!-- <div class="tab-pane fade show active" id="meeting4" role="tabpanel" aria-labelledby="meeting4-tab">
-							<?php include_once("meeting4.php") ?>
+						<!-- <div class="tab-pane fade show active" id="meeting6" role="tabpanel" aria-labelledby="meeting6-tab">
+							<?php include_once("./meetings/meeting6.php") ?>
 						</div> -->
-						<div class="tab-pane fade show active" id="meeting3" role="tabpanel" aria-labelledby="meeting3-tab">
-							<?php include_once("meeting3.php") ?>
+						<div class="tab-pane fade show active" id="meeting5" role="tabpanel" aria-labelledby="meeting5-tab">
+							<?php include_once("./meetings/meeting5.php") ?>
+						</div>
+						<div class="tab-pane fade" id="meeting4" role="tabpanel" aria-labelledby="meeting4-tab">
+							<?php include_once("./meetings/meeting4.php") ?>
+						</div>
+						<div class="tab-pane fade" id="meeting3" role="tabpanel" aria-labelledby="meeting3-tab">
+							<?php include_once("./meetings/meeting3.php") ?>
 						</div>
 						<div class="tab-pane fade" id="meeting2" role="tabpanel" aria-labelledby="meeting2-tab">
-							<?php include_once("meeting2.php") ?>
+							<?php include_once("./meetings/meeting2.php") ?>
 						</div>
 						<div class="tab-pane fade" id="meeting1" role="tabpanel" aria-labelledby="meeting1-tab">
-							<?php include_once("meeting1.php") ?>
+							<?php include_once("./meetings/meeting1.php") ?>
 						</div>
 					</div>
 				</div>
