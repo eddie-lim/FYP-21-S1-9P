@@ -40,11 +40,12 @@
 
 
 	<li>
-		Prototype
+		Technical Design Manual
 	</li>
 	<li class="no-bullet">
 		<ol>
-			<li>Create a prototype as per the project plan</li>
+			<li>Database design</li>
+			<li>Build version 1 prototype</li>
 			<li>Ensure login and registration function works properly</li>
 			<li>When a function is clicked, describe what happened (static pages or not)</li>
 			<li>Keep in mind, the app is meant for use every year and not just one-time use</li>
