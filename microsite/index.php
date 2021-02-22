@@ -19,10 +19,13 @@
 				<div class="tab-pane fade show active" id="minutes" role="tabpanel" aria-labelledby="minutes-tab">
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
 						<!-- <li class="nav-item">
-							<a class="nav-link active" id="meeting6-tab" data-toggle="tab" href="#meeting6" role="tab" aria-controls="meeting6" aria-selected="false">Meeting 6</a>
+							<a class="nav-link active" id="meeting7-tab" data-toggle="tab" href="#meeting7" role="tab" aria-controls="meeting7" aria-selected="false">Meeting 7</a>
 						</li> -->
 						<li class="nav-item">
-							<a class="nav-link active" id="meeting5-tab" data-toggle="tab" href="#meeting5" role="tab" aria-controls="meeting5" aria-selected="false">Meeting 5</a>
+							<a class="nav-link active" id="meeting6-tab" data-toggle="tab" href="#meeting6" role="tab" aria-controls="meeting6" aria-selected="false">Meeting 6</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="meeting5-tab" data-toggle="tab" href="#meeting5" role="tab" aria-controls="meeting5" aria-selected="false">Meeting 5</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id="meeting4-tab" data-toggle="tab" href="#meeting4" role="tab" aria-controls="meeting4" aria-selected="false">Meeting 4</a>
@@ -38,10 +41,13 @@
 						</li>
 					</ul>
 					<div class="tab-content" id="myTabContent">
-						<!-- <div class="tab-pane fade show active" id="meeting6" role="tabpanel" aria-labelledby="meeting6-tab">
-							<?php include_once("./meetings/meeting6.php") ?>
+						<!-- <div class="tab-pane fade show active" id="meeting7" role="tabpanel" aria-labelledby="meeting7-tab">
+							<?php include_once("./meetings/meeting7.php") ?>
 						</div> -->
-						<div class="tab-pane fade show active" id="meeting5" role="tabpanel" aria-labelledby="meeting5-tab">
+						<div class="tab-pane fade show active" id="meeting6" role="tabpanel" aria-labelledby="meeting6-tab">
+							<?php include_once("./meetings/meeting6.php") ?>
+						</div>
+						<div class="tab-pane fade" id="meeting5" role="tabpanel" aria-labelledby="meeting5-tab">
 							<?php include_once("./meetings/meeting5.php") ?>
 						</div>
 						<div class="tab-pane fade" id="meeting4" role="tabpanel" aria-labelledby="meeting4-tab">
