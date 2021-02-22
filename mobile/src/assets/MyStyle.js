@@ -2,8 +2,9 @@ import { StyleSheet } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
 
 const StyleConstant = {
-
-  primary: '#ffc300',
+  
+  // primary: '#ffc300',
+  primary: '#16b2bc',
   primaryLight: '#ffdb66',
   primaryDark: '#ffb901',
   secondary: '#06B995',

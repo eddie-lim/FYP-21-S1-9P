@@ -30,17 +30,14 @@ const withScreenBase = (WrappedComponent, base=ScreenBaseType.MAIN, navigationOp
             onWillFocus={async()=>{
               let name = WrappedComponent.displayName;
               name = name ? name : WrappedComponent.name;
-              // console.log("will focus: " + name);
-              await firebase.analytics().setCurrentScreen(name);
+              console.log("will focus: " + name);
+              // await firebase.analytics().setCurrentScreen(name);
             }}
           />
           { renderActivityIndicator() }
           { renderCustomDialog() }
-          { renderCustomPopup() }
 
-          <View style={ShareStyle.flex1}>
-            <WrappedComponent {...props} />
-          </View>
+          <WrappedComponent {...props} />
 
         </View>
     );

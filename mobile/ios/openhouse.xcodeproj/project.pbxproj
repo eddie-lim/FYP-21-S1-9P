@@ -194,7 +194,6 @@
 				55F632EB6D12582E7F895BEE /* Pods-openhouse-tvOSTests.debug.xcconfig */,
 				6BF9F601DF80C96CD0020B26 /* Pods-openhouse-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
