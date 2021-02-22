@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 
 const ScreenLanding = (props) => {
@@ -11,15 +12,11 @@ const ScreenLanding = (props) => {
   }, []);
 
   return (
-    <View style={{flex : 1}}>
-      <ImageBackground
-        resizeMode={'cover'}
-        style={styles.imgBg}
-        source={require('@assets/img/bg-orange.jpg')}
-      >
-        <Text>landing</Text>
-      </ImageBackground>
-    </View>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
+        <Text style={{color:"black"}}>landing</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 

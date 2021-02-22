@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 
 const ScreenEventListing = (props) => {
@@ -11,19 +12,19 @@ const ScreenEventListing = (props) => {
   }, []);
 
   return (
-    <View style={styles.viewHolder}>
-      <ImageBackground
-        resizeMode={'cover'}
-        style={styles.imgBg}
-        source={require('@assets/img/bg-orange.jpg')}
-      >
-        <Text>event listing</Text>
-      </ImageBackground>
-    </View>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
+        <Text style={{color:"black"}}>event</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
-export default withScreenBase(ScreenEventListing, ScreenBaseType.MAIN);
+navigationOptions = ({navigation}) => ({
+  header: null
+});
+
+export default withScreenBase(ScreenEventListing, ScreenBaseType.MAIN, navigationOptions);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
