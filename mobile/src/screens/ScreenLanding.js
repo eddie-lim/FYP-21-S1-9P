@@ -22,7 +22,7 @@ const ScreenLanding = (props) => {
 
 navigationOptions = ({navigation}) => ({
   // header: null
-  title:"Home"
+  title:"< Login/Profile btn | Settings >"
 });
 
 export default withScreenBase(ScreenLanding, ScreenBaseType.MAIN, navigationOptions);
