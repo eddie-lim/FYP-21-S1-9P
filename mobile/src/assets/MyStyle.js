@@ -1,40 +1,29 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet, Platform, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Settings, StoreSettings, GlobalContext } from '@helpers/Settings';
 
 const StyleConstant = {
-  
-  // primary: '#ffc300',
-  primary: '#16b2bc',
-  primaryLight: '#ffdb66',
-  primaryDark: '#ffb901',
-  secondary: '#06B995',
-  dealerColor: '#663E07',
-  mutedText: "#c9c9c9",
-  cooldownBlue: '#386BE3',
-  greyBg: '#f0f0f0',
-  orange: '#f89b02',
-  warning: '#f15c5b',
-  green: '#5fa31c',
-  dark: '#333333',
+  primaryColor: "#0c4c23",
+  primaryColorLight: "#3e794c",
+  primaryColorDark: "#002400",
+  primaryTextColor: "#000000",
 
-  greyBgHightlight: '#dddddd',
-  greyOutline: '#c8c7cc',
-  primary1: '#F4869C',
-  primary2: '#6296f9',
-  searchBg: '#303337',
-  disabled: '#dadee0',
-  white: '#ffffff',
-  error: '#ff190c',
-  secondary2: '#00B233',
-  secondary3: '#00FF48',
+  secondaryColor: "#fbc02d",
+  secondaryColorWithAlpha: '#fbc02dda',
+  secondaryColorLight: "#fff263",
+  secondaryColorDark: "#c49000",  
+  secondaryTextColor: "#ffffff",
+  mutedTextColor: "#cccccc",
 
-  //https://mdbootstrap.com/docs/jquery/css/colors/
-  success: "#00C851",
-  danger: "#ff4444",
-  warn: "#ffbb33",
-  info: "#33b5e5",
+  warnColor: "#ffee75",
+  bgGray: "#eeeeee",
+  tabGray: "#999",
+  xmasRed: "#af0005",
+  additionRed: "#c62828",
 
-  titleSize: 28,
+  titleFontSize: 28,
 }
 
 const s = StyleConstant;
@@ -46,60 +35,108 @@ const MyTheme = {
     ...DefaultTheme.colors,
     primary: s.primary,
     accent: s.secondary,
-    placeholder: '#dddddd',
   }
 };
 
-const ShadowStyle = {
-  shadowColor: 'rgba(0,0,0,0.4)', shadowOffset: {height: 1, width: 1}, shadowOpacity: 1, shadowRadius: 1, elevation: 2
+
+//ref: https://reactnavigation.org/docs/en/stack-navigator.html#stacknavigatorconfig
+const HeaderStyle = {
+  headerStyle : {backgroundColor: s.primaryColor},
+  headerTitleStyle: { color: "white", alignSelf: "center", marginLeft: "auto", marginRight: "auto", fontSize: 16, fontWeight: "normal"},
+  headerTintColor: 'white'
 };
 
-const TextShadowStyle = { textShadowColor: 'rgba(0,0,0,0.75)', textShadowOffset: {width: 1, height: 1}, textShadowRadius: 5 };
+const HeaderStyleWithBackDroid = {
+  headerTitleStyle: { color: "white", alignSelf: "center", marginLeft: "auto", marginRight: "auto", fontSize: 16, fontWeight: "normal"},
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: s.primaryColor },
+  headerTitleContainerStyle: {
+    left: 0
+  }
+};
+const HeaderStyleWithBackIos = {
+  headerTitleStyle: { color: "white", alignSelf: "center", marginLeft: "auto", marginRight: "auto", fontSize: 16, fontWeight: "normal"},
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: s.primaryColor },
+  headerTitleContainerStyle: {}
+};
+//different style required for droid and ios
+const HeaderStyleWithBack = Platform.OS === 'android'? HeaderStyleWithBackDroid : HeaderStyleWithBackIos;
 
-const ShareStyle = StyleSheet.create({
-  titleTxt: { fontSize: StyleConstant.titleSize, lineHeight:StyleConstant.titleSize, color: StyleConstant.primaryText,  textAlign: 'center', textAlignVertical: 'center' 
-            //fontWeight: 'bold',
-  },
-  btnSmall: { flexDirection: 'row', backgroundColor: StyleConstant.secondary, borderRadius: 6, justifyContent: 'center', alignSelf: 'flex-end', padding: 4 },
-  btnSmallShadow: {elevation:4, shadowOffset: { width: 5, height: 5 }, shadowColor: "grey", shadowOpacity: 0.5, shadowRadius: 10},
-  txtBold : {  },
-  txtItalic : { },
-  txtSemibold : { },
-  txtRegular : { }
-});
+const HeaderStyleWithRight = {
+  headerTitleStyle: { color: "white", alignSelf: "center", marginLeft: "auto", marginRight: "auto", fontSize: 16, fontWeight: "normal"},
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: s.primaryColor },
+  headerTitleContainerStyle: {
+    alignItems: "center"
+  }
+};
+
+const HeaderWithTexture = (title)=>{
+  return(
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 76 : 56, backgroundColor: '#074d21', paddingTop: Platform.OS == 'ios' ? 20 : 0}}>
+      <ImageBackground source={require('@assets/img/green_texture_bg.png')} style={{width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{alignSelf: 'center', color: 'white'}}>{title}</Text>
+      </ImageBackground>
+    </View>
+  )
+}
+
+const HeaderWithAvatar = (title, navigate, inBorder)=>{
+  return(
+    // TODO: USER_AVATAR_URL store in normal settings
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 86 : 56, backgroundColor: '#074d21', paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+      <ImageBackground source={require('@assets/img/green_texture_bg.png')} style={{width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <TouchableOpacity onPress={() => inBorder ? navigate("camera") : alert("You must be within the C2C zone to be able to use the Camera")} style={{position: 'absolute', left: 10}}>
+          <Icon name={inBorder ? 'camera' : 'camera-off'} size={30} color={inBorder ? 'white' : 'gray'}/>
+        </TouchableOpacity>
+        <Text style={{alignSelf: 'center', color: 'white'}}>{title}</Text>
+        <TouchableOpacity style={{position: 'absolute', right: 10, justifyContent: 'center'}} onPress={() => navigate("me")}>
+          <Image source={{uri: Settings.get(Settings.USER_AVATAR_URL)}} style={{width: 34, height: 34, borderRadius: 17, backgroundColor: StyleConstant.bgGray}}/>
+        </TouchableOpacity>
+      </ImageBackground>
+    </View>
+  );
+}
+
+const ShadowStyle = { shadowColor: 'rgba(0,0,0,0.4)', shadowOffset: {height: 1, width: 1}, shadowOpacity: 1, shadowRadius: 1, elevation: 2 }
+const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' }
+
+const HeaderWithBack = (title, navigate, headerLeft, headerRight=null)=>{
+  return(
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 86 : 56, backgroundColor: '#074d21', paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+      <ImageBackground source={require('@assets/img/green_texture_bg.png')} style={{width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{alignSelf: 'center', color: 'white'}}>{title}</Text>
+        {headerLeft}
+        {headerRight}
+      </ImageBackground>
+    </View>
+  );
+}
 
 const NavOptionStyle = {
-  transparent : {title: null, headerTransparent: true, backgroundColor: 'transparent', headerTintColor: 'white'},
-  default: {
-    headerTitleStyle: { color: StyleConstant.dark, fontSize: 16},
-    headerTintColor: StyleConstant.dark,
-    headerStyle: { backgroundColor: 'white' }, 
-    headerBackTitle: 'Back'
-  } 
-};
-export { StyleConstant, ShareStyle, MyTheme, ShadowStyle, TextShadowStyle, NavOptionStyle };
+  transparent : {headerTransparent: true, backgroundColor: 'transparent', headerTintColor: 'black', headerBackTitle: null, headerTitleStyle: {position: 'absolute', fontSize: 14, left: -30, fontWeight: 'normal'}},
+  transparentWhite : {headerTransparent: true, backgroundColor: 'transparent', headerTintColor: 'white', headerBackTitle: null, headerTitleStyle: {position: 'absolute', fontSize: 14, left: -30, fontWeight: 'normal'}},};
 
+const ShareStyle = StyleSheet.create({
+  titleTxt: { fontSize: StyleConstant.titleFontSize, lineHeight:StyleConstant.titleFontSize, color: StyleConstant.primaryColorLight, textAlign: 'center', textAlignVertical: 'center', },
+  flex1: { flex: 1, },
+  flex2: { flex: 2, },
+  flex3: { flex: 3, },
+  txtBold : { fontWeight: 'bold' },
+  txtRegular : {},
+  textShadow: { textShadowColor: 'rgba(0,0,0,0.75)', textShadowOffset: {width: 1, height: 1}, textShadowRadius: 5 }
+});
 /*
-
-{
-  primary: '#9E9E9E',
-  primary1: '#4d86f7',
-  primary2: '#6296f9',
-  secondary: '#8F0CE8',
-  secondary2: '#00B233',
-  secondary3: '#00FF48',
-  grey0: '#393e42',
-  grey1: '#43484d',
-  grey2: '#5e6977',
-  grey3: '#86939e',
-  grey4: '#bdc6cf',
-  grey5: '#e1e8ee',
-  dkGreyBg: '#232323',
-  greyOutline: '#bbb',
-  searchBg: '#303337',
-  disabled: '#dadee0',
-  white: '#ffffff',
-  error: '#ff190c',
+const MyThemeReactPaper = {
+  ...DefaultTheme,
+  roundness: 12,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: StyleConstant.primaryColor,
+    accent: StyleConstant.primaryColorLight,
+  },
 };
+*/
 
-  */
+export { StyleConstant, ShareStyle, MyTheme, HeaderStyle, HeaderStyleWithBack, HeaderStyleWithBackIos, HeaderStyleWithRight, ShadowStyle, fabStyle, NavOptionStyle, HeaderWithTexture, HeaderWithAvatar, HeaderWithBack };
