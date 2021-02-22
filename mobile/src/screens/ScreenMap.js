@@ -3,10 +3,10 @@ import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-nativ
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 
-const ScreenLanding = (props) => {
+const ScreenMap = (props) => {
 
   useEffect(() => {
-    console.log("ScreenLanding")
+    console.log("hello world")
     // opening_animation.current.play();
     return function cleanup() { } 
   }, []);
@@ -14,18 +14,17 @@ const ScreenLanding = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
-        <Text style={{color:"black"}}>landing</Text>
+        <Text style={{color:"black"}}>map</Text>
       </View>
     </SafeAreaView>
   );
 }
 
 navigationOptions = ({navigation}) => ({
-  // header: null
-  title:"Home"
+  header: null
 });
 
-export default withScreenBase(ScreenLanding, ScreenBaseType.MAIN, navigationOptions);
+export default withScreenBase(ScreenMap, ScreenBaseType.MAIN, navigationOptions);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
