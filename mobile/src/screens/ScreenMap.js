@@ -6,25 +6,23 @@ import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 const ScreenMap = (props) => {
 
   useEffect(() => {
-    console.log("hello world")
-    // opening_animation.current.play();
+    console.log("ScreenMap")
+    props.navigation.setParams({"navOptions":{
+      header: null
+    }});
     return function cleanup() { } 
   }, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color:"black"}}>map</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-navigationOptions = ({navigation}) => ({
-  header: null
-});
-
-export default withScreenBase(ScreenMap, ScreenBaseType.MAIN, navigationOptions);
+export default withScreenBase(ScreenMap, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

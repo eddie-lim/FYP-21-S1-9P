@@ -1,31 +1,30 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
+import { HomeHeader, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
+import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
 const ScreenLanding = (props) => {
+  const { navigate } = useNavigation();
 
   useEffect(() => {
     console.log("ScreenLanding")
-    // opening_animation.current.play();
+    props.navigation.setParams({"navOptions":{
+      header: HomeHeader(navigate)
+    }});
     return function cleanup() { } 
   }, []);
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color:"black"}}>landing</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-navigationOptions = ({navigation}) => ({
-  // header: null
-  title:"< Login/Profile btn | Settings >"
-});
-
-export default withScreenBase(ScreenLanding, ScreenBaseType.MAIN, navigationOptions);
+export default withScreenBase(ScreenLanding, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

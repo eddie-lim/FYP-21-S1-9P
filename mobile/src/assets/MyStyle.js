@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, StyleSheet, Platform, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Platform, ImageBackground, Image, Pressable } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Settings, StoreSettings, GlobalContext } from '@helpers/Settings';
 
 const StyleConstant = {
-  primaryColor: "#0c4c23",
+  primaryColor: "#9c8642",
   primaryColorLight: "#3e794c",
   primaryColorDark: "#002400",
   primaryTextColor: "#000000",
@@ -74,7 +74,7 @@ const HeaderStyleWithRight = {
 
 const HeaderWithTexture = (title)=>{
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 76 : 56, backgroundColor: '#074d21', paddingTop: Platform.OS == 'ios' ? 20 : 0}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 76 : 56, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 20 : 0}}>
       <ImageBackground source={require('@assets/img/green_texture_bg.png')} style={{width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white'}}>{title}</Text>
       </ImageBackground>
@@ -82,19 +82,23 @@ const HeaderWithTexture = (title)=>{
   )
 }
 
-const HeaderWithAvatar = (title, navigate, inBorder)=>{
+const HomeHeader = (navigate)=>{
+  const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
+  const logged_in = true;
   return(
-    // TODO: USER_AVATAR_URL store in normal settings
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 86 : 56, backgroundColor: '#074d21', paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <ImageBackground source={require('@assets/img/green_texture_bg.png')} style={{width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-        <TouchableOpacity onPress={() => inBorder ? navigate("camera") : alert("You must be within the C2C zone to be able to use the Camera")} style={{position: 'absolute', left: 10}}>
-          <Icon name={inBorder ? 'camera' : 'camera-off'} size={30} color={inBorder ? 'white' : 'gray'}/>
-        </TouchableOpacity>
-        <Text style={{alignSelf: 'center', color: 'white'}}>{title}</Text>
-        <TouchableOpacity style={{position: 'absolute', right: 10, justifyContent: 'center'}} onPress={() => navigate("me")}>
-          <Image source={{uri: Settings.get(Settings.USER_AVATAR_URL)}} style={{width: 34, height: 34, borderRadius: 17, backgroundColor: StyleConstant.bgGray}}/>
-        </TouchableOpacity>
-      </ImageBackground>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 186 : 156, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text>
+      </View>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <Pressable onPress={() => {navigate('screenLogin')}} style={{position: 'absolute', left: 10, flexDirection: 'row'}}>
+          <Icon name={logged_in ? 'login' : 'user'} size={25} color={'white'}/>
+          <Text style={{color: 'white', fontSize:20, marginStart:10}}>Login</Text>
+        </Pressable>
+        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 10}}>
+          <Icon name={'cog'} size={30} color={'white'}/>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -102,14 +106,16 @@ const HeaderWithAvatar = (title, navigate, inBorder)=>{
 const ShadowStyle = { shadowColor: 'rgba(0,0,0,0.4)', shadowOffset: {height: 1, width: 1}, shadowOpacity: 1, shadowRadius: 1, elevation: 2 }
 const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' }
 
-const HeaderWithBack = (title, navigate, headerLeft, headerRight=null)=>{
+const HeaderWithBack = (title, navigate, destination, headerRight=null)=>{
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 86 : 56, backgroundColor: '#074d21', paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <ImageBackground source={require('@assets/img/green_texture_bg.png')} style={{width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{alignSelf: 'center', color: 'white'}}>{title}</Text>
-        {headerLeft}
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 86 : 56, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
+        <Pressable style={{position: 'absolute', left: 10, justifyContent: 'center'}} onPress={() => navigate(destination)}>
+          <Icon name={'arrow-left'} color={'white'} size={30} />
+        </Pressable>
         {headerRight}
-      </ImageBackground>
+      </View>
     </View>
   );
 }
@@ -139,4 +145,4 @@ const MyThemeReactPaper = {
 };
 */
 
-export { StyleConstant, ShareStyle, MyTheme, HeaderStyle, HeaderStyleWithBack, HeaderStyleWithBackIos, HeaderStyleWithRight, ShadowStyle, fabStyle, NavOptionStyle, HeaderWithTexture, HeaderWithAvatar, HeaderWithBack };
+export { StyleConstant, ShareStyle, MyTheme, HeaderStyle, HeaderStyleWithBack, HeaderStyleWithBackIos, HeaderStyleWithRight, ShadowStyle, fabStyle, NavOptionStyle, HeaderWithTexture, HomeHeader, HeaderWithBack };

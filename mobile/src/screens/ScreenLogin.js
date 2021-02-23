@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
-const ScreenFaq = (props) => {
+const ScreenLogin = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("ScreenFaq")
+    console.log("ScreenLogin")
     props.navigation.setParams({"navOptions":{
-      header: HeaderWithBack("FAQ", navigate, "screenQuestions")
+      header: HeaderWithBack("Login", navigate, "mainBottomTab")
     }});
     return function cleanup() { } 
   }, []);
@@ -19,13 +19,14 @@ const ScreenFaq = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color:"black"}}>faq</Text>
+        <Text style={{color:"black"}}>login</Text>
+        <Text style={{color:"black"}}>register button here</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-export default withScreenBase(ScreenFaq, ScreenBaseType.MAIN);
+export default withScreenBase(ScreenLogin, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

@@ -8,7 +8,7 @@ const ScreenAppLoading = (props) => {
   const opening_animation = useRef(null);
 
   useEffect(() => {
-    console.log("hello world")
+    console.log("ScreenAppLoading")
     // opening_animation.current.play();
     return function cleanup() { } 
   }, []);

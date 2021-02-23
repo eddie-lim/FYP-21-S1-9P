@@ -1,30 +1,31 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
+import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
 const ScreenCourseListing = (props) => {
+  const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("hello world")
-    // opening_animation.current.play();
+    console.log("ScreenCourseListing")
+    props.navigation.setParams({"navOptions":{
+      header: HeaderWithBack("Course", navigate, "screenUniversity")
+    }});
     return function cleanup() { } 
   }, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color:"black"}}>course listing</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-navigationOptions = ({navigation}) => ({
-  header: null
-});
-
-export default withScreenBase(ScreenCourseListing, ScreenBaseType.MAIN, navigationOptions);
+export default withScreenBase(ScreenCourseListing, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

@@ -15,12 +15,28 @@ import ScreenMap from '@screens/ScreenMap';
 import ScreenQuestions from '@screens/ScreenQuestions';
 import ScreenApplicationProcess from '@screens/ScreenApplicationProcess';
 import ScreenFaq from '@screens/ScreenFaq';
+import ScreenLogin from '@screens/ScreenLogin';
+import ScreenRegister from '@screens/ScreenRegister';
+import ScreenSettings from '@screens/ScreenSettings';
 
 //##############################################
 
 const LandingStack = createStackNavigator({
   screenLanding: ScreenLanding,
 }, { initialRouteName: 'screenLanding'});
+
+//##############################################
+
+const LoginStack = createStackNavigator({
+  screenLogin: ScreenLogin,
+  screenRegister: ScreenRegister,
+}, { initialRouteName: 'screenLogin'});
+
+//##############################################
+
+const SettingsStack = createStackNavigator({
+  screenSettings: ScreenSettings,
+}, { initialRouteName: 'screenSettings'});
 
 //##############################################
 
@@ -59,7 +75,7 @@ const MainBottomTab= createBottomTabNavigator({
       tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>landing</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'school'} style={{marginRight: 5}} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
+          <Icon name={'school'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
           <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>
         </View>
       ),
@@ -71,7 +87,7 @@ const MainBottomTab= createBottomTabNavigator({
       tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>landing</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'map'} style={{marginRight: 5}} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
+          <Icon name={'map'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
           <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Map</Text>
         </View>
       ),
@@ -83,7 +99,7 @@ const MainBottomTab= createBottomTabNavigator({
       tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>landing</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'home'} style={{marginRight: 5}} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
+          <Icon name={'home'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
           <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Home</Text>
         </View>
       ),
@@ -95,7 +111,7 @@ const MainBottomTab= createBottomTabNavigator({
       tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>event</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'calendar'} style={{marginRight: 5}} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
+          <Icon name={'calendar'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
           <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>
         </View>
       ),
@@ -107,19 +123,21 @@ const MainBottomTab= createBottomTabNavigator({
       tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>event</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'information'} style={{marginRight: 5}} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
+          <Icon name={'information'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
           <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Questions</Text>
         </View>
       ),
     }
   },
-}, { initialRouteName: 'landing', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
+}, { initialRouteName: 'questions', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
 
 //##############################################
 
 const RootSwitch = createSwitchNavigator({
   appLoading: ScreenAppLoading,
   mainBottomTab: MainBottomTab,
+  loginStack: LoginStack,
+  settingsStack: SettingsStack
 }, { initialRouteName: 'mainBottomTab' });
 
 export default createAppContainer(RootSwitch);

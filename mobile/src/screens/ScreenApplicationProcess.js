@@ -1,30 +1,31 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
+import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
 const ScreenApplicationProcess = (props) => {
+  const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("hello world")
-    // opening_animation.current.play();
+    console.log("ScreenApplicationProcess")
+    props.navigation.setParams({"navOptions":{
+      header: HeaderWithBack("Application Process", navigate, "screenQuestions")
+    }});
     return function cleanup() { } 
   }, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color:"black"}}>application process</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-navigationOptions = ({navigation}) => ({
-  header: null
-});
-
-export default withScreenBase(ScreenApplicationProcess, ScreenBaseType.MAIN, navigationOptions);
+export default withScreenBase(ScreenApplicationProcess, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

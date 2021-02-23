@@ -5,13 +5,13 @@ import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/My
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
-const ScreenFaq = (props) => {
+const ScreenRegister = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("ScreenFaq")
+    console.log("ScreenRegister")
     props.navigation.setParams({"navOptions":{
-      header: HeaderWithBack("FAQ", navigate, "screenQuestions")
+      header: HeaderWithBack("Register", navigate, "screenLogin")
     }});
     return function cleanup() { } 
   }, []);
@@ -19,13 +19,13 @@ const ScreenFaq = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color:"black"}}>faq</Text>
+        <Text style={{color:"black"}}>register</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-export default withScreenBase(ScreenFaq, ScreenBaseType.MAIN);
+export default withScreenBase(ScreenRegister, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

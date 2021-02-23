@@ -1,22 +1,37 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
+import { View, Dimensions, StyleSheet, ImageBackground, Text, Pressable } from 'react-native';
+import LottieView from 'lottie-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
+import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
 const ScreenUniversity = (props) => {
+  const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("hello world")
-    // opening_animation.current.play();
+    console.log("ScreenUniversity")
+    props.navigation.setParams({"navOptions":{
+      header: null
+    }});
     return function cleanup() { } 
   }, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center'}}>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color:"black"}}>university</Text>
-        <Text style={{color:"black"}}>course listing button here</Text>
-        <Text style={{color:"black"}}>school listing button here</Text>
+        <Pressable style={{}} onPress={() => navigate("screenCourseListing")}>
+          <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
+            {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
+            <Text style={{ position:'absolute', color:"black", bottom:10}}>course listing button here</Text>
+          </ImageBackground>
+        </Pressable>
+        <Pressable style={{marginTop:15}} onPress={() => navigate("screenSchoolListing")}>
+          <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
+            {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
+            <Text style={{ position:'absolute', color:"black", bottom:10}}>school listing button here</Text>
+          </ImageBackground>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
