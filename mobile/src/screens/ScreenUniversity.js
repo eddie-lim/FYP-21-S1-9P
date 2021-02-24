@@ -22,7 +22,7 @@ const ScreenUniversity = (props) => {
         <Text style={{color:"black"}}>university</Text>
         <Pressable style={{}} onPress={() => navigate("screenCourseListing")}>
           <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
+            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} />
             <Text style={{ position:'absolute', color:"black", bottom:10}}>course listing button here</Text>
           </ImageBackground>
         </Pressable>

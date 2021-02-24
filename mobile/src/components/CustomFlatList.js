@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FlatList, StyleSheet, View, Text, Dimensions, RefreshControl } from 'react-native';
 import { ShadowStyle, StyleConstant, ShareStyle, TextShadowStyle } from '@assets/MyStyle';
-import Render from '@helpers/Render';
+import { Placeholder, PlaceholderMedia, PlaceholderLine, Progressive, ShineOverlay,Shine} from "rn-placeholder";
 
-export default MyCustomFlatList = (id, api, data_state, renderItem, emptyListString, refreshing, lastPage, type) => {
+export default CustomFlatList = (id, api, data_state, renderItem, emptyListString, refreshing, lastPage, type) => {
     const [ page, setPage ] = useState(0);
 
     useEffect(() => {
@@ -26,7 +26,12 @@ export default MyCustomFlatList = (id, api, data_state, renderItem, emptyListStr
 
     render = () => {
         if(refreshing){
-            return Render.renderPlaceHolder(type);
+            return <Placeholder Animation={props =>(<Shine {...props} style={{backgroundColor: '#d8d8d8', width: Dimensions.get('window').width}} />)}>
+            <View style={{flexDirection: 'row', width: '100%', alignItems: 'center', marginVertical: 5, padding: 10}}>
+              <PlaceholderMedia style={{width: 30, height: 30, borderRadius: 6}}/>
+              <View style={{flexDirection: 'row', height: 'auto', alignItems: 'center', marginHorizontal: 10, marginTop: 5}}><PlaceholderLine width={50}/></View>
+            </View>
+          </Placeholder>
         } else{
             return <FlatList
             ListEmptyComponent={

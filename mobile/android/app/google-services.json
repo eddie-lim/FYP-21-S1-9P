@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "701892900585",
+    "project_id": "fyp-21-s1-9p",
+    "storage_bucket": "fyp-21-s1-9p.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701892900585:android:3d2314055658ae4fc5a278",
+        "android_client_info": {
+          "package_name": "com.openhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701892900585-tfhsjpvjk9rofckpkonrph2inmv245oi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9gtqqTDwbn68Koek1H7UDA9Q7eVNONrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701892900585-tfhsjpvjk9rofckpkonrph2inmv245oi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

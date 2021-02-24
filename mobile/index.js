@@ -4,7 +4,7 @@ import App from './App';
 import {name as appName} from './app.json';
 import { GlobalContext } from '@helpers/Settings';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { MyTheme } from '@assets/MyStyle';
+import { MyTheme, StyleConstant } from '@assets/MyStyle';
 import useActivityIndicator from "@hooks/useActivityIndicator";
 import useCustomDialog from '@hooks/useCustomDialog';
 import useWatchInternetConnection from '@hooks/useWatchInternetConnection';
@@ -22,7 +22,7 @@ const AppTheme = () => {
         <RootSiblingParent>
             <GlobalContext.Provider value={{ toggleActivityIndicator, renderActivityIndicator, showCustomDialog, renderCustomDialog, renderConnectedToInternetInfo }}>
                 <PaperProvider theme={MyTheme}>
-                    <StatusBar backgroundColor="#074d21" barStyle="light-content"/>
+                    <StatusBar backgroundColor={StyleConstant.primaryColor} barStyle="light-content"/>
                     <App/>
                 </PaperProvider>
                 { renderConnectedToInternetInfo() }

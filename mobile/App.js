@@ -72,7 +72,7 @@ const MainBottomTab= createBottomTabNavigator({
   university: {
     screen: UniversityStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>landing</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Icon name={'school'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
@@ -84,7 +84,7 @@ const MainBottomTab= createBottomTabNavigator({
   map: {
     screen: MapStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>landing</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Map</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Icon name={'map'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
@@ -96,7 +96,7 @@ const MainBottomTab= createBottomTabNavigator({
   landing: {
     screen: LandingStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>landing</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Home</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Icon name={'home'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
@@ -108,7 +108,7 @@ const MainBottomTab= createBottomTabNavigator({
   event: {
     screen: EventStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>event</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Icon name={'calendar'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
@@ -120,7 +120,7 @@ const MainBottomTab= createBottomTabNavigator({
   questions: {
     screen: QuestionsStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>event</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Questions</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Icon name={'information'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
@@ -129,7 +129,7 @@ const MainBottomTab= createBottomTabNavigator({
       ),
     }
   },
-}, { initialRouteName: 'questions', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
+}, { initialRouteName: 'landing', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
 
 //##############################################
 

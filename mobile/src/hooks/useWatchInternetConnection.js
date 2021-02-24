@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Alert, Platform } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import { ShareStyle,  StyleConstant } from '@assets/MyStyle';
-import Utils from '@helpers/Utils';
 
 //ref: https://github.com/react-native-community/react-native-netinfo
 
@@ -36,6 +35,18 @@ export default useWatchInternetConnection = () => {
 }
 
 const styles = StyleSheet.create({
-  content: { backgroundColor: StyleConstant.warn, padding: 5, top: 0, width: '100%', height: 30 },
-  txt: { textAlign: 'center', textAlignVertical: 'center', color: StyleConstant.dark, ...ShareStyle.txtRegular}  
+  content: {
+    flex: 1,
+    backgroundColor: StyleConstant.warnColor,
+    position: 'absolute',
+    padding: 5,
+    paddingTop:40,
+    width: '100%',
+  },
+  txt: {
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#333333',
+  }  
 });
