@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text, FlatList, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
+import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
 const ScreenEventListing = (props) => {
+  const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
     console.log("ScreenEventListing")
@@ -36,10 +38,10 @@ const ScreenEventListing = (props) => {
           },
         ]}
         renderItem={({ item }) => (
-          <Pressable onPress={()=>alert('hello')}>
+          <Pressable onPress={()=>navigate('screenEventDetail')}>
             <View style={{backgroundColor: 'white', padding: 20, width:Dimensions.get('window').width * 0.95, marginVertical: 8, borderColor: 'black', borderWidth:1}}>
-              <Text style={{ fontSize: 26, }}>{item.title}</Text>
-              <Text style={{ fontSize: 18, }}>{item.subtitle}</Text>
+              <Text style={{ fontSize: 20, }}>{item.title}</Text>
+              <Text style={{ fontSize: 16, }}>{item.subtitle}</Text>
             </View>
           </Pressable>
         )}

@@ -5,13 +5,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
-const ScreenSettings = (props) => {
+const ScreenSchoolDetail = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("ScreenSettings")
+    console.log("ScreenSchoolDetail")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Settings", navigate, "mainBottomTab")
+      header:()=> HeaderWithBack("School Detail", navigate, "screenSchoolListing")
     }});
     return function cleanup() { } 
   }, []);
@@ -19,13 +19,14 @@ const ScreenSettings = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color:"black"}}>settings</Text>
+        <Text style={{color:"black"}}>school detail</Text>
+        <Text style={{color:"black"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut aliquam massa. Vivamus posuere tellus augue, ut condimentum sapien semper a. Vivamus cursus vehicula leo, et posuere nunc aliquam at. Maecenas convallis est sed arcu rhoncus, sed finibus dolor vestibulum. Praesent porta varius molestie. In quis quam faucibus nisi aliquam sodales at dapibus dui. Mauris pulvinar quis sem at pellentesque. Donec molestie erat vitae nisl dictum ornare.</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-export default withScreenBase(ScreenSettings, ScreenBaseType.MAIN);
+export default withScreenBase(ScreenSchoolDetail, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

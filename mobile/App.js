@@ -8,17 +8,22 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ScreenAppLoading from '@screens/ScreenAppLoading';
 import ScreenLanding from '@screens/ScreenLanding';
 import ScreenEventListing from '@screens/ScreenEventListing';
+import ScreenEventDetail from '@screens/ScreenEventDetail';
 import ScreenUniversity from '@screens/ScreenUniversity';
 import ScreenCourseListing from '@screens/ScreenCourseListing';
+import ScreenCourseDetail from '@screens/ScreenCourseDetail';
 import ScreenSchoolListing from '@screens/ScreenSchoolListing';
+import ScreenSchoolDetail from '@screens/ScreenSchoolDetail';
 import ScreenMap from '@screens/ScreenMap';
 import ScreenQuestions from '@screens/ScreenQuestions';
 import ScreenApplicationProcess from '@screens/ScreenApplicationProcess';
 import ScreenFaq from '@screens/ScreenFaq';
+import ScreenFaqDetail from '@screens/ScreenFaqDetail';
 import ScreenLogin from '@screens/ScreenLogin';
 import ScreenRegister from '@screens/ScreenRegister';
 import ScreenSettings from '@screens/ScreenSettings';
 import ScreenProfile from '@screens/ScreenProfile';
+
 
 //##############################################
 
@@ -49,6 +54,7 @@ const SettingsStack = createStackNavigator({
 
 const EventStack = createStackNavigator({
   screenEventListing: ScreenEventListing,
+  screenEventDetail: ScreenEventDetail,
 }, { initialRouteName: 'screenEventListing'});
 
 //##############################################
@@ -57,6 +63,8 @@ const UniversityStack = createStackNavigator({
   screenUniversity: ScreenUniversity,
   screenCourseListing: ScreenCourseListing,
   screenSchoolListing: ScreenSchoolListing,
+  screenCourseDetail: ScreenCourseDetail,
+  screenSchoolDetail: ScreenSchoolDetail,
 }, { initialRouteName: 'screenUniversity'});
 
 //##############################################
@@ -71,6 +79,7 @@ const QuestionsStack = createStackNavigator({
   screenQuestions: ScreenQuestions,
   screenApplicationProcess: ScreenApplicationProcess,
   screenFaq: ScreenFaq,
+  screenFaqDetail: ScreenFaqDetail,
 }, { initialRouteName: 'screenQuestions'});
 
 //##############################################
