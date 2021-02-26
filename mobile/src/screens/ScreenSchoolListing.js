@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
+import { View, Dimensions, StyleSheet, ImageBackground, Text, FlatList, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -20,6 +20,34 @@ const ScreenSchoolListing = (props) => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color:"black"}}>school listing</Text>
+        <FlatList
+        data={[
+          {
+            id: '1',
+            title: 'title',
+            subtitle: 'subtitle',
+          },
+          {
+            id: '2',
+            title: 'title',
+            subtitle: 'subtitle',
+          },
+          {
+            id: '3',
+            title: 'title',
+            subtitle: 'subtitle',
+          },
+        ]}
+        renderItem={({ item }) => (
+          <Pressable onPress={()=>alert('hello')}>
+            <View style={{backgroundColor: 'white', padding: 20, width:Dimensions.get('window').width * 0.95, marginVertical: 8, borderColor: 'black', borderWidth:1}}>
+              <Text style={{ fontSize: 26, }}>{item.title}</Text>
+              <Text style={{ fontSize: 18, }}>{item.subtitle}</Text>
+            </View>
+          </Pressable>
+        )}
+        keyExtractor={item => item.id}
+      />
       </View>
     </SafeAreaView>
   );
