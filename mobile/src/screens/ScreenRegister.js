@@ -4,6 +4,7 @@ import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/My
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import {StoreSettings} from '@helpers/Settings';
 
 const ScreenRegister = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -14,10 +15,18 @@ const ScreenRegister = (props) => {
   useEffect(() => {
     console.log("ScreenRegister")
     props.navigation.setParams({"navOptions":{
-      header: HeaderWithBack("Register", navigate, "screenLogin")
+      header:()=> HeaderWithBack("Register", navigate, "screenLogin")
     }});
     return function cleanup() { } 
   }, []);
+
+  handleRegister = () =>{
+    console.log("Register!!")
+    StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
+    .then(()=>{
+      navigate("mainBottomTab")
+    })
+  }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -58,7 +67,7 @@ const ScreenRegister = (props) => {
           />
         </View>
 
-        <Pressable style={{marginTop:15}} onPress={() => console.log("register!")}>
+        <Pressable style={{marginTop:15}} onPress={() => handleRegister()}>
           <ImageBackground resizeMode={'cover'} style={{width: 300, height: 100, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
             {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
             <Text style={{ position:'absolute', color:"black", bottom:10}}>Register</Text>

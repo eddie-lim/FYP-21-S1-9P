@@ -5,13 +5,13 @@ import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/My
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
-const ScreenSchoolListing = (props) => {
+const ScreenProfile = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("ScreenSchoolListing")
+    console.log("ScreenProfile")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Schools", navigate, "screenUniversity")
+      header:()=> HeaderWithBack("Profile", navigate, "mainBottomTab")
     }});
     return function cleanup() { } 
   }, []);
@@ -19,13 +19,13 @@ const ScreenSchoolListing = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color:"black"}}>school listing</Text>
+        <Text style={{color:"black"}}>profile</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-export default withScreenBase(ScreenSchoolListing, ScreenBaseType.MAIN);
+export default withScreenBase(ScreenProfile, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },

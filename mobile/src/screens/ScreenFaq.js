@@ -11,7 +11,7 @@ const ScreenFaq = (props) => {
   useEffect(() => {
     console.log("ScreenFaq")
     props.navigation.setParams({"navOptions":{
-      header: HeaderWithBack("FAQ", navigate, "screenQuestions")
+      header:()=> HeaderWithBack("FAQ", navigate, "screenQuestions")
     }});
     return function cleanup() { } 
   }, []);

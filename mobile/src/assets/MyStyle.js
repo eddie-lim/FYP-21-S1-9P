@@ -82,19 +82,37 @@ const HeaderWithTexture = (title)=>{
   )
 }
 
-const HomeHeader = (navigate)=>{
+const HomeHeader = (navigate, logged_in = null)=>{
   const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
-  const logged_in = true;
+  // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
+  // const logged_in = false;
+  
+  renderAccountButton = () =>{
+    if(logged_in === "true" || logged_in === true){
+      return(
+        <Pressable onPress={() => {navigate('screenProfile')}} style={{position: 'absolute', left: 10, flexDirection: 'row'}}>
+          <Icon name={'account-circle'} size={25} color={'white'}/>
+          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Profile'}</Text>
+        </Pressable>
+      )
+    } else if(logged_in === "false" || logged_in === false) {
+      return (
+        <Pressable onPress={() => {navigate('screenLogin')}} style={{position: 'absolute', left: 10, flexDirection: 'row'}}>
+          <Icon name={'login'} size={25} color={'white'}/>
+          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Login'}</Text>
+        </Pressable>
+      )
+    } else {
+      return;
+    }
+  }
   return(
     <View style={{width: '100%', height: Platform.OS == 'ios' ? 186 : 156, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
       <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text>
       </View>
       <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-        <Pressable onPress={() => {navigate('screenLogin')}} style={{position: 'absolute', left: 10, flexDirection: 'row'}}>
-          <Icon name={logged_in ? 'login' : 'user'} size={25} color={'white'}/>
-          <Text style={{color: 'white', fontSize:20, marginStart:10}}>Login</Text>
-        </Pressable>
+        {renderAccountButton()}
         <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 10}}>
           <Icon name={'cog'} size={30} color={'white'}/>
         </Pressable>

@@ -4,6 +4,7 @@ import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/My
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import {StoreSettings} from '@helpers/Settings';
 
 const ScreenLogin = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -13,10 +14,18 @@ const ScreenLogin = (props) => {
   useEffect(() => {
     console.log("ScreenLogin")
     props.navigation.setParams({"navOptions":{
-      header: HeaderWithBack("Login", navigate, "mainBottomTab")
+      header:()=> HeaderWithBack("Login", navigate, "mainBottomTab")
     }});
     return function cleanup() { } 
   }, []);
+
+  handleLogin = () =>{
+    console.log("Login!!")
+    StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
+    .then(()=>{
+      navigate("mainBottomTab")
+    })
+  }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -50,7 +59,7 @@ const ScreenLogin = (props) => {
           <Text style={{color:"black"}}>register button here</Text>
         </Pressable>
 
-        <Pressable style={{marginTop:15}} onPress={() => console.log("login!")}>
+        <Pressable style={{marginTop:15}} onPress={() => handleLogin()}>
           <ImageBackground resizeMode={'cover'} style={{width: 300, height: 100, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
             {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
             <Text style={{ position:'absolute', color:"black", bottom:10}}>Login</Text>

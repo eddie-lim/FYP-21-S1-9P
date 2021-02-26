@@ -11,7 +11,7 @@ const ScreenSettings = (props) => {
   useEffect(() => {
     console.log("hello world")
     props.navigation.setParams({"navOptions":{
-      header: HeaderWithBack("Settings", navigate, "mainBottomTab")
+      header:()=> HeaderWithBack("Settings", navigate, "mainBottomTab")
     }});
     return function cleanup() { } 
   }, []);
