@@ -24,18 +24,18 @@ const ScreenSchoolListing = (props) => {
         data={[
           {
             id: '1',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'University of Wollongong (UOW)',
+            subtitle: '7 Courses',
           },
           {
             id: '2',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'The University of Sydney',
+            subtitle: '2 Courses',
           },
           {
             id: '3',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'RMIT University',
+            subtitle: '10 Courses',
           },
         ]}
         renderItem={({ item }) => (

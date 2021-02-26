@@ -24,18 +24,18 @@ const ScreenFaq = (props) => {
         data={[
           {
             id: '1',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'Is SIM registered with MOE?',
+            subtitle: 'Updated 12/11/2020 04:36 PM',
           },
           {
             id: '2',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'Can my child / I enrol in SIM with GCE \'N\' Level qualification?',
+            subtitle: 'Updated 12/11/2020 04:46 PM',
           },
           {
             id: '3',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'Can CPF be used for paying the programme fees?',
+            subtitle: 'Updated 12/11/2020 10:28 AM',
           },
         ]}
         renderItem={({ item }) => (

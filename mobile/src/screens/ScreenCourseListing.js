@@ -24,25 +24,25 @@ const ScreenCourseListing = (props) => {
         data={[
           {
             id: '1',
-            title: 'BIT',
-            subtitle: 'Bachelor in Information Technologu',
+            title: 'Bachelor of Science (Honours) in Data Science and Business Analytics',
+            subtitle: 'Awarded by University of London',
           },
           {
             id: '2',
-            title: 'BCS',
-            subtitle: 'Bachelor in Computer Science',
+            title: 'Bachelor of Computer Science (Big Data)',
+            subtitle: 'Awarded by University of Wollongong',
           },
           {
             id: '3',
-            title: 'BBD',
-            subtitle: 'Bachelor in Big Data',
+            title: 'Bachelor of Business Information Systems',
+            subtitle: 'Awarded by University of Wollongong',
           },
         ]}
         renderItem={({ item }) => (
           <Pressable onPress={()=>alert('hello')}>
             <View style={{backgroundColor: 'white', padding: 20, width:Dimensions.get('window').width * 0.95, marginVertical: 8, borderColor: 'black', borderWidth:1}}>
-              <Text style={{ fontSize: 26, }}>{item.title}</Text>
-              <Text style={{ fontSize: 18, }}>{item.subtitle}</Text>
+              <Text style={{ fontSize: 20, }}>{item.title}</Text>
+              <Text style={{ fontSize: 16, }}>{item.subtitle}</Text>
             </View>
           </Pressable>
         )}

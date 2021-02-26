@@ -21,18 +21,18 @@ const ScreenEventListing = (props) => {
         data={[
           {
             id: '1',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'Pathways After \'A\' Levels Online Consultation',
+            subtitle: '19 FEB 2021 (FRI) to 26 FEB 2021 (FRI)',
           },
           {
             id: '2',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'Inside Singapore Uhak with SIM Parents and Students "Undergraduate Open House',
+            subtitle: '27 FEB 2021 (SAT)',
           },
           {
             id: '3',
-            title: 'title',
-            subtitle: 'subtitle',
+            title: 'Study International Education Fair',
+            subtitle: '27 FEB 2021 (SAT)',
           },
         ]}
         renderItem={({ item }) => (
