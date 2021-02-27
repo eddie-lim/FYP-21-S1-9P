@@ -22,7 +22,7 @@ const AppTheme = () => {
         <RootSiblingParent>
             <GlobalContext.Provider value={{ toggleActivityIndicator, renderActivityIndicator, showCustomDialog, renderCustomDialog }}>
                 <PaperProvider theme={MyTheme}>
-                    <StatusBar backgroundColor={StyleConstant.primaryColor} barStyle="light-content"/>
+                    <StatusBar backgroundColor={StyleConstant.primaryColor} />
                     <App/>
                 </PaperProvider>
                 { renderConnectedToInternetInfo() }
