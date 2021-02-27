@@ -11,7 +11,7 @@ const ScreenCourseListing = (props) => {
   useEffect(() => {
     console.log("ScreenCourseListing")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Course", navigate, "screenUniversity")
+      header:()=> HeaderWithBack("Courses", navigate, "screenUniversity")
     }});
     return function cleanup() { } 
   }, []);
@@ -19,7 +19,6 @@ const ScreenCourseListing = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{color:"black"}}>course listing</Text>
       <FlatList
         data={[
           {
