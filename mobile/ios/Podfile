@@ -9,6 +9,7 @@ target 'openhouse' do
   use_react_native!(:path => config["reactNativePath"])
   
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'react-native-mapbox-gl', :path => '../node_modules/@react-native-mapbox-gl/maps'
 
   target 'openhouseTests' do
     inherit! :complete
