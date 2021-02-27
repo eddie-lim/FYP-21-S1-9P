@@ -95,15 +95,13 @@ const HomeHeader = (navigate, logged_in = null)=>{
           <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Profile'}</Text>
         </Pressable>
       )
-    } else if(logged_in === "false" || logged_in === false) {
+    } else {
       return (
         <Pressable onPress={() => {navigate('screenLogin')}} style={{position: 'absolute', left: 10, flexDirection: 'row'}}>
           <Icon name={'login'} size={25} color={'white'}/>
           <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Login'}</Text>
         </Pressable>
       )
-    } else {
-      return;
     }
   }
   return(
