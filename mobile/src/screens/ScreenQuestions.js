@@ -21,14 +21,14 @@ const ScreenQuestions = (props) => {
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Pressable style={{}} onPress={() => navigate("screenFaq")}>
           <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>faq button here</Text>
+            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/faq-25920.json')} autoPlay={true} loop={true} />
+            <Text style={{ position:'absolute', color:"black", bottom:10}}>Frequently Asked Questions</Text>
           </ImageBackground>
         </Pressable>
         <Pressable style={{marginTop:15}} onPress={() => navigate("screenApplicationProcess")}>
           <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>application process button here</Text>
+            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={true} />
+            <Text style={{ position:'absolute', color:"black", bottom:10}}>Application Process</Text>
           </ImageBackground>
         </Pressable>
       </View>

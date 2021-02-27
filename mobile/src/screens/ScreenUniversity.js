@@ -21,14 +21,14 @@ const ScreenUniversity = (props) => {
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Pressable style={{}} onPress={() => navigate("screenCourseListing")}>
           <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} />
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>course listing button here</Text>
+            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/courselisting-45241.json')} autoPlay={true} loop={true} />
+            <Text style={{ position:'absolute', color:"black", bottom:10}}>Courses Available</Text>
           </ImageBackground>
         </Pressable>
         <Pressable style={{marginTop:15}} onPress={() => navigate("screenSchoolListing")}>
           <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>school listing button here</Text>
+            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/schoollisting-22472.json')} autoPlay={true} loop={true} />
+            <Text style={{ position:'absolute', color:"black", bottom:10}}>University Partners</Text>
           </ImageBackground>
         </Pressable>
       </View>
