@@ -55,7 +55,7 @@ const ScreenLogin = (props) => {
           />
         </View>
 
-        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="login" mode="contained" onPress={() => navigate("screenRegister")}>
+        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="login" mode="contained" onPress={() => handleLogin()}>
           Log me in!
         </Button>
 
