@@ -3,7 +3,7 @@ import {AppRegistry, StatusBar, LogBox} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import { GlobalContext } from '@helpers/Settings';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider , DefaultTheme} from 'react-native-paper';
 import { MyTheme, StyleConstant } from '@assets/MyStyle';
 import useActivityIndicator from "@hooks/useActivityIndicator";
 import useCustomDialog from '@hooks/useCustomDialog';
@@ -21,7 +21,7 @@ const AppTheme = () => {
     return (
         <RootSiblingParent>
             <GlobalContext.Provider value={{ toggleActivityIndicator, renderActivityIndicator, showCustomDialog, renderCustomDialog }}>
-                <PaperProvider theme={MyTheme}>
+                <PaperProvider theme={DefaultTheme}>
                     <StatusBar backgroundColor={StyleConstant.primaryColor} />
                     <App/>
                 </PaperProvider>

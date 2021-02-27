@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import {StoreSettings} from '@helpers/Settings';
+import { Button } from 'react-native-paper';
 
 const ScreenLogin = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -54,16 +55,17 @@ const ScreenLogin = (props) => {
           />
         </View>
 
-        <Pressable onPress={()=>{navigate("screenRegister")}}>
-          <Text style={{color:"black"}}>register button here</Text>
-        </Pressable>
+        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="login" mode="contained" onPress={() => navigate("screenRegister")}>
+          Log me in!
+        </Button>
 
-        <Pressable style={{marginTop:15}} onPress={() => handleLogin()}>
-          <ImageBackground resizeMode={'cover'} style={{width: 300, height: 100, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            {/* <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/splashscreen.json')} autoPlay={true} loop={true} /> */}
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>Login</Text>
-          </ImageBackground>
-        </Pressable>
+        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"orange" }} icon="lock-reset" mode="contained" onPress={() => alert("to open forget password page")}>
+          Forget password? Click here!
+        </Button>
+
+        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"blue" }} icon="account-plus" mode="contained" onPress={() => navigate("screenRegister")}>
+          Register here!
+        </Button>
 
         <Text>email: {email}</Text>
         <Text>password: {password}</Text>
