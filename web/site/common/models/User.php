@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\commands\AddToTimelineCommand;
+use common\components\MyCustomActiveRecord;
 use common\models\query\UserQuery;
 use Yii;
 use yii\behaviors\AttributeBehavior;
