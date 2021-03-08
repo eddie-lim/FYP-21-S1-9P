@@ -24,12 +24,14 @@ $config = [
             'enableCookieValidation' => false,
         ],
         'user' => [
-            'class' => yii\web\User::class,
-            'identityClass' => common\models\User::class,
-            'loginUrl' => ['/user/sign-in/login'],
-            'enableAutoLogin' => true,
-            'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
-        ]
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => false,
+            'loginUrl' => null,
+            'enableSession' => false,
+        ],
+        'api' => [
+            'class' => 'api\components\Api',
+        ],
     ]
 ];
 
