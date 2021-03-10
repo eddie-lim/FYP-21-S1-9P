@@ -22,6 +22,10 @@ class UserController extends \api\controllers\RestControllerBase
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'index' => ['GET'],
+                    'register' => ['POST'],
+                    'authorize' => ['POST'],
+                    'access-token' => ['POST'],
+                    'me' => ['GET'],
                 ],
             ],
             'authenticator' => [
@@ -39,6 +43,7 @@ class UserController extends \api\controllers\RestControllerBase
         $o = (object) array("app"=>Yii::$app->name, "version"=>Yii::$app->params["apiVersion"], "endpoint"=>Yii::$app->controller->id);
         Yii::$app->api->sendSuccessResponse($o);
     }
+
     public function actionRegister() {
         $model = new RegistrationForm();
         $model->attributes = $this->request;
@@ -52,6 +57,7 @@ class UserController extends \api\controllers\RestControllerBase
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
         }
     }
+
     public function actionAuthorize() {
         $model = new LoginForm();
         $model->attributes = $this->request;
@@ -69,8 +75,9 @@ class UserController extends \api\controllers\RestControllerBase
         } else {
             $str = $this->getSerialisedValidationError($model);
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
-        }        
-    }    
+        }
+    }
+
     public function actionAccessToken() {
         if (!isset($this->request["authorization_code"])) {
             $str =  Utility::jsonifyError("authorization_code", "Missing Authorization Code.");

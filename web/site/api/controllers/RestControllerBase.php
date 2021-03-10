@@ -30,7 +30,7 @@ class RestControllerBase extends Controller
                 'cors' => [
                     //'Origin:' => static::allowedDomains(),
                     'Access-Control-Allow-Origin:' => static::allowedDomains(),
-                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'OPTIONS'],
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'OPTIONS', 'DELETE'],
                     'Access-Control-Request-Headers' => ['*'],
                     'Access-Control-Allow-Credentials' => true,
                 ],
