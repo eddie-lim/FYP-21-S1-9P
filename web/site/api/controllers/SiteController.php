@@ -3,13 +3,7 @@
 namespace api\controllers;
 
 use Yii;
-use yii\rest\Controller;
-use yii\rest\OptionsAction;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\HttpHeaderAuth;
-use yii\filters\auth\QueryParamAuth;
 
 use api\components\CustomHttpException;
 
@@ -20,12 +14,7 @@ use common\models\Faq;
 use common\models\UniversityPartners;
 use common\components\Utility;
 
-use api\controllers\RestControllerBase;
-
-/**
- * @author Eugene Terentev <eugene@terentev.net>
- */
-class SiteController extends RestControllerBase
+class SiteController extends \api\controllers\RestControllerBase
 {
     const MAX_ROW_PER_PAGE = 20;
     public $layout = false;

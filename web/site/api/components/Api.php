@@ -107,5 +107,40 @@ class Api extends Component
         );
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
+    
+    public function deleteAllUserAccesstokens(){
+        SysOAuthAccessToken::deleteAll();
+    }
 
+    public function deleteUserAuthorizationCodes($user_id) {
+        SysOAuthAuthorizationCode::deleteAll('user_id = '.$user_id);
+    }
+
+    public function createAuthorizationCode($user_id)
+    {
+        $model = new SysOAuthAuthorizationCode;
+        $model->generateNewCode($user_id);
+        $model->save();
+
+        return ($model);
+    }
+
+    public function getUserIdFromAuthorizationCode($authorization_code) {
+        $auth_code = SysOAuthAuthorizationCode::findOne(['code' => $authorization_code]);
+        return $auth_code->user_id;
+    }
+
+    public function deleteUserAccesstokens($user_id) {
+        SysOAuthAccessToken::deleteAll('user_id = '.$user_id);
+    }
+
+    public function createAccesstoken($authorization_code, $user_id)
+    {
+        //$auth_code = SysOAuthAuthorizationCode::findOne(['code' => $authorization_code]);
+        $model = new SysOAuthAccessToken();
+        $model->generateNewToken($user_id, $authorization_code);
+        $model->save();
+
+        return ($model);
+    }
 }

@@ -1,14 +1,12 @@
 <?php
-
 namespace common\models\form;
 
 use cheatsheet\Time;
-use common\commands\SendEmailCommand;
-use common\models\User;
 use common\models\UserToken;
 use Yii;
+use common\models\User;
 use yii\base\Model;
-use common\components\MyCustomActiveRecord;
+use common\jobs\EmailQueueJob;
 
 /**
  * Password reset request form
@@ -29,12 +27,28 @@ class PasswordResetRequestForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
+            ['email', 'validateRole'],
+            /*
+            //LOYNOTE:: dun check for if exist
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
-                'filter' => ['status' => MyCustomActiveRecord::STATUS_ENABLED],
+                'filter' => ['status' => ['or', User::STATUS_VERIFIED, User::STATUS_NOT_VERIFIED]],
                 'message' => 'There is no user with such email.'
             ],
+            */
         ];
+    }
+
+    public function validateRole(){
+        $user = User::findOne([
+            'email' => $this->email,
+        ]);
+
+        if($user && ($user->isSuspended())){
+            $this->addError('email', Yii::t('frontend', 'This account has been suspended. For more info, please contact: ' . env('CONTACT_EMAIL')));
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -44,28 +58,34 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-        /* @var $user User */
         $user = User::findOne([
-            'status' => MyCustomActiveRecord::STATUS_ENABLED,
             'email' => $this->email,
         ]);
 
         if ($user) {
-            $token = UserToken::create($user->id, UserToken::TYPE_PASSWORD_RESET, Time::SECONDS_IN_A_DAY);
-            if ($user->save()) {
-                return Yii::$app->commandBus->handle(new SendEmailCommand([
-                    'to' => $this->email,
-                    'subject' => Yii::t('frontend', 'Password reset for {name}', ['name' => Yii::$app->name]),
-                    'view' => 'passwordResetToken',
-                    'params' => [
-                        'user' => $user,
-                        'token' => $token->token
-                    ]
-                ]));
-            }
+
+            UserToken::deleteAll(['user_id'=>$user->id, 'type'=>UserToken::TYPE_PASSWORD_RESET]);
+
+            $token = UserToken::create($user->id, UserToken::TYPE_PASSWORD_RESET, 20*60); //20mins
+	    //TODO:: WHERE is email queue job got this?
+
+            Yii::$app->queue->delay(0)->push(new EmailQueueJob([
+                'to' => $this->email,
+                'subject' => Yii::t('frontend', '{app-name} | Password Reset', ['app-name'=>Yii::$app->name]),
+                'view' => 'passwordResetToken',
+                'params' => [
+                    'user' => $user,
+                    'token' => $token->token
+                ]
+            ]));
+            return true;
+
+        } else {
+            $this->addError('email', Yii::t('frontend', 'User does not exist.'));
+            return false;
         }
 
-        return false;
+        
     }
 
     /**
@@ -74,7 +94,7 @@ class PasswordResetRequestForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('frontend', 'E-mail')
+            'email'=>Yii::t('frontend', 'E-mail')
         ];
     }
 }

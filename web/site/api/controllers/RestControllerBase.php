@@ -8,7 +8,6 @@ use yii\web\BadRequestHttpException;
 use yii\helpers\ArrayHelper;
 use common\components\MyCustomActiveRecord;
 
-
 class RestControllerBase extends Controller
 {
     //used for api rate limiting
