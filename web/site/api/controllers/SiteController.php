@@ -1,52 +1,130 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace api\controllers;
 
 use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\helpers\Url;
+use yii\rest\Controller;
+use yii\rest\OptionsAction;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\HttpBasicAuth;
+use yii\filters\auth\HttpBearerAuth;
+use yii\filters\auth\HttpHeaderAuth;
+use yii\filters\auth\QueryParamAuth;
 
-class SiteController extends Controller
+use api\components\CustomHttpException;
+
+use common\models\User;
+use common\models\Courses;
+use common\models\Events;
+use common\models\Faq;
+use common\models\UniversityPartners;
+use common\components\Utility;
+
+use api\controllers\RestControllerBase;
+
+/**
+ * @author Eugene Terentev <eugene@terentev.net>
+ */
+class SiteController extends RestControllerBase
 {
-        /**
-     * @inheritdoc
-     */
-    public function actions(): array
-    {
-        return [
-            'docs' => [
-                'class' => \yii2mod\swagger\SwaggerUIRenderer::class,
-                'restUrl' => Url::to(['site/json-schema']),
-            ],
-            'json-schema' => [
-                'class' => \yii2mod\swagger\OpenAPIRenderer::class,
-                // Тhe list of directories that contains the swagger annotations.
-                'scanDir' => [
-                    Yii::getAlias('@api/modules/v1/controllers'),
-                    Yii::getAlias('@api/modules/v1/models'),
+    const MAX_ROW_PER_PAGE = 20;
+    public $layout = false;
+
+    public function behaviors() {
+        return array_merge(parent::behaviors(), [
+            
+            'verbs' => [
+                'class' => \yii\filters\VerbFilter::className(),
+                'actions' => [
+                    'index' => ['GET'],
                 ],
             ],
-        ];
+            // 'authenticator' => [
+            //     'class' => HttpBearerAuth::className(),
+            //     'except' => ['index'],
+            // ],
+            'ActiveTimestampBehavior' => [
+                'class' => \common\behaviors\ActiveTimestampBehavior::className(),
+                'attribute' => 'active_at'
+            ],
+        ]);       
     }
 
-    public function actionIndex()
-    {
-        return $this->redirect(['site/docs']);
+    public function actionIndex(){
+        $o = (object) array("app"=>Yii::$app->name, "version"=>Yii::$app->params["apiVersion"], "endpoint"=>Yii::$app->controller->id);
+        Yii::$app->api->sendSuccessResponse($o);
     }
 
-    public function actionError()
-    {
-        if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
-            $exception = new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-        }
+    public function actionListCourses($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
+        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
+        $offset = $page * $limit;
+        $models = Courses::find()->orderBy([
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
+        Yii::$app->api->sendSuccessResponse($models);
+    }
 
-        if ($exception instanceof \HttpException) {
-            Yii::$app->response->setStatusCode($exception->getCode());
+    public function actionGetCourse($id){
+        $model = Courses::find()->where(['id'=>$id])->asArray()->one();
+        if($model){
+            Yii::$app->api->sendSuccessResponse($model);
         } else {
-            Yii::$app->response->setStatusCode(500);
+            $str = Utility::jsonifyError("id", "Invalid ID.");
+            throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
         }
-
-        return $this->asJson(['error' => $exception->getMessage(), 'code' => $exception->getCode()]);
     }
+
+    public function actionListEvents($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
+        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
+        $offset = $page * $limit;
+        $models = Events::find()->orderBy([
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
+        Yii::$app->api->sendSuccessResponse($models);
+    }
+
+    public function actionGetEvent($id){
+        $model = Events::find()->where(['id'=>$id])->asArray()->one();
+        if($model){
+            Yii::$app->api->sendSuccessResponse($model);
+        } else {
+            $str = Utility::jsonifyError("id", "Invalid ID.");
+            throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    public function actionListFaq($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
+        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
+        $offset = $page * $limit;
+        $models = Faq::find()->orderBy([
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
+        Yii::$app->api->sendSuccessResponse($models);
+    }
+
+    public function actionGetFaq($id){
+        $model = Faq::find()->where(['id'=>$id])->asArray()->one();
+        if($model){
+            Yii::$app->api->sendSuccessResponse($model);
+        } else {
+            $str = Utility::jsonifyError("id", "Invalid ID.");
+            throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    public function actionListUniversityPartners($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
+        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
+        $offset = $page * $limit;
+        $models = UniversityPartners::find()->orderBy([
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
+        Yii::$app->api->sendSuccessResponse($models);
+    }
+
+    public function actionGetUniversityPartner($id){
+        $model = UniversityPartners::find()->where(['id'=>$id])->asArray()->one();
+        if($model){
+            Yii::$app->api->sendSuccessResponse($model);
+        } else {
+            $str = Utility::jsonifyError("id", "Invalid ID.");
+            throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
+        }
+    }
+
 }

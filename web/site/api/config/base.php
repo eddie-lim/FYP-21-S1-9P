@@ -1,6 +1,6 @@
 <?php
 return [
-    'id' => 'frontend',
+    'id' => 'api',
     'basePath' => dirname(__DIR__),
     'components' => [
         'urlManager' => require(__DIR__ . '/_urlManager.php'),

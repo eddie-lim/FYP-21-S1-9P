@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\v1\controllers;
+namespace api\controllers;
 
 use common\models\User;
 use yii\filters\auth\CompositeAuth;
@@ -17,25 +17,8 @@ use Yii;
  */
 class UserController extends Controller
 {
-    /**
-     * @return array
-     */
-    // public function behaviors()
-    // {
-    //     $behaviors = parent::behaviors();
-
-    //     $behaviors['authenticator'] = [
-    //         'class' => CompositeAuth::class,
-    //         'authMethods' => [
-    //             HttpBasicAuth::class,
-    //             HttpBearerAuth::class,
-    //             HttpHeaderAuth::class,
-    //             QueryParamAuth::class
-    //         ]
-    //     ];
-
-    //     return $behaviors;
-    // }
+    public $layout = false;
+    
     public function behaviors() {
         return array_merge(parent::behaviors(), [
             
@@ -53,23 +36,11 @@ class UserController extends Controller
                 'class' => \common\behaviors\ActiveTimestampBehavior::className(),
                 'attribute' => 'active_at'
             ],
-        ]);       
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'options' => [
-                'class' => OptionsAction::class
-            ]
-        ];
+        ]);
     }
 
     public function actionIndex(){
-        $o = (object) array("app"=>Yii::$app->name, "version"=>Yii::$app->controller->module->id, "endpoint"=>Yii::$app->controller->id);
+        $o = (object) array("app"=>Yii::$app->name, "version"=>Yii::$app->params["apiVersion"], "endpoint"=>Yii::$app->controller->id);
         Yii::$app->api->sendSuccessResponse($o);
     }
 
