@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "04041aa8-934a-4f91-8d36-675cadd5efbf",
+		"name": "[FYP] Open house",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "user/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstname\":\"Eddie\",\n    \"lastname\":\"Lim\",\n    \"password\":\"P@ssw0rd1234\",\n    \"password_confirm\":\"P@ssw0rd1234\",\n    \"email\":\"ethlim001@mymail.sim.edu.sg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/user/register",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/authorise",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var code = pm.response.json().data.authorization_code;",
+									"pm.environment.set(\"authCode\", code);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ethlim001@mymail.sim.edu.sg\", \r\n    \"password\": \"P@ssw0rd1234\"\r\n}"
+						},
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/user/authorize",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"user",
+								"authorize"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/accesstoken",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var token = pm.response.json().data.access_token;",
+									"pm.environment.set(\"accessToken\", token);",
+									"console.log (\"Set access token to global: \" + token);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"authorization_code\": \"{{authCode}}\"\n}"
+						},
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/user/access-token",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"user",
+								"access-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/user/me",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "site",
+			"item": [
+				{
+					"name": "site/list-courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/list-courses?page=0",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"list-courses"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "site/get-course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/get-course?id=1",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"get-course"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "site/list-events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/list-events?page=0",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"list-events"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "site/get-event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/get-event?id=1",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"get-event"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "site/list-faq",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/list-faq?page=0",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"list-faq"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "site/get-faq",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/get-faq?id=1",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"get-faq"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "site/list-university-partners",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/list-university-partners?page=0",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"list-university-partners"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "site/get-university-partner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverUrl}}/{{version}}/site/get-university-partner?id=1",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"{{version}}",
+								"site",
+								"get-university-partner"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
