@@ -6,11 +6,12 @@ import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import {StoreSettings} from '@helpers/Settings';
 import { Button } from 'react-native-paper';
+import OutlineInput from 'react-native-outline-input';
 
 const ScreenLogin = (props) => {
   const { navigate, goBack } = useNavigation();
-  const [ email, setEmail ] = useState();
-  const [ password, setPassword ] = useState();
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
 
   useEffect(() => {
     console.log("ScreenLogin")
@@ -32,26 +33,31 @@ const ScreenLogin = (props) => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <View style={[styles.container]}>
-          <TextInput style={styles.txt}
-              placeholder={"email"}
-              placeholderTextColor={StyleConstant.mutedTextColor}
-              returnKeyType="done"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              defaultValue={email}
-              onChangeText={(new_value)=>{setEmail(new_value)}}
+          <OutlineInput
+            value={email}
+            onChangeText={(e) => setEmail(e)}
+            label="Email"
+            activeValueColor="#6c63fe"
+            activeBorderColor="#6c63fe"
+            activeLabelColor="#6c63fe"
+            passiveBorderColor="#bbb7ff"
+            passiveLabelColor="#bbb7ff"
+            passiveValueColor="#bbb7ff"
           />
         </View>
         
         <View style={[styles.container]}>
-          <TextInput style={styles.txt}
-              placeholder={"password"}
-              placeholderTextColor={StyleConstant.mutedTextColor}
-              returnKeyType="done"
-              secureTextEntry
-              defaultValue={password}
-              onChangeText={(new_value)=>{setPassword(new_value)}}
+          <OutlineInput
+            value={password}
+            onChangeText={(e) => setPassword(e)}
+            label="Password"
+            secureTextEntry={true}
+            activeValueColor="#6c63fe"
+            activeBorderColor="#6c63fe"
+            activeLabelColor="#6c63fe"
+            passiveBorderColor="#bbb7ff"
+            passiveLabelColor="#bbb7ff"
+            passiveValueColor="#bbb7ff"
           />
         </View>
 
@@ -85,5 +91,5 @@ const styles = StyleSheet.create({
   logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
   centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'},
   txt: { width: '80%', height: 40, borderRadius: 10, backgroundColor: '#ffffff', color: '#000000', textAlign: 'left', textAlignVertical: 'center', borderWidth: 1, borderColor: StyleConstant.bgGray, paddingLeft: 15 },
-  container: { width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10 },
+  container: { width:"80%",  marginTop: 10, marginBottom: 10 },
 });
