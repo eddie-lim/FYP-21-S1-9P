@@ -57,9 +57,9 @@ error => {
 );
 
 callApi = async(method, endpoint, data, isMultipart = false) => {
-  const lang = await StoreSettings.get(StoreSettings.USER_LANGUAGE);
-  const url = endpoint.includes("?") ? Environment.API_URL + endpoint + "&locale=" + lang : Environment.API_URL + endpoint + "?locale=" + lang;
-  // const url = Environment.API_URL + endpoint;
+  // const lang = await StoreSettings.get(StoreSettings.USER_LANGUAGE);
+  // const url = endpoint.includes("?") ? Environment.API_URL + endpoint + "&locale=" + lang : Environment.API_URL + endpoint + "?locale=" + lang;
+  const url = Environment.API_URL + endpoint;
   const token = await StoreSettings.get(StoreSettings.ACCESS_TOKEN);
   const headers = { 'Authorization': "Bearer " + token } 
   let formData = JSON.stringify(data);
@@ -85,33 +85,17 @@ const WebApi = {
   STATUS_FORBIDDEN: 403,
   STATUS_UNPROCESSABLE_ENTITY: 422,
   
-  geoIp: async() => {
-    return callApi(GET_METHOD, '/utils/geo-ip');
+  register: async(firstname, lastname, email, password, password_confirm) => {
+    var data = {"firstname":firstname, "lastname":lastname, "password":password, "password_confirm":password_confirm, "email":email};
+    return callApi(POST_METHOD, '/user/register', data);
   },
-  getTermsUrl: async(region_id) => {
-    return callApi(GET_METHOD, '/terms?region_id=' + region_id);
+  authorise: async(email, password) => {
+    var data = { "email": email, "password": password }
+    return callApi(POST_METHOD, '/user/authorize', data);
   },
-  getWhatsappBusinessUrl: async(region_id) => {
-    return callApi(GET_METHOD, '/whatsapp-business?region_id=' + region_id);
-  },
-  getOtp: async(region_id, mobile_calling_code, mobile_number, mobile_number_full) => {
-    var data = {  "region_id":region_id, "mobile_calling_code":mobile_calling_code, "mobile_number":mobile_number, "mobile_number_full": mobile_number_full }
-    return callApi(POST_METHOD, '/user/get-otp', data);
-  },
-  verifyOtp: async(mobile_number_full, token) => {
-    var data = { "mobile_number_full":mobile_number_full, "token":token }
-    return callApi(POST_METHOD, '/user/verify-otp', data);
-  },
-  resendVerifyEmail: async() => {
-    return callApi(GET_METHOD, '/user/resend-verify-email');
-  },
-  accessToken: async(code) => {
-    var data = { "authorization_code": code }
+  accessToken: async(authorization_code) => {
+    var data = { "authorization_code": authorization_code }
     return callApi(POST_METHOD, '/user/access-token', data);
-  },
-  registerFcmToken: async(token) => {
-    var data = { "token": token }
-    return callApi(POST_METHOD, '/user/register-fcm-token', data);
   },
   logout: async() => {
     return callApi(GET_METHOD, '/user/logout');
@@ -119,282 +103,6 @@ const WebApi = {
   me: async() => {
     return callApi(GET_METHOD, '/user/me');
   },
-  //weird bug causing param pass from customflatlist to horizontalflatlist
-  meListPlans: async(page = 0, pageSize = Constants.FLATLIST_PAGESIZE) =>{ 
-    status_type = Constants.STATUS_TYPE_ACTIVE;
-    return callApi(GET_METHOD, '/user/my-plans?status_type=' + status_type + '&page=' + page +'&pageSize='+ pageSize);
-  },
-  meListPlansAll: async(page = 0, pageSize = Constants.FLATLIST_PAGESIZE) =>{ 
-    status_type = Constants.STATUS_TYPE_ALL;
-    return callApi(GET_METHOD, '/user/my-plans?status_type=' + status_type + '&page=' + page +'&pageSize='+ pageSize);
-  },
-  meListPlanActions: async(plan_pool_id) =>{
-    return callApi(GET_METHOD, '/user/my-plan-actions?plan_pool_id=' + plan_pool_id);
-  },
-  meListPlanDetails: async(plan_pool_id) =>{
-    var data = { "plan_pool_ids": [plan_pool_id]}
-    return callApi(POST_METHOD, '/user/my-plan-details', data);
-  },
-  meAddPlan: async(channel, activation_token) => {
-    var data = { "channel":channel, "activation_token":activation_token }
-    return callApi(POST_METHOD, '/user/add-plan', data);
-  },
-  meRegisterPlan: async(m, image_url) => {
-    var formData = new FormData();
-    let counter = 0;
-    image_url.map((img) => {
-      counter++;
-      var f = {
-        uri : img.uri,
-        type: 'image/jpeg',
-        name: counter+'.jpg',
-      }
-      formData.append('image_file[]', f);
-    })
-    formData.append('json', JSON.stringify(m));
-    return callApi(POST_METHOD, '/user/register-plan', formData, isMultipart=true);
-  },
-  meRegistrationResubmit: async(plan_pool_id, description, image_url) =>{
-    var formData = new FormData();
-    let counter = 0;
-    image_url.map((img) => {
-      counter++;
-      var f = {
-        uri : img.uri,
-        type: 'image/jpeg',
-        name: counter+'.jpg',
-      }
-      formData.append('image_file[]', f);
-    })
-    var data = '';
-    if(description==''||description==null){
-      data = { "plan_pool_id":plan_pool_id }
-    } else {
-      data = { "plan_pool_id":plan_pool_id, "description":description }
-    }
-    formData.append('json', JSON.stringify(data));
-
-    return callApi(POST_METHOD, '/user/registration-resubmit', formData, isMultipart=true);
-  },
-  dealerMe: async() => {
-    return callApi(GET_METHOD, '/dealer-company/me');
-  },
-  dealerAvailablePlans: async() => {
-    return callApi(GET_METHOD, '/dealer-company/available-plans');
-  },
-  dealerOrderPlanAdHoc: async(plan_id) => {
-    return callApi(GET_METHOD, '/dealer-company/order-plan-ad-hoc?plan_id='+plan_id);
-  },
-  dealerOrderPlanStockpile: async(plan_id) => {
-    return callApi(GET_METHOD, '/dealer-company/order-plan-stockpile?plan_id='+plan_id);
-  },
-  dealerAddAssociate: async(full_mobile_no) => {
-    return callApi(GET_METHOD, '/dealer-company/add-staff?dealer_staff_mobile='+full_mobile_no); //add dealer staff
-  },
-  dealerDeleteAssociate: async(user_id) => {
-    return callApi(GET_METHOD, '/dealer-company/delete-staff?dealer_staff_id='+user_id); //delete dealer staff
-  },
-  dealerListStaff: async(page, pageSize) =>{
-    var data = { "company_ids": [Settings.get(Settings.DEALER_ID)]}
-    return callApi(POST_METHOD, '/dealer-company/view-staff?page='+ page + '&pageSize='+ pageSize, data);
-    // return callApi(GET_METHOD, '/dealer-company/view-staff?page='+ page + '&pageSize='+ pageSize); //get dealer staff
-  },
-  dealerStaffMovement: async(page, pageSize) =>{
-    return callApi(GET_METHOD, '/dealer-company/staff-movement?page='+ page + '&pageSize='+ pageSize); //display from dealer_user_history
-  },
-  dealerVoidOrder: async(plan_pool_id, reason) => {
-    return callApi(GET_METHOD, '/dealer-company/void-order?plan_pool_id='+plan_pool_id+'&reason='+reason);
-  },
-  //list of plans sold
-  dealerOrderHistory: async(dealer_user_id=null, page, pageSize) => {
-    return callApi(GET_METHOD, '/dealer-company/order-history?dealer_user_id='+ dealer_user_id + '&page='+ page + '&pageSize='+ pageSize);
-  },
-  //new api from jw
-  dealerOrderDetail: async(plan_pool_id)=>{
-    var data = { "plan_pool_ids": [plan_pool_id]}
-    return callApi(POST_METHOD, '/dealer-company/plan-detail', data);
-  },
-  dealerOrderHistoryGraph: async(day, dealer_user_id=null) => {
-    return callApi(GET_METHOD, '/dealer-company/order-history-graph?day='+day+'&dealer_user_id='+dealer_user_id);
-  },
-  dealerCompanyOrderHistory: async(page, pageSize) => {
-    return callApi(GET_METHOD, '/dealer-company/company-order-history?page='+ page + '&pageSize='+ pageSize);
-  },
-  dealerCompanyOrderHistoryGraph: async(day) => {
-    return callApi(GET_METHOD, '/dealer-company/company-order-history-graph?day='+day);
-  },
-  dealerUploadPhoto: async(plan_pool_id, image_url) =>{
-    var formData = new FormData();
-    let counter = 0;
-    image_url.map((img) => {
-      counter++;
-      var f = {
-        uri : img.uri,
-        type: 'image/jpeg',
-        name: counter+'.jpg',
-      }
-      formData.append('image_file[]', f);
-    })
-    formData.append('plan_pool_id', JSON.stringify(plan_pool_id));
-    return callApi(POST_METHOD, '/dealer-company/register-plan-photo', formData, isMultipart=true);
-  },
-  dealerUpdateProfile: async(image_url) => {
-    var formData = new FormData();
-    if(image_url != null ){
-      var f = {
-        uri : image_url,
-        type: 'image/jpeg',
-        name: 'avatar.jpg',
-      }
-      formData.append('image_file[]', f);
-    }
-    return await callApi(POST_METHOD, '/dealer-company/update-profile', formData, isMultipart=true);
-  },  
-  dealerRequestStock: async(plan_id, amount) =>{
-    return await callApi(GET_METHOD, '/company-inventory/request-stock?plan_id='+plan_id +'&amount='+ amount);
-  },
-  dealerAllocateStock: async(downline_id, amount, plan_id) =>{
-    const data = {
-      "downline_id": downline_id,
-      "amount": amount,
-      "plan_id": plan_id,
-    };
-    return await callApi(POST_METHOD, '/company-inventory/allocate-stock', data);
-  },
-  dealerActivateStock: async(plan_id, amount) =>{
-    const data = {
-      "amount": amount,
-      "plan_id": plan_id
-    };
-    return await callApi(POST_METHOD, '/company-inventory/activate-stock', data);
-  },
-  dealerActionHistory: async(page, pageSize) =>{
-    return await callApi(GET_METHOD, '/company-inventory/allocation-history?page=' + page + '&pageSize=' + pageSize);
-  },
-  dealerViewInfo: async(id) =>{
-    const data = {
-      "dealer_company_ids": id
-    };
-    return await callApi(POST_METHOD, '/dealer-company/view-info', data);
-  },
-  dealerViewInventory: async(id) =>{
-    const data = {
-      "dealer_company_ids": id
-    };
-    return await callApi(POST_METHOD, '/company-inventory/view-inventory', data);
-  },
-  dealerOrgChart: async() =>{
-    return await callApi(GET_METHOD, '/dealer-company/organization-chart');
-  },
-  instapPromotion: async() =>{
-    return callApi(GET_METHOD, '/instap/promotion'); 
-  },
-  sysDeviceAssessment: async(data, image_url) => {
-    var formData = new FormData();
-    let counter = 0;
-    image_url.map((img) => {
-      counter++;
-      var f = {
-        uri : img,
-        type: 'image/jpeg',
-        name: counter+'.jpg',
-      }
-      formData.append('image_file[]', f);
-    })
-    formData.append('json', JSON.stringify(data));
-
-    return await callApi(POST_METHOD, '/sys/device-assessment', formData, isMultipart=true);
-  },
-  meUpdateProfile: async(data, image_url) => {
-    var formData = new FormData();
-    if(image_url != null ){
-      var f = {
-        uri : image_url,
-        type: 'image/jpeg',
-        name: 'avatar.jpg',
-      }
-      formData.append('image_file[]', f);
-    }
-    if(data != null){
-      formData.append('detail', JSON.stringify(data));
-    }
-
-    return await callApi(POST_METHOD, '/user/update-profile', formData, isMultipart=true);
-  },
-  meListMyInbox: async(page, pageSize) =>{
-    return callApi(GET_METHOD, '/user/list-my-inbox?page=' + page + '&pageSize=' + pageSize);
-  },
-  meReadNotification: async(id) =>{
-    return callApi(GET_METHOD, '/user/read-notification?id=' + id);
-  },
-  meFavoriteNotification: async(id) =>{
-    return callApi(GET_METHOD, '/user/favorite-notification?id=' + id);
-  },
-  meDeleteNotification: async(id) =>{
-    return callApi(GET_METHOD, '/user/delete-notification?id=' + id);
-  },
-  meDeleteAllNotification: async() =>{
-    return callApi(GET_METHOD, '/user/delete-all-notification');
-  },
-  meGetNumberOfUnreadNotification: async() => {
-    return await callApi(GET_METHOD, '/user/get-number-of-unread-notification');
-  },
-  meRefreshProvisionalToken: async() => {
-    return await callApi(GET_METHOD, '/user/refresh-provisional-token');
-  },
-  qcdRepairCentre: async(plan_pool_id) => {
-    // brand = Settings.get(Settings.DEVICE_BRAND).toLowerCase();
-    region_id = Settings.get(Settings.COUNTRY_ISO_CODE);
-    // const brand = 'apple';
-    return await callApi(GET_METHOD, '/qcd/list-repair-centre?plan_pool_id='+ plan_pool_id );
-  },
-  meRegisterClaim: async(m, image_url) => {
-    var formData = new FormData();
-    let counter = 0;
-    image_url.map((img) => {
-      counter++;
-      var f = {
-        uri : img.uri,
-        type: 'image/jpeg',
-        name: counter+'.jpg',
-      }
-      formData.append('image_file[]', f);
-    })
-    var data = {"plan_pool_id": m.plan_pool_id, "contact_alt": m.alt_no, "device_issue": m.device_issue, "repair_centre_id": m.repair_centre_id, "location": m.location, "occurred_at": m.occurred_at};
-    formData.append('json', JSON.stringify(data));
-    return callApi(POST_METHOD, '/user/register-claim', formData, isMultipart=true);
-  },
-  meCaseResubmit: async(plan_pool_id, description, image_url) =>{
-    var formData = new FormData();
-    let counter = 0;
-    image_url.map((img) => {
-      counter++;
-      var f = {
-        uri : img.uri,
-        type: 'image/jpeg',
-        name: counter+'.jpg',
-      }
-      formData.append('image_file[]', f);
-    })
-
-    var data = '';
-    if(description==''||description==null){
-      data = { "plan_pool_id":plan_pool_id }
-    } else {
-      data = { "plan_pool_id":plan_pool_id, "description":description }
-    }
-    formData.append('json', JSON.stringify(data));
-
-    return callApi(POST_METHOD, '/user/registration-resubmit-claim', formData, isMultipart=true);
-  },
-  meModelColor: async() =>{
-    const device_no  = Settings.get(Settings.DEVICE_MODEL_NO);
-    return callApi(GET_METHOD, '/user/model-colour?model='+ device_no); 
-  },
-  listServerSetting: async () => {
-    return callApi(GET_METHOD, '/sys/list-setting');
-  },
-
 };
 
 export default WebApi;

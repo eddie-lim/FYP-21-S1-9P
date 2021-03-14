@@ -1,18 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable } from 'react-native';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable, Keyboard } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
-import {StoreSettings} from '@helpers/Settings';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
+import { StoreSettings, GlobalContext } from '@helpers/Settings';
+import Utils from '@helpers/Utils';
+import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 
 const ScreenRegister = (props) => {
   const { navigate, goBack } = useNavigation();
-  const [ email, setEmail ] = useState();
-  const [ password, setPassword ] = useState();
-  const [ passwordConfirm, setPasswordConfirm ] = useState();
+  const { toggleActivityIndicator } = useContext(GlobalContext);
+
+  const [ firstName, setFirstName ] = useState("Eddie");
+  const [ lastName, setLastName ] = useState("Lim");
+  const [ email, setEmail ] = useState("eddielinoofficial@gmail.com");
+  const [ password, setPassword ] = useState("P@ssw0rd");
+  const [ passwordConfirm, setPasswordConfirm ] = useState("P@ssw0rd");
+
+  const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState("");
+  const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState("");
+  const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
+  const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
+  const [ passwordConfirmErrorMsg, setPasswordConfirmErrorMsg ] = useState("");
 
   useEffect(() => {
     console.log("ScreenRegister")
@@ -24,15 +36,100 @@ const ScreenRegister = (props) => {
 
   handleRegister = () =>{
     console.log("Register!!")
-    StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
-    .then(()=>{
-      navigate("mainBottomTab")
+    setFirstNameErrorMsg('');
+    setLastNameErrorMsg('');
+    setEmailErrorMsg('');
+    setPasswordErrorMsg('');
+    setPasswordConfirmErrorMsg('');
+
+    if (firstName.trim() == '' || firstName == null || firstName == '') {
+      setFirstNameErrorMsg("Please enter your first name");
+      return;
+    }
+    if (lastName.trim() == '' || lastName == null || lastName == '') {
+      setLastNameErrorMsg("Please enter your first name");
+      return;
+    }
+    if (email.trim() == '' || email == null || email == '') {
+      setEmailErrorMsg("Please enter your email");
+      return;
+    }
+    if (password == '') {
+      setPasswordErrorMsg("Please enter your password");
+      return;
+    }
+    if (passwordConfirm == '') {
+      setPasswordConfirmErrorMsg("Please confirm your password");
+      return;
+    }
+    if (!Utils.isEmail(email.trim())) {
+      setEmailErrorMsg("Email is not valid");
+      return;
+    }
+    toggleActivityIndicator(true, "Registering...");
+    WebApi.register(firstName, lastName, email, password, passwordConfirm).then((register_res)=>{
+      toggleActivityIndicator(true, "Logging in...");
+      WebApi.authorise(email, password).then((authorise_res)=>{
+        authorization_code = authorise_res.data.authorization_code;
+        WebApi.accessToken(authorization_code).then((accessToken_res)=>{
+          access_token = accessToken_res.data.access_token;
+          StoreSettings.store(StoreSettings.ACCESS_TOKEN, access_token)
+          .then(()=>{
+            StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
+            .then(()=>{
+              toggleActivityIndicator(false)
+              navigate("mainBottomTab");
+            })
+          })
+        }).catch((err)=>{
+          console.log(err)
+          toggleActivityIndicator(false)
+          return
+        })
+      }).catch((err)=>{
+        console.log(err)
+        toggleActivityIndicator(false)
+        return
+      })
+    }).catch((err)=>{
+      console.log(err)
+      toggleActivityIndicator(false)
+      return
     })
   }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+
+        <View style={[styles.container]}>
+          <OutlineInput
+            value={firstName}
+            onChangeText={(e) => setFirstName(e)}
+            label="First Name"
+            activeValueColor="#6c63fe"
+            activeBorderColor="#6c63fe"
+            activeLabelColor="#6c63fe"
+            passiveBorderColor="#bbb7ff"
+            passiveLabelColor="#bbb7ff"
+            passiveValueColor="#bbb7ff"
+          />
+        </View>
+
+        <View style={[styles.container]}>
+          <OutlineInput
+            value={lastName}
+            onChangeText={(e) => setLastName(e)}
+            label="Last Name"
+            activeValueColor="#6c63fe"
+            activeBorderColor="#6c63fe"
+            activeLabelColor="#6c63fe"
+            passiveBorderColor="#bbb7ff"
+            passiveLabelColor="#bbb7ff"
+            passiveValueColor="#bbb7ff"
+          />
+        </View>
+
         <View style={[styles.container]}>
           <OutlineInput
             value={email}
@@ -77,11 +174,12 @@ const ScreenRegister = (props) => {
           />
         </View>
 
-
         <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleRegister()}>
           Create Account!
         </Button>
 
+        <Text>firstName: {firstName}</Text>
+        <Text>lastName: {lastName}</Text>
         <Text>email: {email}</Text>
         <Text>password: {password}</Text>
         <Text>password confirm: {passwordConfirm}</Text>

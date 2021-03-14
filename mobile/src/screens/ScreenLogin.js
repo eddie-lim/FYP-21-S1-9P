@@ -1,17 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable } from 'react-native';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable, Keyboard } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
-import {StoreSettings} from '@helpers/Settings';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
+import { StoreSettings, GlobalContext } from '@helpers/Settings';
+import Utils from '@helpers/Utils';
+import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 
 const ScreenLogin = (props) => {
   const { navigate, goBack } = useNavigation();
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
+  const { toggleActivityIndicator } = useContext(GlobalContext);
+
+  const [ email, setEmail ] = useState("ethlim001@mymail.sim.edu.sg");
+  const [ password, setPassword ] = useState("P@ssw0rd1234");
+  const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
+  const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
 
   useEffect(() => {
     console.log("ScreenLogin")
@@ -22,16 +28,50 @@ const ScreenLogin = (props) => {
   }, []);
 
   handleLogin = () =>{
-    console.log("Login!!")
-    StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
-    .then(()=>{
-      navigate("mainBottomTab")
+    console.log("Login!!");
+    setEmailErrorMsg('');
+    setPasswordErrorMsg('');
+    if (email.trim() == '' || email == null || email == '') {
+      setEmailErrorMsg("Please enter your email");
+      return;
+    }
+    if (password == '') {
+      setPasswordErrorMsg("Please enter your password");
+      return;
+    }
+    if (!Utils.isEmail(email.trim())) {
+      setEmailErrorMsg("Email is not valid");
+      return;
+    }
+    toggleActivityIndicator(true, "Logging in...");
+    WebApi.authorise(email, password).then((authorise_res)=>{
+      authorization_code = authorise_res.data.authorization_code;
+      WebApi.accessToken(authorization_code).then((accessToken_res)=>{
+        access_token = accessToken_res.data.access_token;
+        StoreSettings.store(StoreSettings.ACCESS_TOKEN, access_token)
+        .then(()=>{
+          StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
+          .then(()=>{
+            toggleActivityIndicator(false)
+            navigate("mainBottomTab")
+          })
+        })
+      }).catch((err)=>{
+        console.log(err)
+        toggleActivityIndicator(false);
+        return
+      })
+    }).catch((err)=>{
+      console.log(err)
+      toggleActivityIndicator(false);
+      return
     })
+    
   }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <View style={[styles.container]}>
           <OutlineInput
             value={email}
