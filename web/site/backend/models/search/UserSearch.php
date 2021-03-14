@@ -18,7 +18,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status'], 'integer'],
-            [['created_at', 'updated_at', 'logged_at'], 'default', 'value' => null],
+            [['created_at', 'updated_at', 'login_at'], 'default', 'value' => null],
             [['username', 'auth_key', 'password_hash', 'email'], 'safe'],
         ];
     }
@@ -61,8 +61,8 @@ class UserSearch extends User
             $query->andFilterWhere(['between', 'updated_at', strtotime($this->updated_at), strtotime($this->updated_at) + 3600 * 24]);
         }
 
-        if ($this->logged_at !== null) {
-            $query->andFilterWhere(['between', 'logged_at', strtotime($this->logged_at), strtotime($this->logged_at) + 3600 * 24]);
+        if ($this->login_at !== null) {
+            $query->andFilterWhere(['between', 'login_at', strtotime($this->login_at), strtotime($this->login_at) + 3600 * 24]);
         }
 
         $query->andFilterWhere(['like', 'username', $this->username])

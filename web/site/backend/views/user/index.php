@@ -1,6 +1,7 @@
 <?php
 
 use common\grid\EnumColumn;
+use common\components\MyCustomActiveRecord;
 use common\models\User;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
@@ -44,8 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => EnumColumn::class,
                     'attribute' => 'status',
-                    'enum' => User::statuses(),
-                    'filter' => User::statuses()
+                    'enum' => MyCustomActiveRecord::deleteStatuses(),
+                    'filter' => MyCustomActiveRecord::deleteStatuses()
                 ],
                 [
                     'attribute' => 'created_at',
@@ -63,11 +64,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]),
                 ],
                 [
-                    'attribute' => 'logged_at',
+                    'attribute' => 'login_at',
                     'format' => 'datetime',
                     'filter' => DatePicker::widget([
                         'model' => $searchModel,
-                        'attribute' => 'logged_at',
+                        'attribute' => 'login_at',
                         'type' => DatePicker::TYPE_COMPONENT_APPEND,
                         'pluginOptions' => [
                             'format' => 'dd-mm-yyyy',

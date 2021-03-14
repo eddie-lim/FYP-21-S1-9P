@@ -23,7 +23,7 @@ class m140703_123000_user extends Migration
             'status' => $this->smallInteger()->notNull()->defaultValue(MyCustomActiveRecord::STATUS_ENABLED),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
-            'logged_at' => $this->integer()
+            'login_at' => $this->integer()
         ]);
 
         $this->createTable('{{%user_profile}}', [
