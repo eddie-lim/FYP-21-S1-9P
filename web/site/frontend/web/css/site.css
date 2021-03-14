@@ -26,6 +26,7 @@ h3.active{
 }
 .body-contanier{
 	margin: auto;
+	margin-top: 10px;
 	width: 80%;
 }
 .person{

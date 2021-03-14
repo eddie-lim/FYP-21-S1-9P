@@ -11,13 +11,13 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
 ?>
 <header>
     <?php NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => "FYP-21-S1-9P",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => ['navbar-dark', 'bg-dark', 'navbar-expand-md'],
         ],
     ]); ?>
-    <?php echo Nav::widget([
+    <?php /*echo*/ Nav::widget([
         'options' => ['class' => ['navbar-nav', 'justify-content-end', 'ml-auto']],
         'items' => [
             ['label' => Yii::t('frontend', 'Home'), 'url' => ['/site/index']],
@@ -68,8 +68,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
 <footer class="footer mt-auto py-3">
     <div class="container">
         <div class="d-flex flex-row justify-content-between">
-            <div>&copy; My Company <?php echo date('Y') ?></div>
-            <div><?php echo Yii::powered() ?></div>
+            <strong>&copy; <?php echo "FYP-21-S1-9P" . " " . date('Y') ?></strong>
         </div>
     </div>
 </footer>
