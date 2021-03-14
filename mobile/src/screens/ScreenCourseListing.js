@@ -7,6 +7,7 @@ import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
 import WebApi from '@helpers/WebApi';
 import Constants from '@helpers/Constants';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ScreenCourseListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -14,6 +15,11 @@ const ScreenCourseListing = (props) => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
   const flatListRef = useRef(null);
+  const modeOfStudyIcon = {
+    "part_time" : "circle-half",
+    "full_time" : "circle-full",
+    "part_time_and_full_time" : "circle-half-full"
+  }
   
   useEffect(() => {
     console.log("ScreenCourseListing")
@@ -48,11 +54,11 @@ const ScreenCourseListing = (props) => {
         <View>
           <View style={styles.card}>
             <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, padding: 5}}>
-              <Icon style={{marginHorizontal: 10}} name={item.status_read == true? 'email-open' : 'email'} size={28} color={StyleConstant.primaryColor}/>
+              <Icon style={{marginHorizontal: 10}} name={modeOfStudyIcon[item.mode_of_study]} size={28} color={StyleConstant.primaryColor}/>
 
               <View style={styles.midContent}>
-                <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.title}</Text>
-                <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>Click to find out more</Text>
+                <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.name}</Text>
+                <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>Awarded by {item.school_id}</Text>
               </View>
             </View>
 
