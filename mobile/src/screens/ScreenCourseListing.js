@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, FlatList, Pressable } from 'react-native';
+import { View, Dimensions, StyleSheet, Text, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
+import { HeaderWithBack, StyleConstant } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
 import WebApi from '@helpers/WebApi';
 import Constants from '@helpers/Constants';
@@ -17,7 +17,7 @@ const ScreenCourseListing = (props) => {
   const flatListRef = useRef(null);
   const modeOfStudyIcon = {
     "part_time" : "circle-half",
-    "full_time" : "circle-full",
+    "full_time" : "circle",
     "part_time_and_full_time" : "circle-half-full"
   }
   
@@ -29,10 +29,10 @@ const ScreenCourseListing = (props) => {
     return function cleanup() { } 
   }, []);
 
+  // FLATLIST FUNCTIONS ---- START
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listCourses(page).then((res)=>{
-        console.log("eddd");
         console.log(res);
         if(res.data.length < Constants.FLATLIST_PAGESIZE){
           setIsLastPage(true);
@@ -41,13 +41,11 @@ const ScreenCourseListing = (props) => {
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-          console.log("edd err")
           console.log(err)
           return
       })
     }
   }
-
   renderItem = ({item, index}) => {
     return (        
       <Pressable onPress={ () => navigate("screenCourseDetail", {item:item, data: data})}>
@@ -55,23 +53,19 @@ const ScreenCourseListing = (props) => {
           <View style={styles.card}>
             <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, padding: 5}}>
               <Icon style={{marginHorizontal: 10}} name={modeOfStudyIcon[item.mode_of_study]} size={28} color={StyleConstant.primaryColor}/>
-
               <View style={styles.midContent}>
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.name}</Text>
                 <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>Awarded by {item.school_id}</Text>
               </View>
             </View>
-
           </View>
-
           {index == data.length - 1 || <View style={styles.inboxSeperator}/>}
-
         </View>
       </Pressable>
     )
   }
-
   const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)-80);
+  // FLATLIST FUNCTIONS ---- END
 
   return (
     <SafeAreaView style={{flex:1}}>
