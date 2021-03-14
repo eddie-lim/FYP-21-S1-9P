@@ -7,17 +7,8 @@ return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
-        // Pages
-        ['pattern' => 'page/<slug>', 'route' => 'page/view'],
-
-        // Articles
-        ['pattern' => 'article/index', 'route' => 'article/index'],
-        ['pattern' => 'article/attachment-download', 'route' => 'article/attachment-download'],
-        ['pattern' => 'article/<slug>', 'route' => 'article/view'],
-
-        // Sitemap
-        ['pattern' => 'sitemap.xml', 'route' => 'site/sitemap', 'defaults' => ['format' => Sitemap::FORMAT_XML]],
-        ['pattern' => 'sitemap.txt', 'route' => 'site/sitemap', 'defaults' => ['format' => Sitemap::FORMAT_TXT]],
-        ['pattern' => 'sitemap.xml.gz', 'route' => 'site/sitemap', 'defaults' => ['format' => Sitemap::FORMAT_XML, 'gzip' => true]],
+        ['pattern'=>'', 'route'=>'site/index'],
+        ['pattern'=>'<controller>', 'route'=>'site/index'],
+        ['pattern'=>'<controller>/<action>', 'route'=>'site/index'],
     ]
 ];
