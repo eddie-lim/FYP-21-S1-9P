@@ -14,7 +14,7 @@ class LoginTimestampBehavior extends Behavior
     /**
      * @var string
      */
-    public $attribute = 'logged_at';
+    public $attribute = 'login_at';
 
 
     /**

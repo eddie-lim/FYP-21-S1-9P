@@ -96,11 +96,11 @@ class LoginForm extends Model
         if ($this->validate() && $this->validatePassword() && $this->validateAccount()) {
             echo "success";
             if (Yii::$app->user->login($this->getUser(), $this->rememberMe ? Time::SECONDS_IN_A_MINUTE : 0)) {
-                if (!Yii::$app->user->can('loginToBackend')) {
-                    Yii::$app->user->logout();
-                    $str = Utility::jsonifyError("email", "");
-                    throw new CustomHttpException($str, CustomHttpException::FORBIDDEN);
-                }
+                // if (!Yii::$app->user->can('loginToBackend')) {
+                //     Yii::$app->user->logout();
+                //     $str = Utility::jsonifyError("email", "");
+                //     throw new CustomHttpException($str, CustomHttpException::FORBIDDEN);
+                // }
                 return true;
             }
         }

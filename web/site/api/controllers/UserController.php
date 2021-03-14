@@ -10,6 +10,7 @@ use common\models\User;
 use common\models\form\LoginForm;
 use common\models\form\RegistrationForm;
 use common\models\SysOAuthAuthorizationCode;
+use common\components\Utility;
 
 class UserController extends \api\controllers\RestControllerBase
 {
