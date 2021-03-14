@@ -25,3 +25,32 @@
     ErrorLog "logs/openhouse-error.log"
     CustomLog "logs/dummy-host2.example.com-access.log" common
 </VirtualHost>
+
+
+
+------------------------------------------------------------------------------------------
+## PROD ##
+
+<VirtualHost *:80>
+    ServerAdmin fyp21s19p@gmail.com
+    DocumentRoot "/var/www/html/frontend/web"
+    ServerName fyp21s19p.link
+    ErrorLog "logs/fyp21s19p-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin fyp21s19p@gmail.com
+    DocumentRoot "/var/www/html/api/web"
+    ServerName api.fyp21s19p.link
+    ErrorLog "logs/api-fyp21s19p-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin fyp21s19p@gmail.com
+    DocumentRoot "/var/www/html/backend/web"
+    ServerName admin.fyp21s19p.link
+    ErrorLog "logs/admin-fyp21s19p-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+</VirtualHost>
