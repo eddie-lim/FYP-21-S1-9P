@@ -11,7 +11,7 @@ const ScreenUniversity = (props) => {
   useEffect(() => {
     console.log("ScreenUniversity")
     props.navigation.setParams({"navOptions":{
-      header: null
+      headerShown: false
     }});
     return function cleanup() { } 
   }, []);
@@ -37,7 +37,7 @@ const ScreenUniversity = (props) => {
 }
 
 navigationOptions = ({navigation}) => ({
-  header: null
+  headerShown: false
 });
 
 export default withScreenBase(ScreenUniversity, ScreenBaseType.MAIN, navigationOptions);

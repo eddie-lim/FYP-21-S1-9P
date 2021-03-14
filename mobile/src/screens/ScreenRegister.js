@@ -16,7 +16,7 @@ const ScreenRegister = (props) => {
 
   const [ firstName, setFirstName ] = useState("Eddie");
   const [ lastName, setLastName ] = useState("Lim");
-  const [ email, setEmail ] = useState("eddielinoofficial@gmail.com");
+  const [ email, setEmail ] = useState("ethlim001@mymail.sim.edu.sg");
   const [ password, setPassword ] = useState("P@ssw0rd");
   const [ passwordConfirm, setPasswordConfirm ] = useState("P@ssw0rd");
 

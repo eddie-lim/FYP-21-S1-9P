@@ -11,7 +11,7 @@ const ScreenQuestions = (props) => {
   useEffect(() => {
     console.log("ScreenQuestions")
     props.navigation.setParams({"navOptions":{
-      header: null
+      headerShown: false
     }});
     return function cleanup() { } 
   }, []);

@@ -10,7 +10,7 @@ const ScreenEventListing = (props) => {
   useEffect(() => {
     console.log("ScreenEventListing")
     props.navigation.setParams({"navOptions":{
-      header: null
+      headerShown: false
     }});
     return function cleanup() { } 
   }, []);

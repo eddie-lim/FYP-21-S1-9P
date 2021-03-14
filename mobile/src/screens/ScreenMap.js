@@ -19,7 +19,7 @@ const ScreenMap = (props) => {
     console.log("ScreenMap")
     MapboxGL.setAccessToken(Environment.MAPBOX_KEY);
     props.navigation.setParams({"navOptions":{
-      header: null
+      headerShown: false
     }});
     return function cleanup() { } 
   }, []);
