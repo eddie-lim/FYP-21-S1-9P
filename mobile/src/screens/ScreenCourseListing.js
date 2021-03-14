@@ -11,10 +11,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ScreenCourseListing = (props) => {
   const { navigate, goBack } = useNavigation();
+  // FLATLIST VALUES ---- START
   const [data, setData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
   const flatListRef = useRef(null);
+  // FLATLIST VALUES ---- END
   const modeOfStudyIcon = {
     "part_time" : "circle-half",
     "full_time" : "circle",

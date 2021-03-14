@@ -1,12 +1,29 @@
-import React, { useEffect, useRef } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, FlatList, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Dimensions, StyleSheet, Text, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { HeaderWithBack, StyleConstant } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import { useNavigation } from 'react-navigation-hooks';
+import CustomFlatList from '@components/CustomFlatList';
+import WebApi from '@helpers/WebApi';
+import Constants from '@helpers/Constants';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ScreenSchoolListing = (props) => {
   const { navigate, goBack } = useNavigation();
+  // FLATLIST VALUES ---- START
+  const [data, setData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const flatListRef = useRef(null);
+  // FLATLIST VALUES ---- END
+  const continentIcon = {
+    "europe" : "globe-europe",
+    "uk" : "globe-europe",
+    "australia" : "globe-asia",
+    "singapore" : "globe-asia",
+    "us" : "globe-americas",
+  }
 
   useEffect(() => {
     console.log("ScreenSchoolListing")
@@ -16,37 +33,48 @@ const ScreenSchoolListing = (props) => {
     return function cleanup() { } 
   }, []);
 
-  return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <FlatList
-        data={[
-          {
-            id: '1',
-            title: 'University of Wollongong (UOW)',
-            subtitle: '7 Courses',
-          },
-          {
-            id: '2',
-            title: 'The University of Sydney',
-            subtitle: '2 Courses',
-          },
-          {
-            id: '3',
-            title: 'RMIT University',
-            subtitle: '10 Courses',
-          },
-        ]}
-        renderItem={({ item }) => (
-          <Pressable onPress={()=>navigate('screenSchoolDetail')}>
-            <View style={{backgroundColor: 'white', padding: 20, width:Dimensions.get('window').width * 0.95, marginVertical: 8, borderColor: 'black', borderWidth:1}}>
-              <Text style={{ fontSize: 20, }}>{item.title}</Text>
-              <Text style={{ fontSize: 16, }}>{item.subtitle}</Text>
+  // FLATLIST FUNCTIONS ---- START
+  getList = (page = 0)=>{
+    if(!refreshing){
+      WebApi.listUniversityPartners(page).then((res)=>{
+        console.log(res);
+        if(res.data.length < Constants.FLATLIST_PAGESIZE){
+          setIsLastPage(true);
+        }
+        const d = (page === 0)? res.data : [...data, ...res.data];
+        setData(d);
+        setRefreshing(false);
+      }).catch((err)=>{
+          console.log(err)
+          return
+      })
+    }
+  }
+  renderItem = ({item, index}) => {
+    return (        
+      <Pressable onPress={ () => navigate("screenSchoolDetail", {item:item, data: data})}>
+        <View>
+          <View style={styles.card}>
+            <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, padding: 5}}>
+              <Icon style={{marginHorizontal: 10}} name={continentIcon[item.continent]} size={28} color={StyleConstant.primaryColor}/>
+              <View style={styles.midContent}>
+                <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.name}</Text>
+                <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>{item.continent}</Text>
+              </View>
             </View>
-          </Pressable>
-        )}
-        keyExtractor={item => item.id}
-      />
+          </View>
+          {index == data.length - 1 || <View style={styles.inboxSeperator}/>}
+        </View>
+      </Pressable>
+    )
+  }
+  const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)-80);
+  // FLATLIST FUNCTIONS ---- END
+
+  return (
+    <SafeAreaView style={{flex:1}}>
+      <View style={styles.container}>
+        { renderList() }
       </View>
     </SafeAreaView>
   );
