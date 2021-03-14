@@ -103,6 +103,34 @@ const WebApi = {
   me: async() => {
     return callApi(GET_METHOD, '/user/me');
   },
+
+  // LISTING
+  listCourses: async(page) => {
+    return callApi(GET_METHOD, '/site/list-courses?page='+page);
+  },
+  listEvents: async(page) => {
+    return callApi(GET_METHOD, '/site/list-events?page='+page);
+  },
+  listFaq: async(page) => {
+    return callApi(GET_METHOD, '/site/list-faq?page='+page);
+  },
+  listUniversityPartners: async(page) => {
+    return callApi(GET_METHOD, '/site/list-university-partners?page='+page);
+  },
+
+  // GET INDIVIDUAL
+  getCourse: async(id) => {
+    return callApi(GET_METHOD, '/site/get-course?page='+id);
+  },
+  getEvent: async(id) => {
+    return callApi(GET_METHOD, '/site/get-event?page='+id);
+  },
+  getFaq: async(id) => {
+    return callApi(GET_METHOD, '/site/get-faq?page='+id);
+  },
+  getUniversityPartners: async(id) => {
+    return callApi(GET_METHOD, '/site/get-university-partner?page='+id);
+  },
 };
 
 export default WebApi;
