@@ -15,7 +15,7 @@ const ScreenLogin = (props) => {
   const { toggleActivityIndicator } = useContext(GlobalContext);
 
   const [ email, setEmail ] = useState("ethlim001@mymail.sim.edu.sg");
-  const [ password, setPassword ] = useState("P@ssw0rd1234");
+  const [ password, setPassword ] = useState("P@ssw0rd");
   const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
 
@@ -45,9 +45,9 @@ const ScreenLogin = (props) => {
     }
     toggleActivityIndicator(true, "Logging in...");
     WebApi.authorise(email, password).then((authorise_res)=>{
-      authorization_code = authorise_res.data.authorization_code;
+      var authorization_code = authorise_res.data.authorization_code;
       WebApi.accessToken(authorization_code).then((accessToken_res)=>{
-        access_token = accessToken_res.data.access_token;
+        var access_token = accessToken_res.data.access_token;
         StoreSettings.store(StoreSettings.ACCESS_TOKEN, access_token)
         .then(()=>{
           StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
@@ -105,7 +105,7 @@ const ScreenLogin = (props) => {
           Log me in!
         </Button>
 
-        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"orange" }} icon="lock-reset" mode="contained" onPress={() => alert("to open forget password page")}>
+        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"orange" }} icon="lock-reset" mode="contained" onPress={() => navigate("screenForgetPassword")}>
           Forget password? Click here!
         </Button>
 

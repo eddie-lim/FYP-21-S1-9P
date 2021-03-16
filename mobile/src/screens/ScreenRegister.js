@@ -70,9 +70,9 @@ const ScreenRegister = (props) => {
     WebApi.register(firstName, lastName, email, password, passwordConfirm).then((register_res)=>{
       toggleActivityIndicator(true, "Logging in...");
       WebApi.authorise(email, password).then((authorise_res)=>{
-        authorization_code = authorise_res.data.authorization_code;
+        var authorization_code = authorise_res.data.authorization_code;
         WebApi.accessToken(authorization_code).then((accessToken_res)=>{
-          access_token = accessToken_res.data.access_token;
+          var access_token = accessToken_res.data.access_token;
           StoreSettings.store(StoreSettings.ACCESS_TOKEN, access_token)
           .then(()=>{
             StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
@@ -191,13 +191,5 @@ const ScreenRegister = (props) => {
 export default withScreenBase(ScreenRegister, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
-  seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
-  imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
-  topHolder: {flexDirection: 'row', position: 'absolute', right: 10, top: 10},
-  logoHolder: {width: '90%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center'},
-  logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
-  centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'},
-  txt: { width: '80%', height: 40, borderRadius: 10, backgroundColor: '#ffffff', color: '#000000', textAlign: 'left', textAlignVertical: 'center', borderWidth: 1, borderColor: StyleConstant.bgGray, paddingLeft: 15 },
   container: { width:"80%",  marginTop: 10, marginBottom: 10 },
 });

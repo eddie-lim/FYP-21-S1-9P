@@ -23,6 +23,7 @@ import ScreenLogin from '@screens/ScreenLogin';
 import ScreenRegister from '@screens/ScreenRegister';
 import ScreenSettings from '@screens/ScreenSettings';
 import ScreenProfile from '@screens/ScreenProfile';
+import ScreenForgetPassword from '@screens/ScreenForgetPassword';
 
 
 //##############################################
@@ -36,6 +37,7 @@ const LandingStack = createStackNavigator({
 const LoginStack = createStackNavigator({
   screenLogin: ScreenLogin,
   screenRegister: ScreenRegister,
+  screenForgetPassword: ScreenForgetPassword,
 }, { initialRouteName: 'screenLogin'});
 
 //##############################################
