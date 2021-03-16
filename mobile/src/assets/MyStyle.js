@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Settings, StoreSettings, GlobalContext } from '@helpers/Settings';
 
 const StyleConstant = {
-  primaryColor: "#9c8642",
+  primaryColor: "#1b5e20",
   primaryColorLight: "#3e794c",
   primaryColorDark: "#002400",
   primaryTextColor: "#000000",
