@@ -84,7 +84,7 @@ const ScreenCourseDetail = (props) => {
       <Animatable.View
         duration={300}
         transition="backgroundColor"
-        style={{ backgroundColor: (isActive ? 'rgba(255,255,255,1)' : 'rgba(245,252,255,1)') }}>
+        style={[styles.header, isActive ? styles.active : styles.inactive]}>
         <Text style={styles.headerText}>{section.header}</Text>
       </Animatable.View>
     );
@@ -95,11 +95,11 @@ const ScreenCourseDetail = (props) => {
       <Animatable.View
         duration={300}
         transition="backgroundColor"
-        style={{ backgroundColor: (isActive ? 'rgba(255,255,255,1)' : 'rgba(245,252,255,1)') }}>
+        style={[styles.content, isActive ? styles.active : styles.inactive]}>
         <Animatable.Text
-          duration={300}
+          duration={500}
           easing="ease-out"
-          animation={isActive ? 'zoomIn' : false}>
+          animation={isActive ? 'bounceIn' : false}>
           {section.content}
         </Animatable.Text>
       </Animatable.View>
@@ -131,11 +131,61 @@ const ScreenCourseDetail = (props) => {
 export default withScreenBase(ScreenCourseDetail, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
-  seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
-  imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
-  topHolder: {flexDirection: 'row', position: 'absolute', right: 10, top: 10},
-  logoHolder: {width: '90%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center'},
-  logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
-  centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'}
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+    paddingTop: Constants.statusBarHeight,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: '300',
+    marginBottom: 20,
+  },
+  header: {
+    backgroundColor: '#F5FCFF',
+    padding: 10,
+  },
+  headerText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  content: {
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  active: {
+    backgroundColor: 'rgba(255,255,255,1)',
+  },
+  inactive: {
+    backgroundColor: 'rgba(245,252,255,1)',
+  },
+  selectors: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  selector: {
+    backgroundColor: '#F5FCFF',
+    padding: 10,
+  },
+  activeSelector: {
+    fontWeight: 'bold',
+  },
+  selectTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    padding: 10,
+  },
+  multipleToggle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 30,
+    alignItems: 'center',
+  },
+  multipleToggle__title: {
+    fontSize: 16,
+    marginRight: 8,
+  },
 });
