@@ -1,12 +1,67 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import Accordion from 'react-native-collapsible/Accordion';
+import * as Animatable from 'react-native-animatable';
 
 const ScreenCourseDetail = (props) => {
   const { navigate, goBack } = useNavigation();
+  const [ activeSections, setActiveSections ] = useState([]);
+  const [ isCollapsed2, setIsCollapsed2 ] = useState(true);
+    
+  const BACON_IPSUM =
+  'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
+
+  const CONTENT = [
+    {
+      title: 'First',
+      content: BACON_IPSUM,
+    },
+    {
+      title: 'Second',
+      content: BACON_IPSUM,
+    },
+    {
+      title: 'Third',
+      content: BACON_IPSUM,
+    },
+    {
+      title: 'Fourth',
+      content: BACON_IPSUM,
+    },
+    {
+      title: 'Fifth',
+      content: BACON_IPSUM,
+    },
+  ];
+  const SELECTORS = [
+    {
+      title: 'First',
+      value: 0,
+    },
+    {
+      title: 'Third',
+      value: 2,
+    },
+    {
+      title: 'None',
+    },
+  ];
+  const SECTIONS = [
+    {
+      title: 'First',
+      header: 'First header',
+      content: 'Lorem ipsum...',
+    },
+    {
+      title: 'Second',
+      header: 'Second header',
+      content: 'Lorem ipsum...',
+    },
+  ];
 
   useEffect(() => {
     console.log("ScreenCourseDetail")
@@ -15,12 +70,59 @@ const ScreenCourseDetail = (props) => {
     }});
     return function cleanup() { } 
   }, []);
+  
+  renderSectionTitle = (section) => {
+    return (
+      <View style={styles.content}>
+        <Text>{section.title}</Text>
+      </View>
+    );
+  };
+
+  renderHeader = (section, _, isActive) => {
+    return (
+      <Animatable.View
+        duration={300}
+        transition="backgroundColor"
+        style={{ backgroundColor: (isActive ? 'rgba(255,255,255,1)' : 'rgba(245,252,255,1)') }}>
+        <Text style={styles.headerText}>{section.header}</Text>
+      </Animatable.View>
+    );
+  };
+
+  renderContent = (section, _, isActive) => {
+    return (
+      <Animatable.View
+        duration={300}
+        transition="backgroundColor"
+        style={{ backgroundColor: (isActive ? 'rgba(255,255,255,1)' : 'rgba(245,252,255,1)') }}>
+        <Animatable.Text
+          duration={300}
+          easing="ease-out"
+          animation={isActive ? 'zoomIn' : false}>
+          {section.content}
+        </Animatable.Text>
+      </Animatable.View>
+    );
+  };
+
+  updateSections = (activeSections) => {
+    console.log("activeSections", activeSections)
+    setActiveSections(activeSections);
+  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color:"black"}}>course detail</Text>
-        <Text style={{color:"black"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut aliquam massa. Vivamus posuere tellus augue, ut condimentum sapien semper a. Vivamus cursus vehicula leo, et posuere nunc aliquam at. Maecenas convallis est sed arcu rhoncus, sed finibus dolor vestibulum. Praesent porta varius molestie. In quis quam faucibus nisi aliquam sodales at dapibus dui. Mauris pulvinar quis sem at pellentesque. Donec molestie erat vitae nisl dictum ornare.</Text>
+      <Accordion
+      containerStyle={{width:'90%'}}
+        sections={SECTIONS}
+        activeSections={activeSections}
+        renderSectionTitle={renderSectionTitle}
+        renderHeader={renderHeader}
+        renderContent={renderContent}
+        onChange={updateSections}
+      />
       </View>
     </SafeAreaView>
   );
