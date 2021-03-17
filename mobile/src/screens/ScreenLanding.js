@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
+import { View, Dimensions, StyleSheet, Modal, Text, BackHandler } from 'react-native';
 import { HomeHeader, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
