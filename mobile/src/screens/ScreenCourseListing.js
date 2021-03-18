@@ -204,7 +204,7 @@ const ScreenCourseListing = (props) => {
 
     return (
       <>
-        <View style={[styles.dropDownContainer]}>
+        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
           <Text>Mode of Study</Text>
           <DropDownPicker
             controller={instance => modeOfStudyRef.current = instance}
@@ -229,7 +229,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer]}>
+        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 8000})]}>
           <Text>Disciplines</Text>
           <DropDownPicker
             controller={instance => disciplinesRef.current = instance}
@@ -254,7 +254,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer]}>
+        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 7000})]}>
           <Text>University Parters</Text>
           <DropDownPicker
             controller={instance => universityPartersRef.current = instance}
@@ -279,7 +279,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer]}>
+        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 6000})]}>
           <Text>Academic Level</Text>
           <DropDownPicker
             controller={instance => academicLevelRef.current = instance}
@@ -304,7 +304,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer]}>
+        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 5000})]}>
           <Text>Entry Qualifications</Text>
           <DropDownPicker
             controller={instance => entryQualificationsRef.current = instance}
@@ -329,7 +329,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer]}>
+        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 4000})]}>
           <Text>Sub Disciplines</Text>
           <DropDownPicker
             controller={instance => subDisciplinesRef.current = instance}
@@ -418,7 +418,7 @@ const ScreenCourseListing = (props) => {
           backdropOpacity={0}
           showBackdrop={false}
           ref={slidingUpPanelRef}
-          draggableRange={{top: (Dimensions.get('window').height) * 0.85 , bottom: 0}}
+          draggableRange={{top: (Dimensions.get('window').height) * 0.80 , bottom: 0}}
           // height={250}
           allowDragging={true}
         >
