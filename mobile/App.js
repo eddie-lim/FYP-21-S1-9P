@@ -138,11 +138,11 @@ const MainBottomTab= createBottomTabNavigator({
   questions: {
     screen: QuestionsStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Questions</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Information</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Icon name={'information'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Questions</Text>
+          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Information</Text>
         </View>
       ),
     }

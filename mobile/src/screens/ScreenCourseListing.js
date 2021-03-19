@@ -418,7 +418,7 @@ const ScreenCourseListing = (props) => {
           backdropOpacity={0}
           showBackdrop={false}
           ref={slidingUpPanelRef}
-          draggableRange={{top: (Dimensions.get('window').height) * 0.80 , bottom: 0}}
+          draggableRange={{top: (Dimensions.get('window').height) * 0.80 , bottom: 55}}
           // height={250}
           allowDragging={true}
         >

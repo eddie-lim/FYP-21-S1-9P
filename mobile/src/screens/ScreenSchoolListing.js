@@ -28,7 +28,7 @@ const ScreenSchoolListing = (props) => {
   useEffect(() => {
     console.log("ScreenSchoolListing")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Schools", navigate, "screenUniversity")
+      header:()=> HeaderWithBack("University Partners", navigate, "screenUniversity")
     }});
     return function cleanup() { } 
   }, []);

@@ -19,35 +19,28 @@ const ScreenUniversity = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Pressable style={{}} onPress={() => navigate("screenCourseListing")}>
-          <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/courselisting-45241.json')} autoPlay={true} loop={true} />
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>Courses Available</Text>
-          </ImageBackground>
+        <Pressable onPress={() => navigate("screenCourseListing")}>
+          <View elevation={5} style={[styles.cardContainer]}>
+            <Text style={{ position:'absolute', color:"black", top:10}}>Courses Available</Text>
+            <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/courselisting-45241.json')} autoPlay={true} loop={false} />
+          </View>
         </Pressable>
         <Pressable style={{marginTop:15}} onPress={() => navigate("screenSchoolListing")}>
-          <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/schoollisting-22472.json')} autoPlay={true} loop={true} />
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>University Partners</Text>
-          </ImageBackground>
+          <View elevation={5} style={[styles.cardContainer]}>
+            <Text style={{ position:'absolute', color:"black", top:10}}>University Partners</Text>
+            <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/schoollisting-22472.json')} autoPlay={true} loop={false} />
+          </View>
         </Pressable>
       </View>
     </SafeAreaView>
   );
 }
 
-navigationOptions = ({navigation}) => ({
-  headerShown: false
-});
-
-export default withScreenBase(ScreenUniversity, ScreenBaseType.MAIN, navigationOptions);
+export default withScreenBase(ScreenUniversity, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
-  seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
-  imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
-  topHolder: {flexDirection: 'row', position: 'absolute', right: 10, top: 10},
-  logoHolder: {width: '90%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center'},
-  logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
-  centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'}
+  cardContainer: {width: (Dimensions.get('window').width) * 0.90, height: 200, justifyContent: 'center', alignItems: 'center', borderWidth:1, borderRadius:15, padding:20, backgroundColor:'#fff', shadowColor: "#fff", shadowOpacity: 0.8, shadowRadius: 2, shadowOffset: {
+    height: 1,
+    width: 1
+  }},
 });

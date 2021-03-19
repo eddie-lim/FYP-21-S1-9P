@@ -20,16 +20,16 @@ const ScreenQuestions = (props) => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Pressable style={{}} onPress={() => navigate("screenFaq")}>
-          <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/faq-25920.json')} autoPlay={true} loop={true} />
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>Frequently Asked Questions</Text>
-          </ImageBackground>
+          <View elevation={5} style={[styles.cardContainer]}>
+            <Text style={{ position:'absolute', color:"black", top:10}}>Frequently Asked Questions</Text>
+            <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/faq-25920.json')} autoPlay={true} loop={false} />
+          </View>
         </Pressable>
         <Pressable style={{marginTop:15}} onPress={() => navigate("screenApplicationProcess")}>
-          <ImageBackground resizeMode={'cover'} style={{width: 300, height: 200, justifyContent: 'center', alignItems: 'center'}} source={require('@assets/img/bg-orange.jpg')} >
-            <LottieView style={{height: 150, position:'absolute', top:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={true} />
-            <Text style={{ position:'absolute', color:"black", bottom:10}}>Application Process</Text>
-          </ImageBackground>
+          <View elevation={5} style={[styles.cardContainer]}>
+            <Text style={{ position:'absolute', color:"black", top:10}}>Application Process</Text>
+            <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={false} />
+          </View>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -39,11 +39,8 @@ const ScreenQuestions = (props) => {
 export default withScreenBase(ScreenQuestions, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
-  seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
-  imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
-  topHolder: {flexDirection: 'row', position: 'absolute', right: 10, top: 10},
-  logoHolder: {width: '90%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center'},
-  logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
-  centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'}
+  cardContainer: {width: (Dimensions.get('window').width) * 0.90, height: 200, justifyContent: 'center', alignItems: 'center', borderWidth:1, borderRadius:15, padding:20, backgroundColor:'#fff', shadowColor: "#fff", shadowOpacity: 0.8, shadowRadius: 2, shadowOffset: {
+    height: 1,
+    width: 1
+  }},
 });

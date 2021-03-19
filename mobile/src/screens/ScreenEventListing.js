@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Dimensions, StyleSheet, Text, Pressable, Modal, Button } from 'react-native';
+import { View, Dimensions, StyleSheet, Text, Pressable, Modal, Button, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderWithBack, StyleConstant } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -10,6 +10,9 @@ import Constants from '@helpers/Constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import DropDownPicker from 'react-native-dropdown-picker';
+import OutlineInput from 'react-native-outline-input';
+import DatePicker from 'react-native-datepicker'
 
 const ScreenEventListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -22,6 +25,23 @@ const ScreenEventListing = (props) => {
   const slidingUpPanelRef = useRef(null);
   const [isCalendarVisible, setIsCalendarVisible] = useState(true);
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  const [keyword, setKeyword ] = useState("");
+  const [keywordErrorMsg, setKeywordErrorMsg ] = useState("");
+
+  const [filterStartDate , setFilterStartDate] = useState();
+  const [filterEndDate, setFilterEndDate] = useState();
+
+  const TypeOfEvents_part_time_and_full_time = "part_time_and_full_time";
+  const TypeOfEvents_full_time = "full_time";
+  const TypeOfEvents_part_time = "part_time";
+  const TypeOfEventsIcons = {};
+  const [TypeOfEvents, setTypeOfEvents] = useState();
+  const TypeOfEventsRef = useRef(null);
+
+  TypeOfEventsIcons[TypeOfEvents_part_time_and_full_time] = "circle-half-full";
+  TypeOfEventsIcons[TypeOfEvents_full_time] = "circle";
+  TypeOfEventsIcons[TypeOfEvents_part_time] = "circle-half";
 
   useEffect(() => {
     console.log("ScreenEventListing")
@@ -67,103 +87,215 @@ const ScreenEventListing = (props) => {
       </Pressable>
     )
   }
-  const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)-80);
+  const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)*0.5);
   // FLATLIST FUNCTIONS ---- END
 
+  renderFilterFields = () =>{
+    var TypeOfEventsItems = []; 
+    for (const key in TypeOfEventsIcons) {
+      if (Object.hasOwnProperty.call(TypeOfEventsIcons, key)) {
+        const element = TypeOfEventsIcons[key];
+        TypeOfEventsItems.push({
+          label: key, // capitalise and remove underscore
+          value: key,
+          icon: () => <Icon name={element} size={18} color="#900" />,
+        })
+      }
+    }
+
+    return (
+      <>
+        <View style={[styles.filterFieldContainer]}>
+          <OutlineInput
+            value={keyword}
+            onChangeText={(e) => setKeyword(e)}
+            label="Keyword Search"
+            activeValueColor="#6c63fe"
+            activeBorderColor="#6c63fe"
+            activeLabelColor="#6c63fe"
+            passiveBorderColor="#bbb7ff"
+            passiveLabelColor="#bbb7ff"
+            passiveValueColor="#bbb7ff"
+          />
+        </View>
+
+        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
+          <Text>Types of Events</Text>
+          <DropDownPicker
+            controller={instance => TypeOfEventsRef.current = instance}
+            placeholder="Types of Events"
+            items={TypeOfEventsItems}
+            defaultValue={Object.keys(TypeOfEventsIcons)}
+            multiple={true}
+            multipleText="%d items have been selected."
+            containerStyle={{height: 40}}
+            style={[styles.DropDownPickerStyle]}
+            itemStyle={[styles.DropDownPickerItemStyle]}
+            dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+            onChangeItem={item => setTypeOfEvents(item.value)}
+            onOpen={() => {
+              // TypeOfEventsRef.current.close();
+            }}
+          />
+        </View>
+        
+        <View style={[styles.filterFieldContainer]}>
+          <DatePicker
+            style={{width: "100%"}}
+            date={filterStartDate}
+            mode="date"
+            placeholder="select start date"
+            format="YYYY-MM-DD"
+            minDate="2021-01-01"
+            maxDate="2021-06-01"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 0
+              },
+              dateInput: {
+                marginLeft: 36
+              }
+              // ... You can check the source to find the other keys.
+            }}
+            onDateChange={(date) => {setFilterStartDate(date)}}
+          />
+        </View>
+
+        <View style={[styles.filterFieldContainer]}>
+          <DatePicker
+            style={{width: "100%"}}
+            date={filterEndDate}
+            mode="date"
+            placeholder="select end date"
+            format="YYYY-MM-DD"
+            minDate="2021-01-01"
+            maxDate="2021-06-01"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 0
+              },
+              dateInput: {
+                marginLeft: 36
+              }
+              // ... You can check the source to find the other keys.
+            }}
+            onDateChange={(date) => {setFilterEndDate(date)}}
+          />
+        </View>
+      </>
+    )
+  }
   return (
     <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
+        <View style={[styles.calendarContainer]}>
+          <Calendar
+            // Initially visible month. Default = Date()
+            current={'2021-03-19'}
+            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+            minDate={'2020-05-10'}
+            // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
+            maxDate={'2021-05-30'}
+            // Handler which gets executed on day press. Default = undefined
+            onDayPress={(day) => {console.log('selected day', day)}}
+            // Handler which gets executed on day long press. Default = undefined
+            onDayLongPress={(day) => {console.log('selected day', day)}}
+            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+            monthFormat={'yyyy MM'}
+            // Handler which gets executed when visible month changes in calendar. Default = undefined
+            onMonthChange={(month) => {console.log('month changed', month)}}
+            // Replace default arrows with custom ones (direction can be 'left' or 'right')
+            renderArrow={(direction) => (<Icon name={'arrow-'+direction} color={'black'} size={28} />)}
+            // Do not show days of other months in month page. Default = false
+            hideExtraDays={true}
+            // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
+            // day from another month that is visible in calendar page. Default = false
+            disableMonthChange={false}
+            // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
+            firstDay={1}
+            // Hide day names. Default = false
+            hideDayNames={false}
+            // Show week numbers to the left. Default = false
+            showWeekNumbers={true}
+            // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+            onPressArrowLeft={subtractMonth => subtractMonth()}
+            // Handler which gets executed when press arrow icon right. It receive a callback can go next month
+            onPressArrowRight={addMonth => addMonth()}
+            // Disable left arrow. Default = false
+            disableArrowLeft={false}
+            // Disable right arrow. Default = false
+            disableArrowRight={false}
+            // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
+            disableAllTouchEventsForDisabledDays={true}
+            // Replace default month and year title with custom one. the function receive a date as parameter. Date() object
+            renderHeader={(date) => (<Text>{months[date.getMonth()]} {date.getFullYear()}</Text>)}
+            // Enable the option to swipe between months. Default = false
+            // Collection of dates that have to be marked. Default = {}
+            markedDates={{
+              '2021-03-16': {selected: true, marked: true, selectedColor: 'blue'},
+              '2021-03-17': {marked: true},
+              '2021-03-18': {marked: true, dotColor: 'red', activeOpacity: 0},
+              '2021-03-19': {disabled: true, disableTouchEvent: true}
+            }}
+            // Callback which gets executed when visible months change in scroll view. Default = undefined
+            onVisibleMonthsChange={(months) => {console.log('now these months are visible', months);}}
+            // Max amount of months allowed to scroll to the past. Default = 50
+            pastScrollRange={5}
+            // Max amount of months allowed to scroll to the future. Default = 50
+            futureScrollRange={5}
+            // Enable or disable scrolling of calendar list
+            scrollEnabled={true}
+            // Enable or disable vertical scroll indicator. Default = false
+            showScrollIndicator={true}
+            // Enable horizontal scrolling, default = false
+            horizontal={true}
+            // Enable paging on horizontal, default = false
+            pagingEnabled={true}
+            // Set custom calendarWidth.
+          />
+        </View>
         { renderList() }
 
         <SlidingUpPanel
-          snappingPoints={[(Dimensions.get('window').height) * 0.55]}
+          snappingPoints={[(Dimensions.get('window').height) * 0.1]}
           friction={0.75}
           backdropOpacity={0}
           showBackdrop={false}
           ref={slidingUpPanelRef}
-          draggableRange={{top: (Dimensions.get('window').height) * 0.90 , bottom: 75}}
+          draggableRange={{top: (Dimensions.get('window').height) * 0.80 , bottom: 55}}
+          // height={250}
           allowDragging={true}
         >
-          <View style={styles.panalContainer}>
-            
-            <View style={[styles.sliderHeader]}>
-              <Text style={[styles.sliderHeaderText]}>Calender</Text>
-              <Pressable style={[styles.sliderResetButton]} onPress={() => {
-              }}>
-                <Icon name={'refresh'} color={'white'} size={28} />
-              </Pressable>
-              <Pressable style={[styles.sliderDoneButton]} onPress={() => slidingUpPanelRef.current.hide()}>
-                <Icon name={'check-circle-outline'} color={'white'} size={28} />
-              </Pressable>
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            <View style={styles.panalContainer} onTouchStart={() => {
+              TypeOfEventsRef.current.close();
+            }}>
+              
+              <View style={[styles.filterHeader]}>
+                <Text style={[styles.filterHeaderText]}>Filters</Text>
+                <Pressable style={[styles.filterResetButton]} onPress={() => {
+                  TypeOfEventsRef.current.reset();
+                }}>
+                  <Icon name={'refresh'} color={'white'} size={28} />
+                </Pressable>
+                <Pressable style={[styles.filterDoneButton]} onPress={() => slidingUpPanelRef.current.hide()}>
+                  <Icon name={'check-circle-outline'} color={'white'} size={28} />
+                </Pressable>
+              </View>
+              {/* {renderFilteredResults()} */}
+              {renderFilterFields()}
             </View>
-
-            <View style={[styles.calendarContainer]}>
-              <Calendar
-                // Initially visible month. Default = Date()
-                current={'2021-03-19'}
-                // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                minDate={'2020-05-10'}
-                // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                maxDate={'2021-05-30'}
-                // Handler which gets executed on day press. Default = undefined
-                onDayPress={(day) => {console.log('selected day', day)}}
-                // Handler which gets executed on day long press. Default = undefined
-                onDayLongPress={(day) => {console.log('selected day', day)}}
-                // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-                monthFormat={'yyyy MM'}
-                // Handler which gets executed when visible month changes in calendar. Default = undefined
-                onMonthChange={(month) => {console.log('month changed', month)}}
-                // Replace default arrows with custom ones (direction can be 'left' or 'right')
-                renderArrow={(direction) => (<Icon name={'arrow-'+direction} color={'black'} size={28} />)}
-                // Do not show days of other months in month page. Default = false
-                hideExtraDays={true}
-                // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-                // day from another month that is visible in calendar page. Default = false
-                disableMonthChange={false}
-                // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-                firstDay={1}
-                // Hide day names. Default = false
-                hideDayNames={false}
-                // Show week numbers to the left. Default = false
-                showWeekNumbers={true}
-                // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-                onPressArrowLeft={subtractMonth => subtractMonth()}
-                // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-                onPressArrowRight={addMonth => addMonth()}
-                // Disable left arrow. Default = false
-                disableArrowLeft={false}
-                // Disable right arrow. Default = false
-                disableArrowRight={false}
-                // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-                disableAllTouchEventsForDisabledDays={true}
-                // Replace default month and year title with custom one. the function receive a date as parameter. Date() object
-                renderHeader={(date) => (<Text>{months[date.getMonth()]} {date.getFullYear()}</Text>)}
-                // Enable the option to swipe between months. Default = false
-                // Collection of dates that have to be marked. Default = {}
-                markedDates={{
-                  '2021-03-16': {selected: true, marked: true, selectedColor: 'blue'},
-                  '2021-03-17': {marked: true},
-                  '2021-03-18': {marked: true, dotColor: 'red', activeOpacity: 0},
-                  '2021-03-19': {disabled: true, disableTouchEvent: true}
-                }}
-                // Callback which gets executed when visible months change in scroll view. Default = undefined
-                onVisibleMonthsChange={(months) => {console.log('now these months are visible', months);}}
-                // Max amount of months allowed to scroll to the past. Default = 50
-                pastScrollRange={5}
-                // Max amount of months allowed to scroll to the future. Default = 50
-                futureScrollRange={5}
-                // Enable or disable scrolling of calendar list
-                scrollEnabled={true}
-                // Enable or disable vertical scroll indicator. Default = false
-                showScrollIndicator={true}
-                // Enable horizontal scrolling, default = false
-                horizontal={true}
-                // Enable paging on horizontal, default = false
-                pagingEnabled={true}
-                // Set custom calendarWidth.
-              />
-            </View>
-          </View>
+          </ScrollView>
         </SlidingUpPanel>
       </View>
     </SafeAreaView>
@@ -181,5 +313,20 @@ const styles = StyleSheet.create({
   sliderDoneButton: {position: 'absolute', right: 10, justifyContent: 'center'},
   calendarContainer: { width:"100%",  marginTop: 10, marginBottom: 10 },
   container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
-  panalContainer:{borderLeftColor:"black", borderRightColor:"black", borderTopWidth:1, borderLeftWidth:1, borderRightWidth:1, borderRadius:15, flex: 1, backgroundColor: 'white', alignItems: 'center', },  
+  panalContainer:{borderLeftColor:"black", borderRightColor:"black", borderTopWidth:1, borderLeftWidth:1, borderRightWidth:1, borderRadius:15, flex: 1, backgroundColor: 'white', alignItems: 'center', },
+  DropDownPickerStyle:{backgroundColor: '#fafafa'},
+  DropDownPickerItemStyle:{justifyContent: 'flex-start'},
+  DropDownPickerDropDownStyle:{backgroundColor: '#fafafa'},
+  filterHeader: {borderTopLeftRadius:15, borderTopRightRadius:15, backgroundColor:"#3c3c3c", width: '100%', height: 55, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'},
+  filterHeaderText: {alignSelf: 'center', color: 'white', fontSize:16, fontWeight:"bold"},
+  filterResultText: {alignSelf: 'center', color: 'white', fontSize:15, fontWeight:"bold", marginRight:10},
+  filterResetButton: {position: 'absolute', left: 10, justifyContent: 'center'},
+  filterDoneButton: {position: 'absolute', right: 10, justifyContent: 'center'},
+  filterFieldContainer: { width:"80%",  marginTop: 10, marginBottom: 10 },
+  card: {width:'100%', flex:1, paddingVertical: 10, flexDirection:'row', backgroundColor: "white", alignItems: 'center', justifyContent: 'space-between'},
+  icon: {width: 50, height: 50, margin: 10},
+  midContent: {flex: 1, flexDirection:'column'},
+  title: {color:"black" , fontSize: 12, fontWeight: "bold"},
+  subtitle: {color:"black" , fontSize: 12},
+  inboxSeperator: {position: 'absolute', bottom: 0, width: '95%', alignSelf: 'center', marginLeft: 'auto', marginRight: 'auto', backgroundColor: StyleConstant.bgGray, height: 1},
 });
