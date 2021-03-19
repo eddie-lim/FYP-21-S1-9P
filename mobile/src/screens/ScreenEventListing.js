@@ -28,7 +28,7 @@ const ScreenEventListing = (props) => {
     props.navigation.setParams({"navOptions":{
       headerShown: false
     }});
-    slidingUpPanelRef.current.show()
+    // slidingUpPanelRef.current.show()
     return function cleanup() { } 
   }, []);
 
@@ -81,7 +81,7 @@ const ScreenEventListing = (props) => {
           backdropOpacity={0}
           showBackdrop={false}
           ref={slidingUpPanelRef}
-          draggableRange={{top: (Dimensions.get('window').height) * 0.80 , bottom: 100}}
+          draggableRange={{top: (Dimensions.get('window').height) * 0.90 , bottom: 75}}
           allowDragging={true}
         >
           <View style={styles.panalContainer}>

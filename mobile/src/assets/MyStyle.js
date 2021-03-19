@@ -124,7 +124,7 @@ const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center'
 
 const HeaderWithBack = (title, navigate, destination, headerRight=null)=>{
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 86 : 40, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
       <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
         <Pressable style={{position: 'absolute', left: 10, justifyContent: 'center'}} onPress={() => navigate(destination)}>
