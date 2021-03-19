@@ -442,10 +442,10 @@ const ScreenCourseListing = (props) => {
                   entryQualificationsRef.current.reset();
                   subDisciplinesRef.current.reset();
                 }}>
-                  <Icon name={'refresh'} color={'black'} size={28} />
+                  <Icon name={'refresh'} color={'white'} size={28} />
                 </Pressable>
                 <Pressable style={[styles.filterDoneButton]} onPress={() => slidingUpPanelRef.current.hide()}>
-                  <Icon name={'check-circle-outline'} color={'black'} size={28} />
+                  <Icon name={'check-circle-outline'} color={'white'} size={28} />
                 </Pressable>
               </View>
               {/* {renderFilteredResults()} */}
@@ -464,14 +464,14 @@ const styles = StyleSheet.create({
   DropDownPickerStyle:{backgroundColor: '#fafafa'},
   DropDownPickerItemStyle:{justifyContent: 'flex-start'},
   DropDownPickerDropDownStyle:{backgroundColor: '#fafafa'},
-  filterHeader: {borderTopLeftRadius:15, borderTopRightRadius:15, backgroundColor:"white", width: '100%', height: 55, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'},
-  filterHeaderText: {alignSelf: 'center', color: 'black', fontSize:16, fontWeight:"bold"},
-  filterResultText: {alignSelf: 'center', color: 'black', fontSize:15, fontWeight:"bold", marginRight:10},
+  filterHeader: {borderTopLeftRadius:15, borderTopRightRadius:15, backgroundColor:"#3c3c3c", width: '100%', height: 55, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'},
+  filterHeaderText: {alignSelf: 'center', color: 'white', fontSize:16, fontWeight:"bold"},
+  filterResultText: {alignSelf: 'center', color: 'white', fontSize:15, fontWeight:"bold", marginRight:10},
   filterResetButton: {position: 'absolute', left: 10, justifyContent: 'center'},
   filterDoneButton: {position: 'absolute', right: 10, justifyContent: 'center'},
   dropDownContainer: { width:"80%",  marginTop: 10, marginBottom: 10 },
   container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
-  panalContainer:{borderLeftColor:"black", borderRightColor:"black", borderTopWidth:1, borderLeftWidth:1, borderRightWidth:1, borderRadius:15, flex: 1, backgroundColor: 'lightgrey', alignItems: 'center', },
+  panalContainer:{borderLeftColor:"black", borderRightColor:"black", borderTopWidth:1, borderLeftWidth:1, borderRightWidth:1, borderRadius:15, flex: 1, backgroundColor: 'white', alignItems: 'center', },
   card: {width:'100%', flex:1, paddingVertical: 10, flexDirection:'row', backgroundColor: "white", alignItems: 'center', justifyContent: 'space-between'},
   icon: {width: 50, height: 50, margin: 10},
   midContent: {flex: 1, flexDirection:'column'},
