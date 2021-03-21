@@ -22,13 +22,13 @@ const ScreenUniversity = (props) => {
         <Pressable onPress={() => navigate("screenCourseListing")}>
           <View elevation={5} style={[styles.cardContainer]}>
             <Text style={{ position:'absolute', color:"black", top:10}}>Courses Available</Text>
-            <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/courselisting-45241.json')} autoPlay={true} loop={false} />
+            <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/courselisting-45241.json')} autoPlay={true} loop={true} />
           </View>
         </Pressable>
         <Pressable style={{marginTop:15}} onPress={() => navigate("screenSchoolListing")}>
           <View elevation={5} style={[styles.cardContainer]}>
             <Text style={{ position:'absolute', color:"black", top:10}}>University Partners</Text>
-            <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/schoollisting-22472.json')} autoPlay={true} loop={false} />
+            <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/schoollisting-22472.json')} autoPlay={true} loop={true} />
           </View>
         </Pressable>
       </View>

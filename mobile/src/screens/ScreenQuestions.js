@@ -22,13 +22,13 @@ const ScreenQuestions = (props) => {
         <Pressable style={{}} onPress={() => navigate("screenFaq")}>
           <View elevation={5} style={[styles.cardContainer]}>
             <Text style={{ position:'absolute', color:"black", top:10}}>Frequently Asked Questions</Text>
-            <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/faq-25920.json')} autoPlay={true} loop={false} />
+            <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/faq-25920.json')} autoPlay={true} loop={true} />
           </View>
         </Pressable>
         <Pressable style={{marginTop:15}} onPress={() => navigate("screenApplicationProcess")}>
           <View elevation={5} style={[styles.cardContainer]}>
             <Text style={{ position:'absolute', color:"black", top:10}}>Application Process</Text>
-            <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={false} />
+            <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={true} />
           </View>
         </Pressable>
       </View>
