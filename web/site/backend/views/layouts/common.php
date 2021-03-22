@@ -9,7 +9,7 @@
 use backend\assets\BackendAsset;
 use common\models\SystemLog;
 use backend\widgets\MainSidebarMenu;
-use common\models\TimelineEvent;
+use common\models\User;
 use yii\bootstrap4\Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -60,7 +60,7 @@ $logEntries[] = [
                 'main-header',
                 'navbar',
                 'navbar-expand',
-                'navbar-dark',
+                Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "navbar-dark" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "navbar-dark" : "navbar-light"),
                 $keyStorage->get('adminlte.navbar-no-border') ? 'border-bottom-0' : null,
                 $keyStorage->get('adminlte.navbar-small-text') ? 'text-sm' : null,
             ],
@@ -84,18 +84,11 @@ $logEntries[] = [
             ]
         ]); ?>
         <!-- /left navbar links -->
-
         <!-- right navbar links -->
         <?php echo Nav::widget([
             'options' => ['class' => ['navbar-nav', 'ml-auto']],
             'encodeLabels' => false,
             'items' => [
-                [
-                    // timeline events
-                    'label' => FAR::icon('bell').' <span class="badge badge-success navbar-badge">'.TimelineEvent::find()->today()->count().'</span>',
-                    'url'  => ['/timeline-event/index'],
-                    'visible' => Yii::$app->user->can('administrator'),
-                ],
                 [
                     // log events
                     'label' => FAS::icon('clipboard-list').' <span class="badge badge-warning navbar-badge">'.SystemLog::find()->count().'</span>',
@@ -105,7 +98,7 @@ $logEntries[] = [
                         'class' => ['dropdown-menu', 'dropdown-menu-lg', 'dropdown-menu-right'],
                     ],
                     'items' => $logEntries,
-                    'visible' => Yii::$app->user->can('administrator'),
+                    'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN),
                 ],
                 '<li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -144,7 +137,7 @@ $logEntries[] = [
                         'data' => ['widget' => 'control-sidebar', 'slide' => 'true'],
                         'role' => 'button'
                     ],
-                    'visible' => Yii::$app->user->can('administrator'),
+                    'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN),
                 ],
             ]
         ]); ?>
@@ -154,7 +147,7 @@ $logEntries[] = [
     <!-- /navbar -->
 
     <!-- main sidebar -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4 <?php echo $keyStorage->get('adminlte.sidebar-no-expand') ? 'sidebar-no-expand' : null ?>">
+    <aside class="main-sidebar <?= Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "sidebar-dark-red" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "sidebar-dark-orange" : "sidebar-light-teal") ?> elevation-4 <?php echo $keyStorage->get('adminlte.sidebar-no-expand') ? 'sidebar-no-expand' : null ?>">
         <!-- brand logo -->
         <a href="/" class="brand-link text-center <?php echo $keyStorage->get('adminlte.brand-text-small') ? 'text-sm' : null ?>">
             <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -175,6 +168,7 @@ $logEntries[] = [
                 </div>
                 <div class="info">
                     <a href="#" class="d-block"><?php echo Yii::$app->user->identity->publicIdentity ?></a>
+                    <a class="d-block"><?= Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "Dev" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "SIM Staff" : "University Partners Staff") ?></a>
                 </div>
             </div>
             <!-- /sidebar user panel -->
@@ -206,18 +200,11 @@ $logEntries[] = [
                             'options' => ['class' => 'nav-header'],
                         ],
                         [
-                            'label' => Yii::t('backend', 'Timeline'),
-                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
-                            'url' => ['/timeline-event/index'],
-                            'badge' => TimelineEvent::find()->today()->count(),
-                            'badgeBgClass' => 'badge-success',
-                        ],
-                        [
                             'label' => Yii::t('backend', 'Users'),
                             'icon' => FAS::icon('users', ['class' => ['nav-icon']]),
                             'url' => ['/user/index'],
                             'active' => Yii::$app->controller->id === 'user',
-                            'visible' => Yii::$app->user->can('administrator'),
+                            'visible' => Yii::$app->user->can(User::ROLE_ADMINISTRATOR),
                         ],
                         [
                             'label' => Yii::t('backend', 'Courses'),
@@ -255,7 +242,6 @@ $logEntries[] = [
                             'label' => Yii::t('backend', 'Newsletter Subscriptions'),
                             'icon' => FAS::icon('newspaper', ['class' => ['nav-icon']]),
                             'url' => ['/newsletter-subscriptions/index'],
-                            'active' => Yii::$app->controller->id === 'newsletter-subscriptions',
                         ],
                         // DEV --------------------------------------------------
                         [
@@ -264,7 +250,7 @@ $logEntries[] = [
                             'icon' => FAB::icon('dev', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
                             'active' => (strpos(Yii::$app->controller->id, 'rbac') === 0),
-                            'visible' => Yii::$app->user->can('administrator'),
+                            'visible' => Yii::$app->user->can(User::ROLE_SUPERADMIN),
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'RBAC Rules'),
