@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
 
                     // 'id',
-                    'school_id',
+                    // 'school_id',
                     'question:ntext',
                     'answer:ntext',
                     // 'tags:ntext',
@@ -46,7 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'updated_at',
                     // 'updated_by',
                     
-                    ['class' => \common\widgets\ActionColumn::class],
+                    [
+                        'class' => \common\widgets\ActionColumn::class, 
+                        'headerOptions' => ['width' => '20px']
+                    ],
                 ],
             ]); ?>
     

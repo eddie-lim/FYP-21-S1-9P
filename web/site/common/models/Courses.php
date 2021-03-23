@@ -59,7 +59,7 @@ class Courses extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'school_id' => 'School ID',
+            'school_id' => 'University',
             'name' => 'Name',
             'mode_of_study' => 'Mode Of Study',
             'disciplines' => 'Disciplines',

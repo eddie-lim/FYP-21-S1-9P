@@ -47,7 +47,7 @@ class Faq extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'school_id' => 'School ID',
+            'school_id' => 'University',
             'question' => 'Question',
             'answer' => 'Answer',
             'tags' => 'Tags',

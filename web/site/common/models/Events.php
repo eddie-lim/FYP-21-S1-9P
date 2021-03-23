@@ -53,7 +53,7 @@ class Events extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'school_id' => 'School ID',
+            'school_id' => 'University',
             'session' => 'Session',
             'name' => 'Name',
             'description' => 'Description',

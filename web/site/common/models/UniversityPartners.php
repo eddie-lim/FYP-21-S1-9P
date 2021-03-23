@@ -65,4 +65,14 @@ class UniversityPartners extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+    public static function getUniversityBlock($id){
+        $model = static::findOne($id);
+
+        $html = <<< html
+            <div>$model->name<div>
+        html;
+
+        return $html;
+    }
 }

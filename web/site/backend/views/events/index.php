@@ -35,7 +35,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
 
                     // 'id',
-                    'school_id',
+                    // 'school_id',
+                    [
+                        'attribute' => 'school_id',
+                        'format' => 'raw',
+                        'value' => function ($model){
+                            return \common\models\UniversityPartners::getUniversityBlock($model->school_id);
+                        },
+                        'headerOptions' => ['width' => '250px'],
+                    ],
                     'session',
                     'name',
                     // 'description:ntext',

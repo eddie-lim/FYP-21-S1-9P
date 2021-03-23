@@ -46,8 +46,8 @@ class Enquiries extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'school_id' => 'School ID',
+            'user_id' => 'User',
+            'school_id' => 'University',
             'enquiry' => 'Enquiry',
             'notes' => 'Notes',
             'status' => 'Status',
