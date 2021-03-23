@@ -21,8 +21,9 @@ use yii\bootstrap4\ActiveForm;
     <?php echo $form->field($model, 'school_id') ?>
     <?php echo $form->field($model, 'question') ?>
     <?php echo $form->field($model, 'answer') ?>
-    <?php echo $form->field($model, 'status') ?>
+    <?php echo $form->field($model, 'tags') ?>
     <?php // echo $form->field($model, 'notes') ?>
+    <?php // echo $form->field($model, 'status') ?>
     <?php // echo $form->field($model, 'created_at') ?>
     <?php // echo $form->field($model, 'created_by') ?>
     <?php // echo $form->field($model, 'updated_at') ?>

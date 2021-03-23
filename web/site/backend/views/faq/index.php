@@ -27,19 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ['gridview', 'table-responsive'],
                 ],
                 'tableOptions' => [
-                    'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
+                    'class' => ['table', 'text-wrap', 'table-striped', 'table-bordered', 'mb-0'],
                 ],
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-                    'id',
+                    // 'id',
                     'school_id',
                     'question:ntext',
                     'answer:ntext',
-                    'status',
+                    // 'tags:ntext',
                     // 'notes:ntext',
+                    // 'status',
                     // 'created_at',
                     // 'created_by',
                     // 'updated_at',

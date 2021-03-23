@@ -9,16 +9,17 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "user_profile".
  *
- * @property integer $user_id
- * @property integer $locale
- * @property string $firstname
- * @property string $middlename
- * @property string $lastname
- * @property string $picture
- * @property string $avatar
- * @property string $avatar_path
- * @property string $avatar_base_url
- * @property integer $gender
+ * @property int $user_id
+ * @property string|null $firstname
+ * @property string|null $lastname
+ * @property string|null $avatar_path
+ * @property string|null $avatar_base_url
+ * @property string $locale
+ * @property int|null $gender
+ * @property string|null $mobile
+ * @property string|null $highest_qualification
+ * @property int|null $school_id
+ * @property int|null $subscribe_newsletter
  *
  * @property User $user
  */
@@ -62,12 +63,10 @@ class UserProfile extends ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'gender'], 'integer'],
             [['gender'], 'in', 'range' => [NULL, self::GENDER_FEMALE, self::GENDER_MALE]],
-            [['firstname', 'lastname', 'avatar_path', 'avatar_base_url'], 'string', 'max' => 255],
-            ['locale', 'default', 'value' => Yii::$app->language],
-            ['locale', 'in', 'range' => array_keys(Yii::$app->params['availableLocales'])],
-            ['picture', 'safe']
+            [['user_id', 'gender', 'school_id', 'subscribe_newsletter'], 'integer'],
+            [['firstname', 'lastname', 'avatar_path', 'avatar_base_url', 'mobile', 'highest_qualification'], 'string', 'max' => 255],
+            ['picture', 'safe'],
         ];
     }
 
@@ -77,12 +76,17 @@ class UserProfile extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('common', 'User ID'),
-            'firstname' => Yii::t('common', 'Firstname'),
-            'lastname' => Yii::t('common', 'Lastname'),
-            'locale' => Yii::t('common', 'Locale'),
-            'picture' => Yii::t('common', 'Picture'),
-            'gender' => Yii::t('common', 'Gender'),
+            'user_id' => 'User ID',
+            'firstname' => 'Firstname',
+            'lastname' => 'Lastname',
+            'avatar_path' => 'Avatar Path',
+            'avatar_base_url' => 'Avatar Base Url',
+            'locale' => 'Locale',
+            'gender' => 'Gender',
+            'mobile' => 'Mobile',
+            'highest_qualification' => 'Highest Qualification',
+            'school_id' => 'School ID',
+            'subscribe_newsletter' => 'Subscribe Newsletter',
         ];
     }
 

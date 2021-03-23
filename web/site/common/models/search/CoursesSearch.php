@@ -19,7 +19,7 @@ class CoursesSearch extends Courses
     {
         return [
             [['id', 'school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'mode_of_study', 'disciplines', 'sub_disciplines', 'academic_level', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'notes', 'status'], 'safe'],
+            [['name', 'mode_of_study', 'disciplines', 'sub_disciplines', 'academic_level', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'tags', 'notes', 'status'], 'safe'],
         ];
     }
 
@@ -42,6 +42,10 @@ class CoursesSearch extends Courses
     public function search($params)
     {
         $query = Courses::find();
+
+        if(!Yii::$app->user->can(Yii::$app->user->identity::ROLE_SUPERADMIN)){
+            $query->where(['school_id'=>Yii::$app->user->identity->userProfile->school_id]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -72,6 +76,7 @@ class CoursesSearch extends Courses
             ->andFilterWhere(['like', 'exemptions', $this->exemptions])
             ->andFilterWhere(['like', 'profiles', $this->profiles])
             ->andFilterWhere(['like', 'assessments_exams', $this->assessments_exams])
+            ->andFilterWhere(['like', 'tags', $this->tags])
             ->andFilterWhere(['like', 'notes', $this->notes])
             ->andFilterWhere(['like', 'status', $this->status]);
 

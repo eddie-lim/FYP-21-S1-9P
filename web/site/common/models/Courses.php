@@ -21,6 +21,7 @@ use Yii;
  * @property string|null $exemptions
  * @property string|null $profiles
  * @property string|null $assessments_exams
+ * @property string|null $tags
  * @property string|null $notes
  * @property string|null $status
  * @property int|null $created_at
@@ -71,6 +72,7 @@ class Courses extends \yii\db\ActiveRecord
             'exemptions' => 'Exemptions',
             'profiles' => 'Profiles',
             'assessments_exams' => 'Assessments Exams',
+            'tags' => 'Tags',
             'notes' => 'Notes',
             'status' => 'Status',
             'created_at' => 'Created At',

@@ -23,8 +23,9 @@ use yii\bootstrap4\ActiveForm;
     <?php echo $form->field($model, 'continent') ?>
     <?php echo $form->field($model, 'highlights') ?>
     <?php // echo $form->field($model, 'certifications') ?>
-    <?php // echo $form->field($model, 'status') ?>
+    <?php // echo $form->field($model, 'tags') ?>
     <?php // echo $form->field($model, 'notes') ?>
+    <?php // echo $form->field($model, 'status') ?>
     <?php // echo $form->field($model, 'created_at') ?>
     <?php // echo $form->field($model, 'created_by') ?>
     <?php // echo $form->field($model, 'updated_at') ?>

@@ -18,8 +18,8 @@ class EventsSearch extends Events
     public function rules()
     {
         return [
-            [['id', 'school_id', 'date_start_at', 'date_end_at', 'time_start_at', 'time_end_at', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'description', 'venue', 'notes', 'status'], 'safe'],
+            [['id', 'school_id', 'start_at', 'end_at', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['session', 'name', 'description', 'venue', 'tags', 'notes', 'status'], 'safe'],
         ];
     }
 
@@ -43,6 +43,10 @@ class EventsSearch extends Events
     {
         $query = Events::find();
 
+        if(!Yii::$app->user->can(Yii::$app->user->identity::ROLE_SUPERADMIN)){
+            $query->where(['school_id'=>Yii::$app->user->identity->userProfile->school_id]);
+        }
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -54,19 +58,19 @@ class EventsSearch extends Events
         $query->andFilterWhere([
             'id' => $this->id,
             'school_id' => $this->school_id,
-            'date_start_at' => $this->date_start_at,
-            'date_end_at' => $this->date_end_at,
-            'time_start_at' => $this->time_start_at,
-            'time_end_at' => $this->time_end_at,
+            'start_at' => $this->start_at,
+            'end_at' => $this->end_at,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'session', $this->session])
+            ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'venue', $this->venue])
+            ->andFilterWhere(['like', 'tags', $this->tags])
             ->andFilterWhere(['like', 'notes', $this->notes])
             ->andFilterWhere(['like', 'status', $this->status]);
 

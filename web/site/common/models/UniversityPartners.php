@@ -13,8 +13,9 @@ use Yii;
  * @property string|null $continent
  * @property string|null $highlights
  * @property string|null $certifications
- * @property string|null $status
+ * @property string|null $tags
  * @property string|null $notes
+ * @property string|null $status
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int|null $updated_at
@@ -36,7 +37,7 @@ class UniversityPartners extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'highlights', 'certifications', 'status', 'notes'], 'string'],
+            [['description', 'highlights', 'certifications', 'tags', 'notes', 'status'], 'string'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['continent'], 'string', 'max' => 32],
@@ -55,8 +56,9 @@ class UniversityPartners extends \yii\db\ActiveRecord
             'continent' => 'Continent',
             'highlights' => 'Highlights',
             'certifications' => 'Certifications',
-            'status' => 'Status',
+            'tags' => 'Tags',
             'notes' => 'Notes',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',

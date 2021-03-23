@@ -31,6 +31,7 @@ use yii\bootstrap4\ActiveForm;
     <?php // echo $form->field($model, 'exemptions') ?>
     <?php // echo $form->field($model, 'profiles') ?>
     <?php // echo $form->field($model, 'assessments_exams') ?>
+    <?php // echo $form->field($model, 'tags') ?>
     <?php // echo $form->field($model, 'notes') ?>
     <?php // echo $form->field($model, 'status') ?>
     <?php // echo $form->field($model, 'created_at') ?>

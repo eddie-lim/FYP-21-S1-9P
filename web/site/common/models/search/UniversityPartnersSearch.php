@@ -19,7 +19,7 @@ class UniversityPartnersSearch extends UniversityPartners
     {
         return [
             [['id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'description', 'continent', 'highlights', 'certifications', 'status', 'notes'], 'safe'],
+            [['name', 'description', 'continent', 'highlights', 'certifications', 'tags', 'notes', 'status'], 'safe'],
         ];
     }
 
@@ -64,8 +64,9 @@ class UniversityPartnersSearch extends UniversityPartners
             ->andFilterWhere(['like', 'continent', $this->continent])
             ->andFilterWhere(['like', 'highlights', $this->highlights])
             ->andFilterWhere(['like', 'certifications', $this->certifications])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'notes', $this->notes]);
+            ->andFilterWhere(['like', 'tags', $this->tags])
+            ->andFilterWhere(['like', 'notes', $this->notes])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

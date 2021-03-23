@@ -1,51 +1,44 @@
 <?php
 
+use common\grid\EnumColumn;
+use common\components\MyCustomActiveRecord;
+use common\models\User;
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use rmrevin\yii\fontawesome\FAS;
 
 /**
  * @var yii\web\View $this
- * @var common\models\search\NewsletterSubscriptionsSearch $searchModel
+ * @var backend\models\search\UserSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
  */
-
-$this->title = 'Newsletter Subscriptions';
+$this->title = Yii::t('backend', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="newsletter-subscriptions-index">
-    <div class="card">
-        <div class="card-header">
-            <?php echo Html::a('Create Newsletter Subscriptions', ['create'], ['class' => 'btn btn-success']) ?>
-        </div>
 
-        <div class="card-body p-0">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    
-            <?php echo GridView::widget([
-                'layout' => "{items}\n{pager}",
-                'options' => [
-                    'class' => ['gridview', 'table-responsive'],
-                ],
-                'tableOptions' => [
-                    'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
-                ],
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+<div class="card">
 
-                    'id',
-                    'created_at',
-                    'created_by',
-                    
-                    ['class' => \common\widgets\ActionColumn::class],
-                ],
-            ]); ?>
-    
-        </div>
-        <div class="card-footer">
-            <?php echo getDataProviderSummary($dataProvider) ?>
-        </div>
+    <div class="card-body p-0">
+        <?php echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'layout' => "{items}\n{pager}",
+            'options' => [
+                'class' => ['gridview', 'table-responsive'],
+            ],
+            'tableOptions' => [
+                'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
+            ],
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'username',
+                'email:email',
+            ],
+        ]); ?>
     </div>
 
+    <div class="card-footer">
+        <?php echo getDataProviderSummary($dataProvider) ?>
+    </div>
 </div>

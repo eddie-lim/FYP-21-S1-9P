@@ -14,12 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="enquiries-index">
     <div class="card">
-        <div class="card-header">
-            <?php echo Html::a('Create Enquiries', ['create'], ['class' => 'btn btn-success']) ?>
-        </div>
 
         <div class="card-body p-0">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     
             <?php echo GridView::widget([
                 'layout' => "{items}\n{pager}",
@@ -27,20 +23,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ['gridview', 'table-responsive'],
                 ],
                 'tableOptions' => [
-                    'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
+                    'class' => ['table', 'text-wrap', 'table-striped', 'table-bordered', 'mb-0'],
                 ],
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-                    'id',
+                    // 'id',
                     'user_id',
                     'school_id',
                     'enquiry:ntext',
-                    'notes:ntext',
+                    // 'notes:ntext',
                     // 'status',
-                    // 'created_at',
+                    'created_at:datetime',
                     // 'created_by',
                     // 'updated_at',
                     // 'updated_by',

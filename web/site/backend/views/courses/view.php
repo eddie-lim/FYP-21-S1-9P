@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'exemptions:ntext',
                     'profiles:ntext',
                     'assessments_exams:ntext',
+                    'tags:ntext',
                     'notes:ntext',
                     'status',
                     'created_at',

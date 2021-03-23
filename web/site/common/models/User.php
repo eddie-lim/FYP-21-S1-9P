@@ -9,6 +9,7 @@ use common\commands\AddToTimelineCommand;
 use common\models\query\UserQuery;
 use common\models\NparksRewardPool;
 use common\jobs\EmailQueueJob;
+use common\components\MyCustomActiveRecord;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -133,6 +134,13 @@ class User extends ActiveRecord implements IdentityInterface
     public function getPublicIdentity(){
         return $this->userProfile->fullName ?? $this->email;
     }
+    public static function statuses()
+    {
+        return [
+            MyCustomActiveRecord::STATUS_ENABLED => 'Enabled',
+            MyCustomActiveRecord::STATUS_DISABLED => 'Disabled'
+        ];
+    }
 
     public function getUserDetails(){
         $o = (object)[];
@@ -143,17 +151,17 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     //TODO::commandbus shat
-    public function addToTimeline(){
-        Yii::$app->commandBus->handle(new AddToTimelineCommand([
-            'category' => 'user',
-            'event' => 'registration',
-            'data' => [
-                'public_identity' => $this->getPublicIdentity(),
-                'user_id' => $this->getId(),
-                'created_at' => $this->created_at
-            ]
-        ]));
-    }
+    // public function addToTimeline(){
+    //     Yii::$app->commandBus->handle(new AddToTimelineCommand([
+    //         'category' => 'user',
+    //         'event' => 'registration',
+    //         'data' => [
+    //             'public_identity' => $this->getPublicIdentity(),
+    //             'user_id' => $this->getId(),
+    //             'created_at' => $this->created_at
+    //         ]
+    //     ]));
+    // }
 
     //#####################
     //identity interface (for cookie)

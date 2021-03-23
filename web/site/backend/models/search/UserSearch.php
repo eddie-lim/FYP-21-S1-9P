@@ -11,6 +11,8 @@ use yii\data\ActiveDataProvider;
  */
 class UserSearch extends User
 {
+    private $newsletterSubscriptionsMode = false;
+    private $joinRoles = false;
     /**
      * @inheritdoc
      */
@@ -32,6 +34,10 @@ class UserSearch extends User
         return Model::scenarios();
     }
 
+    public function setNewsletterSubscriptionsMode(){
+        $this->newsletterSubscriptionsMode = true;
+    }
+
     /**
      * Creates data provider instance with search query applied
      * @return ActiveDataProvider
@@ -39,6 +45,16 @@ class UserSearch extends User
     public function search($params)
     {
         $query = User::find();
+
+        if($this->joinRoles){
+            $query->join('LEFT JOIN','rbac_auth_assignment','rbac_auth_assignment.user_id = id');
+        }
+
+        if($this->newsletterSubscriptionsMode){
+            $query->andWhere([]);
+            $query->join('LEFT JOIN','user_profile','user_profile.user_id = id')
+            ->andWhere(['user_profile.subscribe_newsletter' => 1]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -168,7 +168,7 @@ $logEntries[] = [
                 </div>
                 <div class="info">
                     <a href="#" class="d-block"><?php echo Yii::$app->user->identity->publicIdentity ?></a>
-                    <a class="d-block"><?= Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "Dev" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "SIM Staff" : "University Partners Staff") ?></a>
+                    <a class="d-block">Role: <?= Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "Dev" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "SIM Staff" : "University Partners Staff") ?></a>
                 </div>
             </div>
             <!-- /sidebar user panel -->
@@ -196,8 +196,10 @@ $logEntries[] = [
                     ],
                     'items' => [
                         [
-                            'label' => Yii::t('backend', 'Main'),
-                            'options' => ['class' => 'nav-header'],
+                            'label' => Yii::t('backend', 'My University'),
+                            'icon' => FAS::icon('building', ['class' => ['nav-icon']]),
+                            'url' => ['/university-partners/index'],
+                            'active' => Yii::$app->controller->id === 'university-partners' && Yii::$app->controller->action->id === 'university-partners',
                         ],
                         [
                             'label' => Yii::t('backend', 'Users'),
@@ -217,6 +219,7 @@ $logEntries[] = [
                             'icon' => FAS::icon('school', ['class' => ['nav-icon']]),
                             'url' => ['/university-partners/index'],
                             'active' => Yii::$app->controller->id === 'university-partners',
+                            'visible' => Yii::$app->user->can(User::ROLE_ADMINISTRATOR),
                         ],
                         [
                             'label' => Yii::t('backend', 'Events'),

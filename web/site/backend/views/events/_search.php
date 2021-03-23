@@ -19,13 +19,13 @@ use yii\bootstrap4\ActiveForm;
 
     <?php echo $form->field($model, 'id') ?>
     <?php echo $form->field($model, 'school_id') ?>
+    <?php echo $form->field($model, 'session') ?>
     <?php echo $form->field($model, 'name') ?>
     <?php echo $form->field($model, 'description') ?>
-    <?php echo $form->field($model, 'venue') ?>
-    <?php // echo $form->field($model, 'date_start_at') ?>
-    <?php // echo $form->field($model, 'date_end_at') ?>
-    <?php // echo $form->field($model, 'time_start_at') ?>
-    <?php // echo $form->field($model, 'time_end_at') ?>
+    <?php // echo $form->field($model, 'venue') ?>
+    <?php // echo $form->field($model, 'start_at') ?>
+    <?php // echo $form->field($model, 'end_at') ?>
+    <?php // echo $form->field($model, 'tags') ?>
     <?php // echo $form->field($model, 'notes') ?>
     <?php // echo $form->field($model, 'status') ?>
     <?php // echo $form->field($model, 'created_at') ?>

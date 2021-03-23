@@ -19,7 +19,7 @@ class FaqSearch extends Faq
     {
         return [
             [['id', 'school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['question', 'answer', 'status', 'notes'], 'safe'],
+            [['question', 'answer', 'tags', 'notes', 'status'], 'safe'],
         ];
     }
 
@@ -43,6 +43,10 @@ class FaqSearch extends Faq
     {
         $query = Faq::find();
 
+        if(!Yii::$app->user->can(Yii::$app->user->identity::ROLE_SUPERADMIN)){
+            $query->where(['school_id'=>Yii::$app->user->identity->userProfile->school_id]);
+        }
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -62,8 +66,9 @@ class FaqSearch extends Faq
 
         $query->andFilterWhere(['like', 'question', $this->question])
             ->andFilterWhere(['like', 'answer', $this->answer])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'notes', $this->notes]);
+            ->andFilterWhere(['like', 'tags', $this->tags])
+            ->andFilterWhere(['like', 'notes', $this->notes])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }
