@@ -7,7 +7,8 @@ import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
 import WebApi from '@helpers/WebApi';
 import Constants from '@helpers/Constants';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const ScreenSchoolListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -56,7 +57,7 @@ const ScreenSchoolListing = (props) => {
         <View>
           <View style={styles.card}>
             <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, padding: 5}}>
-              <Icon style={{marginHorizontal: 10}} name={continentIcon[item.continent]} size={28} color={StyleConstant.primaryColor}/>
+              <FontAwesome5 style={{marginHorizontal: 10}} name={continentIcon[item.continent]} size={28} color={StyleConstant.primaryColor}/>
               <View style={styles.midContent}>
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.name}</Text>
                 <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>{item.continent}</Text>

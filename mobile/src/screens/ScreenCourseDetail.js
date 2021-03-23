@@ -9,7 +9,7 @@ import * as Animatable from 'react-native-animatable';
 
 const ScreenCourseDetail = (props) => {
   const { navigate, goBack } = useNavigation();
-  const [ activeSections, setActiveSections ] = useState([]);
+  const [ activeSections, setActiveSections ] = useState([0]);
     
   const SECTIONS = [
     {
@@ -94,10 +94,10 @@ const ScreenCourseDetail = (props) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <ScrollView>
+      <ScrollView style={{backgroundColor: 'rgba(245,252,255,1)'}}>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Accordion
-        containerStyle={{width:'90%'}}
+          containerStyle={{width:'100%'}}
           sections={SECTIONS}
           activeSections={activeSections}
           // renderSectionTitle={renderSectionTitle}
