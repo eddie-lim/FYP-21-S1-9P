@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, Modal, Text, BackHandler } from 'react-native';
+import { View, Dimensions, StyleSheet, Modal, Text, BackHandler, Pressable, ScrollView } from 'react-native';
 import { HomeHeader, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
+import LottieView from 'lottie-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
@@ -25,10 +26,29 @@ const ScreenLanding = (props) => {
     return function cleanup() { } 
   }, []);
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color:"black"}}>landing</Text>
-      </View>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
+      <ScrollView>
+        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop:20, paddingTop:15, paddingBottom:15}}>
+          <Pressable onPress={() => navigate("screenCourseDetail")}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Featured Courses</Text>
+              <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/study-27637.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenEventDetail")}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Featured Event</Text>
+              <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/questions-27636.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenSchoolDetail")}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Featured University</Text>
+              <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/comms-27635.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -36,11 +56,8 @@ const ScreenLanding = (props) => {
 export default withScreenBase(ScreenLanding, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
-  seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
-  imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
-  topHolder: {flexDirection: 'row', position: 'absolute', right: 10, top: 10},
-  logoHolder: {width: '90%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center'},
-  logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
-  centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'}
+  cardContainer: {width: (Dimensions.get('window').width) * 0.90, height: 200, justifyContent: 'center', alignItems: 'center', borderWidth:1, borderRadius:15, padding:20, backgroundColor:'#fff', shadowColor: "#fff", shadowOpacity: 0.8, shadowRadius: 2, shadowOffset: {
+    height: 1,
+    width: 1
+  }},
 });
