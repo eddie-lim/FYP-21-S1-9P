@@ -71,13 +71,12 @@ class UniversityPartners extends \yii\db\ActiveRecord
         $model = static::findOne($id);
         $url = Url::to(['university-partners/view', 'id'=>$id]);
 
-        $html = <<< html
-            <a href="$url">
-                <div>
-                    $model->name
-                <div>
-            </a>
-        html;
+        $html = "";
+        $html .= '<a href="'.$url.'">';
+        $html .= '<div>';
+        $html .= '$model->name';
+        $html .= '<div>';
+        $html .= '</a>';
 
         return $html;
     }

@@ -20,14 +20,14 @@ $textColor = $statusCode == 500? 'danger': 'warning';
         <h3 class="font-weight-bold"><?php echo FAS::icon('exclamation-triangle', ['class' => "text-$textColor"]).' '.nl2br(Html::encode($message)) ?></h3>
 
         <p>
-            <?php echo Yii::t('backend', 'Oops! Something went wrong... You may audit the error by reviewing the system logs or the application timeline.') ?>
+            <?php Yii::t('backend', 'Oops! Something went wrong... You may audit the error by reviewing the system logs or the application timeline.') ?>
         </p>
         <ul class="list-inline">
             <li class="list-inline-item">
-                <?php echo Html::a(FAS::icon('stream').' '.Yii::t('backend', 'Go to timeline'), ['/timeline-event/index'], ['class' => ['btn', 'btn-primary', 'btn-lg']]) ?>
+                <?php echo Html::a(FAS::icon('stream').' '.Yii::t('backend', 'Go to home'), ['/site/home'], ['class' => ['btn', 'btn-primary', 'btn-lg']]) ?>
             </li>
             <li class="list-inline-item">
-                <?php echo Html::a(FAS::icon('clipboard-list').' '.Yii::t('backend', 'Go to logs'), ['/system/log/index'], ['class' => ['btn', 'btn-secondary', 'btn-lg']]) ?>
+                <?php  Html::a(FAS::icon('clipboard-list').' '.Yii::t('backend', 'Go to logs'), ['/system/log/index'], ['class' => ['btn', 'btn-secondary', 'btn-lg']]) ?>
             </li>
         </ul>
     </div>

@@ -150,19 +150,6 @@ class User extends ActiveRecord implements IdentityInterface
         return $o;
     }
 
-    //TODO::commandbus shat
-    // public function addToTimeline(){
-    //     Yii::$app->commandBus->handle(new AddToTimelineCommand([
-    //         'category' => 'user',
-    //         'event' => 'registration',
-    //         'data' => [
-    //             'public_identity' => $this->getPublicIdentity(),
-    //             'user_id' => $this->getId(),
-    //             'created_at' => $this->created_at
-    //         ]
-    //     ]));
-    // }
-
     //#####################
     //identity interface (for cookie)
     //#####################
@@ -215,52 +202,14 @@ class User extends ActiveRecord implements IdentityInterface
         $user = static::findIdentity($id);
         $url = Url::to(['user/view', 'id'=>$id]);
 
-        $html = <<< html
-            <a href="$url">
-                <div>
-                    $user->publicIdentity
-                <div>
-            </a>
-        html;
+        $html = "";
+        $html .= '<a href="'.$url.'">';
+        $html .= '<div>';
+        $html .= '$user->publicIdentity';
+        $html .= '<div>';
+        $html .= '</a>';
 
         return $html;
     }
 
-    //#####################
-    //ratelimiter interface
-    //#####################
-    //RestControllerBase
-    /*public function getRateLimit($request, $action) {
-        //return [$this->rateLimit,1];
-        //1 time per 2 secs
-        return [1,2];
-    }
-
-    public function loadAllowance($request, $action){
-        $endpoint = $action->controller->id ."/" . $action->id;
-        //$endpoint = "all";
-        $rate = ApiRateLimiter::findEntry($this->id, $endpoint);
-        
-        if ($rate) {        
-            return [$rate->allowance, $rate->allowance_updated_at];
-        } else {
-            $rate = new ApiRateLimiter();
-            $rate->user_id = $this->id;
-            $rate->endpoint = $endpoint;
-            $rate->allowance = 0;
-            $rate->allowance_updated_at = time();
-            $rate->save();
-        }
-    }
-
-    public function saveAllowance($request, $action, $allowance, $timestamp){
-        $endpoint = $action->controller->id ."/" . $action->id;
-        //$endpoint = "all";
-        $rate = ApiRateLimiter::findEntry($this->id, $endpoint);
-        if ($rate) {        
-            $rate->allowance = $allowance;
-            $rate->allowance_updated_at = $timestamp;
-            $rate->save(false);
-        }        
-    }*/
 }
