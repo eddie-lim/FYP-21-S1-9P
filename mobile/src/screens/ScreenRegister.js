@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable, Keyboard } from 'react-native';
+import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable, Keyboard, ScrollView } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -30,7 +30,7 @@ const ScreenRegister = (props) => {
   useEffect(() => {
     console.log("ScreenRegister")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Register", navigate, "screenLogin", null, goBack)
+      header:()=> HeaderWithBack("Register", navigate, "screenLogin")
     }});
     return function cleanup() { } 
   }, []);
@@ -105,9 +105,10 @@ const ScreenRegister = (props) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <ScrollView>
+        <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
   
-        <LottieView style={{height: 250}} source={require('@assets/animation/register-53395.json')} autoPlay={true} loop={true} />
+        <LottieView style={{height: 150}} source={require('@assets/animation/register-53395.json')} autoPlay={true} loop={true} />
 
         <View style={[styles.container]}>
           <OutlineInput
@@ -190,6 +191,7 @@ const ScreenRegister = (props) => {
           Create Account!
         </Button>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -197,6 +199,6 @@ const ScreenRegister = (props) => {
 export default withScreenBase(ScreenRegister, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  container: { width:"80%",  marginTop: 10, marginBottom: 10 },
+  container: { width:"80%", marginBottom: 10 },
   errorText:{color:'red'},
 });

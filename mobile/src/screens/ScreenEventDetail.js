@@ -42,7 +42,7 @@ const ScreenEventDetail = (props) => {
   useEffect(() => {
     console.log("ScreenEventDetail")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Event Detail", navigate, "screenEventListing", null, goBack)
+      header:()=> HeaderWithBack("Event Detail", navigate, "screenEventListing")
     }});
     return function cleanup() { } 
   }, []);

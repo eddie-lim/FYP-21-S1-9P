@@ -10,6 +10,7 @@ import * as Animatable from 'react-native-animatable';
 const ScreenCourseDetail = (props) => {
   const { navigate, goBack } = useNavigation();
   const [ activeSections, setActiveSections ] = useState([0]);
+  const params = useNavigationParam('data');
     
   const SECTIONS = [
     {
@@ -47,8 +48,9 @@ const ScreenCourseDetail = (props) => {
   useEffect(() => {
     console.log("ScreenCourseDetail")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Course Detail", navigate, "screenCourseListing", null, goBack)
+      header:()=> HeaderWithBack("Course Detail", navigate, "screenCourseListing")
     }});
+    console.log(props)
     return function cleanup() { } 
   }, []);
   

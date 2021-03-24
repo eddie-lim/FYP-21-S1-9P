@@ -11,7 +11,7 @@ const ScreenApplicationProcess = (props) => {
   useEffect(() => {
     console.log("ScreenApplicationProcess")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Application Process", navigate, "screenQuestions", null, goBack)
+      header:()=> HeaderWithBack("Application Process", navigate, "screenQuestions")
     }});
     return function cleanup() { } 
   }, []);
