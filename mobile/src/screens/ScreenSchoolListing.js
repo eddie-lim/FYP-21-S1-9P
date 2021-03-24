@@ -29,7 +29,7 @@ const ScreenSchoolListing = (props) => {
   useEffect(() => {
     console.log("ScreenSchoolListing")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("University Partners", navigate, "screenUniversity")
+      header:()=> HeaderWithBack("University Partners", navigate, "screenUniversity", null, goBack)
     }});
     return function cleanup() { } 
   }, []);

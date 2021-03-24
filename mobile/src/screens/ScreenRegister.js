@@ -9,16 +9,17 @@ import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
+import LottieView from 'lottie-react-native';
 
 const ScreenRegister = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
 
-  const [ firstName, setFirstName ] = useState("Eddie");
-  const [ lastName, setLastName ] = useState("Lim");
-  const [ email, setEmail ] = useState("ethlim001@mymail.sim.edu.sg");
-  const [ password, setPassword ] = useState("P@ssw0rd");
-  const [ passwordConfirm, setPasswordConfirm ] = useState("P@ssw0rd");
+  const [ firstName, setFirstName ] = useState("");
+  const [ lastName, setLastName ] = useState("");
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ passwordConfirm, setPasswordConfirm ] = useState("");
 
   const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState("");
   const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState("");
@@ -29,7 +30,7 @@ const ScreenRegister = (props) => {
   useEffect(() => {
     console.log("ScreenRegister")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Register", navigate, "screenLogin")
+      header:()=> HeaderWithBack("Register", navigate, "screenLogin", null, goBack)
     }});
     return function cleanup() { } 
   }, []);
@@ -41,29 +42,33 @@ const ScreenRegister = (props) => {
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
     setPasswordConfirmErrorMsg('');
+    var hasError = false;
 
     if (firstName.trim() == '' || firstName == null || firstName == '') {
       setFirstNameErrorMsg("Please enter your first name");
-      return;
+      hasError = true;
     }
     if (lastName.trim() == '' || lastName == null || lastName == '') {
       setLastNameErrorMsg("Please enter your first name");
-      return;
+      hasError = true;
     }
     if (email.trim() == '' || email == null || email == '') {
       setEmailErrorMsg("Please enter your email");
-      return;
+      hasError = true;
     }
     if (password == '') {
       setPasswordErrorMsg("Please enter your password");
-      return;
+      hasError = true;
     }
     if (passwordConfirm == '') {
       setPasswordConfirmErrorMsg("Please confirm your password");
-      return;
+      hasError = true;
     }
     if (!Utils.isEmail(email.trim())) {
       setEmailErrorMsg("Email is not valid");
+      hasError = true;
+    }
+    if(hasError){
       return;
     }
     toggleActivityIndicator(true, "Registering...");
@@ -101,6 +106,8 @@ const ScreenRegister = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+  
+        <LottieView style={{height: 250}} source={require('@assets/animation/register-53395.json')} autoPlay={true} loop={true} />
 
         <View style={[styles.container]}>
           <OutlineInput
@@ -114,6 +121,7 @@ const ScreenRegister = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{firstNameErrorMsg}</Text>
         </View>
 
         <View style={[styles.container]}>
@@ -128,6 +136,7 @@ const ScreenRegister = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{lastNameErrorMsg}</Text>
         </View>
 
         <View style={[styles.container]}>
@@ -142,6 +151,7 @@ const ScreenRegister = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{emailErrorMsg}</Text>
         </View>
         
         <View style={[styles.container]}>
@@ -157,6 +167,7 @@ const ScreenRegister = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{passwordErrorMsg}</Text>
         </View>
         
         <View style={[styles.container]}>
@@ -172,17 +183,12 @@ const ScreenRegister = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{passwordConfirmErrorMsg}</Text>
         </View>
 
         <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleRegister()}>
           Create Account!
         </Button>
-
-        <Text>firstName: {firstName}</Text>
-        <Text>lastName: {lastName}</Text>
-        <Text>email: {email}</Text>
-        <Text>password: {password}</Text>
-        <Text>password confirm: {passwordConfirm}</Text>
       </View>
     </SafeAreaView>
   );
@@ -192,4 +198,5 @@ export default withScreenBase(ScreenRegister, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   container: { width:"80%",  marginTop: 10, marginBottom: 10 },
+  errorText:{color:'red'},
 });

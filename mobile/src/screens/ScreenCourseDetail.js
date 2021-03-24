@@ -47,7 +47,7 @@ const ScreenCourseDetail = (props) => {
   useEffect(() => {
     console.log("ScreenCourseDetail")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Course Detail", navigate, "screenCourseListing")
+      header:()=> HeaderWithBack("Course Detail", navigate, "screenCourseListing", null, goBack)
     }});
     return function cleanup() { } 
   }, []);

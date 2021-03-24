@@ -9,13 +9,14 @@ import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
+import LottieView from 'lottie-react-native';
 
 const ScreenLogin = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
 
-  const [ email, setEmail ] = useState("ethlim001@mymail.sim.edu.sg");
-  const [ password, setPassword ] = useState("P@ssw0rd");
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
   const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
 
@@ -31,16 +32,21 @@ const ScreenLogin = (props) => {
     console.log("Login!!");
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
+    var hasError = false;
+    
     if (email.trim() == '' || email == null || email == '') {
       setEmailErrorMsg("Please enter your email");
-      return;
+      hasError = true;
     }
     if (password == '') {
       setPasswordErrorMsg("Please enter your password");
-      return;
+      hasError = true;
     }
     if (!Utils.isEmail(email.trim())) {
       setEmailErrorMsg("Email is not valid");
+      hasError = true;
+    }
+    if(hasError){
       return;
     }
     toggleActivityIndicator(true, "Logging in...");
@@ -72,6 +78,9 @@ const ScreenLogin = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        
+        <LottieView style={{height: 250}} source={require('@assets/animation/login-8590.json')} autoPlay={true} loop={true} />
+
         <View style={[styles.container]}>
           <OutlineInput
             value={email}
@@ -84,6 +93,7 @@ const ScreenLogin = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{emailErrorMsg}</Text>
         </View>
         
         <View style={[styles.container]}>
@@ -99,6 +109,7 @@ const ScreenLogin = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{passwordErrorMsg}</Text>
         </View>
 
         <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="login" mode="contained" onPress={() => handleLogin()}>
@@ -112,9 +123,6 @@ const ScreenLogin = (props) => {
         <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"blue" }} icon="account-plus" mode="contained" onPress={() => navigate("screenRegister")}>
           Register here!
         </Button>
-
-        <Text>email: {email}</Text>
-        <Text>password: {password}</Text>
       </View>
     </SafeAreaView>
   );
@@ -131,5 +139,6 @@ const styles = StyleSheet.create({
   logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
   centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'},
   txt: { width: '80%', height: 40, borderRadius: 10, backgroundColor: '#ffffff', color: '#000000', textAlign: 'left', textAlignVertical: 'center', borderWidth: 1, borderColor: StyleConstant.bgGray, paddingLeft: 15 },
-  container: { width:"80%",  marginTop: 10, marginBottom: 10 },
+  container: { width:"80%", marginBottom: 10 },
+  errorText:{color:'red'},
 });

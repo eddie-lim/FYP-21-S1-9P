@@ -9,19 +9,20 @@ import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
+import LottieView from 'lottie-react-native';
 
 const ScreenForgetPassword = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
 
-  const [ email, setEmail ] = useState("ethlim001@mymail.sim.edu.sg");
+  const [ email, setEmail ] = useState("");
 
   const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
 
   useEffect(() => {
     console.log("ScreenForgetPassword")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Reset Password", navigate, "screenLogin")
+      header:()=> HeaderWithBack("Reset Password", navigate, "screenLogin", null, goBack)
     }});
     return function cleanup() { } 
   }, []);
@@ -54,6 +55,8 @@ const ScreenForgetPassword = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        
+        <LottieView style={{height: 250}} source={require('@assets/animation/forget-password-16766.json')} autoPlay={true} loop={true} />
 
         <View style={[styles.container]}>
           <OutlineInput
@@ -67,13 +70,13 @@ const ScreenForgetPassword = (props) => {
             passiveLabelColor="#bbb7ff"
             passiveValueColor="#bbb7ff"
           />
+          <Text style={styles.errorText}>{emailErrorMsg}</Text>
         </View>
         
         <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="lock-reset" mode="contained" onPress={() => handleReset()}>
           Reset!
         </Button>
 
-        <Text>email: {email}</Text>
       </View>
     </SafeAreaView>
   );
@@ -83,4 +86,5 @@ export default withScreenBase(ScreenForgetPassword, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   container: { width:"80%",  marginTop: 10, marginBottom: 10 },
+  errorText:{color:'red'},
 });

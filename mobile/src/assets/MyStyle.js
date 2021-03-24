@@ -122,12 +122,12 @@ const HomeHeader = (navigate, logged_in = null)=>{
 const ShadowStyle = { shadowColor: 'rgba(0,0,0,0.4)', shadowOffset: {height: 1, width: 1}, shadowOpacity: 1, shadowRadius: 1, elevation: 2 }
 const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' }
 
-const HeaderWithBack = (title, navigate, destination, headerRight=null)=>{
+const HeaderWithBack = (title, navigate, destination, headerRight=null, goBack = null)=>{
   return(
     <View style={{width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
       <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
-        <Pressable style={{position: 'absolute', left: 10, justifyContent: 'center'}} onPress={() => navigate(destination)}>
+        <Pressable style={{position: 'absolute', left: 10, justifyContent: 'center'}} onPress={() => goBack == null ? navigate(destination): goBack()}>
           <Icon name={'arrow-left'} color={'white'} size={30} />
         </Pressable>
         {headerRight}

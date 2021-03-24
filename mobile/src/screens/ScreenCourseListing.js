@@ -125,7 +125,7 @@ const ScreenCourseListing = (props) => {
           <Icon name={'filter-variant'} color={'white'} size={30} />
         </Pressable>
       )
-    }});
+    }}, goBack);
     return function cleanup() { } 
   }, []);
 

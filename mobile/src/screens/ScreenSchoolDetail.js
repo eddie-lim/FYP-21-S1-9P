@@ -47,7 +47,7 @@ const ScreenSchoolDetail = (props) => {
   useEffect(() => {
     console.log("ScreenSchoolDetail")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("School Detail", navigate, "screenSchoolListing")
+      header:()=> HeaderWithBack("School Detail", navigate, "screenSchoolListing", null, goBack)
     }});
     return function cleanup() { } 
   }, []);

@@ -157,6 +157,6 @@ const RootSwitch = createSwitchNavigator({
   loginStack: LoginStack,
   settingsStack: SettingsStack,
   profileStack: ProfileStack
-}, { initialRouteName: 'mainBottomTab' });
+}, { initialRouteName: 'appLoading' });
 
 export default createAppContainer(RootSwitch);
