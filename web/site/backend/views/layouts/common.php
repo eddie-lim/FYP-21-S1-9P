@@ -198,8 +198,8 @@ $logEntries[] = [
                         [
                             'label' => Yii::t('backend', 'My University'),
                             'icon' => FAS::icon('building', ['class' => ['nav-icon']]),
-                            'url' => ['/university-partners/index'],
-                            'active' => Yii::$app->controller->id === 'university-partners' && Yii::$app->controller->action->id === 'university-partners',
+                            'url' => ['/site/home'],
+                            'active' => Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'home',
                         ],
                         [
                             'label' => Yii::t('backend', 'Users'),

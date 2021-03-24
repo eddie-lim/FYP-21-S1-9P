@@ -2,7 +2,7 @@
 $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
     'controllerNamespace' => 'backend\controllers',
-    'defaultRoute' => 'courses/index',
+    'defaultRoute' => 'site/home',
     'components' => [
         'errorHandler' => [
             'errorAction' => 'site/error',
