@@ -37,10 +37,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     'tags:ntext',
                     'notes:ntext',
                     'status',
-                    'created_at',
-                    'created_by',
-                    'updated_at',
-                    'updated_by',
+                    'created_at:datetime',
+                    // 'created_by',
+                    [
+                        'attribute' => 'created_by',
+                        'format' => 'raw',
+                        'value' => function ($model){
+                            return \common\models\User::getUserBlock($model->created_by);
+                        },
+                    ],
+                    'updated_at:datetime',
+                    // 'updated_by',
+                    [
+                        'attribute' => 'updated_by',
+                        'format' => 'raw',
+                        'value' => function ($model){
+                            return \common\models\User::getUserBlock($model->updated_by);
+                        },
+                    ],
                     
                 ],
             ]) ?>

@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
             ],
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                [
+                    'class' => \yii\grid\SerialColumn::class, 
+                    'headerOptions' => ['width' => '20px']
+                ],
                 'username',
                 'email:email',
             ],

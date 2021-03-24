@@ -211,6 +211,21 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
+    public static function getUserBlock($id){
+        $user = static::findIdentity($id);
+        $url = Url::to(['user/view', 'id'=>$id]);
+
+        $html = <<< html
+            <a href="$url">
+                <div>
+                    $user->publicIdentity
+                <div>
+            </a>
+        html;
+
+        return $html;
+    }
+
     //#####################
     //ratelimiter interface
     //#####################

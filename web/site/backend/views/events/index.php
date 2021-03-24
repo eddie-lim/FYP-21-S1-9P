@@ -32,7 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => \yii\grid\SerialColumn::class, 
+                        'headerOptions' => ['width' => '20px']
+                    ],
 
                     // 'id',
                     // 'school_id',
@@ -58,7 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'updated_at',
                     // 'updated_by',
                     
-                    ['class' => \common\widgets\ActionColumn::class],
+                    [
+                        'class' => \common\widgets\ActionColumn::class, 
+                        'headerOptions' => ['width' => '20px']
+                    ],
                 ],
             ]); ?>
     

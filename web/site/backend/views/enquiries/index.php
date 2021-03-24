@@ -28,10 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => \yii\grid\SerialColumn::class, 
+                        'headerOptions' => ['width' => '20px']
+                    ],
 
                     // 'id',
-                    'user_id',
+                    // 'user_id',
+                    [
+                        'attribute' => 'user_id',
+                        'format' => 'raw',
+                        'value' => function ($model){
+                            return \common\models\User::getUserBlock($model->user_id);
+                        },
+                        'headerOptions' => ['width' => '250px'],
+                    ],
                     // 'school_id',
                     'enquiry:ntext',
                     // 'notes:ntext',
@@ -41,7 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'updated_at',
                     // 'updated_by',
                     
-                    ['class' => \common\widgets\ActionColumn::class],
+                    [
+                        'class' => \common\widgets\ActionColumn::class, 
+                        'headerOptions' => ['width' => '20px']
+                    ],
                 ],
             ]); ?>
     

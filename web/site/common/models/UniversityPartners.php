@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "university_partners".
@@ -68,9 +69,14 @@ class UniversityPartners extends \yii\db\ActiveRecord
 
     public static function getUniversityBlock($id){
         $model = static::findOne($id);
+        $url = Url::to(['university-partners/view', 'id'=>$id]);
 
         $html = <<< html
-            <div>$model->name<div>
+            <a href="$url">
+                <div>
+                    $model->name
+                <div>
+            </a>
         html;
 
         return $html;
