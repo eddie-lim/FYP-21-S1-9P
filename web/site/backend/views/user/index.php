@@ -42,6 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'username',
                 'email:email',
+                [
+                    'label' => 'Role',
+                    'format' => 'raw',
+                    'attribute' => 'item_name',
+                    'value' => function ($model) {
+                        $html = User::getUserRole($model->id);
+                        return $html;
+                    },
+                    'headerOptions' => ['width' => '150px'],
+                ],
                 // [
                 //     'class' => EnumColumn::class,
                 //     'attribute' => 'status',

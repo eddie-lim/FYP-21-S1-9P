@@ -2,6 +2,7 @@
 
 namespace backend\models\search;
 
+use Yii;
 use common\models\User;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,7 +13,7 @@ use yii\data\ActiveDataProvider;
 class UserSearch extends User
 {
     private $newsletterSubscriptionsMode = false;
-    private $joinRoles = false;
+    public $item_name;
     /**
      * @inheritdoc
      */
@@ -20,8 +21,8 @@ class UserSearch extends User
     {
         return [
             [['id', 'status'], 'integer'],
-            [['created_at', 'updated_at', 'login_at'], 'default', 'value' => null],
-            [['username', 'auth_key', 'password_hash', 'email'], 'safe'],
+            [['created_at', 'updated_at', 'login_at', 'item_name'], 'default', 'value' => null],
+            [['username', 'auth_key', 'password_hash', 'email', 'item_name'], 'safe'],
         ];
     }
 
@@ -44,10 +45,10 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = User::find()->join('LEFT JOIN','rbac_auth_assignment','rbac_auth_assignment.user_id = id');
 
-        if($this->joinRoles){
-            $query->join('LEFT JOIN','rbac_auth_assignment','rbac_auth_assignment.user_id = id');
+        if(!Yii::$app->user->can(User::ROLE_SUPERADMIN)){
+            $query->andFilterWhere(['or', ['not', ['rbac_auth_assignment.item_name'=> User::ROLE_SUPERADMIN]]])->orderBy(['rbac_auth_assignment.created_at' => SORT_DESC]);
         }
 
         if($this->newsletterSubscriptionsMode){
@@ -84,7 +85,8 @@ class UserSearch extends User
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'rbac_auth_assignment.item_name', $this->item_name]);
 
         return $dataProvider;
     }

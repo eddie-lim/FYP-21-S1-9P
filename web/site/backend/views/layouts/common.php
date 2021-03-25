@@ -168,7 +168,7 @@ $logEntries[] = [
                 </div>
                 <div class="info">
                     <a href="#" class="d-block"><?php echo Yii::$app->user->identity->publicIdentity ?></a>
-                    <a class="d-block text-wrap">Role: <?= Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "Dev" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "SIM Staff" : "University Partners Staff") ?></a>
+                    <a class="d-block text-wrap">Role: <?= User::getUserRole(Yii::$app->user->id) ?></a>
                 </div>
             </div>
             <!-- /sidebar user panel -->

@@ -105,6 +105,27 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(UserActionHistory::className(), ['user_id' => 'id']);
     }
 
+    public static function getAllRoles(){
+        return[
+            static::ROLE_SUPERADMIN => "Super Admin (Dev)",
+            static::ROLE_ADMINISTRATOR => "SIM Staff",
+            static::ROLE_MANAGER => "University Partner Staff",
+            static::ROLE_USER => "User",
+        ];
+    }
+
+    public static function getAllocatableRoles(){
+        return [
+            static::ROLE_ADMINISTRATOR => "SIM Staff",
+            static::ROLE_MANAGER => "University Partner Staff",
+            static::ROLE_USER => "User",
+        ];
+    }
+
+    public static function getUserRole($id){
+        return static::getAllRoles()[array_keys(Yii::$app->authManager->getRolesByUser($id))[0]];
+    }
+
     public static function findIdentity($id){
         return static::find()
             ->active()
