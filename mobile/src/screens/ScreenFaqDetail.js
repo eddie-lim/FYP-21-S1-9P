@@ -7,6 +7,7 @@ import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 
 const ScreenFaqDetail = (props) => {
   const { navigate, goBack } = useNavigation();
+  const item = useNavigationParam('item');
 
   useEffect(() => {
     console.log("ScreenFaqDetail")
@@ -19,8 +20,8 @@ const ScreenFaqDetail = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'80%'}}>
-        <Text style={{color:"black", fontSize:20, marginBottom:20}}>Question: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-        <Text style={{color:"black"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut aliquam massa. Vivamus posuere tellus augue, ut condimentum sapien semper a. Vivamus cursus vehicula leo, et posuere nunc aliquam at. Maecenas convallis est sed arcu rhoncus, sed finibus dolor vestibulum. Praesent porta varius molestie. In quis quam faucibus nisi aliquam sodales at dapibus dui. Mauris pulvinar quis sem at pellentesque. Donec molestie erat vitae nisl dictum ornare.</Text>
+        <Text style={{color:"black", fontSize:20, marginBottom:20}}>{item.question}</Text>
+        <Text style={{color:"black"}}>{item.answer}</Text>
       </View>
     </SafeAreaView>
   );
