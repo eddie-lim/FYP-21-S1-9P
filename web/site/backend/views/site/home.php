@@ -27,7 +27,7 @@ $this->title = $model->name;
             ]) ?>
         </div>
         <div class="card-footer">
-            <?php echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?php echo Html::a('Update', ['university-partners/update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 </div>
