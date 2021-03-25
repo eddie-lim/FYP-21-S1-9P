@@ -85,13 +85,15 @@ class RegistrationForm extends Model
                     $success = false;
                 };
                 
+                $auth = Yii::$app->authManager;
+                $auth->assign($auth->getRole(User::ROLE_USER), $user->id);
             } else {
                 $success = false;
             }           
 
             if ($success) {
                 $transaction->commit();
-                $user->addToTimeline();
+                // $user->addToTimeline();
 
                 return $user;
             } else {
