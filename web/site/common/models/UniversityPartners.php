@@ -74,7 +74,7 @@ class UniversityPartners extends \yii\db\ActiveRecord
         $html = "";
         $html .= '<a href="'.$url.'">';
         $html .= '<div>';
-        $html .= '$model->name';
+        $html .= $model->name;
         $html .= '<div>';
         $html .= '</a>';
 

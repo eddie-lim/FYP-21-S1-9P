@@ -205,7 +205,7 @@ class User extends ActiveRecord implements IdentityInterface
         $html = "";
         $html .= '<a href="'.$url.'">';
         $html .= '<div>';
-        $html .= '$user->publicIdentity';
+        $html .= $user->publicIdentity;
         $html .= '<div>';
         $html .= '</a>';
 

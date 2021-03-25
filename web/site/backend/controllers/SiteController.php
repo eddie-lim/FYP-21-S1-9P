@@ -32,7 +32,7 @@ class SiteController extends \yii\web\Controller
 
     public function actionHome()
     {
-        if (($model = UniversityPartners::findOne(Yii::$app->user->id)) == null) {
+        if (($model = UniversityPartners::findOne(Yii::$app->user->identity->userProfile->school_id ?? 0)) == null) {
             throw new NotFoundHttpException('Not assigned to any university, please contact SIM Admin.');
         }
         return $this->render('home', [

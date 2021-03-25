@@ -42,12 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'username',
                 'email:email',
-                [
-                    'class' => EnumColumn::class,
-                    'attribute' => 'status',
-                    'enum' => MyCustomActiveRecord::deleteStatuses(),
-                    'filter' => MyCustomActiveRecord::deleteStatuses()
-                ],
+                // [
+                //     'class' => EnumColumn::class,
+                //     'attribute' => 'status',
+                //     'enum' => MyCustomActiveRecord::deleteStatuses(),
+                //     'filter' => MyCustomActiveRecord::deleteStatuses()
+                // ],
                 [
                     'attribute' => 'created_at',
                     'format' => 'datetime',
@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => \common\widgets\ActionColumn::class,
                     'template' => '{login} {view} {update} {delete}',
-                    'options' => ['style' => 'width: 140px'],
+                    'headerOptions' => ['width' => '20px'],
                     'buttons' => [
                         'login' => function ($url) {
                             return Html::a(

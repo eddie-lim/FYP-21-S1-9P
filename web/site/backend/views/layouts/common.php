@@ -111,7 +111,7 @@ $logEntries[] = [
                             '.Html::img(Yii::$app->user->identity->userProfile->getAvatar('/img/anonymous.png'), ['class' => ['img-circle', 'elevation-2', 'bg-white'], 'alt' => 'User image']).'
                             <p>
                                 '.Yii::$app->user->identity->publicIdentity.'
-                                <small>'.Yii::t('backend', 'Member since {0, date, short}', Yii::$app->user->identity->created_at).'</small>
+                                <small>'.Yii::t('backend', 'Member since {0, date, long}', Yii::$app->user->identity->created_at).'</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
@@ -168,7 +168,7 @@ $logEntries[] = [
                 </div>
                 <div class="info">
                     <a href="#" class="d-block"><?php echo Yii::$app->user->identity->publicIdentity ?></a>
-                    <a class="d-block">Role: <?= Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "Dev" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "SIM Staff" : "University Partners Staff") ?></a>
+                    <a class="d-block text-wrap">Role: <?= Yii::$app->user->can(User::ROLE_SUPERADMIN) ? "Dev" : (Yii::$app->user->can(User::ROLE_ADMINISTRATOR) ? "SIM Staff" : "University Partners Staff") ?></a>
                 </div>
             </div>
             <!-- /sidebar user panel -->

@@ -9,8 +9,6 @@ use yii\widgets\DetailView;
  */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'University Partners', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="university-partners-view">
     <div class="card">
