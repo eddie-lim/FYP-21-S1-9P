@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, ScrollView } from 'react-native';
+import { View, Dimensions, StyleSheet, Pressable, Text, ScrollView } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -7,6 +7,7 @@ import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
 import { capitalize, join, split, parseInt, map } from 'lodash';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ScreenEventDetail = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -17,7 +18,10 @@ const ScreenEventDetail = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Event Detail", navigate, source)
+      header:()=> HeaderWithBack("Event Detail", navigate, source,
+      <Pressable style={{position: 'absolute', right: 10, justifyContent: 'center'}} onPress={() => handleRegister()}>
+        <Icon name={'calendar-plus'} color={'white'} size={30} />
+      </Pressable>)
     }});
     var item_keys = Object.keys(item);
     setActiveSections(map(Object.keys(item_keys), parseInt));
@@ -35,6 +39,10 @@ const ScreenEventDetail = (props) => {
 
     return function cleanup() { } 
   }, []);
+
+  handleRegister = () => {
+
+  }
 
   renderSectionTitle = (section) => {
     return (
