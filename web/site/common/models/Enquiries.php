@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\components\MyCustomActiveRecord;
 
 /**
  * This is the model class for table "enquiries".
@@ -18,7 +19,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Enquiries extends \common\components\MyCustomActiveRecord
+class Enquiries extends MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,6 +37,7 @@ class Enquiries extends \common\components\MyCustomActiveRecord
         return [
             [['user_id', 'school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['enquiry', 'notes', 'status'], 'string'],
+            ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
         ];
     }
 

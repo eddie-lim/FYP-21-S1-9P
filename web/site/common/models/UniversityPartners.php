@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\helpers\Url;
+use common\components\MyCustomActiveRecord;
 
 /**
  * This is the model class for table "university_partners".
@@ -22,7 +23,7 @@ use yii\helpers\Url;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class UniversityPartners extends \common\components\MyCustomActiveRecord
+class UniversityPartners extends MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -38,10 +39,12 @@ class UniversityPartners extends \common\components\MyCustomActiveRecord
     public function rules()
     {
         return [
-            [['description', 'highlights', 'certifications', 'tags', 'notes', 'status'], 'string'],
+            [['description', 'highlights', 'certifications', 'notes', 'status'], 'string'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['continent'], 'string', 'max' => 32],
+            ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
+            ['tags', 'safe'],
         ];
     }
 

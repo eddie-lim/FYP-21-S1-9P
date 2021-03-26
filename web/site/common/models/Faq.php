@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\components\MyCustomActiveRecord;
 
 /**
  * This is the model class for table "faq".
@@ -19,7 +20,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Faq extends \common\components\MyCustomActiveRecord
+class Faq extends MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -37,6 +38,8 @@ class Faq extends \common\components\MyCustomActiveRecord
         return [
             [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['question', 'answer', 'tags', 'notes', 'status'], 'string'],
+            ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
+            ['tags', 'safe'],
         ];
     }
 

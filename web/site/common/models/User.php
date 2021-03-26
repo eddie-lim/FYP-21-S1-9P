@@ -82,6 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             [['status', 'notes'], 'string'],
             [['notes'], 'string', 'max' => 2048],
+            ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
             //[['username'], 'filter', 'filter' => '\yii\helpers\Html::encode']
         ];
     }

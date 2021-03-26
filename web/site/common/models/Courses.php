@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\UniversityPartners;
+use common\components\MyCustomActiveRecord;
 
 /**
  * This is the model class for table "courses".
@@ -30,7 +31,7 @@ use common\models\UniversityPartners;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Courses extends \common\components\MyCustomActiveRecord
+class Courses extends MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -50,6 +51,8 @@ class Courses extends \common\components\MyCustomActiveRecord
             [['mode_of_study', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'notes', 'status'], 'string'],
             [['name'], 'string', 'max' => 512],
             [['disciplines', 'sub_disciplines', 'academic_level'], 'string', 'max' => 128],
+            ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
+            ['tags', 'safe'],
         ];
     }
 

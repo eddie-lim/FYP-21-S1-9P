@@ -64,8 +64,11 @@ class CoursesController extends Controller
     {
         $model = new Courses();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->tags = json_encode($model->tags);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
         return $this->render('create', [
             'model' => $model,
@@ -81,9 +84,13 @@ class CoursesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->tags = json_decode($model->tags);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->tags = json_encode($model->tags);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
         return $this->render('update', [
             'model' => $model,

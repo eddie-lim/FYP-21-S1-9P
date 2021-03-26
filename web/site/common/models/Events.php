@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\UniversityPartners;
+use common\components\MyCustomActiveRecord;
 
 /**
  * This is the model class for table "events".
@@ -24,7 +25,7 @@ use common\models\UniversityPartners;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Events extends \common\components\MyCustomActiveRecord
+class Events extends MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -40,10 +41,12 @@ class Events extends \common\components\MyCustomActiveRecord
     public function rules()
     {
         return [
-            [['school_id', 'start_at', 'end_at', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['description', 'notes', 'status'], 'string'],
             [['session', 'venue'], 'string', 'max' => 128],
             [['name'], 'string', 'max' => 256],
+            ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
+            [['tags', 'start_at', 'end_at'], 'safe'],
         ];
     }
 

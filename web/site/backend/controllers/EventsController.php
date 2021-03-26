@@ -64,8 +64,13 @@ class EventsController extends Controller
     {
         $model = new Events();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->tags = json_encode($model->tags);
+            $model->start_at = strtotime($model->start_at);
+            $model->end_at = strtotime($model->end_at);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
         return $this->render('create', [
             'model' => $model,
@@ -81,9 +86,17 @@ class EventsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->tags = json_decode($model->tags);
+        $model->start_at = date("d-M-Y H:i", $model->start_at);
+        $model->end_at = date("d-M-Y H:i", $model->end_at);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->tags = json_encode($model->tags);
+            $model->start_at = strtotime($model->start_at);
+            $model->end_at = strtotime($model->end_at);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
         return $this->render('update', [
             'model' => $model,
