@@ -79,6 +79,12 @@ const MapStack = createStackNavigator({
 
 //##############################################
 
+const WebviewStack = createStackNavigator({
+  screenWebview: ScreenWebview,
+}, { initialRouteName: 'screenWebview'});
+
+//##############################################
+
 const QuestionsStack = createStackNavigator({
   screenQuestions: ScreenQuestions,
   screenApplicationProcess: ScreenApplicationProcess,
@@ -160,7 +166,7 @@ const RootSwitch = createSwitchNavigator({
   loginStack: LoginStack,
   settingsStack: SettingsStack,
   profileStack: ProfileStack,
-  screenWebview: ScreenWebview,
+  webviewStack: WebviewStack,
 }, { initialRouteName: 'appLoading' });
 
 export default createAppContainer(RootSwitch);

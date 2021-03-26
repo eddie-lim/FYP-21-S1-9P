@@ -118,7 +118,7 @@ const ScreenEnquiryForm = (props) => {
       <ScrollView>
         <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           
-          <LottieView style={{height: 250}} source={require('@assets/animation/enquiry-33011.json')} autoPlay={true} loop={true} />
+          <LottieView style={{height: 200}} source={require('@assets/animation/enquiry-33011.json')} autoPlay={true} loop={true} />
 
           {renderDropdown()}
           

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, Pressable, Text, ScrollView } from 'react-native';
+import { View, BackHandler, StyleSheet, Pressable, Text, ScrollView } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -23,6 +23,8 @@ const ScreenEventDetail = (props) => {
         <Icon name={'calendar-plus'} color={'white'} size={30} />
       </Pressable>)
     }});
+    BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
+
     var item_keys = Object.keys(item);
     setActiveSections(map(Object.keys(item_keys), parseInt));
     var item_values = Object.values(item);
@@ -39,6 +41,12 @@ const ScreenEventDetail = (props) => {
 
     return function cleanup() { } 
   }, []);
+
+  handleBackHandler = ()=>{
+   BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+   navigate("mainBottomTab");
+   return true;
+ }
 
   handleRegister = () => {
 

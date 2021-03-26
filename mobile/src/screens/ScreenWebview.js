@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, Image, ScrollView } from 'react-native';
+import { View, Dimensions, StyleSheet, ImageBackground, Text, Image, ScrollView, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -10,13 +10,21 @@ const ScreenWebview = (props) => {
   const { navigate, goBack } = useNavigation();
   const headerName = useNavigationParam('headerName');
   const url = useNavigationParam('url');
+  const source = useNavigationParam('source');
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack(headerName, navigate, "screenLanding")
+      header:()=> HeaderWithBack(headerName, navigate, source)
     }});
+    BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
     return function cleanup() { } 
   }, []);
+
+  handleBackHandler = ()=>{
+    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+    navigate(source);
+    return true;
+  }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>

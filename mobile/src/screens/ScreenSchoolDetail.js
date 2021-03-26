@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, ScrollView } from 'react-native';
+import { View, Dimensions, StyleSheet, BackHandler, Text, ScrollView } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -19,6 +19,8 @@ const ScreenSchoolDetail = (props) => {
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("School Detail", navigate, source)
     }});
+    BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
+
     var item_keys = Object.keys(item);
     setActiveSections(map(Object.keys(item_keys), parseInt));
     var item_values = Object.values(item);
@@ -35,6 +37,12 @@ const ScreenSchoolDetail = (props) => {
 
     return function cleanup() { } 
   }, []);
+
+  handleBackHandler = ()=>{
+   BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+   navigate("mainBottomTab");
+   return true;
+ }
   
   renderSectionTitle = (section) => {
     return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, ScrollView, Dimensions, StyleSheet, ImageBackground, Text, Keyboard } from 'react-native';
+import { View, ScrollView, Dimensions, StyleSheet, BackHandler, Text, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -39,8 +39,15 @@ const ScreenProfile = (props) => {
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("My Profile", navigate, "mainBottomTab")
     }});
+    BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
     return function cleanup() { } 
   }, []);
+
+  handleBackHandler = ()=>{
+    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+    navigate("mainBottomTab");
+    return true;
+  }
 
   handleUpdate = () =>{
     toggleActivityIndicator(true, "Updating...");

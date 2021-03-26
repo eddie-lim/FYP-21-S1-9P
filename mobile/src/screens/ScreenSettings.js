@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, Pressable, FlatList, ScrollView, Switch } from 'react-native';
+import { View, Dimensions, StyleSheet, BackHandler, Text, Pressable, FlatList, ScrollView, Switch } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -39,6 +39,7 @@ const ScreenSettings = (props) => {
      props.navigation.setParams({"navOptions":{
        header:()=> HeaderWithBack("Settings", navigate, "mainBottomTab")
      }});
+     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
 
      StoreSettings.get(StoreSettings.IS_LOGGED_IN)
      .then((IS_LOGGED_IN)=>{
@@ -60,6 +61,12 @@ const ScreenSettings = (props) => {
      return function cleanup() { } 
    }, []);
 
+   handleBackHandler = ()=>{
+    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+    navigate("mainBottomTab");
+    return true;
+  }
+  
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}} style={{backgroundColor: 'white'}} showsVerticalScrollIndicator={false}>

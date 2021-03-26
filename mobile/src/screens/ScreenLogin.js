@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable, Keyboard } from 'react-native';
+import { View, Dimensions, StyleSheet, ScrollView, Text, BackHandler, Pressable, Keyboard } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -24,8 +24,15 @@ const ScreenLogin = (props) => {
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("Login", navigate, "mainBottomTab")
     }});
+    BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
     return function cleanup() { } 
   }, []);
+
+  handleBackHandler = ()=>{
+    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+    navigate(source);
+    return true;
+  }
 
   handleLogin = () =>{
     setEmailErrorMsg('');
