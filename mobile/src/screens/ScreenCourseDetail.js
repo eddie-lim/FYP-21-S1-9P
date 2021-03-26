@@ -13,11 +13,12 @@ const ScreenCourseDetail = (props) => {
   const [ activeSections, setActiveSections ] = useState([0]);
   const [ section, setSection ] = useState([]);
   const item = useNavigationParam('item');
+  const source = useNavigationParam('source');
 
   useEffect(() => {
     console.log("ScreenCourseDetail")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Course Detail", navigate, "screenCourseListing")
+      header:()=> HeaderWithBack("Course Detail", navigate, source)
     }});
     var item_keys = Object.keys(item);
     var item_values = Object.values(item);

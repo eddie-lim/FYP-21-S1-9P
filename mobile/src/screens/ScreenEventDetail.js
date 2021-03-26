@@ -13,11 +13,12 @@ const ScreenEventDetail = (props) => {
   const [ activeSections, setActiveSections ] = useState([0]);
   const [ section, setSection ] = useState([]);
   const item = useNavigationParam('item');
+  const source = useNavigationParam('source');
 
   useEffect(() => {
     console.log("ScreenEventDetail")
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Event Detail", navigate, "screenEventListing")
+      header:()=> HeaderWithBack("Event Detail", navigate, source)
     }});
     var item_keys = Object.keys(item);
     var item_values = Object.values(item);

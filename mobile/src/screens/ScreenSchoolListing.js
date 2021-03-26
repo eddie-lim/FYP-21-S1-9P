@@ -54,7 +54,7 @@ const ScreenSchoolListing = (props) => {
   }
   renderItem = ({item, index}) => {
     return (        
-      <Pressable onPress={ () => navigate("screenSchoolDetail", {item:item, data: data})}>
+      <Pressable onPress={ () => navigate("screenSchoolDetail", {item:item, data: data, source:"screenSchoolListing"})}>
         <View>
           <View style={styles.card}>
             <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, padding: 5}}>
