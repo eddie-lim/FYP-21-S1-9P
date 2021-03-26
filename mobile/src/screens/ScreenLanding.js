@@ -46,7 +46,7 @@ const ScreenLanding = (props) => {
           <Pressable onPress={() => navigate("screenWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Try our Course Quiz!</Text>
-              <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/course-hero-5071.json')} autoPlay={true} loop={true} />
+              <LottieView style={{height: 125, position:'absolute', bottom:10}} source={require('@assets/animation/course-hero-5071.json')} autoPlay={true} loop={true} />
             </View>
           </Pressable>
           <Pressable style={{marginTop:15}} onPress={() => navigate("screenCourseDetail", {item:featuredItems.course, source:"screenLanding"})}>

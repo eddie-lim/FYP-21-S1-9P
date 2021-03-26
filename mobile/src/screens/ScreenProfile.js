@@ -9,8 +9,10 @@ import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
+import LottieView from 'lottie-react-native';
 
 const ScreenProfile = (props) => {
+  const { toggleActivityIndicator } = useContext(GlobalContext);
   const { navigate, goBack } = useNavigation();
 
   const [ firstName, setFirstName ] = useState("");
@@ -40,10 +42,24 @@ const ScreenProfile = (props) => {
     return function cleanup() { } 
   }, []);
 
+  handleUpdate = () =>{
+    toggleActivityIndicator(true, "Updating...");
+    setTimeout(() => {
+      toggleActivityIndicator(false)
+    }, 1000);
+    // WebApi.resetPassword(email).then((res)=>{
+    //   toggleActivityIndicator(true, "Logging in...");
+    // }).catch((err)=>{
+    //   toggleActivityIndicator(false)
+    //   return
+    // })
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
         <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <LottieView style={{height: 250}} source={require('@assets/animation/user-profile-50124.json')} autoPlay={true} loop={true} />
 
           <View style={[styles.container]}>
             <OutlineInput
@@ -174,16 +190,6 @@ const ScreenProfile = (props) => {
           <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleUpdate()}>
             Update
           </Button>
-
-          <Text>firstName: {firstName}</Text>
-          <Text>lastName: {lastName}</Text>
-          <Text>email: {email}</Text>
-          <Text>countryCode: {countryCode}</Text>
-          <Text>mobileNumber: {mobileNumber}</Text>
-          <Text>nationality: {nationality}</Text>
-          <Text>highestQualification: {highestQualification}</Text>
-          <Text>highestQualificationInstitute: {highestQualificationInstitute}</Text>
-          <Text>yearOfGraduation: {yearOfGraduation}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

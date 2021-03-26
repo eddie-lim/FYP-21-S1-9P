@@ -73,53 +73,55 @@ const ScreenLogin = (props) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        
-        <LottieView style={{height: 250}} source={require('@assets/animation/login-8590.json')} autoPlay={true} loop={true} />
+      <ScrollView>
+        <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          
+          <LottieView style={{height: 250}} source={require('@assets/animation/login-8590.json')} autoPlay={true} loop={true} />
 
-        <View style={[styles.container]}>
-          <OutlineInput
-            value={email}
-            onChangeText={(e) => setEmail(e)}
-            label="Email"
-            activeValueColor="#6c63fe"
-            activeBorderColor="#6c63fe"
-            activeLabelColor="#6c63fe"
-            passiveBorderColor="#bbb7ff"
-            passiveLabelColor="#bbb7ff"
-            passiveValueColor="#bbb7ff"
-          />
-          <Text style={styles.errorText}>{emailErrorMsg}</Text>
+          <View style={[styles.container]}>
+            <OutlineInput
+              value={email}
+              onChangeText={(e) => setEmail(e)}
+              label="Email"
+              activeValueColor="#6c63fe"
+              activeBorderColor="#6c63fe"
+              activeLabelColor="#6c63fe"
+              passiveBorderColor="#bbb7ff"
+              passiveLabelColor="#bbb7ff"
+              passiveValueColor="#bbb7ff"
+            />
+            <Text style={styles.errorText}>{emailErrorMsg}</Text>
+          </View>
+          
+          <View style={[styles.container]}>
+            <OutlineInput
+              value={password}
+              onChangeText={(e) => setPassword(e)}
+              label="Password"
+              secureTextEntry={true}
+              activeValueColor="#6c63fe"
+              activeBorderColor="#6c63fe"
+              activeLabelColor="#6c63fe"
+              passiveBorderColor="#bbb7ff"
+              passiveLabelColor="#bbb7ff"
+              passiveValueColor="#bbb7ff"
+            />
+            <Text style={styles.errorText}>{passwordErrorMsg}</Text>
+          </View>
+
+          <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="login" mode="contained" onPress={() => handleLogin()}>
+            Log me in!
+          </Button>
+
+          <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"orange" }} icon="lock-reset" mode="contained" onPress={() => navigate("screenForgetPassword")}>
+            Forget password? Click here!
+          </Button>
+
+          <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"blue" }} icon="account-plus" mode="contained" onPress={() => navigate("screenRegister")}>
+            Register here!
+          </Button>
         </View>
-        
-        <View style={[styles.container]}>
-          <OutlineInput
-            value={password}
-            onChangeText={(e) => setPassword(e)}
-            label="Password"
-            secureTextEntry={true}
-            activeValueColor="#6c63fe"
-            activeBorderColor="#6c63fe"
-            activeLabelColor="#6c63fe"
-            passiveBorderColor="#bbb7ff"
-            passiveLabelColor="#bbb7ff"
-            passiveValueColor="#bbb7ff"
-          />
-          <Text style={styles.errorText}>{passwordErrorMsg}</Text>
-        </View>
-
-        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="login" mode="contained" onPress={() => handleLogin()}>
-          Log me in!
-        </Button>
-
-        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"orange" }} icon="lock-reset" mode="contained" onPress={() => navigate("screenForgetPassword")}>
-          Forget password? Click here!
-        </Button>
-
-        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"blue" }} icon="account-plus" mode="contained" onPress={() => navigate("screenRegister")}>
-          Register here!
-        </Button>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
