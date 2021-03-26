@@ -24,12 +24,14 @@ import ScreenRegister from '@screens/ScreenRegister';
 import ScreenSettings from '@screens/ScreenSettings';
 import ScreenProfile from '@screens/ScreenProfile';
 import ScreenForgetPassword from '@screens/ScreenForgetPassword';
+import ScreenWebview from '@screens/ScreenWebview';
 
 
 //##############################################
 
 const LandingStack = createStackNavigator({
   screenLanding: ScreenLanding,
+  screenWebview: ScreenWebview,
 }, { initialRouteName: 'screenLanding'});
 
 //##############################################
@@ -156,7 +158,7 @@ const RootSwitch = createSwitchNavigator({
   mainBottomTab: MainBottomTab,
   loginStack: LoginStack,
   settingsStack: SettingsStack,
-  profileStack: ProfileStack
+  profileStack: ProfileStack,
 }, { initialRouteName: 'appLoading' });
 
 export default createAppContainer(RootSwitch);
