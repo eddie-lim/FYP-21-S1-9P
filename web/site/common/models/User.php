@@ -124,7 +124,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     public static function getUserRole($id){
-        return static::getAllRoles()[array_keys(Yii::$app->authManager->getRolesByUser($id))[0]];
+        return empty(Yii::$app->authManager->getRolesByUser($id)) ? "" : static::getAllRoles()[array_keys(Yii::$app->authManager->getRolesByUser($id))[0]];
     }
 
     public static function findIdentity($id){
