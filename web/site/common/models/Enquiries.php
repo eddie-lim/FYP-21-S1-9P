@@ -18,7 +18,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Enquiries extends \yii\db\ActiveRecord
+class Enquiries extends \common\components\MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}

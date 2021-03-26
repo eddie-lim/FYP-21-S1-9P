@@ -22,7 +22,7 @@ use yii\helpers\Url;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class UniversityPartners extends \yii\db\ActiveRecord
+class UniversityPartners extends \common\components\MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -79,5 +79,16 @@ class UniversityPartners extends \yii\db\ActiveRecord
         $html .= '</a>';
 
         return $html;
+    }
+
+    public function toObject() {
+        $m = $this;
+        $o = (object) [];
+        $o->name = $m->name;
+        $o->description = $m->description;
+        $o->continent = $m->continent;
+        $o->highlights = $m->highlights;
+        $o->certifications = $m->certifications;
+        return $o;
     }
 }

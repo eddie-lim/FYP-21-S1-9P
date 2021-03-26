@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\UniversityPartners;
 
 /**
  * This is the model class for table "events".
@@ -23,7 +24,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Events extends \yii\db\ActiveRecord
+class Events extends \common\components\MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -68,5 +69,23 @@ class Events extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getSchool()
+    {
+        return $this->hasOne(UniversityPartners::class, ['id' => 'school_id']);
+    }
+
+    public function toObject() {
+        $m = $this;
+        $o = (object) [];
+        $o->name = $m->name;
+        $o->university = $m->school->name;
+        $o->session = $m->session;
+        $o->description = $m->description;
+        $o->venue = $m->venue;
+        $o->start_at = $m->start_at;
+        $o->end_at = $m->end_at;
+        return $o;
     }
 }

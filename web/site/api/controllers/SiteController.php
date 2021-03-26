@@ -13,6 +13,7 @@ use common\models\Events;
 use common\models\Faq;
 use common\models\UniversityPartners;
 use common\components\Utility;
+use common\components\MyCustomActiveRecord;
 
 class SiteController extends \api\controllers\RestControllerBase
 {
@@ -48,14 +49,14 @@ class SiteController extends \api\controllers\RestControllerBase
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
         $models = Courses::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
-        Yii::$app->api->sendSuccessResponse($models);
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
+        Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
     }
 
     public function actionGetCourse($id){
         $model = Courses::find()->where(['id'=>$id])->asArray()->one();
         if($model){
-            Yii::$app->api->sendSuccessResponse($model);
+            Yii::$app->api->sendSuccessResponse($model->toObject());
         } else {
             $str = Utility::jsonifyError("id", "Invalid ID.");
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
@@ -66,14 +67,14 @@ class SiteController extends \api\controllers\RestControllerBase
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
         $models = Events::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
-        Yii::$app->api->sendSuccessResponse($models);
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
+        Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
     }
 
     public function actionGetEvent($id){
         $model = Events::find()->where(['id'=>$id])->asArray()->one();
         if($model){
-            Yii::$app->api->sendSuccessResponse($model);
+            Yii::$app->api->sendSuccessResponse($model->toObject());
         } else {
             $str = Utility::jsonifyError("id", "Invalid ID.");
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
@@ -84,7 +85,7 @@ class SiteController extends \api\controllers\RestControllerBase
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
         $models = Faq::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
         Yii::$app->api->sendSuccessResponse($models);
     }
 
@@ -102,14 +103,14 @@ class SiteController extends \api\controllers\RestControllerBase
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
         $models = UniversityPartners::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
-        Yii::$app->api->sendSuccessResponse($models);
+        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
+        Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
     }
 
     public function actionGetUniversityPartner($id){
         $model = UniversityPartners::find()->where(['id'=>$id])->asArray()->one();
         if($model){
-            Yii::$app->api->sendSuccessResponse($model);
+            Yii::$app->api->sendSuccessResponse($model->toObject());
         } else {
             $str = Utility::jsonifyError("id", "Invalid ID.");
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\UniversityPartners;
 
 /**
  * This is the model class for table "courses".
@@ -29,7 +30,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Courses extends \yii\db\ActiveRecord
+class Courses extends \common\components\MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -80,5 +81,29 @@ class Courses extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getSchool()
+    {
+        return $this->hasOne(UniversityPartners::class, ['id' => 'school_id']);
+    }
+
+    public function toObject() {
+        $m = $this;
+        $o = (object) [];
+        $o->name = $m->name;
+        $o->university = $m->school->name;
+        $o->mode_of_study = $m->mode_of_study;
+        $o->disciplines = $m->disciplines;
+        $o->sub_disciplines = $m->sub_disciplines;
+        $o->academic_level = $m->academic_level;
+        $o->introduction = $m->introduction;
+        $o->programme_structure = $m->programme_structure;
+        $o->admission_criteria = $m->admission_criteria;
+        $o->fees = $m->fees;
+        $o->exemptions = $m->exemptions;
+        $o->profiles = $m->profiles;
+        $o->assessments_exams = $m->assessments_exams;
+        return $o;
     }
 }
