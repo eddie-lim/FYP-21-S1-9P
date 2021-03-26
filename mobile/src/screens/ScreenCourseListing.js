@@ -22,7 +22,6 @@ const ScreenCourseListing = (props) => {
   const [isLastPage, setIsLastPage] = useState(false);
   const flatListRef = useRef(null);
   // FLATLIST VALUES ---- END
-  const default_filter_all = "All";
 
   const modeOfStudy_part_time_and_full_time = "part_time_and_full_time";
   const modeOfStudy_full_time = "full_time";

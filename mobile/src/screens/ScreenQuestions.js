@@ -4,6 +4,7 @@ import LottieView from 'lottie-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import { ScrollView } from 'react-native';
 
 const ScreenQuestions = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -17,20 +18,34 @@ const ScreenQuestions = (props) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
-      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Pressable style={{}} onPress={() => navigate("screenFaq")}>
-          <View elevation={5} style={[styles.cardContainer]}>
-            <Text style={{ position:'absolute', color:"black", top:10}}>Frequently Asked Questions</Text>
-            <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/faq-25920.json')} autoPlay={true} loop={true} />
-          </View>
-        </Pressable>
-        <Pressable style={{marginTop:15}} onPress={() => navigate("screenApplicationProcess")}>
-          <View elevation={5} style={[styles.cardContainer]}>
-            <Text style={{ position:'absolute', color:"black", top:10}}>Application Process</Text>
-            <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={true} />
-          </View>
-        </Pressable>
-      </View>
+      <ScrollView>
+        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <Pressable style={{}} onPress={() => navigate("screenFaq")}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Frequently Asked Questions</Text>
+              <LottieView style={{height: 175, position:'absolute', bottom:0}} source={require('@assets/animation/faq-25920.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenApplicationProcess")}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Application Process</Text>
+              <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenEnquiryForm")}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Enquiry Form</Text>
+              <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/enquiry-form-27620.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenWebview", {url:"https://www.sim.edu.sg/contact-info/Pages/ContactUs.aspx", source:"screenQuestion", headerName:"Contact Us"})}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Contact Us</Text>
+              <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/contact-us-45056.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

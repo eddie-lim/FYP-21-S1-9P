@@ -25,13 +25,13 @@ import ScreenSettings from '@screens/ScreenSettings';
 import ScreenProfile from '@screens/ScreenProfile';
 import ScreenForgetPassword from '@screens/ScreenForgetPassword';
 import ScreenWebview from '@screens/ScreenWebview';
+import ScreenEnquiryForm from '@screens/ScreenEnquiryForm';
 
 
 //##############################################
 
 const LandingStack = createStackNavigator({
   screenLanding: ScreenLanding,
-  screenWebview: ScreenWebview,
 }, { initialRouteName: 'screenLanding'});
 
 //##############################################
@@ -84,6 +84,7 @@ const QuestionsStack = createStackNavigator({
   screenApplicationProcess: ScreenApplicationProcess,
   screenFaq: ScreenFaq,
   screenFaqDetail: ScreenFaqDetail,
+  screenEnquiryForm: ScreenEnquiryForm,
 }, { initialRouteName: 'screenQuestions'});
 
 //##############################################
@@ -149,7 +150,7 @@ const MainBottomTab= createBottomTabNavigator({
       ),
     }
   },
-}, { initialRouteName: 'event', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
+}, { initialRouteName: 'landing', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
 
 //##############################################
 
@@ -159,6 +160,7 @@ const RootSwitch = createSwitchNavigator({
   loginStack: LoginStack,
   settingsStack: SettingsStack,
   profileStack: ProfileStack,
+  screenWebview: ScreenWebview,
 }, { initialRouteName: 'appLoading' });
 
 export default createAppContainer(RootSwitch);
