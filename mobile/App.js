@@ -149,7 +149,7 @@ const MainBottomTab= createBottomTabNavigator({
       ),
     }
   },
-}, { initialRouteName: 'landing', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
+}, { initialRouteName: 'event', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
 
 //##############################################
 

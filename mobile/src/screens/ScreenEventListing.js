@@ -13,6 +13,8 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
 import OutlineInput from 'react-native-outline-input';
 import DatePicker from 'react-native-datepicker'
+import randomcolor from 'randomcolor';
+import { isEqual, padStart } from 'lodash';
 
 const ScreenEventListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -43,6 +45,10 @@ const ScreenEventListing = (props) => {
   TypeOfEventsIcons[TypeOfEvents_full_time] = "circle";
   TypeOfEventsIcons[TypeOfEvents_part_time] = "circle-half";
 
+  const [selectedDate, setSelectedDate] = useState(Date());
+  const markedDatesRef = useRef({});
+  const calendarRef = useRef(null);
+
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown: false
@@ -58,10 +64,37 @@ const ScreenEventListing = (props) => {
         if(res.data.length < Constants.FLATLIST_PAGESIZE){
           setIsLastPage(true);
         }
+        res.data.forEach(element => {
+          var start = new Date(element.start_at * 1000);
+          var start_date = start.getFullYear()+"-"+padStart(start.getMonth(),2,"0")+"-"+start.getDate();
+          var end = new Date(element.end_at * 1000);
+          var end_date = end.getFullYear()+"-"+padStart(end.getMonth(),2,"0")+"-"+end.getDate();
+          var dates = markedDatesRef.current;
+          var color = randomcolor();
+          if(dates.hasOwnProperty(start_date)){
+            dates[start_date].periods.push({startingDay: true, endingDay: false, color: color})
+          } else {
+            dates[start_date] = {
+              periods:[{startingDay: true, endingDay: false, color: color}]
+            }
+          }
+          if(start_date != end_date){
+            if(dates.hasOwnProperty(end_date)){
+              dates[end_date].periods.push({startingDay: true, endingDay: false, color: color})
+            } else {
+              dates[end_date] = {
+                periods:[{startingDay: false, endingDay: true, color: color}]
+              }
+            }
+          }
+          markedDatesRef.current = JSON.parse(JSON.stringify(dates));
+        });
+
         const d = (page === 0)? res.data : [...data, ...res.data];
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
+        console.log(err)
           return
       })
     }
@@ -197,14 +230,14 @@ const ScreenEventListing = (props) => {
       <View style={styles.container}>
         <View style={[styles.calendarContainer]}>
           <Calendar
-            // Initially visible month. Default = Date()
-            current={'2021-03-19'}
+            ref={calendarRef}
             // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-            minDate={'2020-05-10'}
+            minDate={'2021-01-01'}
             // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
             maxDate={'2021-05-30'}
             // Handler which gets executed on day press. Default = undefined
             onDayPress={(day) => {
+              setSelectedDate(day.dateString)
               console.log('selected day', day)
             }}
             // Handler which gets executed on day long press. Default = undefined
@@ -228,8 +261,6 @@ const ScreenEventListing = (props) => {
             firstDay={1}
             // Hide day names. Default = false
             hideDayNames={false}
-            // Show week numbers to the left. Default = false
-            showWeekNumbers={true}
             // Handler which gets executed when press arrow icon left. It receive a callback can go back month
             onPressArrowLeft={subtractMonth => subtractMonth()}
             // Handler which gets executed when press arrow icon right. It receive a callback can go next month
@@ -244,20 +275,23 @@ const ScreenEventListing = (props) => {
             renderHeader={(date) => (<Text>{months[date.getMonth()]} {date.getFullYear()}</Text>)}
             // Enable the option to swipe between months. Default = false
             // Collection of dates that have to be marked. Default = {}
-            markedDates={{
-              '2021-03-16': {selected: true, marked: true, selectedColor: 'blue'},
-              '2021-03-17': {marked: true},
-              '2021-03-18': {marked: true, dotColor: 'red', activeOpacity: 0},
-              '2021-03-19': {disabled: true, disableTouchEvent: true}
-            }}
+            // markedDates={{
+            //   '2021-03-16': {marked: true},
+            //   '2021-03-17': {marked: true},
+            //   '2021-03-18': {marked: true, dotColor: 'red', activeOpacity: 0},
+            //   '2021-03-19': {disabled: true, disableTouchEvent: true}
+            // }}
+            // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+            markingType='multi-period'
+            markedDates={markedDatesRef.current}
             // Callback which gets executed when visible months change in scroll view. Default = undefined
             onVisibleMonthsChange={(months) => {
               console.log('now these months are visible', months);
             }}
             // Max amount of months allowed to scroll to the past. Default = 50
-            pastScrollRange={5}
+            pastScrollRange={3}
             // Max amount of months allowed to scroll to the future. Default = 50
-            futureScrollRange={5}
+            futureScrollRange={3}
             // Enable or disable scrolling of calendar list
             scrollEnabled={true}
             // Enable or disable vertical scroll indicator. Default = false
@@ -266,7 +300,6 @@ const ScreenEventListing = (props) => {
             horizontal={true}
             // Enable paging on horizontal, default = false
             pagingEnabled={true}
-            // Set custom calendarWidth.
           />
         </View>
         { renderList() }
