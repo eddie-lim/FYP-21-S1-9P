@@ -172,6 +172,10 @@ class User extends ActiveRecord implements IdentityInterface
         return $o;
     }
 
+    public function afterSignup(){
+        
+    }
+
     //#####################
     //identity interface (for cookie)
     //#####################
