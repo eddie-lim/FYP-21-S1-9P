@@ -48,13 +48,12 @@ class SiteController extends \api\controllers\RestControllerBase
     public function actionListCourses($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
-        $models = Courses::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
+        $models = Courses::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
         Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
     }
 
     public function actionGetCourse($id){
-        $model = Courses::find()->where(['id'=>$id])->asArray()->one();
+        $model = Courses::find()->where(['id'=>$id])->one();
         if($model){
             Yii::$app->api->sendSuccessResponse($model->toObject());
         } else {
@@ -66,13 +65,12 @@ class SiteController extends \api\controllers\RestControllerBase
     public function actionListEvents($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
-        $models = Events::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
+        $models = Events::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
         Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
     }
 
     public function actionGetEvent($id){
-        $model = Events::find()->where(['id'=>$id])->asArray()->one();
+        $model = Events::find()->where(['id'=>$id])->one();
         if($model){
             Yii::$app->api->sendSuccessResponse($model->toObject());
         } else {
@@ -84,8 +82,7 @@ class SiteController extends \api\controllers\RestControllerBase
     public function actionListFaq($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
-        $models = Faq::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
+        $models = Faq::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
         Yii::$app->api->sendSuccessResponse($models);
     }
 
@@ -102,19 +99,34 @@ class SiteController extends \api\controllers\RestControllerBase
     public function actionListUniversityPartners($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
         $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
         $offset = $page * $limit;
-        $models = UniversityPartners::find()->orderBy([
-        'created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
+        $models = UniversityPartners::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
         Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
     }
 
     public function actionGetUniversityPartner($id){
-        $model = UniversityPartners::find()->where(['id'=>$id])->asArray()->one();
+        $model = UniversityPartners::find()->where(['id'=>$id])->one();
         if($model){
             Yii::$app->api->sendSuccessResponse($model->toObject());
         } else {
             $str = Utility::jsonifyError("id", "Invalid ID.");
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
         }
+    }
+
+    public function actionGetFeaturedItems(){
+        $course = Courses::find()->orderBy(['created_at' => SORT_DESC])->one();
+        $event = Events::find()->orderBy(['created_at' => SORT_DESC])->one();
+        $university_partner = UniversityPartners::find()->orderBy(['created_at' => SORT_DESC])->one();
+
+        $data = [
+            'course' => $course->toObject(),
+            'event' => $event->toObject(),
+            'university_partner' => $university_partner->toObject(),
+            'course_quiz_url' => 'https://quiz.simge.edu.sg/',
+        ];
+
+        Yii::$app->api->sendSuccessResponse($data);
+
     }
 
 }
