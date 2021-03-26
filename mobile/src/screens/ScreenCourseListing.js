@@ -395,7 +395,7 @@ const ScreenCourseListing = (props) => {
               <Icon style={{marginHorizontal: 10}} name={modeOfStudyIcons[item.mode_of_study]} size={28} color={StyleConstant.primaryColor}/>
               <View style={styles.midContent}>
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.name}</Text>
-                <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>Awarded by {item.school_id}</Text>
+                <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>Awarded by {item.university}</Text>
               </View>
             </View>
           </View>

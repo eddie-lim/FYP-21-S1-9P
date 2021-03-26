@@ -6,6 +6,7 @@ import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
+import { capitalize, join, split } from 'lodash';
 
 const ScreenEventDetail = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -22,7 +23,7 @@ const ScreenEventDetail = (props) => {
     var item_values = Object.values(item);
     var items = [];
     for (let i = 0; i < item_keys.length; i++) {
-      const item_key = item_keys[i];
+      const item_key = capitalize(join(split(item_keys[i], "_"), " "));
       const item_value = item_values[i];
       items.push({
         header:item_key,

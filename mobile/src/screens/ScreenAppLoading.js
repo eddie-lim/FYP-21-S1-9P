@@ -13,7 +13,7 @@ const ScreenAppLoading = (props) => {
     // opening_animation.current.play();
     setTimeout(() => {
       navigate("mainBottomTab");
-    }, 500);
+    }, 1500);
     return function cleanup() { } 
   }, []);
 
