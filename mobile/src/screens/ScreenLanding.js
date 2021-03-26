@@ -7,14 +7,22 @@ import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import {StoreSettings} from '@helpers/Settings';
 import { NavigationEvents } from 'react-navigation';
+import WebApi from '@helpers/WebApi';
 
 const ScreenLanding = (props) => {
   const { navigate } = useNavigation();
   const [ loggedIn, setLoggedIn ] = useState(null);
+  const [ featuredItems, setFeaturedItems ] = useState({
+    course:[],
+    event:[],
+    university_partner:[],
+    course_quiz_url:[],
+  })
 
   useEffect(() => {
     console.log("ScreenLanding")
     // StoreSettings.store(StoreSettings.IS_LOGGED_IN, "false")
+    getFeaturedItems();
     StoreSettings.get(StoreSettings.IS_LOGGED_IN)
     .then((res)=>{
       setLoggedIn(res)
@@ -25,23 +33,40 @@ const ScreenLanding = (props) => {
     })
     return function cleanup() { } 
   }, []);
+
+  getFeaturedItems = ()=>{
+    WebApi.getFeaturedItems().then((res)=>{
+      console.log(res);
+      setFeaturedItems(res.data)
+    }).catch((err)=>{
+      console.log(err)
+      return
+    })
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
       <ScrollView>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop:20, paddingTop:15, paddingBottom:15}}>
-          <Pressable onPress={() => navigate("screenCourseDetail")}>
+          <Pressable onPress={() => navigate("screenWebview", {item:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>
+            <View elevation={5} style={[styles.cardContainer]}>
+              <Text style={{ position:'absolute', color:"black", top:10}}>Try our Course Quiz!</Text>
+              <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/study-27637.json')} autoPlay={true} loop={true} />
+            </View>
+          </Pressable>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenCourseDetail", {item:featuredItems.course, source:"screenLanding"})}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Featured Courses</Text>
               <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/study-27637.json')} autoPlay={true} loop={true} />
             </View>
           </Pressable>
-          <Pressable style={{marginTop:15}} onPress={() => navigate("screenEventDetail")}>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenEventDetail", {item:featuredItems.event, source:"screenLanding"})}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Featured Event</Text>
               <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/questions-27636.json')} autoPlay={true} loop={true} />
             </View>
           </Pressable>
-          <Pressable style={{marginTop:15}} onPress={() => navigate("screenSchoolDetail")}>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenSchoolDetail", {item:featuredItems.university_partner})}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Featured University</Text>
               <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/comms-27635.json')} autoPlay={true} loop={true} />

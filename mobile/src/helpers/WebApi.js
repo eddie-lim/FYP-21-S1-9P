@@ -131,6 +131,9 @@ const WebApi = {
   getUniversityPartners: async(id) => {
     return callApi(GET_METHOD, '/site/get-university-partner?page='+id);
   },
+  getFeaturedItems: async() => {
+    return callApi(GET_METHOD, '/site/get-featured-items');
+  },
 };
 
 export default WebApi;
