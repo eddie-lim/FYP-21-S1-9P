@@ -9,8 +9,6 @@ const ScreenAppLoading = (props) => {
   const opening_animation = useRef(null);
 
   useEffect(() => {
-    console.log("ScreenAppLoading")
-    // opening_animation.current.play();
     setTimeout(() => {
       navigate("mainBottomTab");
     }, 1500);
@@ -18,7 +16,6 @@ const ScreenAppLoading = (props) => {
   }, []);
 
   handleAnimationFinish=(e)=>{
-    console.log("end")
     navigate("mainBottomTab");
   }
 
@@ -33,7 +30,7 @@ const ScreenAppLoading = (props) => {
           ref={animation => {
             opening_animation.current = animation;
           }}
-          source={require('@assets/animation/splashscreen.json')}
+          source={require('@assets/animation/mobile-application-44214.json')}
           autoPlay={true}
           // onAnimationFinish={handleAnimationFinish}
           loop={false}
