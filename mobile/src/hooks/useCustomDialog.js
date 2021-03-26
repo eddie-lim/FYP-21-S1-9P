@@ -16,8 +16,6 @@ export default useCustomDialog = () => {
   const imageWidth = (Dimensions.get('window').width) * 0.5;
   
   const showCustomDialog = (data, isVisible = true) => {
-    // Utils.log(data);
-    // console.log(data.body);
     setData(data);
     setVisible(isVisible);
   }

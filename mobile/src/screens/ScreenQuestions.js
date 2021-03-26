@@ -9,7 +9,6 @@ const ScreenQuestions = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("ScreenQuestions")
     props.navigation.setParams({"navOptions":{
       headerShown: false
     }});

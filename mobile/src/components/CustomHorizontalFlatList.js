@@ -40,7 +40,6 @@ export default CustomHorizontalFlatList = (id, api, data_state, renderItem, empt
 
         }
         
-        //console.log(">>>", res.data);
     }
     
     handleRefresh = async () => {

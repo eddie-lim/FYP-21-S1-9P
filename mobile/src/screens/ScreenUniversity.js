@@ -9,7 +9,6 @@ const ScreenUniversity = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
-    console.log("ScreenUniversity")
     props.navigation.setParams({"navOptions":{
       headerShown: false
     }});

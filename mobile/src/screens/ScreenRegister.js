@@ -28,7 +28,6 @@ const ScreenRegister = (props) => {
   const [ passwordConfirmErrorMsg, setPasswordConfirmErrorMsg ] = useState("");
 
   useEffect(() => {
-    console.log("ScreenRegister")
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("Register", navigate, "screenLogin")
     }});
@@ -36,7 +35,6 @@ const ScreenRegister = (props) => {
   }, []);
 
   handleRegister = () =>{
-    console.log("Register!!")
     setFirstNameErrorMsg('');
     setLastNameErrorMsg('');
     setEmailErrorMsg('');
@@ -87,17 +85,14 @@ const ScreenRegister = (props) => {
             })
           })
         }).catch((err)=>{
-          console.log(err)
           toggleActivityIndicator(false)
           return
         })
       }).catch((err)=>{
-        console.log(err)
         toggleActivityIndicator(false)
         return
       })
     }).catch((err)=>{
-      console.log(err)
       toggleActivityIndicator(false)
       return
     })

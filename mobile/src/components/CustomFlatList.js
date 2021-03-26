@@ -7,7 +7,6 @@ export default CustomFlatList = (callApi, data_state, renderItem, emptyListStrin
 
     useEffect(() => {
         if(!lastPage){ callApi(); }
-        console.log("type:" + type, "page :",page);
     }, [page]);
     
     handleRefresh = async () => {

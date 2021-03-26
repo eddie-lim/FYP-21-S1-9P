@@ -28,7 +28,6 @@ const ScreenSchoolListing = (props) => {
   }
 
   useEffect(() => {
-    console.log("ScreenSchoolListing")
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("University Partners", navigate, "screenUniversity")
     }});
@@ -39,7 +38,6 @@ const ScreenSchoolListing = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listUniversityPartners(page).then((res)=>{
-        console.log(res);
         if(res.data.length < Constants.FLATLIST_PAGESIZE){
           setIsLastPage(true);
         }
@@ -47,7 +45,6 @@ const ScreenSchoolListing = (props) => {
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-          console.log(err)
           return
       })
     }

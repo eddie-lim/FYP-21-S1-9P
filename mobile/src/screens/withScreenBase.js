@@ -30,7 +30,6 @@ const withScreenBase = (WrappedComponent, base=ScreenBaseType.MAIN, navigationOp
             onWillFocus={async()=>{
               let name = WrappedComponent.displayName;
               name = name ? name : WrappedComponent.name;
-              console.log("will focus: " + name);
               // await firebase.analytics().setCurrentScreen(name);
             }}
           />

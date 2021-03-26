@@ -22,8 +22,6 @@ export default HelperFunctions = {
       var dateFormat = require('dateformat');
       let now = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"})
       const d = dateFormat(now, "yyyy-mm-dd HH:MM:ss");
-      //console.log("\x1b[36m", d, "\x1b[0m", msg);
-      console.log(d, msg);
     }
   },
   error: (msg) => {
@@ -31,8 +29,6 @@ export default HelperFunctions = {
       var dateFormat = require('dateformat');
       let now = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"})
       const d = dateFormat(now, "yyyy-mm-dd HH:MM:ss");
-      //console.log("\x1b[31m", d, "\x1b[0m", msg);
-      console.log(d, msg);
     }
   },
 };

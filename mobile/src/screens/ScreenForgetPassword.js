@@ -20,7 +20,6 @@ const ScreenForgetPassword = (props) => {
   const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
 
   useEffect(() => {
-    console.log("ScreenForgetPassword")
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("Reset Password", navigate, "screenLogin")
     }});
@@ -28,7 +27,6 @@ const ScreenForgetPassword = (props) => {
   }, []);
 
   handleReset = () =>{
-    console.log("Reset!!")
     setEmailErrorMsg('');
 
     if (email.trim() == '' || email == null || email == '') {
@@ -46,7 +44,6 @@ const ScreenForgetPassword = (props) => {
     // WebApi.resetPassword(email).then((res)=>{
     //   toggleActivityIndicator(true, "Logging in...");
     // }).catch((err)=>{
-    //   console.log(err)
     //   toggleActivityIndicator(false)
     //   return
     // })

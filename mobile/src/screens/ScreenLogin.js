@@ -21,7 +21,6 @@ const ScreenLogin = (props) => {
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
 
   useEffect(() => {
-    console.log("ScreenLogin")
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("Login", navigate, "mainBottomTab")
     }});
@@ -29,7 +28,6 @@ const ScreenLogin = (props) => {
   }, []);
 
   handleLogin = () =>{
-    console.log("Login!!");
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
     var hasError = false;
@@ -63,12 +61,10 @@ const ScreenLogin = (props) => {
           })
         })
       }).catch((err)=>{
-        console.log(err)
         toggleActivityIndicator(false);
         return
       })
     }).catch((err)=>{
-      console.log(err)
       toggleActivityIndicator(false);
       return
     })

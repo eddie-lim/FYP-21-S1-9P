@@ -24,36 +24,18 @@ const STATUS_UNPROCESSABLE_ENTITY = 422;
     }
 }
 */
-console.log("SETUP WEB API");
 //ref: https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
 axios.interceptors.request.use(config => {
-  console.log('Request sent', config);
   return config;
 }, error => {
-  console.log('Request error', error);
   return Promise.reject(error);
 });
 
-
 axios.interceptors.response.use(async (response) => {
-  console.log('Response received', response.data);
-
-  //note: do force logout logic here.
-  /*
-  if (reponse.data.status == WebApi.STATUS_UNAUTHORIZED) {    
-    
+    return response.data;
+  }, error => {
+    return Promise.reject(error.response.data);
   }
-  */
-
-  return response.data;
-},
-/**/
-error => {
-  //todo: show generic error dialog for catch all?
-  console.log('Response error', error.response.data);
-  return Promise.reject(error.response.data);
-}
-
 );
 
 callApi = async(method, endpoint, data, isMultipart = false) => {

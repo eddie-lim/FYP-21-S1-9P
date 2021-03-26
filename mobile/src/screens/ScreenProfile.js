@@ -34,7 +34,6 @@ const ScreenProfile = (props) => {
   const [ yearOfGraduationErrorMsg, setYearOfGraduationErrorMsg ] = useState("");
 
   useEffect(() => {
-    console.log("ScreenProfile")
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("My Profile", navigate, "mainBottomTab")
     }});

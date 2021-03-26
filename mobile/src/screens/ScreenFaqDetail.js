@@ -10,7 +10,6 @@ const ScreenFaqDetail = (props) => {
   const item = useNavigationParam('item');
 
   useEffect(() => {
-    console.log("ScreenFaqDetail")
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("FAQ Detail", navigate, "screenFaq")
     }});

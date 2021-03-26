@@ -16,7 +16,6 @@ const ScreenMap = (props) => {
   const [hasLocationPermission, setHasLocationPermission] = useState(false);
 
   useEffect(() => {
-    console.log("ScreenMap")
     MapboxGL.setAccessToken(Environment.MAPBOX_KEY);
     props.navigation.setParams({"navOptions":{
       headerShown: false
@@ -25,8 +24,6 @@ const ScreenMap = (props) => {
   }, []);
 
   handleOnDidFinishRenderingMapFully = (e) =>{
-    console.log('handleOnDidFinishRenderingMapFully')
-    
     cameraRef.current.setCamera({
       centerCoordinate: [103.776027, 1.329290],
       zoomLevel: 17,
@@ -35,11 +32,9 @@ const ScreenMap = (props) => {
   }
 
   handleOnUserLocationUpdate = (e) =>{
-    console.log('handleOnUserLocationUpdate')
   }
 
   handleOnPressMyLocation = (e) =>{
-    console.log('handleOnPressMyLocation')
     cameraRef.current.setCamera({
       centerCoordinate: [103.776027, 1.329290],
       zoomLevel: 17,

@@ -44,7 +44,6 @@ const ScreenEventListing = (props) => {
   TypeOfEventsIcons[TypeOfEvents_part_time] = "circle-half";
 
   useEffect(() => {
-    console.log("ScreenEventListing")
     props.navigation.setParams({"navOptions":{
       headerShown: false
     }});
@@ -56,7 +55,6 @@ const ScreenEventListing = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listEvents(page).then((res)=>{
-        console.log(res);
         if(res.data.length < Constants.FLATLIST_PAGESIZE){
           setIsLastPage(true);
         }
@@ -64,7 +62,6 @@ const ScreenEventListing = (props) => {
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-          console.log(err)
           return
       })
     }
@@ -207,13 +204,19 @@ const ScreenEventListing = (props) => {
             // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
             maxDate={'2021-05-30'}
             // Handler which gets executed on day press. Default = undefined
-            onDayPress={(day) => {console.log('selected day', day)}}
+            onDayPress={(day) => {
+              console.log('selected day', day)
+            }}
             // Handler which gets executed on day long press. Default = undefined
-            onDayLongPress={(day) => {console.log('selected day', day)}}
+            onDayLongPress={(day) => {
+              console.log('selected day', day)
+            }}
             // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
             monthFormat={'yyyy MM'}
             // Handler which gets executed when visible month changes in calendar. Default = undefined
-            onMonthChange={(month) => {console.log('month changed', month)}}
+            onMonthChange={(month) => {
+              console.log('month changed', month)
+            }}
             // Replace default arrows with custom ones (direction can be 'left' or 'right')
             renderArrow={(direction) => (<Icon name={'arrow-'+direction} color={'black'} size={28} />)}
             // Do not show days of other months in month page. Default = false
@@ -248,7 +251,9 @@ const ScreenEventListing = (props) => {
               '2021-03-19': {disabled: true, disableTouchEvent: true}
             }}
             // Callback which gets executed when visible months change in scroll view. Default = undefined
-            onVisibleMonthsChange={(months) => {console.log('now these months are visible', months);}}
+            onVisibleMonthsChange={(months) => {
+              console.log('now these months are visible', months);
+            }}
             // Max amount of months allowed to scroll to the past. Default = 50
             pastScrollRange={5}
             // Max amount of months allowed to scroll to the future. Default = 50

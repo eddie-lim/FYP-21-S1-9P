@@ -117,7 +117,6 @@ const ScreenCourseListing = (props) => {
   subDisciplinesIcons[subDisciplines_big_data] = "book-open-page-variant";
   
   useEffect(() => {
-    console.log("ScreenCourseListing")
     // slidingUpPanelRef.current.hide()
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("Courses", navigate, "screenUniversity", 
@@ -373,7 +372,6 @@ const ScreenCourseListing = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listCourses(page).then((res)=>{
-        console.log(res);
         if(res.data.length < Constants.FLATLIST_PAGESIZE){
           setIsLastPage(true);
         }
@@ -381,7 +379,6 @@ const ScreenCourseListing = (props) => {
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-          console.log(err)
           return
       })
     }

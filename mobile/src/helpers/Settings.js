@@ -17,12 +17,10 @@ class Settings {
 
     //need to call init() upon app starts
     static init = async() => {
-        console.log('init Settings');
         this.reset();   
     }
 
     static reset = () => {
-        console.log('reset Settings');
         this.defaultSettings = [];
         this.defaultSettings[this.USER_ID] = "";
         this.defaultSettings[this.USER_EMAIL] = "";
@@ -30,7 +28,6 @@ class Settings {
         global.settings = this.defaultSettings;
     }    
     static store = (key, value) => {
-        //console.log("setting store -> key: " + key + ", value: " + value);
         this.isValidKey(key)
         if (value == null)  { value = ""; }
         global.settings[key] = value;
@@ -47,12 +44,10 @@ class Settings {
             }
         });
         if (!valid) {
-            console.log('Settings !isValidKey: ' + key);
         }
         return valid;
     }    
     static debug = () => {
-        //console.log(JSON.stringify(global.settings));
         console.log("DEBUG SETTINGS", global.settings);
     }    
 }
@@ -80,23 +75,19 @@ class StoreSettings {
     //async storage need to call init() upon app starts
     static init = () => {        
         var promise = new Promise((resolve, reject) => {
-            console.log('init StoreSettings');
             AsyncStorage.getItem(this.IS_INITIALISE).then((v) => {
-                //console.log("IS_INITIALISE: " + v);
                 if (v == null) {
                     return this.reset();
                 }
             }).then(()=>{
                 resolve("settings init ok")
             }).catch((e)=>{
-                console.log(e);
                 reject("settings init error")
             });
           });        
         return promise;
     }
     static reset = async() => {
-        console.log('reset StoreSettings');
         try {
             var cache = [];
             await AsyncStorage.multiSet(this.defaultSettings);            
@@ -110,7 +101,6 @@ class StoreSettings {
         //return a promise
     }
     static store = async (key, value) => {
-        console.log('StoreSettings.store',key,value);
         this.checkIsValidKey(key);
         return AsyncStorage.setItem(key, value);
     }
@@ -123,10 +113,8 @@ class StoreSettings {
         return this.store(key, str)        
     }
     static addObj = async (key, obj) => {
-        //console.log('StoreSettings.addObj', key, obj);
         var promise = new Promise((resolve, reject) => {            
             this.getObj(key).then((res)=>{
-                //console.log(">>>>>>", res)
                 if (res == null) {
                     resolve(this.storeObj(key, [obj]));
                 } else {

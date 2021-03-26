@@ -19,7 +19,6 @@ const ScreenFaq = (props) => {
   // FLATLIST VALUES ---- END
 
   useEffect(() => {
-    console.log("ScreenFaq")
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("FAQ", navigate, "screenQuestions")
     }});
@@ -30,7 +29,6 @@ const ScreenFaq = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listFaq(page).then((res)=>{
-        console.log(res);
         if(res.data.length < Constants.FLATLIST_PAGESIZE){
           setIsLastPage(true);
         }
@@ -38,7 +36,6 @@ const ScreenFaq = (props) => {
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-          console.log(err)
           return
       })
     }
