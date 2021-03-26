@@ -18,6 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="card">
+    <div class="card-header">
+        <?php echo Html::a('Export CSV', ['#'], ['class' => 'btn btn-success']) ?>
+    </div>
 
     <div class="card-body p-0">
         <?php echo GridView::widget([
@@ -35,8 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => \yii\grid\SerialColumn::class, 
                     'headerOptions' => ['width' => '20px']
                 ],
-                'username',
+                // 'username',
                 'email:email',
+                'created_at:datetime',
             ],
         ]); ?>
     </div>

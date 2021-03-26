@@ -10,6 +10,7 @@ use backend\assets\BackendAsset;
 use common\models\SystemLog;
 use backend\widgets\MainSidebarMenu;
 use common\models\User;
+use common\models\Enquiries;
 use yii\bootstrap4\Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -238,7 +239,7 @@ $logEntries[] = [
                             'icon' => FAB::icon('wpforms', ['class' => ['nav-icon']]),
                             'url' => ['/enquiries/index'],
                             'active' => Yii::$app->controller->id === 'enquiries',
-                            'badge' => '0',
+                            'badge' => Yii::$app->user->can(Yii::$app->user->identity::ROLE_SUPERADMIN) ? Enquiries::find()->where(['status'=>'enabled'])->count() : Enquiries::find()->where(['status'=>'enabled'])->andWhere(['school_id'=>Yii::$app->user->identity->userProfile->school_id])->count(),
                             'badgeBgClass' => 'badge-success',
                         ],
                         [
