@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'id',
                     'name',
                     // 'description:ntext',
-                    // 'continent',
+                    'continent',
                     // 'highlights:ntext',
                     // 'certifications:ntext',
                     // 'tags:ntext',

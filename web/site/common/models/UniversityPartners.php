@@ -70,6 +70,16 @@ class UniversityPartners extends MyCustomActiveRecord
         ];
     }
 
+    public static function getAllContinents(){
+        return [ 
+            "europe" => "Europe",
+            "uk" => "United Kingdom",
+            "australia" => "Australia",
+            "singapore" => "Singapore",
+            "us" => "United States",
+        ];
+    }
+
     public static function getUniversityBlock($id){
         $model = static::findOne($id);
         $url = Url::to(['university-partners/view', 'id'=>$id]);

@@ -25,7 +25,7 @@ use yii\web\JsExpression;
                         <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="col-lg-3 col-xs-12">
-                        <?php echo $form->field($model, 'continent')->textInput(['maxlength' => true]) ?>
+                        <?php echo $form->field($model, 'continent')->dropDownList(UniversityPartners::getAllContinents(), ['prompt' => '']) ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'description')->textarea(['rows' => 3]) ?>

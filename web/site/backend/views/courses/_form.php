@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap4\ActiveForm;
 use kartik\select2\Select2;
+use common\models\Courses;
 use common\models\UniversityPartners;
 use common\components\MyCustomActiveRecord;
 use yii\web\JsExpression;
@@ -33,7 +34,7 @@ use yii\web\JsExpression;
                         <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
-                        <?php echo $form->field($model, 'mode_of_study')->dropDownList([ 'part_time' => 'Part time', 'full_time' => 'Full time', 'part_time_and_full_time' => 'Part time and full time', ], ['prompt' => '']) ?>
+                        <?php echo $form->field($model, 'mode_of_study')->dropDownList(Courses::getAllModeOfStudy(), ['prompt' => '']) ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'disciplines')->textInput(['maxlength' => true]) ?>

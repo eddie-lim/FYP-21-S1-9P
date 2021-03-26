@@ -91,6 +91,14 @@ class Courses extends MyCustomActiveRecord
         return $this->hasOne(UniversityPartners::class, ['id' => 'school_id']);
     }
 
+    public static function getAllModeOfStudy(){
+        return [ 
+            'part_time' => 'Part time', 
+            'full_time' => 'Full time', 
+            'part_time_and_full_time' => 'Part time and full time', 
+        ];
+    }
+
     public function toObject() {
         $m = $this;
         $o = (object) [];
