@@ -47,7 +47,14 @@ $config = [
             }
         ],
         'request' => [
-            'cookieValidationKey' => env('FRONTEND_COOKIE_VALIDATION_KEY')
+            'cookieValidationKey' => env('FRONTEND_COOKIE_VALIDATION_KEY'),
+            'baseUrl' => env('FRONTEND_BASE_URL'),
+            'enableCookieValidation' => true,           
+            'enableCsrfValidation' => true,
+            'csrfCookie'=>array(
+                'httpOnly'=>true,
+                'secure' => true,
+            ),
         ],
         'user' => [
             'class' => yii\web\User::class,

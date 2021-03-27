@@ -21,11 +21,6 @@ $this->beginContent('@frontend/views/layouts/base.php');
             'options'=>ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'options'),
         ])?>
     <?php endif; ?>
-
-    <!-- Example of your ads placing -->
-    <?php echo \common\widgets\DbText::widget([
-        'key' => 'ads-example'
-    ]) ?>
 </div>
 
 <?php echo $content ?>

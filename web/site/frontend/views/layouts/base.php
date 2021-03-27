@@ -29,7 +29,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php');
     <?php NavBar::end(); ?>
 </header>
 
-<main class="flex-shrink-0" role="main">
+<main class="flex-shrink-0" style="min-height: 80vh;" role="main">
     <?php echo $content ?>
 </main>
 
