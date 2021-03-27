@@ -4,7 +4,7 @@
 	<li>12th Mar 20:45 - 21:40</li>
 </ul>
 <div class="minutes-subheader">Attendance:</div>
-<?php include("attendees.php") ?>
+<?php echo $this->render('./../attendees.php') ?>
 <div class="minutes-subheader">Discussed Topics:</div>
 <ul>
 	<li>The class diagram & DB schema. Run through the attributes of each classes to see if any attributes need to be added or removed</li>

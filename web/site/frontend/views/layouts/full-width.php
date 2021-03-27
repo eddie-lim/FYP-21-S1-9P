@@ -7,7 +7,7 @@
 use yii\helpers\ArrayHelper;
 use yii\bootstrap4\Breadcrumbs;
 
-$this->beginContent('@frontend/views/layouts/base.php')
+$this->beginContent('@frontend/views/layouts/base.php');
 ?>
 
 <div class="container">

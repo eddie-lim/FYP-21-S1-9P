@@ -8,7 +8,6 @@ return [
     'showScriptName' => false,
     'rules' => [
         ['pattern'=>'', 'route'=>'site/index'],
-        ['pattern'=>'<controller>', 'route'=>'site/index'],
-        ['pattern'=>'<controller>/<action>', 'route'=>'site/index'],
+        ['pattern'=>'<controller>', 'route'=>'site/<controller>'],
     ]
 ];

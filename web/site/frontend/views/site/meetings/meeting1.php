@@ -4,7 +4,7 @@
 	<li>16th Jan 19:00 - 20:00</li>
 </ul>
 <div class="minutes-subheader">Attendance:</div>
-<?php include("attendees.php") ?>
+<?php echo $this->render('./../attendees.php') ?>
 <div class="minutes-subheader">Discussed Topics:</div>
 <ul>
 	<li>

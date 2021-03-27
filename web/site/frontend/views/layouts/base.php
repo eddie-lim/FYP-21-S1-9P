@@ -7,7 +7,7 @@
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 
-$this->beginContent('@frontend/views/layouts/_clear.php')
+$this->beginContent('@frontend/views/layouts/_clear.php');
 ?>
 <header>
     <?php NavBar::begin([
@@ -17,45 +17,13 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
             'class' => ['navbar-dark', 'bg-dark', 'navbar-expand-md'],
         ],
     ]); ?>
-    <?php /*echo*/ Nav::widget([
+    <?php echo Nav::widget([
         'options' => ['class' => ['navbar-nav', 'justify-content-end', 'ml-auto']],
         'items' => [
-            ['label' => Yii::t('frontend', 'Home'), 'url' => ['/site/index']],
-            ['label' => Yii::t('frontend', 'About'), 'url' => ['/page/view', 'slug'=>'about']],
-            ['label' => Yii::t('frontend', 'Articles'), 'url' => ['/article/index']],
-            ['label' => Yii::t('frontend', 'Contact'), 'url' => ['/site/contact']],
-            ['label' => Yii::t('frontend', 'Signup'), 'url' => ['/user/sign-in/signup'], 'visible'=>Yii::$app->user->isGuest],
-            ['label' => Yii::t('frontend', 'Login'), 'url' => ['/user/sign-in/login'], 'visible'=>Yii::$app->user->isGuest],
-            [
-                'label' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->getPublicIdentity(),
-                'visible'=>!Yii::$app->user->isGuest,
-                'items'=>[
-                    [
-                        'label' => Yii::t('frontend', 'Settings'),
-                        'url' => ['/user/default/index']
-                    ],
-                    [
-                        'label' => Yii::t('frontend', 'Backend'),
-                        'url' => Yii::getAlias('@backendUrl'),
-                        'visible'=>Yii::$app->user->can('manager')
-                    ],
-                    [
-                        'label' => Yii::t('frontend', 'Logout'),
-                        'url' => ['/user/sign-in/logout'],
-                        'linkOptions' => ['data-method' => 'post']
-                    ]
-                ]
-            ],
-            [
-                'label'=>Yii::t('frontend', 'Language'),
-                'items'=>array_map(function ($code) {
-                    return [
-                        'label' => Yii::$app->params['availableLocales'][$code],
-                        'url' => ['/site/set-locale', 'locale'=>$code],
-                        'active' => Yii::$app->language === $code
-                    ];
-                }, array_keys(Yii::$app->params['availableLocales']))
-            ]
+            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Meeting Minutes', 'url' => ['/site/meeting-minutes']],
+            ['label' => 'Documents', 'url' => ['/site/download-documents']],
+            ['label' => 'App', 'url' => ['/site/app']],
         ]
     ]); ?>
     <?php NavBar::end(); ?>

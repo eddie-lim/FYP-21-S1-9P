@@ -28,15 +28,23 @@ class FrontendAsset extends AssetBundle
      */
     public $css = [
         'style.css',
+        '/css/site.css',
     ];
-
     /**
      * @var array
      */
     public $js = [
-        'app.js',
+        'app.js'
     ];
 
+    public $publishOptions = [
+        'only' => [
+            '*.css',
+            '*.js',
+            '../img/*'
+        ],
+        "forceCopy" => YII_ENV_DEV,
+    ];
     /**
      * @var array
      */

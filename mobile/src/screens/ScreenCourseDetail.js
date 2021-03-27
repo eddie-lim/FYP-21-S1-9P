@@ -40,7 +40,7 @@ const ScreenCourseDetail = (props) => {
 
   handleBackHandler = ()=>{
    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
-   navigate("mainBottomTab");
+   navigate(source);
    return true;
  }
   

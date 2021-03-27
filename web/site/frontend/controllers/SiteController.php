@@ -37,4 +37,19 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+    public function actionApp()
+    {
+        return $this->render('app');
+    }
+
+    public function actionMeetingMinutes()
+    {
+        return $this->render('meeting-minutes');
+    }
+
+    public function actionDownloadDocuments()
+    {
+        return $this->render('documents');
+    }
 }
