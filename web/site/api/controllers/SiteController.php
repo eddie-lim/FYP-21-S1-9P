@@ -15,6 +15,10 @@ use common\models\UniversityPartners;
 use common\components\Utility;
 use common\components\MyCustomActiveRecord;
 
+use common\models\form\LoginForm;
+use common\models\form\RegistrationForm;
+use common\models\SysOAuthAuthorizationCode;
+
 class SiteController extends \api\controllers\RestControllerBase
 {
     const MAX_ROW_PER_PAGE = 20;
@@ -27,6 +31,9 @@ class SiteController extends \api\controllers\RestControllerBase
                 'class' => \yii\filters\VerbFilter::className(),
                 'actions' => [
                     'index' => ['GET'],
+                    'register' => ['POST'],
+                    'authorize' => ['POST'],
+                    'access-token' => ['POST'],
                 ],
             ],
             // 'authenticator' => [
@@ -45,73 +52,63 @@ class SiteController extends \api\controllers\RestControllerBase
         Yii::$app->api->sendSuccessResponse($o);
     }
 
-    public function actionListCourses($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
-        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
-        $offset = $page * $limit;
-        $models = Courses::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
-        Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
-    }
+    public function actionRegister() {
+        $model = new RegistrationForm();
+        $model->attributes = $this->request;
 
-    public function actionGetCourse($id){
-        $model = Courses::find()->where(['id'=>$id])->one();
-        if($model){
-            Yii::$app->api->sendSuccessResponse($model->toObject());
+        if ($model->register()) {
+            $data['message'] = "Success";
+
+            Yii::$app->api->sendSuccessResponse($data);
         } else {
-            $str = Utility::jsonifyError("id", "Invalid ID.");
+            $str = $this->getSerialisedValidationError($model);
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
         }
     }
 
-    public function actionListEvents($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
-        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
-        $offset = $page * $limit;
-        $models = Events::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
-        Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
-    }
+    public function actionAuthorize() {
+        $model = new LoginForm();
+        $model->attributes = $this->request;
+        
+        if ($model->loginApi()) {
+            $user_id = Yii::$app->user->identity->id;
+            Yii::$app->api->deleteUserAuthorizationCodes($user_id);
+            $auth_code = Yii::$app->api->createAuthorizationCode($user_id);
 
-    public function actionGetEvent($id){
-        $model = Events::find()->where(['id'=>$id])->one();
-        if($model){
-            Yii::$app->api->sendSuccessResponse($model->toObject());
+            $data = [];
+            $data['authorization_code'] = $auth_code->code;
+            $data['expires_at'] = $auth_code->expires_at;
+
+            Yii::$app->api->sendSuccessResponse($data);
         } else {
-            $str = Utility::jsonifyError("id", "Invalid ID.");
+            $str = $this->getSerialisedValidationError($model);
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
         }
     }
 
-    public function actionListFaq($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
-        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
-        $offset = $page * $limit;
-        $models = Faq::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->asArray()->all();
-        Yii::$app->api->sendSuccessResponse($models);
-    }
-
-    public function actionGetFaq($id){
-        $model = Faq::find()->where(['id'=>$id])->asArray()->one();
-        if($model){
-            Yii::$app->api->sendSuccessResponse($model);
-        } else {
-            $str = Utility::jsonifyError("id", "Invalid ID.");
+    public function actionAccessToken() {
+        if (!isset($this->request["authorization_code"])) {
+            $str =  Utility::jsonifyError("authorization_code", "Missing Authorization Code.");
             throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
         }
-    }
-
-    public function actionListUniversityPartners($page = 0, $pageSize = self::MAX_ROW_PER_PAGE) {
-        $limit = ($pageSize > self::MAX_ROW_PER_PAGE) ? self::MAX_ROW_PER_PAGE : $pageSize;
-        $offset = $page * $limit;
-        $models = UniversityPartners::find()->orderBy(['created_at' => SORT_DESC])->limit($limit)->offset($offset)->all();
-        Yii::$app->api->sendSuccessResponse(MyCustomActiveRecord::toObjectArray($models));
-    }
-
-    public function actionGetUniversityPartner($id){
-        $model = UniversityPartners::find()->where(['id'=>$id])->one();
-        if($model){
-            Yii::$app->api->sendSuccessResponse($model->toObject());
-        } else {
-            $str = Utility::jsonifyError("id", "Invalid ID.");
-            throw new CustomHttpException($str, CustomHttpException::UNPROCESSABLE_ENTITY);
+        $authorization_code = $this->request["authorization_code"];
+        $auth_code = SysOAuthAuthorizationCode::isValid($authorization_code);
+        if (!$auth_code) {
+            $str =  Utility::jsonifyError("authorization_code", "Authorization Code is invalid or has expired.");
+            throw new CustomHttpException($str, CustomHttpException::UNAUTHORIZED, CustomHttpException::INVALID_OR_EXPIRED_TOKEN);
         }
+
+        $user_id = Yii::$app->api->getUserIdFromAuthorizationCode($authorization_code);
+        Yii::$app->api->deleteUserAuthorizationCodes($user_id);
+        Yii::$app->api->deleteUserAccesstokens($user_id);
+        $accesstoken = Yii::$app->api->createAccesstoken($authorization_code, $user_id);
+
+        $data = [];
+        $data['access_token'] = $accesstoken->token;
+        $data['expires_at'] = $accesstoken->expires_at;
+        Yii::$app->api->sendSuccessResponse($data);
     }
+
 
     public function actionGetFeaturedItems(){
         $course = Courses::find()->orderBy(['created_at' => SORT_DESC])->one();

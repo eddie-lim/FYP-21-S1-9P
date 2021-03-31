@@ -7,7 +7,6 @@ use common\models\SysOAuthAccessToken;
 use common\models\UserProfile;
 use common\commands\AddToTimelineCommand;
 use common\models\query\UserQuery;
-use common\models\NparksRewardPool;
 use common\jobs\EmailQueueJob;
 use common\components\MyCustomActiveRecord;
 use Yii;
@@ -98,12 +97,12 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public function getUserProfile(){
-        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    public function extraFields() {
+        return ['userProfile'];
     }
 
-    public function getUserActionHistory(){
-        return $this->hasOne(UserActionHistory::className(), ['user_id' => 'id']);
+    public function getUserProfile(){
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
 
     public static function getAllRoles(){

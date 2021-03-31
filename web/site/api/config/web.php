@@ -15,9 +15,9 @@ return [
             'enableCookieValidation' => false,
             'enableCsrfValidation' => false,
             // 'cookieValidationKey' => 'xxxxxxx',
-            // 'parsers' => [
-            //     'application/json' => 'yii\web\JsonParser',
-            // ]            
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
         'api' => [
             'class' => 'api\components\Api',

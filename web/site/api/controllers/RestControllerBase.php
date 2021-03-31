@@ -7,8 +7,9 @@ use yii\web\Controller;
 use yii\web\BadRequestHttpException;
 use yii\helpers\ArrayHelper;
 use common\components\MyCustomActiveRecord;
+use yii\web\Response;
 
-class RestControllerBase extends Controller
+class RestControllerBase extends \yii\rest\ActiveController
 {
     //used for api rate limiting
     public $endpoint; //name of endpoint
@@ -28,15 +29,27 @@ class RestControllerBase extends Controller
             'corsFilter' => [
                 'class' => \yii\filters\Cors::className(),
                 'cors' => [
-                    //'Origin:' => static::allowedDomains(),
-                    'Access-Control-Allow-Origin:' => static::allowedDomains(),
+                    'Origin:' => static::allowedDomains(),
+                    // 'Access-Control-Allow-Origin:' => static::allowedDomains(),
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'OPTIONS', 'DELETE'],
                     'Access-Control-Request-Headers' => ['*'],
                     'Access-Control-Allow-Credentials' => true,
                 ],
             ],
-
-            
+            [
+                'class' => 'yii\filters\ContentNegotiator',
+                //'only' => ['view', 'index'], 
+                'formats' => [
+                    'application/octet-stream' => Response::FORMAT_JSON,
+                    'text/html' => Response::FORMAT_JSON,
+                    'application/json' => Response::FORMAT_JSON,
+                    'application/xml' => Response::FORMAT_XML
+                ],
+            ],
+            'ActiveTimestampBehavior' => [
+                'class' => \common\behaviors\ActiveTimestampBehavior::className(),
+                'attribute' => 'active_at'
+            ],
         ]);
     }
 
@@ -47,6 +60,20 @@ class RestControllerBase extends Controller
             //TODO:: this is not catching, fix it bitch
             throw new BadRequestHttpException(Utility::jsonifyError("server", "Invalid Json."));
         }
+    }
+
+    public function beforeSend($event) {
+
+        print_r("expression"); exit();
+        $response = $event->sender;
+        if ($response->data !== null && Yii::$app->request->get('suppress_response_code')) {
+            $response->data = [
+                'success' => $response->isSuccessful,
+                'data' => $response->data,
+            ];
+            $response->statusCode = 200;
+        }
+        return parent::beforeSend($action);
     }
 
     public function beforeAction($action) {
@@ -61,9 +88,9 @@ class RestControllerBase extends Controller
     }
 
     public function actions() {
-        return [
+        return array_merge(parent::actions(), [
             'error' => ['class' => 'yii\web\ErrorAction'],
-        ];
+        ]);
     }
 
     function prettyPrintModelError($model) {

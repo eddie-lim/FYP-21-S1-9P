@@ -40,16 +40,17 @@ class Api extends Component
     public function sendSuccessResponse($data = false) {
         $this->setHeader(200);
 
-        $r = [];
-        $r['status'] = 200;
-        $r['text'] = 'OK';
-        //$r['time'] =  date('Y-m-d H:i:s', time());
-        $r['data'] = $data;
+        // $r = [];
+        // $r['status'] = 200;
+        // $r['text'] = 'OK';
+        // //$r['time'] =  date('Y-m-d H:i:s', time());
+        // $r['data'] = $data;
 
-        //echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        // //echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         $response = Yii::$app->response;
         $response->format = \yii\web\Response::FORMAT_JSON;
-        $response->data = $r;
+        // $response->data = $r;
+        $response->data = $data;
 
         Yii::$app->end();
     }
