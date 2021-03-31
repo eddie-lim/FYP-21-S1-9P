@@ -25,7 +25,7 @@ export default CustomHorizontalFlatList = (id, api, data_state, renderItem, empt
             } else { 
                 res = await api(); 
             }
-            setData(res.data);
+            setData(res);
             setLoading(false);
             return true;
 

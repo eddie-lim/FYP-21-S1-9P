@@ -29,7 +29,7 @@ const ScreenFaq = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listFaq(page).then((res)=>{
-        if(res.data.length < Constants.FLATLIST_PAGESIZE){
+        if(res.data.length < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 0)? res.data : [...data, ...res.data];

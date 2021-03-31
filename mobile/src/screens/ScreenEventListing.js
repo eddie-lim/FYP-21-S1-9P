@@ -61,7 +61,7 @@ const ScreenEventListing = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listEvents(page).then((res)=>{
-        if(res.data.length < Constants.FLATLIST_PAGESIZE){
+        if(res.data.length < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         res.data.forEach(element => {

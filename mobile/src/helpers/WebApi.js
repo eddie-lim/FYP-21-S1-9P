@@ -32,9 +32,9 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(async (response) => {
-    return response.data;
+    return response;
   }, error => {
-    return Promise.reject(error.response.data);
+    return Promise.reject(error.response);
   }
 );
 
@@ -69,52 +69,52 @@ const WebApi = {
   
   register: async(firstname, lastname, email, password, password_confirm) => {
     var data = {"firstname":firstname, "lastname":lastname, "password":password, "password_confirm":password_confirm, "email":email};
-    return callApi(POST_METHOD, '/user/register', data);
+    return callApi(POST_METHOD, '/v1/site/register', data);
   },
   authorise: async(email, password) => {
     var data = { "email": email, "password": password }
-    return callApi(POST_METHOD, '/user/authorize', data);
+    return callApi(POST_METHOD, '/v1/site/authorize', data);
   },
   accessToken: async(authorization_code) => {
     var data = { "authorization_code": authorization_code }
-    return callApi(POST_METHOD, '/user/access-token', data);
+    return callApi(POST_METHOD, '/v1/site/access-token', data);
   },
   logout: async() => {
-    return callApi(GET_METHOD, '/user/logout');
-  },
-  me: async() => {
-    return callApi(GET_METHOD, '/user/me');
+    return callApi(GET_METHOD, '/site/logout');
   },
 
   // LISTING
   listCourses: async(page) => {
-    return callApi(GET_METHOD, '/site/list-courses?page='+page);
+    return callApi(GET_METHOD, '/courses?page='+page);
   },
   listEvents: async(page) => {
-    return callApi(GET_METHOD, '/site/list-events?page='+page);
+    return callApi(GET_METHOD, '/events?page='+page);
   },
   listFaq: async(page) => {
-    return callApi(GET_METHOD, '/site/list-faq?page='+page);
+    return callApi(GET_METHOD, '/faq?page='+page);
   },
   listUniversityPartners: async(page) => {
-    return callApi(GET_METHOD, '/site/list-university-partners?page='+page);
+    return callApi(GET_METHOD, '/university-partners?page='+page);
   },
 
   // GET INDIVIDUAL
   getCourse: async(id) => {
-    return callApi(GET_METHOD, '/site/get-course?page='+id);
+    return callApi(GET_METHOD, '/courses/'+id);
   },
   getEvent: async(id) => {
-    return callApi(GET_METHOD, '/site/get-event?page='+id);
+    return callApi(GET_METHOD, '/events/'+id);
   },
   getFaq: async(id) => {
-    return callApi(GET_METHOD, '/site/get-faq?page='+id);
+    return callApi(GET_METHOD, '/faq/'+id);
   },
-  getUniversityPartners: async(id) => {
-    return callApi(GET_METHOD, '/site/get-university-partner?page='+id);
+  getUniversityPartner: async(id) => {
+    return callApi(GET_METHOD, '/university-partners/'+id);
   },
   getFeaturedItems: async() => {
-    return callApi(GET_METHOD, '/site/get-featured-items');
+    return callApi(GET_METHOD, '/v1/site/get-featured-items');
+  },
+  getProfile: async(id) => {
+    return callApi(GET_METHOD, '/user/'+id);
   },
 };
 
