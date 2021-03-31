@@ -4,14 +4,11 @@ namespace api\controllers;
 
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
+use yii\data\ActiveDataFilter;
+use yii\data\ActiveDataProvider;
+use common\models\Faq;
 
 use api\components\CustomHttpException;
-
-use common\models\User;
-use common\models\Courses;
-use common\models\Events;
-use common\models\Faq;
-use common\models\UniversityPartners;
 use common\components\Utility;
 use common\components\MyCustomActiveRecord;
 
@@ -19,6 +16,35 @@ class FaqController extends \api\controllers\RestControllerBase
 {
     public $layout = false;
     public $modelClass = Faq::class;
+    
+    public function actionIndex()
+    {
+        $filter = new ActiveDataFilter([
+            'searchModel' => 'common\models\search\FaqSearch'
+        ]);
+
+        $filterCondition = null;
+
+        // You may load filters from any source. For example,
+        // if you prefer JSON in request body,
+        // use Yii::$app->request->getBodyParams() below:
+        if ($filter->load(\Yii::$app->request->get())) { 
+            $filterCondition = $filter->build();
+            if ($filterCondition === false) {
+                // Serializer would get errors out of it
+                return $filter;
+            }
+        }
+
+        $query = Faq::find();
+        if ($filterCondition !== null) {
+            $query->andWhere($filterCondition);
+        }
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    }
 
     /*public function actionIndex(){
         $o = (object) array("app"=>Yii::$app->name, "version"=>Yii::$app->params["apiVersion"], "endpoint"=>Yii::$app->controller->id);

@@ -3,17 +3,10 @@
 namespace api\controllers;
 
 use Yii;
+use yii\data\ActiveDataFilter;
+use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
-
-use api\components\CustomHttpException;
-
 use common\models\User;
-use common\models\Courses;
-use common\models\Events;
-use common\models\Faq;
-use common\models\UniversityPartners;
-use common\components\Utility;
-use common\components\MyCustomActiveRecord;
 
 class UserController extends \api\controllers\RestControllerBase
 {
@@ -28,6 +21,35 @@ class UserController extends \api\controllers\RestControllerBase
             ],
         ]);       
     }
+    
+    public function actionIndex()
+    {
+        $filter = new ActiveDataFilter([
+            'searchModel' => 'backend\models\search\UserSearch'
+        ]);
+
+        $filterCondition = null;
+
+        // You may load filters from any source. For example,
+        // if you prefer JSON in request body,
+        // use Yii::$app->request->getBodyParams() below:
+        if ($filter->load(\Yii::$app->request->get())) { 
+            $filterCondition = $filter->build();
+            if ($filterCondition === false) {
+                // Serializer would get errors out of it
+                return $filter;
+            }
+        }
+
+        $query = User::find();
+        if ($filterCondition !== null) {
+            $query->andWhere($filterCondition);
+        }
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    }
 
     /*public function actionIndex(){
         $o = (object) array("app"=>Yii::$app->name, "version"=>Yii::$app->params["apiVersion"], "endpoint"=>Yii::$app->controller->id);
@@ -38,10 +60,5 @@ class UserController extends \api\controllers\RestControllerBase
         $data = Yii::$app->user->identity->userDetails;
         Yii::$app->api->sendSuccessResponse($data);
     }*/
-
-    public function extraFields()
-    {
-        return ['userProfile'];
-    }
 }
 

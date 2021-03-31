@@ -31,7 +31,7 @@ class MyCustomActiveRecord extends \yii\db\ActiveRecord {
     
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(), [
             "timestamp" => TimestampBehavior::className(),
             "blame" => BlameableBehavior::className(),
             "upload" =>
@@ -42,13 +42,13 @@ class MyCustomActiveRecord extends \yii\db\ActiveRecord {
                 'baseUrlAttribute' => 'base_url'
             ],
             "auditTrail" => MyAuditTrailBehavior::className(),  
-        ];
+        ]);
     }
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['upload_file'], 'safe'] //important for upload!!
-        ];
+        ]);
     }
 
     public static function deleteStatuses()

@@ -3,13 +3,13 @@
 namespace api\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\web\BadRequestHttpException;
 use yii\helpers\ArrayHelper;
 use common\components\MyCustomActiveRecord;
 use yii\web\Response;
+use yii\rest\Controller;
 
-class RestControllerBase extends \yii\rest\ActiveController
+class RestControllerBase extends Controller
 {
     //used for api rate limiting
     public $endpoint; //name of endpoint

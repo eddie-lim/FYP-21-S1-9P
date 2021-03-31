@@ -99,22 +99,25 @@ class Courses extends MyCustomActiveRecord
         ];
     }
 
-    public function toObject() {
-        $m = $this;
-        $o = (object) [];
-        $o->name = $m->name;
-        $o->university = $m->school->name;
-        $o->mode_of_study = $m->mode_of_study;
-        $o->disciplines = $m->disciplines;
-        $o->sub_disciplines = $m->sub_disciplines;
-        $o->academic_level = $m->academic_level;
-        $o->introduction = $m->introduction;
-        $o->programme_structure = $m->programme_structure;
-        $o->admission_criteria = $m->admission_criteria;
-        $o->fees = $m->fees;
-        $o->exemptions = $m->exemptions;
-        $o->profiles = $m->profiles;
-        $o->assessments_exams = $m->assessments_exams;
-        return $o;
+
+    public function fields() {
+        return [
+            'id',
+            'name',
+            'university' => function ($model) {
+                return $model->school->name;
+            },
+            'mode_of_study',
+            'disciplines',
+            'sub_disciplines',
+            'academic_level',
+            'introduction',
+            'programme_structure',
+            'admission_criteria',
+            'fees',
+            'exemptions',
+            'profiles',
+            'assessments_exams',
+        ];
     }
 }
