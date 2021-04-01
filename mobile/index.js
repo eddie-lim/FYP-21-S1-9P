@@ -6,6 +6,7 @@ import { GlobalContext } from '@helpers/Settings';
 import { Provider as PaperProvider , DefaultTheme} from 'react-native-paper';
 import { MyTheme, StyleConstant } from '@assets/MyStyle';
 import useActivityIndicator from "@hooks/useActivityIndicator";
+import useSlidingPanel from "@hooks/useSlidingPanel";
 import useCustomDialog from '@hooks/useCustomDialog';
 import useWatchInternetConnection from '@hooks/useWatchInternetConnection';
 import { RootSiblingParent } from 'react-native-root-siblings';
@@ -16,15 +17,16 @@ const AppTheme = () => {
     const { toggleActivityIndicator, renderActivityIndicator } = useActivityIndicator();    
     const { showCustomDialog, renderCustomDialog } = useCustomDialog();
     const { renderConnectedToInternetInfo } = useWatchInternetConnection();
-    
+    const { initSlidingPanel, renderSlidingPanel } = useSlidingPanel();
 
     return (
         <RootSiblingParent>
-            <GlobalContext.Provider value={{ toggleActivityIndicator, renderActivityIndicator, showCustomDialog, renderCustomDialog }}>
+            <GlobalContext.Provider value={{ toggleActivityIndicator, renderActivityIndicator, showCustomDialog, renderCustomDialog, initSlidingPanel }}>
                 <PaperProvider theme={DefaultTheme}>
                     <StatusBar backgroundColor={StyleConstant.primaryColor} />
                     <App/>
                 </PaperProvider>
+                { renderSlidingPanel() }
                 { renderConnectedToInternetInfo() }
             </GlobalContext.Provider>
         </RootSiblingParent>

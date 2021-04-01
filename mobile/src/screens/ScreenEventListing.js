@@ -57,11 +57,25 @@ const ScreenEventListing = (props) => {
     return function cleanup() { } 
   }, []);
 
+  handleReset = () =>{
+    TypeOfEventsRef.current.reset();
+    refreshList();
+  }
+
+  handleFilter = () =>{
+    slidingUpPanelRef.current.hide();
+    refreshList();
+  }
+
   // FLATLIST FUNCTIONS ---- START
   getList = (page = 0)=>{
     if(!refreshing){
-      WebApi.listEvents(page).then((res)=>{
-        if(res.data.length < parseInt(res.headers["x-pagination-per-page"])){
+      var filter = "";
+      modeOfStudy.forEach(element => {
+        filter += "&filter[type][]="+element
+      });
+      WebApi.listEvents(page, filter).then((res)=>{
+        if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         res.data.forEach(element => {
@@ -321,12 +335,10 @@ const ScreenEventListing = (props) => {
               
               <View style={[styles.filterHeader]}>
                 <Text style={[styles.filterHeaderText]}>Filters</Text>
-                <Pressable style={[styles.filterResetButton]} onPress={() => {
-                  TypeOfEventsRef.current.reset();
-                }}>
+                <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
                   <Icon name={'refresh'} color={'white'} size={28} />
                 </Pressable>
-                <Pressable style={[styles.filterDoneButton]} onPress={() => slidingUpPanelRef.current.hide()}>
+                <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
                   <Icon name={'check-circle-outline'} color={'white'} size={28} />
                 </Pressable>
               </View>

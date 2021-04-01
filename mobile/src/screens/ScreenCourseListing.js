@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, Dimensions, StyleSheet, Text, Pressable, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderWithBack, StyleConstant } from '@assets/MyStyle';
@@ -9,9 +9,12 @@ import WebApi from '@helpers/WebApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import DropDownPicker from 'react-native-dropdown-picker';
+import OutlineInput from 'react-native-outline-input';
+import { GlobalContext } from '@helpers/Settings';
 
 const ScreenCourseListing = (props) => {
   const { navigate, goBack } = useNavigation();
+  const { initSlidingPanel } = useContext(GlobalContext);
   const slidingUpPanelRef = useRef(null);
   // FLATLIST VALUES ---- START
   const [data, setData] = useState([]);
@@ -19,6 +22,8 @@ const ScreenCourseListing = (props) => {
   const [isLastPage, setIsLastPage] = useState(false);
   const flatListRef = useRef(null);
   // FLATLIST VALUES ---- END
+  const [keyword, setKeyword ] = useState("");
+  const [keywordErrorMsg, setKeywordErrorMsg ] = useState("");
 
   const modeOfStudy_part_time_and_full_time = "part_time_and_full_time";
   const modeOfStudy_full_time = "full_time";
@@ -121,8 +126,39 @@ const ScreenCourseListing = (props) => {
         </Pressable>
       )
     }}, goBack);
+    initSlidingPanel(renderFilterPanel(), slidingUpPanelRef)
     return function cleanup() { } 
   }, []);
+
+  renderFilterPanel = () => {
+    return(
+      <>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <View style={styles.panalContainer} onTouchStart={() => {
+            modeOfStudyRef.current.close();
+            disciplinesRef.current.close();
+            universityPartersRef.current.close();
+            academicLevelRef.current.close();
+            entryQualificationsRef.current.close();
+            subDisciplinesRef.current.close();
+          }}>
+            
+            <View style={[styles.filterHeader]}>
+              <Text style={[styles.filterHeaderText]}>Filters</Text>
+              <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
+                <Icon name={'refresh'} color={'white'} size={28} />
+              </Pressable>
+              <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
+                <Icon name={'check-circle-outline'} color={'white'} size={28} />
+              </Pressable>
+            </View>
+            {/* {renderFilteredResults()} */}
+            {renderDropDownPicker()}
+          </View>
+        </ScrollView>
+      </>
+    )
+  }
 
   renderDropDownPicker = () =>{
     var ModeOfStudyItems = []; 
@@ -199,7 +235,21 @@ const ScreenCourseListing = (props) => {
 
     return (
       <>
-        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
+        <View style={[styles.filterFieldContainer]}>
+          <OutlineInput
+            value={keyword}
+            onChangeText={(e) => setKeyword(e)}
+            label="Keyword Search"
+            activeValueColor="#6c63fe"
+            activeBorderColor="#6c63fe"
+            activeLabelColor="#6c63fe"
+            passiveBorderColor="#bbb7ff"
+            passiveLabelColor="#bbb7ff"
+            passiveValueColor="#bbb7ff"
+          />
+        </View>
+
+        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
           <Text>Mode of Study</Text>
           <DropDownPicker
             controller={instance => modeOfStudyRef.current = instance}
@@ -224,7 +274,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 8000})]}>
+        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 8000})]}>
           <Text>Disciplines</Text>
           <DropDownPicker
             controller={instance => disciplinesRef.current = instance}
@@ -249,7 +299,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 7000})]}>
+        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 7000})]}>
           <Text>University Parters</Text>
           <DropDownPicker
             controller={instance => universityPartersRef.current = instance}
@@ -274,7 +324,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 6000})]}>
+        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 6000})]}>
           <Text>Academic Level</Text>
           <DropDownPicker
             controller={instance => academicLevelRef.current = instance}
@@ -299,7 +349,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 5000})]}>
+        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 5000})]}>
           <Text>Entry Qualifications</Text>
           <DropDownPicker
             controller={instance => entryQualificationsRef.current = instance}
@@ -324,7 +374,7 @@ const ScreenCourseListing = (props) => {
           />
         </View>
         
-        <View style={[styles.dropDownContainer, (Platform.OS !== 'android' && {zIndex: 4000})]}>
+        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 4000})]}>
           <Text>Sub Disciplines</Text>
           <DropDownPicker
             controller={instance => subDisciplinesRef.current = instance}
@@ -365,6 +415,16 @@ const ScreenCourseListing = (props) => {
     )
   }
 
+  handleReset = () =>{
+    modeOfStudyRef.current.reset();
+    disciplinesRef.current.reset();
+    universityPartersRef.current.reset();
+    academicLevelRef.current.reset();
+    entryQualificationsRef.current.reset();
+    subDisciplinesRef.current.reset();
+    refreshList();
+  }
+
   handleFilter = () =>{
     slidingUpPanelRef.current.hide();
     refreshList();
@@ -373,7 +433,7 @@ const ScreenCourseListing = (props) => {
   getList = (page = 1)=>{
     if(!refreshing){
       var filter = "";
-      console.log(modeOfStudy, disciplines, universityParters, academicLevel, entryQualifications, subDisciplines)
+      // console.log(modeOfStudy, disciplines, universityParters, academicLevel, entryQualifications, subDisciplines)
       modeOfStudy.forEach(element => {
         filter += "&filter[mode_of_study][]="+element
       });
@@ -393,8 +453,8 @@ const ScreenCourseListing = (props) => {
         filter += "&filter[sub_disciplines][]="+element
       });
       WebApi.listCourses(page, filter).then((res)=>{
-        console.log("res.data.length",res.data.length)
-        if(parseInt(res.headers["x-pagination-total-count"] < parseInt(res.headers["x-pagination-per-page"])){
+        // console.log("res.data.length",res.data.length)
+        if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
@@ -430,48 +490,6 @@ const ScreenCourseListing = (props) => {
     <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
         { renderList() }
-
-        <SlidingUpPanel
-          snappingPoints={[(Dimensions.get('window').height) * 0.1]}
-          friction={0.75}
-          backdropOpacity={0}
-          showBackdrop={false}
-          ref={slidingUpPanelRef}
-          draggableRange={{top: (Dimensions.get('window').height) * 0.80 , bottom: 55}}
-          // height={250}
-          allowDragging={true}
-        >
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            <View style={styles.panalContainer} onTouchStart={() => {
-              modeOfStudyRef.current.close();
-              disciplinesRef.current.close();
-              universityPartersRef.current.close();
-              academicLevelRef.current.close();
-              entryQualificationsRef.current.close();
-              subDisciplinesRef.current.close();
-            }}>
-              
-              <View style={[styles.filterHeader]}>
-                <Text style={[styles.filterHeaderText]}>Filters</Text>
-                <Pressable style={[styles.filterResetButton]} onPress={() => {
-                  modeOfStudyRef.current.reset();
-                  disciplinesRef.current.reset();
-                  universityPartersRef.current.reset();
-                  academicLevelRef.current.reset();
-                  entryQualificationsRef.current.reset();
-                  subDisciplinesRef.current.reset();
-                }}>
-                  <Icon name={'refresh'} color={'white'} size={28} />
-                </Pressable>
-                <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
-                  <Icon name={'check-circle-outline'} color={'white'} size={28} />
-                </Pressable>
-              </View>
-              {/* {renderFilteredResults()} */}
-              {renderDropDownPicker()}
-            </View>
-          </ScrollView>
-        </SlidingUpPanel>
       </View>
     </SafeAreaView>
   );
@@ -488,7 +506,7 @@ const styles = StyleSheet.create({
   filterResultText: {alignSelf: 'center', color: 'black', fontSize:15, fontWeight:"bold", marginRight:10},
   filterResetButton: {position: 'absolute', left: 10, justifyContent: 'center'},
   filterDoneButton: {position: 'absolute', right: 10, justifyContent: 'center'},
-  dropDownContainer: { width:"80%",  marginTop: 10, marginBottom: 10 },
+  filterFieldContainer: { width:"80%",  marginTop: 10, marginBottom: 10 },
   container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
   panalContainer:{borderLeftColor:"black", borderRightColor:"black", borderTopWidth:1, borderLeftWidth:1, borderRightWidth:1, borderRadius:15, flex: 1, backgroundColor: 'white', alignItems: 'center', },
   card: {width:'100%', flex:1, paddingVertical: 10, flexDirection:'row', backgroundColor: "white", alignItems: 'center', justifyContent: 'space-between'},

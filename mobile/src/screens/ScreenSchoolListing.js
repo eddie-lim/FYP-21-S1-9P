@@ -38,7 +38,7 @@ const ScreenSchoolListing = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       WebApi.listUniversityPartners(page).then((res)=>{
-        if(res.data.length < parseInt(res.headers["x-pagination-per-page"])){
+        if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 0)? res.data : [...data, ...res.data];
