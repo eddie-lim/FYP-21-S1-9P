@@ -7,7 +7,7 @@ return [
     'rules' => [
         [
             'class' => 'yii\rest\UrlRule',
-            'controller' => ['courses', 'events', 'faq', 'university-partners', 'user'],
+            'controller' => ['courses', 'events', 'faq', 'university-partners', 'user', 'enquiries'],
             'pluralize' => false,
             // 'tokens' => [
             //     '{id}' => '<id:\\w+>'

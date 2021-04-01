@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\UniversityPartners;
 use common\components\MyCustomActiveRecord;
 
 /**
@@ -60,6 +61,23 @@ class Faq extends MyCustomActiveRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+        ];
+    }
+
+    public function getSchool()
+    {
+        return $this->hasOne(UniversityPartners::class, ['id' => 'school_id']);
+    }
+    
+    public function fields() {
+        return [
+            'id',
+            'university' => function ($model) {
+                return $model->school ? $model->school->name : "";
+            },
+            'question',
+            'answer',
+            'tags',
         ];
     }
 }

@@ -20,6 +20,10 @@ use yii\db\ActiveRecord;
  * @property string|null $highest_qualification
  * @property int|null $school_id
  * @property int|null $subscribe_newsletter
+ * @property string|null $country_code
+ * @property string|null $nationality
+ * @property string|null $awarding_institute
+ * @property int|null $year_of_graduation
  *
  * @property User $user
  */
@@ -62,11 +66,13 @@ class UserProfile extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
+            [['gender', 'school_id', 'subscribe_newsletter', 'year_of_graduation'], 'integer'],
             [['gender'], 'in', 'range' => [NULL, self::GENDER_FEMALE, self::GENDER_MALE]],
-            [['user_id', 'gender', 'school_id', 'subscribe_newsletter'], 'integer'],
-            [['firstname', 'lastname', 'avatar_path', 'avatar_base_url', 'mobile', 'highest_qualification'], 'string', 'max' => 255],
+            [['firstname', 'lastname', 'avatar_path', 'avatar_base_url', 'mobile', 'highest_qualification', 'nationality', 'awarding_institute'], 'string', 'max' => 255],
+            [['locale'], 'string', 'max' => 32],
+            [['country_code'], 'string', 'max' => 45],
             ['picture', 'safe'],
+            // [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -87,6 +93,10 @@ class UserProfile extends ActiveRecord
             'highest_qualification' => 'Highest Qualification',
             'school_id' => 'School ID',
             'subscribe_newsletter' => 'Subscribe Newsletter',
+            'country_code' => 'Country Code',
+            'nationality' => 'Nationality',
+            'awarding_institute' => 'Awarding Institute',
+            'year_of_graduation' => 'Year Of Graduation',
         ];
     }
 
@@ -118,5 +128,18 @@ class UserProfile extends ActiveRecord
         return $this->avatar_path
             ? Yii::getAlias($this->avatar_base_url . '/' . $this->avatar_path)
             : $default;
+    }
+
+    public function fields() {
+        return [
+            'firstname',
+            'lastname',
+            'subscribe_newsletter',
+            'country_code',
+            'nationality',
+            'awarding_institute',
+            'year_of_graduation',
+            'mobile',
+        ];
     }
 }

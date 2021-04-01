@@ -19,7 +19,13 @@ class UserController extends \api\controllers\RestControllerBase
                 'class' => HttpBearerAuth::className(),
                 // 'except' => ['index'],
             ],
-        ]);       
+        ]);
+    }
+    
+    public function actions(){
+        $actions = parent::actions();
+        unset($actions['index']);
+        return $actions;
     }
     
     public function actionIndex()
@@ -41,7 +47,8 @@ class UserController extends \api\controllers\RestControllerBase
             }
         }
 
-        $query = User::find();
+        $query = User::find()
+        ->where(['id'=>Yii::$app->user->id]); // show only user's own data
         if ($filterCondition !== null) {
             $query->andWhere($filterCondition);
         }

@@ -104,4 +104,15 @@ class UniversityPartners extends MyCustomActiveRecord
         $o->certifications = $m->certifications;
         return $o;
     }
+    
+    public function fields() {
+        return [
+            'id',
+            'name',
+            'description',
+            'continent',
+            'highlights',
+            'certifications',
+        ];
+    }
 }

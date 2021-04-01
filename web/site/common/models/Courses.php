@@ -99,7 +99,6 @@ class Courses extends MyCustomActiveRecord
         ];
     }
 
-
     public function fields() {
         return [
             'id',

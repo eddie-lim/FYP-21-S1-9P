@@ -8,8 +8,9 @@ use yii\helpers\ArrayHelper;
 use common\components\MyCustomActiveRecord;
 use yii\web\Response;
 use yii\rest\Controller;
+use yii\rest\ActiveController;
 
-class RestControllerBase extends Controller
+class RestControllerBase extends ActiveController
 {
     //used for api rate limiting
     public $endpoint; //name of endpoint

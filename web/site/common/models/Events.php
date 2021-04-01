@@ -78,17 +78,19 @@ class Events extends MyCustomActiveRecord
     {
         return $this->hasOne(UniversityPartners::class, ['id' => 'school_id']);
     }
-
-    public function toObject() {
-        $m = $this;
-        $o = (object) [];
-        $o->name = $m->name;
-        $o->university = $m->school->name;
-        $o->session = $m->session;
-        $o->description = $m->description;
-        $o->venue = $m->venue;
-        $o->start_at = $m->start_at;
-        $o->end_at = $m->end_at;
-        return $o;
+    
+    public function fields() {
+        return [
+            'id',
+            'name',
+            'university' => function ($model) {
+                return $model->school->name;
+            },
+            'session',
+            'description',
+            'venue',
+            'start_at',
+            'end_at',
+        ];
     }
 }
