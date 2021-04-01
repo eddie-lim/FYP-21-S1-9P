@@ -4,13 +4,14 @@ import LottieView from 'lottie-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import { HeaderWithCustomButtons } from '@assets/MyStyle';
 
 const ScreenUniversity = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
-      headerShown: false
+      header: ()=>HeaderWithCustomButtons('University')
     }});
     return function cleanup() { } 
   }, []);

@@ -42,7 +42,7 @@ const ScreenLanding = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
       <ScrollView>
-        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop:20, paddingTop:15, paddingBottom:15}}>
+        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop:30, paddingTop:15, paddingBottom:15}}>
           <Pressable onPress={() => navigate("screenWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Try our Course Quiz!</Text>

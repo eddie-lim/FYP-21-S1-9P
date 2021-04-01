@@ -5,13 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import { ScrollView } from 'react-native';
+import { HeaderWithCustomButtons } from '@assets/MyStyle';
 
 const ScreenQuestions = (props) => {
   const { navigate, goBack } = useNavigation();
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
-      headerShown: false
+      header: ()=>HeaderWithCustomButtons('Information')
     }});
     return function cleanup() { } 
   }, []);

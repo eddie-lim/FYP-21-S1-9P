@@ -72,16 +72,6 @@ const HeaderStyleWithRight = {
   }
 };
 
-const HeaderWithTexture = (title)=>{
-  return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 76 : 56, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 20 : 0}}>
-      <ImageBackground source={require('@assets/img/green_texture_bg.png')} style={{width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{alignSelf: 'center', color: 'white'}}>{title}</Text>
-      </ImageBackground>
-    </View>
-  )
-}
-
 const HomeHeader = (navigate, logged_in = null)=>{
   const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
   // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
@@ -90,14 +80,14 @@ const HomeHeader = (navigate, logged_in = null)=>{
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenProfile')}} style={{position: 'absolute', left: 10, flexDirection: 'row'}}>
+        <Pressable onPress={() => {navigate('screenProfile')}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
           <Icon name={'account-circle'} size={25} color={'white'}/>
           <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Profile'}</Text>
         </Pressable>
       )
     } else {
       return (
-        <Pressable onPress={() => {navigate('screenLogin')}} style={{position: 'absolute', left: 10, flexDirection: 'row'}}>
+        <Pressable onPress={() => {navigate('screenLogin')}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
           <Icon name={'login'} size={25} color={'white'}/>
           <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Login'}</Text>
         </Pressable>
@@ -105,13 +95,13 @@ const HomeHeader = (navigate, logged_in = null)=>{
     }
   }
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 186 : 156, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 160 : 130, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
       <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text>
       </View>
-      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{...ShareStyle.curveThis, marginTop:20, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {renderAccountButton()}
-        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 10}}>
+        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 15, bottom: 15}}>
           <Icon name={'cog'} size={30} color={'white'}/>
         </Pressable>
       </View>
@@ -124,12 +114,23 @@ const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center'
 
 const HeaderWithBack = (title, navigate, destination, headerRight=null)=>{
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{...ShareStyle.curveThis, width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
-        <Pressable style={{position: 'absolute', left: 10, justifyContent: 'center'}} onPress={() => navigate(destination)}>
+        <Pressable style={{position: 'absolute', left: 15, justifyContent: 'center'}} onPress={() => navigate(destination)}>
           <Icon name={'arrow-left'} color={'white'} size={30} />
         </Pressable>
+        {headerRight}
+      </View>
+    </View>
+  );
+}
+const HeaderWithCustomButtons = (title, headerLeft=null, headerRight=null)=>{
+  return(
+    <View style={{...ShareStyle.curveThis, width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
+        {headerLeft}
         {headerRight}
       </View>
     </View>
@@ -147,7 +148,8 @@ const ShareStyle = StyleSheet.create({
   flex3: { flex: 3, },
   txtBold : { fontWeight: 'bold' },
   txtRegular : {},
-  textShadow: { textShadowColor: 'rgba(0,0,0,0.75)', textShadowOffset: {width: 1, height: 1}, textShadowRadius: 5 }
+  textShadow: { textShadowColor: 'rgba(0,0,0,0.75)', textShadowOffset: {width: 1, height: 1}, textShadowRadius: 5 },
+  curveThis: {borderBottomLeftRadius:30, borderBottomRightRadius:30, borderBottomWidth:1, }
 });
 /*
 const MyThemeReactPaper = {
@@ -161,4 +163,4 @@ const MyThemeReactPaper = {
 };
 */
 
-export { StyleConstant, ShareStyle, MyTheme, HeaderStyle, HeaderStyleWithBack, HeaderStyleWithBackIos, HeaderStyleWithRight, ShadowStyle, fabStyle, NavOptionStyle, HeaderWithTexture, HomeHeader, HeaderWithBack };
+export { StyleConstant, ShareStyle, MyTheme, HeaderStyle, HeaderStyleWithBack, HeaderStyleWithBackIos, HeaderStyleWithRight, ShadowStyle, fabStyle, NavOptionStyle, HomeHeader, HeaderWithBack, HeaderWithCustomButtons };

@@ -19,7 +19,7 @@ const ScreenEventDetail = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       header:()=> HeaderWithBack("Event Detail", navigate, source,
-      <Pressable style={{position: 'absolute', right: 10, justifyContent: 'center'}} onPress={() => handleRegister()}>
+      <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleRegister()}>
         <Icon name={'calendar-plus'} color={'white'} size={30} />
       </Pressable>)
     }});
