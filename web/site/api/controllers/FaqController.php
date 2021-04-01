@@ -16,15 +16,6 @@ class FaqController extends \api\controllers\RestControllerBase
 {
     public $layout = false;
     public $modelClass = Faq::class;
-
-    public function behaviors() {
-        return array_merge(parent::behaviors(), [
-            'authenticator' => [
-                'class' => HttpBearerAuth::className(),
-                // 'except' => ['index'],
-            ],
-        ]);
-    }
     
     public function actions(){
         $actions = parent::actions();
