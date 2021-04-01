@@ -59,4 +59,19 @@ class Enquiries extends MyCustomActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+    public function getSchool()
+    {
+        return $this->hasOne(UniversityPartners::class, ['id' => 'school_id']);
+    }
+    
+    public function fields() {
+        return [
+            'id',
+            'university' => function ($model) {
+                return $model->school ? $model->school->name : "";
+            },
+            'enquiry',
+        ];
+    }
 }
