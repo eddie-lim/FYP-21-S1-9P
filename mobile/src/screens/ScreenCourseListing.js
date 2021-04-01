@@ -126,39 +126,30 @@ const ScreenCourseListing = (props) => {
         </Pressable>
       )
     }}, goBack);
-    initSlidingPanel(renderFilterPanel(), slidingUpPanelRef)
+    initSlidingPanel(
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <View style={styles.panalContainer} onTouchStart={() => {
+          modeOfStudyRef.current.close();
+          disciplinesRef.current.close();
+          universityPartersRef.current.close();
+          academicLevelRef.current.close();
+          entryQualificationsRef.current.close();
+          subDisciplinesRef.current.close();
+        }}>
+          <View style={[styles.filterHeader]}>
+            <Text style={[styles.filterHeaderText]}>Filters</Text>
+            <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
+              <Icon name={'refresh'} color={'white'} size={28} />
+            </Pressable>
+            <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
+              <Icon name={'check-circle-outline'} color={'white'} size={28} />
+            </Pressable>
+          </View>
+          {renderDropDownPicker()}
+        </View>
+      </ScrollView>, slidingUpPanelRef)
     return function cleanup() { } 
   }, []);
-
-  renderFilterPanel = () => {
-    return(
-      <>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          <View style={styles.panalContainer} onTouchStart={() => {
-            modeOfStudyRef.current.close();
-            disciplinesRef.current.close();
-            universityPartersRef.current.close();
-            academicLevelRef.current.close();
-            entryQualificationsRef.current.close();
-            subDisciplinesRef.current.close();
-          }}>
-            
-            <View style={[styles.filterHeader]}>
-              <Text style={[styles.filterHeaderText]}>Filters</Text>
-              <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
-                <Icon name={'refresh'} color={'white'} size={28} />
-              </Pressable>
-              <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
-                <Icon name={'check-circle-outline'} color={'white'} size={28} />
-              </Pressable>
-            </View>
-            {/* {renderFilteredResults()} */}
-            {renderDropDownPicker()}
-          </View>
-        </ScrollView>
-      </>
-    )
-  }
 
   renderDropDownPicker = () =>{
     var ModeOfStudyItems = []; 
@@ -388,6 +379,7 @@ const ScreenCourseListing = (props) => {
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
             onChangeItem={item => setSubDisciplines(item)}
+            dropDownMaxHeight={75}
             onOpen={() => {
               modeOfStudyRef.current.close();
               disciplinesRef.current.close();
@@ -398,19 +390,6 @@ const ScreenCourseListing = (props) => {
             }}
           />
         </View>
-      </>
-    )
-  }
-
-  renderFilteredResults = () =>{
-    return (
-      <>
-        <Text style={[styles.filterResultText]}>Mode of Study: {modeOfStudy}</Text>
-        <Text style={[styles.filterResultText]}>Disciplines: {disciplines}</Text>
-        <Text style={[styles.filterResultText]}>University Parters: {universityParters}</Text>
-        <Text style={[styles.filterResultText]}>Academic Level: {academicLevel}</Text>
-        <Text style={[styles.filterResultText]}>Entry Qualifications: {entryQualifications}</Text>
-        <Text style={[styles.filterResultText]}>Sub Disciplines: {subDisciplines}</Text>
       </>
     )
   }

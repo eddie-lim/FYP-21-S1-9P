@@ -8,16 +8,15 @@ export default useSlidingPanel = () => {
   const slidingUpPanelRef = useRef(null);
   
   init = (jsx, ref) => { 
-    console.log('jsx', jsx)
     setContent(
       <SlidingUpPanel
-        snappingPoints={[(Dimensions.get('window').height) * 0.1]}
+        snappingPoints={[(Dimensions.get('window').height) * 0.2]}
         friction={0.75}
         backdropOpacity={0}
         showBackdrop={false}
         ref={ref}
-        draggableRange={{top: (Dimensions.get('window').height) * 0.95 , bottom: 55}}
-        // height={250}
+        draggableRange={{top: (Dimensions.get('window').height) * 0.97 , bottom: 0}}
+        height={(Dimensions.get('window').height) * 0.98}
         allowDragging={true}
       >
         { jsx }
@@ -25,7 +24,6 @@ export default useSlidingPanel = () => {
   };
 
   render = () => {
-    console.log('content', content)
     if(content !== null){
       return (
         <>

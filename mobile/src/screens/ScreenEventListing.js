@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, Dimensions, StyleSheet, Text, Pressable, Modal, Button, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeaderWithBack, StyleConstant } from '@assets/MyStyle';
+import { HeaderWithCustomButtons, StyleConstant } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
@@ -14,10 +14,12 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import OutlineInput from 'react-native-outline-input';
 import DatePicker from 'react-native-datepicker'
 import randomcolor from 'randomcolor';
-import { isEqual, padStart } from 'lodash';
+import { padStart } from 'lodash';
+import { GlobalContext } from '@helpers/Settings';
 
 const ScreenEventListing = (props) => {
   const { navigate, goBack } = useNavigation();
+  const { initSlidingPanel } = useContext(GlobalContext);
   // FLATLIST VALUES ---- START
   const [data, setData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -38,7 +40,7 @@ const ScreenEventListing = (props) => {
   const TypeOfEvents_full_time = "full_time";
   const TypeOfEvents_part_time = "part_time";
   const TypeOfEventsIcons = {};
-  const [TypeOfEvents, setTypeOfEvents] = useState();
+  const [TypeOfEvents, setTypeOfEvents] = useState([]);
   const TypeOfEventsRef = useRef(null);
 
   TypeOfEventsIcons[TypeOfEvents_part_time_and_full_time] = "circle-half-full";
@@ -51,9 +53,29 @@ const ScreenEventListing = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
-      headerShown: false
+      header: ()=>HeaderWithCustomButtons('Events', null, 
+      <Pressable style={{position: 'absolute', right: 10, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
+        <Icon name={'filter-variant'} color={'white'} size={30} />
+      </Pressable>)
     }});
-    // slidingUpPanelRef.current.show()
+    initSlidingPanel(
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <View style={styles.panalContainer} onTouchStart={() => {
+          TypeOfEventsRef.current.close();
+        }}>
+          <View style={[styles.filterHeader]}>
+            <Text style={[styles.filterHeaderText]}>Filters</Text>
+            <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
+              <Icon name={'refresh'} color={'white'} size={28} />
+            </Pressable>
+            <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
+              <Icon name={'check-circle-outline'} color={'white'} size={28} />
+            </Pressable>
+          </View>
+          {/* {renderFilteredResults()} */}
+          {renderFilterFields()}
+        </View>
+      </ScrollView>, slidingUpPanelRef)
     return function cleanup() { } 
   }, []);
 
@@ -71,7 +93,7 @@ const ScreenEventListing = (props) => {
   getList = (page = 0)=>{
     if(!refreshing){
       var filter = "";
-      modeOfStudy.forEach(element => {
+      TypeOfEvents.forEach(element => {
         filter += "&filter[type][]="+element
       });
       WebApi.listEvents(page, filter).then((res)=>{
@@ -317,36 +339,6 @@ const ScreenEventListing = (props) => {
           />
         </View>
         { renderList() }
-
-        <SlidingUpPanel
-          snappingPoints={[(Dimensions.get('window').height) * 0.1]}
-          friction={0.75}
-          backdropOpacity={0}
-          showBackdrop={false}
-          ref={slidingUpPanelRef}
-          draggableRange={{top: (Dimensions.get('window').height) * 0.80 , bottom: 55}}
-          // height={250}
-          allowDragging={true}
-        >
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
-            <View style={styles.panalContainer} onTouchStart={() => {
-              TypeOfEventsRef.current.close();
-            }}>
-              
-              <View style={[styles.filterHeader]}>
-                <Text style={[styles.filterHeaderText]}>Filters</Text>
-                <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
-                  <Icon name={'refresh'} color={'white'} size={28} />
-                </Pressable>
-                <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
-                  <Icon name={'check-circle-outline'} color={'white'} size={28} />
-                </Pressable>
-              </View>
-              {/* {renderFilteredResults()} */}
-              {renderFilterFields()}
-            </View>
-          </ScrollView>
-        </SlidingUpPanel>
       </View>
     </SafeAreaView>
   );
