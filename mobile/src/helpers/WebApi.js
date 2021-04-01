@@ -84,11 +84,12 @@ const WebApi = {
   },
 
   // LISTING
-  listCourses: async(page) => {
-    return callApi(GET_METHOD, '/courses?page='+page);
+  listCourses: async(page, filter) => {
+    console.log("listCourses GET", '/courses?page='+page+filter);
+    return callApi(GET_METHOD, '/courses?page='+page+filter);
   },
-  listEvents: async(page) => {
-    return callApi(GET_METHOD, '/events?page='+page);
+  listEvents: async(page, filter) => {
+    return callApi(GET_METHOD, '/events?page='+page+filter);
   },
   listFaq: async(page) => {
     return callApi(GET_METHOD, '/faq?page='+page);

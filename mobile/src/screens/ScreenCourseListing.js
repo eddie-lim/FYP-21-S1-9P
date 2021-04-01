@@ -1,20 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Dimensions, StyleSheet, Text, Pressable, Button, ScrollView, Platform } from 'react-native';
+import { View, Dimensions, StyleSheet, Text, Pressable, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationEvents } from 'react-navigation';
 import { HeaderWithBack, StyleConstant } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
 import WebApi from '@helpers/WebApi';
-import Constants from '@helpers/Constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const ScreenCourseListing = (props) => {
   const { navigate, goBack } = useNavigation();
-  const [ showFilterOptions, setShowFilterOptions ] = useState(false);
   const slidingUpPanelRef = useRef(null);
   // FLATLIST VALUES ---- START
   const [data, setData] = useState([]);
@@ -27,7 +24,7 @@ const ScreenCourseListing = (props) => {
   const modeOfStudy_full_time = "full_time";
   const modeOfStudy_part_time = "part_time";
   const modeOfStudyIcons = {};
-  const [modeOfStudy, setModeOfStudy] = useState();
+  const [modeOfStudy, setModeOfStudy] = useState([]);
   const modeOfStudyRef = useRef(null);
 
   const disciplines_arts_and_social_sciences = "arts_and_social_sciences";
@@ -36,7 +33,7 @@ const ScreenCourseListing = (props) => {
   const disciplines_nursing = "nursing";
   const disciplines_specialty = "specialty";
   const disciplinesIcons = {};
-  const [disciplines, setDisciplines] = useState();
+  const [disciplines, setDisciplines] = useState([]);
   const disciplinesRef = useRef(null);
 
   const universityPartners_grenoble_ecole_de_management = "grenoble_ecole_de_management";
@@ -53,7 +50,7 @@ const ScreenCourseListing = (props) => {
   const universityPartners_university_of_stirling = "university_of_stirling";
   const universityPartners_university_of_wollongong = "university_of_wollongong";
   const universityPartersIcons = {};
-  const [universityParters, setUniversityParters] = useState();
+  const [universityParters, setUniversityParters] = useState([]);
   const universityPartersRef = useRef(null);
 
   const academicLevel_bachelor = "bachelor";
@@ -61,7 +58,7 @@ const ScreenCourseListing = (props) => {
   const academicLevel_diploma = "diploma";
   const academicLevel_postgraduate_or_masters = "postgraduate_or_masters";
   const academicLevelIcons = {};
-  const [academicLevel, setAcademicLevel] = useState();
+  const [academicLevel, setAcademicLevel] = useState([]);
   const academicLevelRef = useRef(null);
 
   const entryQualifications_a_level = "a_level";
@@ -69,13 +66,13 @@ const ScreenCourseListing = (props) => {
   const entryQualifications_degree = "degree";
   const entryQualifications_diploma = "diploma";
   const entryQualificationsIcons = {};
-  const [entryQualifications, setEntryQualifications] = useState();
+  const [entryQualifications, setEntryQualifications] = useState([]);
   const entryQualificationsRef = useRef(null);
 
   const subDisciplines_accounting = "accounting";
   const subDisciplines_big_data = "big_data";
   const subDisciplinesIcons = {};
-  const [subDisciplines, setSubDisciplines] = useState();
+  const [subDisciplines, setSubDisciplines] = useState([]);
   const subDisciplinesRef = useRef(null);
 
   modeOfStudyIcons[modeOfStudy_part_time_and_full_time] = "circle-half-full";
@@ -215,7 +212,7 @@ const ScreenCourseListing = (props) => {
             style={[styles.DropDownPickerStyle]}
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setModeOfStudy(item.value)}
+            onChangeItem={item => setModeOfStudy(item)}
             onOpen={() => {
               // modeOfStudyRef.current.close();
               disciplinesRef.current.close();
@@ -240,7 +237,7 @@ const ScreenCourseListing = (props) => {
             style={[styles.DropDownPickerStyle]}
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setDisciplines(item.value)}
+            onChangeItem={item => setDisciplines(item)}
             onOpen={() => {
               modeOfStudyRef.current.close();
               // disciplinesRef.current.close();
@@ -265,7 +262,7 @@ const ScreenCourseListing = (props) => {
             style={[styles.DropDownPickerStyle]}
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setUniversityParters(item.value)}
+            onChangeItem={item => setUniversityParters(item)}
             onOpen={() => {
               modeOfStudyRef.current.close();
               disciplinesRef.current.close();
@@ -290,7 +287,7 @@ const ScreenCourseListing = (props) => {
             style={[styles.DropDownPickerStyle]}
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setAcademicLevel(item.value)}
+            onChangeItem={item => setAcademicLevel(item)}
             onOpen={() => {
               modeOfStudyRef.current.close();
               disciplinesRef.current.close();
@@ -315,7 +312,7 @@ const ScreenCourseListing = (props) => {
             style={[styles.DropDownPickerStyle]}
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setEntryQualifications(item.value)}
+            onChangeItem={item => setEntryQualifications(item)}
             onOpen={() => {
               modeOfStudyRef.current.close();
               disciplinesRef.current.close();
@@ -340,7 +337,7 @@ const ScreenCourseListing = (props) => {
             style={[styles.DropDownPickerStyle]}
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setSubDisciplines(item.value)}
+            onChangeItem={item => setSubDisciplines(item)}
             onOpen={() => {
               modeOfStudyRef.current.close();
               disciplinesRef.current.close();
@@ -367,18 +364,44 @@ const ScreenCourseListing = (props) => {
       </>
     )
   }
+
+  handleFilter = () =>{
+    slidingUpPanelRef.current.hide();
+    refreshList();
+  }
   // FLATLIST FUNCTIONS ---- START
-  getList = (page = 0)=>{
+  getList = (page = 1)=>{
     if(!refreshing){
-      WebApi.listCourses(page).then((res)=>{
-        if(res.data.length < parseInt(res.headers["x-pagination-per-page"])){
+      var filter = "";
+      console.log(modeOfStudy, disciplines, universityParters, academicLevel, entryQualifications, subDisciplines)
+      modeOfStudy.forEach(element => {
+        filter += "&filter[mode_of_study][]="+element
+      });
+      disciplines.forEach(element => {
+        filter += "&filter[disciplines][]="+element
+      });
+      universityParters.forEach(element => {
+        filter += "&filter[school_id][]="+element
+      });
+      academicLevel.forEach(element => {
+        filter += "&filter[academic_level][]="+element
+      });
+      entryQualifications.forEach(element => {
+        filter += "&filter[entry_qualifications][]="+element
+      });
+      subDisciplines.forEach(element => {
+        filter += "&filter[sub_disciplines][]="+element
+      });
+      WebApi.listCourses(page, filter).then((res)=>{
+        console.log("res.data.length",res.data.length)
+        if(parseInt(res.headers["x-pagination-total-count"] < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
-        const d = (page === 0)? res.data : [...data, ...res.data];
+        const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-          return
+        return
       })
     }
   }
@@ -440,7 +463,7 @@ const ScreenCourseListing = (props) => {
                 }}>
                   <Icon name={'refresh'} color={'white'} size={28} />
                 </Pressable>
-                <Pressable style={[styles.filterDoneButton]} onPress={() => slidingUpPanelRef.current.hide()}>
+                <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
                   <Icon name={'check-circle-outline'} color={'white'} size={28} />
                 </Pressable>
               </View>
@@ -462,7 +485,7 @@ const styles = StyleSheet.create({
   DropDownPickerDropDownStyle:{backgroundColor: '#fafafa'},
   filterHeader: {borderTopLeftRadius:15, borderTopRightRadius:15, backgroundColor:"#3c3c3c", width: '100%', height: 55, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'},
   filterHeaderText: {alignSelf: 'center', color: 'white', fontSize:16, fontWeight:"bold"},
-  filterResultText: {alignSelf: 'center', color: 'white', fontSize:15, fontWeight:"bold", marginRight:10},
+  filterResultText: {alignSelf: 'center', color: 'black', fontSize:15, fontWeight:"bold", marginRight:10},
   filterResetButton: {position: 'absolute', left: 10, justifyContent: 'center'},
   filterDoneButton: {position: 'absolute', right: 10, justifyContent: 'center'},
   dropDownContainer: { width:"80%",  marginTop: 10, marginBottom: 10 },

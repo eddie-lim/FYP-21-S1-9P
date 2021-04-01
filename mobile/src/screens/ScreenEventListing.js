@@ -162,7 +162,7 @@ const ScreenEventListing = (props) => {
             style={[styles.DropDownPickerStyle]}
             itemStyle={[styles.DropDownPickerItemStyle]}
             dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setTypeOfEvents(item.value)}
+            onChangeItem={item => setTypeOfEvents(item)}
             onOpen={() => {
               // TypeOfEventsRef.current.close();
             }}

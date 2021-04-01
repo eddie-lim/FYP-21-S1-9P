@@ -3,15 +3,15 @@ import { FlatList, StyleSheet, View, Text, RefreshControl } from 'react-native';
 import { StyleConstant } from '@assets/MyStyle';
 
 export default CustomFlatList = (callApi, data_state, renderItem, emptyListString, refreshing, lastPage, numCol = 1, reference, type, flatlistHeight=400) => {
-    const [ page, setPage ] = useState(0);
+    const [ page, setPage ] = useState(1);
 
     useEffect(() => {
         if(!lastPage){ callApi(); }
     }, [page]);
     
     handleRefresh = async () => {
-        setPage(0); 
-        callApi();
+        setPage(1); 
+        callApi(1);
     }
 
     render = () => {
