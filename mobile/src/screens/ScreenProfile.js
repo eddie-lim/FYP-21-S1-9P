@@ -37,7 +37,8 @@ const ScreenProfile = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("My Profile", navigate, "mainBottomTab")
+      headerShown:true,
+      header:()=> HeaderWithBack("My Profile", navigate, "screenLanding")
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
     return function cleanup() { } 
@@ -45,7 +46,7 @@ const ScreenProfile = (props) => {
 
   handleBackHandler = ()=>{
     BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
-    navigate("mainBottomTab");
+    navigate("screenLanding");
     return true;
   }
 

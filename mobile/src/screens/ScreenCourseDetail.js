@@ -17,6 +17,7 @@ const ScreenCourseDetail = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack("Course Detail", navigate, source)
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);

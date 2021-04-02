@@ -10,13 +10,13 @@ const ScreenAppLoading = (props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("mainBottomTab");
+      navigate("screenLanding");
     }, 1500);
     return function cleanup() { } 
   }, []);
 
   handleAnimationFinish=(e)=>{
-    navigate("mainBottomTab");
+    navigate("screenLanding");
   }
 
   return (

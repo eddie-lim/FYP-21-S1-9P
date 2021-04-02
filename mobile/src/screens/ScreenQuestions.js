@@ -12,6 +12,7 @@ const ScreenQuestions = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header: ()=>HeaderWithCustomButtons('Information')
     }});
     return function cleanup() { } 

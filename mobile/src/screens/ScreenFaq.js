@@ -20,6 +20,7 @@ const ScreenFaq = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack("FAQ", navigate, "screenQuestions")
     }});
     return function cleanup() { } 

@@ -14,6 +14,7 @@ const ScreenWebview = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack(headerName, navigate, source)
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);

@@ -120,11 +120,11 @@ const ScreenCourseListing = (props) => {
   useEffect(() => {
     // slidingUpPanelRef.current.hide()
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack("Courses", navigate, "screenUniversity", 
-        <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
-          <Icon name={'filter-variant'} color={'white'} size={30} />
-        </Pressable>
-      )
+      <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
+        <Icon name={'filter-variant'} color={'white'} size={30} />
+      </Pressable>)
     }}, goBack);
     initSlidingPanel(
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -426,7 +426,7 @@ const ScreenCourseListing = (props) => {
         filter += "&filter[academic_level][]="+element
       });
       entryQualifications.forEach(element => {
-        filter += "&filter[entry_qualifications][]="+element
+        filter += "&filter[admission_criteria][]="+element
       });
       subDisciplines.forEach(element => {
         filter += "&filter[sub_disciplines][]="+element

@@ -18,6 +18,7 @@ const ScreenEventDetail = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack("Event Detail", navigate, source,
       <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleRegister()}>
         <Icon name={'calendar-plus'} color={'white'} size={30} />
@@ -44,7 +45,7 @@ const ScreenEventDetail = (props) => {
 
   handleBackHandler = ()=>{
    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
-   navigate("mainBottomTab");
+   navigate("screenLanding");
    return true;
  }
 

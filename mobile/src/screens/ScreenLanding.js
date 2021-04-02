@@ -25,6 +25,7 @@ const ScreenLanding = (props) => {
     .then((res)=>{
       setLoggedIn(res)
       props.navigation.setParams({"navOptions":{
+        headerShown:true,
         header:()=> HomeHeader(navigate,res)
       }});
     })

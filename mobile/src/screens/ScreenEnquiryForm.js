@@ -59,6 +59,7 @@ const ScreenEnquiryForm = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack("Enquiry Form", navigate, "screenQuestions")
     }});
     return function cleanup() { } 

@@ -22,7 +22,8 @@ const ScreenLogin = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
-      header:()=> HeaderWithBack("Login", navigate, "mainBottomTab")
+      headerShown:true,
+      header:()=> HeaderWithBack("Login", navigate, "screenLanding")
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
     return function cleanup() { } 
@@ -64,7 +65,7 @@ const ScreenLogin = (props) => {
           StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
           .then(()=>{
             toggleActivityIndicator(false)
-            navigate("mainBottomTab")
+            navigate("screenLanding")
           })
         })
       }).catch((err)=>{

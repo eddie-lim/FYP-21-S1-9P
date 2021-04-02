@@ -29,6 +29,7 @@ const ScreenRegister = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack("Register", navigate, "screenLogin")
     }});
     return function cleanup() { } 
@@ -81,7 +82,7 @@ const ScreenRegister = (props) => {
             StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
             .then(()=>{
               toggleActivityIndicator(false)
-              navigate("mainBottomTab");
+              navigate("screenLanding");
             })
           })
         }).catch((err)=>{

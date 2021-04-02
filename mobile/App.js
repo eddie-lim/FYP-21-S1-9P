@@ -32,34 +32,27 @@ import ScreenEnquiryForm from '@screens/ScreenEnquiryForm';
 
 const LandingStack = createStackNavigator({
   screenLanding: ScreenLanding,
-}, { initialRouteName: 'screenLanding'});
-
-//##############################################
-
-const LoginStack = createStackNavigator({
   screenLogin: ScreenLogin,
   screenRegister: ScreenRegister,
   screenForgetPassword: ScreenForgetPassword,
-}, { initialRouteName: 'screenLogin'});
-
-//##############################################
-
-const ProfileStack = createStackNavigator({
   screenProfile: ScreenProfile,
-}, { initialRouteName: 'screenProfile'});
-
-//##############################################
-
-const SettingsStack = createStackNavigator({
   screenSettings: ScreenSettings,
-}, { initialRouteName: 'screenSettings'});
+}, { initialRouteName: 'screenLanding', defaultNavigationOptions:{headerShown:false} });
+
+LandingStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  for (let i = 0; i < navigation.state.routes.length; i++) {
+    if (navigation.state.routes[i].routeName == "screenLogin" || navigation.state.routes[i].routeName == "screenRegister" || navigation.state.routes[i].routeName == "screenForgetPassword" || navigation.state.routes[i].routeName == "screenProfile" || navigation.state.routes[i].routeName == "screenSettings") { tabBarVisible = false; }
+  }
+  return { tabBarVisible };
+};
 
 //##############################################
 
 const EventStack = createStackNavigator({
   screenEventListing: ScreenEventListing,
   screenEventDetail: ScreenEventDetail,
-}, { initialRouteName: 'screenEventListing'});
+}, { initialRouteName: 'screenEventListing', defaultNavigationOptions:{headerShown:false} });
 
 //##############################################
 
@@ -69,13 +62,13 @@ const UniversityStack = createStackNavigator({
   screenSchoolListing: ScreenSchoolListing,
   screenCourseDetail: ScreenCourseDetail,
   screenSchoolDetail: ScreenSchoolDetail,
-}, { initialRouteName: 'screenUniversity'});
+}, { initialRouteName: 'screenUniversity', defaultNavigationOptions:{headerShown:false} });
 
 //##############################################
 
 const MapStack = createStackNavigator({
   screenMap: ScreenMap,
-}, { initialRouteName: 'screenMap'});
+}, { initialRouteName: 'screenMap', defaultNavigationOptions:{headerShown:false} });
 
 //##############################################
 
@@ -163,10 +156,7 @@ const MainBottomTab= createBottomTabNavigator({
 const RootSwitch = createSwitchNavigator({
   appLoading: ScreenAppLoading,
   mainBottomTab: MainBottomTab,
-  loginStack: LoginStack,
-  settingsStack: SettingsStack,
-  profileStack: ProfileStack,
   webviewStack: WebviewStack,
-}, { initialRouteName: 'appLoading' });
+}, { initialRouteName: 'appLoading'});
 
 export default createAppContainer(RootSwitch);

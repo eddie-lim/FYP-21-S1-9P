@@ -96,10 +96,10 @@ const HomeHeader = (navigate, logged_in = null)=>{
   }
   return(
     <View style={{width: '100%', height: Platform.OS == 'ios' ? 160 : 130, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:10}}>
         <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text>
       </View>
-      <View style={{...ShareStyle.curveThis, marginTop:20, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {renderAccountButton()}
         <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 15, bottom: 15}}>
           <Icon name={'cog'} size={30} color={'white'}/>
@@ -149,7 +149,7 @@ const ShareStyle = StyleSheet.create({
   txtBold : { fontWeight: 'bold' },
   txtRegular : {},
   textShadow: { textShadowColor: 'rgba(0,0,0,0.75)', textShadowOffset: {width: 1, height: 1}, textShadowRadius: 5 },
-  curveThis: {borderBottomLeftRadius:30, borderBottomRightRadius:30, borderBottomWidth:1, }
+  curveThis: {borderBottomLeftRadius:30, borderBottomRightRadius:30, }
 });
 /*
 const MyThemeReactPaper = {

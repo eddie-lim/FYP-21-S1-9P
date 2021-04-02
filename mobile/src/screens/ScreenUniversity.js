@@ -11,6 +11,7 @@ const ScreenUniversity = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header: ()=>HeaderWithCustomButtons('University')
     }});
     return function cleanup() { } 

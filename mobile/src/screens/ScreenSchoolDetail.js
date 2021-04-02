@@ -17,6 +17,7 @@ const ScreenSchoolDetail = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header:()=> HeaderWithBack("School Detail", navigate, source)
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
@@ -40,7 +41,7 @@ const ScreenSchoolDetail = (props) => {
 
   handleBackHandler = ()=>{
    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
-   navigate("mainBottomTab");
+   navigate("screenLanding");
    return true;
  }
   

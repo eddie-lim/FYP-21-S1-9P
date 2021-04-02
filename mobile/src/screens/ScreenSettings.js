@@ -36,34 +36,35 @@ const ScreenSettings = (props) => {
    };
  
   useEffect(() => {
-     props.navigation.setParams({"navOptions":{
-       header:()=> HeaderWithBack("Settings", navigate, "mainBottomTab")
-     }});
-     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
+    props.navigation.setParams({"navOptions":{
+      headerShown:true,
+      header:()=> HeaderWithBack("Settings", navigate, "screenLanding")
+    }});
+    BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
 
-     StoreSettings.get(StoreSettings.IS_LOGGED_IN)
-     .then((IS_LOGGED_IN)=>{
-       if(IS_LOGGED_IN === "true" || IS_LOGGED_IN === true){
-        setSettings(previousState => [...previousState, 
-          {
-            "title": "Logout",
-            "icon": <Icon name={'logout'} size={24} color={StyleConstant.mutedTextColor}/>,
-            "action" : ()=>{
-              StoreSettings.store(StoreSettings.IS_LOGGED_IN, "false")
-              .then(()=>{
-                navigate("mainBottomTab")
-              })
-            },
-            'type': "button"
-          }]);
-       }
-     })
-     return function cleanup() { } 
-   }, []);
+    StoreSettings.get(StoreSettings.IS_LOGGED_IN)
+    .then((IS_LOGGED_IN)=>{
+      if(IS_LOGGED_IN === "true" || IS_LOGGED_IN === true){
+      setSettings(previousState => [...previousState, 
+        {
+          "title": "Logout",
+          "icon": <Icon name={'logout'} size={24} color={StyleConstant.mutedTextColor}/>,
+          "action" : ()=>{
+            StoreSettings.store(StoreSettings.IS_LOGGED_IN, "false")
+            .then(()=>{
+              navigate("screenLanding")
+            })
+          },
+          'type': "button"
+        }]);
+      }
+    })
+    return function cleanup() { } 
+  }, []);
 
    handleBackHandler = ()=>{
     BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
-    navigate("mainBottomTab");
+    navigate("screenLanding");
     return true;
   }
   

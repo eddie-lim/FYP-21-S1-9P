@@ -53,6 +53,7 @@ const ScreenEventListing = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
+      headerShown:true,
       header: ()=>HeaderWithCustomButtons('Events', null, 
       <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
         <Icon name={'filter-variant'} color={'white'} size={30} />
