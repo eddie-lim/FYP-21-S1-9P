@@ -17,6 +17,8 @@ return [
         ['pattern'=>'v1', 'route'=>'site/index'],
         ['pattern'=>'v1/site', 'route'=>'site/index'],
         ['pattern'=>'v1/site/<action>', 'route'=>'site/<action>'],
+        
+        ['pattern'=>'courses/<action>', 'route'=>'courses/<action>'],
         // ['pattern'=>'v1/user', 'route'=>'user/index'],
         // ['pattern'=>'v1/user/<action>', 'route'=>'user/<action>'],
         // ['pattern'=>'v1/courses', 'route'=>'courses/index'],

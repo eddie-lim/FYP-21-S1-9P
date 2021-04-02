@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use common\models\Courses;
 
 use api\components\CustomHttpException;
@@ -41,6 +42,7 @@ class CoursesController extends \api\controllers\RestControllerBase
                 return $filter;
             }
         }
+        // print_r($filterCondition); exit();
 
         $query = Courses::find();
         if ($filterCondition !== null) {
@@ -50,6 +52,18 @@ class CoursesController extends \api\controllers\RestControllerBase
         return new ActiveDataProvider([
             'query' => $query,
         ]);
+    }
+
+    public function actionFilterValues(){
+        $courses = Courses::find()->select(['mode_of_study', 'disciplines', 'school_id', 'academic_level', 'admission_criteria', 'sub_disciplines', "CONCAT('{\"label\":\"',university_partners.name,'\",','\"value\":\"',school_id,'\"}') AS universityParters"])->where(['courses.status'=>MyCustomActiveRecord::STATUS_ENABLED])->joinWith('school')->asArray()->all();
+        $o = (object)[];
+        $o->mode_of_study = array_values(array_unique(ArrayHelper::getColumn($courses, "mode_of_study")));
+        $o->disciplines = array_values(array_unique(ArrayHelper::getColumn($courses, "disciplines")));
+        $o->academic_level = array_values(array_unique(ArrayHelper::getColumn($courses, "academic_level")));
+        // $o->admission_criteria = array_values(array_unique(ArrayHelper::getColumn($courses, "admission_criteria")));
+        $o->sub_disciplines = array_values(array_unique(ArrayHelper::getColumn($courses, "sub_disciplines")));
+        $o->universityParters = array_values(array_unique(ArrayHelper::getColumn($courses, "universityParters")));
+        Yii::$app->api->sendSuccessResponse($o);
     }
     /*public function actionIndex(){
         $o = (object) array("app"=>Yii::$app->name, "version"=>Yii::$app->params["apiVersion"], "endpoint"=>Yii::$app->controller->id);

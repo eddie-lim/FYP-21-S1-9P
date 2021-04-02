@@ -18,8 +18,8 @@ class CoursesSearch extends Courses
     public function rules()
     {
         return [
-            [['id', 'school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'mode_of_study', 'disciplines', 'sub_disciplines', 'academic_level', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'tags', 'notes', 'status'], 'safe'],
+            [['id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['name', 'mode_of_study', 'disciplines', 'sub_disciplines', 'academic_level', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'tags', 'notes', 'status', 'school_id'], 'safe'],
         ];
     }
 
