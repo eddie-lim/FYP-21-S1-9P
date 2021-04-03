@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, ScrollView, Dimensions, StyleSheet, BackHandler, Text, Keyboard } from 'react-native';
+import { View, ScrollView, Dimensions, StyleSheet, BackHandler, Pressable, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -8,7 +8,7 @@ import { Settings, GlobalContext } from '@helpers/Settings';
 import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
-// import InputOutline from 'react-native-outline-input';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LottieView from 'lottie-react-native';
 import { InputOutline } from 'react-native-input-outline';
 
@@ -39,14 +39,17 @@ const ScreenProfile = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("My Profile", navigate, "screenLanding")
+      header:()=> HeaderWithBack("My Profile", navigate, "screenLanding",
+      <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleUpdate()}>
+        <Icon name={'content-save'} color={'white'} size={30} />
+      </Pressable>)
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
 
     var profile = Settings.get(Settings.USER_PROFILE);
+    setEmail(profile.email);
     setFirstName(profile.userProfile.firstname);
     setLastName(profile.userProfile.lastname);
-    setEmail(profile.email);
     setCountryCode(profile.userProfile.country_code);
     setMobileNumber(profile.userProfile.mobile);
     setHighestQualification(profile.userProfile.highest_qualification);
@@ -65,29 +68,45 @@ const ScreenProfile = (props) => {
 
   handleUpdate = () =>{
     toggleActivityIndicator(true, "Updating...");
-    setTimeout(() => {
+    var data = { 'userProfile':{} };
+    var profile = Settings.get(Settings.USER_PROFILE);
+    if(profile.email != email){
+      data['email'] = email;
+    }
+
+    if(profile.userProfile.firstname != firstName) { data.userProfile['firstname'] = firstName }
+    if(profile.userProfile.lastname != lastName) { data.userProfile['lastname'] = lastName }
+    if(profile.userProfile.mobile != mobileNumber) { data.userProfile['mobile'] = mobileNumber }
+    if(profile.userProfile.highest_qualification != highestQualification) { data.userProfile['highest_qualification'] = highestQualification }
+    if(profile.userProfile.country_code != countryCode) { data.userProfile['country_code'] = countryCode }
+    if(profile.userProfile.nationality != nationality) { data.userProfile['nationality'] = nationality }
+    if(profile.userProfile.year_of_graduation != yearOfGraduation) { data.userProfile['year_of_graduation'] = yearOfGraduation }
+    if(profile.userProfile.awarding_institute != highestQualificationInstitute) { data.userProfile['awarding_institute'] = highestQualificationInstitute }
+
+    WebApi.patchProfile(data).then((profile_res)=>{
+      console.log("patchProfile(data)",profile_res.data[0]);
+      Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
+      navigate("screenLanding");
+    }).catch((err)=>{
+      console.log('patchProfile', err)
+      return
+    }).finally(()=>{
       toggleActivityIndicator(false)
-    }, 1000);
-    // WebApi.resetPassword(email).then((res)=>{
-    //   toggleActivityIndicator(true, "Logging in...");
-    // }).catch((err)=>{
-    //   toggleActivityIndicator(false)
-    //   return
-    // })
+    })
   }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
         <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <LottieView style={{height: 250}} source={require('@assets/animation/user-profile-50124.json')} autoPlay={true} loop={true} />
+          <LottieView style={{height: 150}} source={require('@assets/animation/user-profile-50124.json')} autoPlay={true} loop={true} />
 
           <View style={[styles.container]}>
             <InputOutline
               value={firstName}
               onChangeText={(e) => setFirstName(e)}
               placeholder="First Name"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -101,7 +120,7 @@ const ScreenProfile = (props) => {
               value={lastName}
               onChangeText={(e) => setLastName(e)}
               placeholder="Last Name"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -115,7 +134,7 @@ const ScreenProfile = (props) => {
               value={email}
               onChangeText={(e) => setEmail(e)}
               placeholder="Email"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -129,7 +148,7 @@ const ScreenProfile = (props) => {
               value={countryCode}
               onChangeText={(e) => setCountryCode(e)}
               placeholder="Country Code"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -143,7 +162,7 @@ const ScreenProfile = (props) => {
               value={mobileNumber}
               onChangeText={(e) => setMobileNumber(e)}
               placeholder="Mobile Number"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -157,7 +176,7 @@ const ScreenProfile = (props) => {
               value={nationality}
               onChangeText={(e) => setNationality(e)}
               placeholder="Nationality"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -171,7 +190,7 @@ const ScreenProfile = (props) => {
               value={highestQualification}
               onChangeText={(e) => setHighestQualification(e)}
               placeholder="Highest Qualification"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -185,7 +204,7 @@ const ScreenProfile = (props) => {
               value={highestQualificationInstitute}
               onChangeText={(e) => setHighestQualificationInstitute(e)}
               placeholder="Awarding Institute"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -199,7 +218,7 @@ const ScreenProfile = (props) => {
               value={yearOfGraduation}
               onChangeText={(e) => setYearOfGraduation(e)}
               placeholder="Year of Graduation"
-              activeValueColor="#6c63fe"
+              // activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
               passiveBorderColor="#bbb7ff"
@@ -208,9 +227,9 @@ const ScreenProfile = (props) => {
             />
           </View>
 
-          <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleUpdate()}>
+          {/* <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleUpdate()}>
             Update
-          </Button>
+          </Button> */}
         </View>
       </ScrollView>
     </SafeAreaView>

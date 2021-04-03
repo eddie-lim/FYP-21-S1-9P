@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const POST_METHOD = 'POST';
 const GET_METHOD = 'GET';
+const PATCH_METHOD = 'PATCH';
 
 const STATUS_OK = 200;
 const STATUS_BAD_REQUEST = 400;
@@ -26,7 +27,7 @@ const STATUS_UNPROCESSABLE_ENTITY = 422;
 */
 //ref: https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
 axios.interceptors.request.use(config => {
-  // console.log("axios.request", config.url)
+  // console.log("axios.request", config)
   return config;
 }, error => {
   return Promise.reject(error);
@@ -49,6 +50,9 @@ callApi = async(method, endpoint, data, isMultipart = false) => {
   if (isMultipart) {
     headers['Content-Type'] = 'multipart/form-data';
     formData = data;
+  }
+  if(method == PATCH_METHOD){
+    headers['Content-Type'] = 'application/json';
   }
   
   const config = {
@@ -130,6 +134,11 @@ const WebApi = {
 
   postEnquiries: async(school_id, enquiry) => {
     return callApi(POST_METHOD, '/enquiries');
+  },
+  patchProfile: async(data) => {
+    const profile = Settings.get(Settings.USER_PROFILE);
+    var user_id = profile.id;
+    return callApi(PATCH_METHOD, '/user/'+user_id, data);
   },
 };
 
