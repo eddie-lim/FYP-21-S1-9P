@@ -223,7 +223,7 @@ const ScreenEventListing = (props) => {
       filter += "&filter[and]["+and_counter+"][end_at][lte]="+(new Date(filterEndDate).getTime() / 1000)
       and_counter++;
 
-      console.log("keyword.current", keyword.current)
+      // console.log("keyword.current", keyword.current)
       if(!isEmpty(trim(keyword.current))){
         filter += "&filter[and]["+and_counter+"][or][0][name][like][]="+trim(keyword.current)
         filter += "&filter[and]["+and_counter+"][or][1][description][like][]="+trim(keyword.current)

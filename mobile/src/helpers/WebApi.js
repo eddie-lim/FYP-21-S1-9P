@@ -93,7 +93,6 @@ const WebApi = {
     return callApi(GET_METHOD, '/courses?page='+page+filter);
   },
   listEvents: async(page, filter) => {
-    console.log("listEvents", '/events?page='+page+filter)
     return callApi(GET_METHOD, '/events?page='+page+filter);
   },
   listFaq: async(page) => {

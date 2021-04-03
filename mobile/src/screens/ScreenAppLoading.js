@@ -13,7 +13,7 @@ const ScreenAppLoading = (props) => {
       Settings.init();
       setTimeout(() => {
         navigate("screenLanding");
-      }, 1400);
+      }, 1300);
     })
     return function cleanup() { } 
   }, []);

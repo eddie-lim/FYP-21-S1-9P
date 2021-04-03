@@ -86,11 +86,11 @@ const ScreenProfile = (props) => {
     if(profile.userProfile.awarding_institute != highestQualificationInstitute) { data.userProfile['awarding_institute'] = highestQualificationInstitute }
 
     WebApi.patchProfile(data).then((profile_res)=>{
-      console.log("patchProfile(data)",profile_res.data[0]);
+      // console.log("patchProfile(data)",profile_res.data[0]);
       Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
       navigate("screenLanding");
     }).catch((err)=>{
-      console.log('patchProfile', err)
+      // console.log('patchProfile', err)
       return
     }).finally(()=>{
       toggleActivityIndicator(false)
