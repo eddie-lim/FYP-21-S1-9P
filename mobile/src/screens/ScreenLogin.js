@@ -133,7 +133,7 @@ const ScreenLogin = (props) => {
           </Button>
 
           <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"orange" }} icon="lock-reset" mode="contained" onPress={() => navigate("screenForgetPassword")}>
-            Forget password? Click here!
+            Forgot password? Click here!
           </Button>
 
           <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"blue" }} icon="account-plus" mode="contained" onPress={() => navigate("screenRegister")}>

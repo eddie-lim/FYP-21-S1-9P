@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, Dimensions, StyleSheet, ScrollView, Text, TextInput, Pressable, Keyboard } from 'react-native';
+import { View, Alert, StyleSheet, ScrollView, Text, Platform, Pressable, Keyboard } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
-import { StoreSettings, GlobalContext } from '@helpers/Settings';
-import Utils from '@helpers/Utils';
+import { StoreSettings, GlobalContext, Settings } from '@helpers/Settings';
 import WebApi from '@helpers/WebApi';
-import { Button } from 'react-native-paper';
-import OutlineInput from 'react-native-outline-input';
+import { Button, TextInput } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { isEmpty, trim } from 'lodash';
 
 const ScreenEnquiryForm = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -26,151 +25,160 @@ const ScreenEnquiryForm = (props) => {
   const [ nameErrorMsg, setNameErrorMsg ] = useState("");
   const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
   const [ enquiryErrorMsg, setEnquiryErrorMsg ] = useState("");
+  const [ courseFilterValues, setCourseFilterValues ] = useState(null);
 
-  const universityPartners_grenoble_ecole_de_management = "grenoble_ecole_de_management";
-  const universityPartners_la_trobe_university = "la_trobe_university";
-  const universityPartners_monash_college = "monash_college";
-  const universityPartners_rmit_university = "rmit_university";
-  const universityPartners_singapore_institute_of_management = "singapore_institute_of_management";
-  const universityPartners_the_university_of_manchester = "the_university_of_manchester";
-  const universityPartners_the_university_of_sydney = "the_university_of_sydney";
-  const universityPartners_the_university_of_warwick = "the_university_of_warwick";
-  const universityPartners_university_at_buffalo_the_state_university_of_new_york = "university_at_buffalo_the_state_university_of_new_york";
-  const universityPartners_university_of_birmingham = "university_of_birmingham";
-  const universityPartners_university_of_london = "university_of_london";
-  const universityPartners_university_of_stirling = "university_of_stirling";
-  const universityPartners_university_of_wollongong = "university_of_wollongong";
-  const universityPartersIcons = {};
   const universityPartersRef = useRef(null);
-
-  universityPartersIcons[universityPartners_grenoble_ecole_de_management] = "book-open-variant";
-  universityPartersIcons[universityPartners_la_trobe_university] = "book-open-variant";
-  universityPartersIcons[universityPartners_monash_college] = "book-open-variant";
-  universityPartersIcons[universityPartners_rmit_university] = "book-open-variant";
-  universityPartersIcons[universityPartners_singapore_institute_of_management] = "book-open-variant";
-  universityPartersIcons[universityPartners_the_university_of_manchester] = "book-open-variant";
-  universityPartersIcons[universityPartners_the_university_of_sydney] = "book-open-variant";
-  universityPartersIcons[universityPartners_the_university_of_warwick] = "book-open-variant";
-  universityPartersIcons[universityPartners_university_at_buffalo_the_state_university_of_new_york] = "book-open-variant";
-  universityPartersIcons[universityPartners_university_of_birmingham] = "book-open-variant";
-  universityPartersIcons[universityPartners_university_of_london] = "book-open-variant";
-  universityPartersIcons[universityPartners_university_of_stirling] = "book-open-variant";
-  universityPartersIcons[universityPartners_university_of_wollongong] = "book-open-variant";
+  const [ loggedIn, setLoggedIn ] = useState(null);
 
   useEffect(() => {
-    props.navigation.setParams({"navOptions":{
-      headerShown:true,
-      header:()=> HeaderWithBack("Enquiry Form", navigate, "screenQuestions")
-    }});
+    StoreSettings.get(StoreSettings.IS_LOGGED_IN)
+    .then((res)=>{
+      var right_button = null;
+      if(res == true || res == "true"){
+        setLoggedIn(true);
+        right_button = <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleSubmit()}>
+            <Icon name={'upload'} color={'white'} size={30} />
+          </Pressable>;
+      }
+      props.navigation.setParams({"navOptions":{
+        headerShown:true,
+        header:()=> HeaderWithBack("Enquiry Form", navigate, "screenQuestions", right_button)
+      }});
+    });
+    WebApi.getCourseFilterValues().then((res)=>{
+      setCourseFilterValues(res);
+    })
     return function cleanup() { } 
   }, []);
 
   handleSubmit = () =>{
+    setSchoolErrorMsg("")
+    setEnquiryErrorMsg("")
+    var hasError = false;
+    if(isEmpty(school)){
+      setSchoolErrorMsg("Please select an university")
+      hasError = true;
+    }
+    if(isEmpty(trim(enquiry))){
+      setEnquiryErrorMsg("Please write your enquiries")
+      hasError = true;
+    }
+    if(hasError){
+      return;
+    }
     toggleActivityIndicator(true, "Submitting...");
-    setTimeout(() => {
-      toggleActivityIndicator(false)
-    }, 1000);
-    // WebApi.resetPassword(school).then((res)=>{
-    //   toggleActivityIndicator(true, "Logging in...");
-    // }).catch((err)=>{
+    // setTimeout(() => {
     //   toggleActivityIndicator(false)
-    //   return
-    // })
+    // }, 1000);
+    var user_id = (Settings.get(Settings.USER_PROFILE)).id;
+    var data = {
+      "user_id": user_id,
+      "school_id": school,
+      "enquiry": enquiry
+    }
+    // console.log("postEnquiries data", data)
+    WebApi.postEnquiries(data).then((res)=>{
+      // console.log("postEnquiries res", res.data)
+      toggleActivityIndicator(false);
+      Alert.alert(
+        "Success!",
+        "Your enquiry has been submitted successfully.\nOur friendly staff will get back to your via your registered email soon!\n\nThank you!",
+        [
+          {
+            text: 'OK', onPress: async () => {
+              navigate("screenQuestions")
+            }
+          },
+        ]
+      );
+    }).catch((err)=>{
+      toggleActivityIndicator(false);
+      return;
+    })
   }
 
-  renderDropdown = () => {
-    var UniversityPartersItems = []; 
-    for (const key in universityPartersIcons) {
-      if (Object.hasOwnProperty.call(universityPartersIcons, key)) {
-        const element = universityPartersIcons[key];
-        UniversityPartersItems.push({
-          label: key, // capitalise and remove underscore
-          value: key,
-          icon: () => <Icon name={element} size={18} color="#900" />,
-        })
+  renderForm = () => {
+    if(loggedIn === true){
+      if(courseFilterValues!=null){
+        var res = courseFilterValues;
+        // console.log(res.data)
+        var UniversityPartersItems = [];
+        // var UniversityPartersValues = []
+        for (let index = 0; index < res.data.universityParters.length; index++) {
+          const item = res.data.universityParters[index];
+          var uni = JSON.parse(item);
+          // UniversityPartersValues.push(uni.value)
+          UniversityPartersItems.push({
+            label: uni.label, // capitalise and remove underscore
+            value: uni.value,
+            icon: () => <Icon name={"book-open-variant"} size={18} color="#900" />,
+          })
+        }
+        // setUniversityParters(UniversityPartersValues)
+    
+        return (
+          <>
+            <View style={[styles.container, (Platform.OS !== 'android' && {zIndex: 7000})]}>
+              <Text>Attention to</Text>
+              <DropDownPicker
+                controller={instance => universityPartersRef.current = instance}
+                placeholder="Pick an university"
+                items={UniversityPartersItems}
+                // defaultValue={Object.keys(universityPartersIcons)}
+                // multiple={true}
+                // multipleText="%d schools have been selected."
+                containerStyle={{height: 40}}
+                style={[styles.DropDownPickerStyle]}
+                itemStyle={[styles.DropDownPickerItemStyle]}
+                dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+                onChangeItem={item => setSchool(item.value)}
+              />
+              <Text style={styles.errorText}>{schoolErrorMsg}</Text>
+            </View>
+            
+            <View style={[styles.container]}>
+              <TextInput
+                value={enquiry}
+                onChangeText={(e) => setEnquiry(e)}
+                label="Enquiry"
+                activeValueColor="#6c63fe"
+                activeBorderColor="#6c63fe"
+                activeLabelColor="#6c63fe"
+                passiveBorderColor="#bbb7ff"
+                passiveLabelColor="#bbb7ff"
+                passiveValueColor="#bbb7ff"
+                multiline
+                numberOfLines={6}
+              />
+              <Text style={styles.errorText}>{enquiryErrorMsg}</Text>
+            </View>
+            
+            {/* <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="upload" mode="contained" onPress={() => handleSubmit()}>
+              Submit!
+            </Button> */}
+          </>
+        )
       }
-    }
-
-    return (
-      <>
-        <View style={[styles.container, (Platform.OS !== 'android' && {zIndex: 7000})]}>
-          <Text>University Parters</Text>
-          <DropDownPicker
-            controller={instance => universityPartersRef.current = instance}
-            placeholder="Attention to school"
-            items={UniversityPartersItems}
-            defaultValue={Object.keys(universityPartersIcons)}
-            multiple={true}
-            multipleText="%d schools have been selected."
-            containerStyle={{height: 40}}
-            style={[styles.DropDownPickerStyle]}
-            itemStyle={[styles.DropDownPickerItemStyle]}
-            dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setSchool(item.value)}
-          />
-          <Text style={styles.errorText}>{schoolErrorMsg}</Text>
+    } else if(loggedIn === false) {
+      return(
+        <View style={{marginTop:100, }}>
+          <Button style={{width:'80%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin")}>
+            Please login first
+          </Button>
         </View>
-      </>
-    )
+      )
+    }
   }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
-        <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <View onTouchStart={()=>{Keyboard.dismiss; }} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           
-          <LottieView style={{height: 200}} source={require('@assets/animation/enquiry-33011.json')} autoPlay={true} loop={true} />
+          <LottieView style={{height: 175, marginTop:15}} source={require('@assets/animation/enquiry-33011.json')} autoPlay={true} loop={true} />
 
-          {renderDropdown()}
-          
-          <View style={[styles.container]}>
-            <OutlineInput
-              value={name}
-              onChangeText={(e) => setName(e)}
-              label="Name"
-              activeValueColor="#6c63fe"
-              activeBorderColor="#6c63fe"
-              activeLabelColor="#6c63fe"
-              passiveBorderColor="#bbb7ff"
-              passiveLabelColor="#bbb7ff"
-              passiveValueColor="#bbb7ff"
-            />
-            <Text style={styles.errorText}>{nameErrorMsg}</Text>
-          </View>
-          
-          <View style={[styles.container]}>
-            <OutlineInput
-              value={email}
-              onChangeText={(e) => setEmail(e)}
-              label="Email"
-              activeValueColor="#6c63fe"
-              activeBorderColor="#6c63fe"
-              activeLabelColor="#6c63fe"
-              passiveBorderColor="#bbb7ff"
-              passiveLabelColor="#bbb7ff"
-              passiveValueColor="#bbb7ff"
-            />
-            <Text style={styles.errorText}>{emailErrorMsg}</Text>
-          </View>
-          
-          <View style={[styles.container]}>
-            <OutlineInput
-              value={enquiry}
-              onChangeText={(e) => setEnquiry(e)}
-              label="Enquiry"
-              activeValueColor="#6c63fe"
-              activeBorderColor="#6c63fe"
-              activeLabelColor="#6c63fe"
-              passiveBorderColor="#bbb7ff"
-              passiveLabelColor="#bbb7ff"
-              passiveValueColor="#bbb7ff"
-            />
-            <Text style={styles.errorText}>{enquiryErrorMsg}</Text>
-          </View>
-          
-          <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="upload" mode="contained" onPress={() => handleSubmit()}>
-            Submit!
-          </Button>
+          { renderForm() }
+
         </View>
       </ScrollView>
     </SafeAreaView>

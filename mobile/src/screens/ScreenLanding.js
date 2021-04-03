@@ -21,20 +21,6 @@ const ScreenLanding = (props) => {
 
   useEffect(() => {
     getFeaturedItems();
-    StoreSettings.get(StoreSettings.IS_LOGGED_IN)
-    .then((res)=>{
-      setLoggedIn(res);
-      if(res == true || res == "true"){
-        WebApi.getProfile().then((profile_res)=>{
-          console.log(profile_res.data[0]);
-          Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
-        })
-      }
-      props.navigation.setParams({"navOptions":{
-        headerShown:true,
-        header:()=> HomeHeader(navigate,res)
-      }});
-    })
     return function cleanup() { } 
   }, []);
 
@@ -48,6 +34,24 @@ const ScreenLanding = (props) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
+      <NavigationEvents
+        onWillFocus={()=>{
+          StoreSettings.get(StoreSettings.IS_LOGGED_IN)
+          .then((res)=>{
+            setLoggedIn(res);
+            if(res == true || res == "true"){
+              WebApi.getProfile().then((profile_res)=>{
+                // console.log(profile_res.data[0]);
+                Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
+              })
+            }
+            props.navigation.setParams({"navOptions":{
+              headerShown:true,
+              header:()=> HomeHeader(navigate,res)
+            }});
+          })
+        }}
+      />
       <ScrollView>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop:30, paddingTop:15, paddingBottom:15}}>
           <Pressable onPress={() => navigate("screenWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>

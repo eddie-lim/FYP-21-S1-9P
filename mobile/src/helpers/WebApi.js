@@ -51,7 +51,7 @@ callApi = async(method, endpoint, data, isMultipart = false) => {
     headers['Content-Type'] = 'multipart/form-data';
     formData = data;
   }
-  if(method == PATCH_METHOD){
+  if(method == PATCH_METHOD || method == POST_METHOD){
     headers['Content-Type'] = 'application/json';
   }
   
@@ -132,8 +132,8 @@ const WebApi = {
   },
 
 
-  postEnquiries: async(school_id, enquiry) => {
-    return callApi(POST_METHOD, '/enquiries');
+  postEnquiries: async(data) => {
+    return callApi(POST_METHOD, '/enquiries', data);
   },
   patchProfile: async(data) => {
     const profile = Settings.get(Settings.USER_PROFILE);

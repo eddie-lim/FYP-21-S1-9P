@@ -101,7 +101,7 @@ const ScreenProfile = (props) => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
         <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <LottieView style={{height: 150}} source={require('@assets/animation/user-profile-50124.json')} autoPlay={true} loop={true} />
+          <LottieView style={{height: 175}} source={require('@assets/animation/user-profile-50124.json')} autoPlay={true} loop={true} />
 
           <View style={[styles.container]}>
             <InputOutline
