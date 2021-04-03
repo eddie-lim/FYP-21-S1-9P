@@ -1,18 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
-import {useNavigation} from 'react-navigation-hooks';
-import { Settings } from '@helpers/Settings';
+import { useNavigation } from 'react-navigation-hooks';
+import { Settings, StoreSettings } from '@helpers/Settings';
 
 const ScreenAppLoading = (props) => {
   const { navigate } = useNavigation();
   const opening_animation = useRef(null);
 
   useEffect(() => {
-    Settings.init();
-    setTimeout(() => {
-      navigate("screenLanding");
-    }, 1500);
+    StoreSettings.init().then(()=>{
+      Settings.init();
+      setTimeout(() => {
+        navigate("screenLanding");
+      }, 1400);
+    })
     return function cleanup() { } 
   }, []);
 

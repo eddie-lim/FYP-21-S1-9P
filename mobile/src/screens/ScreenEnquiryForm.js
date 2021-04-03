@@ -40,6 +40,10 @@ const ScreenEnquiryForm = (props) => {
             <Icon name={'upload'} color={'white'} size={30} />
           </Pressable>;
       }
+
+      if(res == false || res == "false"){
+        setLoggedIn(false);
+      }
       props.navigation.setParams({"navOptions":{
         headerShown:true,
         header:()=> HeaderWithBack("Enquiry Form", navigate, "screenQuestions", right_button)
