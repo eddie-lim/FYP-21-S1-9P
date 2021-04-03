@@ -57,7 +57,9 @@ const ScreenProfile = (props) => {
     setHighestQualificationInstitute(profile.userProfile.awarding_institute);
     setYearOfGraduation(profile.userProfile.year_of_graduation);
 
-    return function cleanup() { } 
+    return function cleanup() {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+    } 
   }, []);
 
   handleBackHandler = ()=>{

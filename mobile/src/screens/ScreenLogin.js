@@ -26,7 +26,9 @@ const ScreenLogin = (props) => {
       header:()=> HeaderWithBack("Login", navigate, "screenLanding")
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
-    return function cleanup() { } 
+    return function cleanup() {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+    } 
   }, []);
 
   handleBackHandler = ()=>{

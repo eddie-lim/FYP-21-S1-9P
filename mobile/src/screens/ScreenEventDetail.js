@@ -40,7 +40,9 @@ const ScreenEventDetail = (props) => {
     }
     setSection(items)
 
-    return function cleanup() { } 
+    return function cleanup() {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
+    } 
   }, []);
 
   handleBackHandler = ()=>{
