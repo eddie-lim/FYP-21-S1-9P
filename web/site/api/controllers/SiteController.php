@@ -116,9 +116,9 @@ class SiteController extends \api\controllers\RestControllerBase
         $university_partner = UniversityPartners::find()->orderBy(['created_at' => SORT_DESC])->one();
 
         $data = [
-            'course' => $course->toObject(),
-            'event' => $event->toObject(),
-            'university_partner' => $university_partner->toObject(),
+            'course' => $course->attributes(),
+            'event' => $event->attributes(),
+            'university_partner' => $university_partner->attributes(),
             'course_quiz_url' => 'https://quiz.simge.edu.sg/',
         ];
 

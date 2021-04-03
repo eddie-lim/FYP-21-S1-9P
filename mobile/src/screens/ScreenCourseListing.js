@@ -7,10 +7,11 @@ import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
 import WebApi from '@helpers/WebApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SlidingUpPanel from 'rn-sliding-up-panel';
 import DropDownPicker from 'react-native-dropdown-picker';
-import OutlineInput from 'react-native-outline-input';
 import { GlobalContext } from '@helpers/Settings';
+import { isEmpty, trim } from 'lodash';
+import { InputOutline } from 'react-native-input-outline';
+import { NavigationEvents } from 'react-navigation';
 
 const ScreenCourseListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -22,7 +23,9 @@ const ScreenCourseListing = (props) => {
   const [isLastPage, setIsLastPage] = useState(false);
   const flatListRef = useRef(null);
   // FLATLIST VALUES ---- END
-  const [keyword, setKeyword ] = useState("");
+  // const [keyword, setKeyword ] = useState("");
+  const keywordRef = useRef(null);
+  const keyword = useRef("");
   const [keywordErrorMsg, setKeywordErrorMsg ] = useState("");
 
   const modeOfStudy_part_time_and_full_time = "part_time_and_full_time";
@@ -41,10 +44,6 @@ const ScreenCourseListing = (props) => {
   const [academicLevel, setAcademicLevel] = useState([]);
   const academicLevelRef = useRef(null);
 
-  // const entryQualificationsIcons = {}; 
-  // const [entryQualifications, setEntryQualifications] = useState([]);
-  // const entryQualificationsRef = useRef(null);
-
   const [subDisciplines, setSubDisciplines] = useState([]);
   const subDisciplinesRef = useRef(null);
 
@@ -52,9 +51,7 @@ const ScreenCourseListing = (props) => {
   modeOfStudyIcons[modeOfStudy_full_time] = "circle";
   modeOfStudyIcons[modeOfStudy_part_time] = "circle-half";
 
-  
   useEffect(() => {
-    // slidingUpPanelRef.current.hide()
     props.navigation.setParams({"navOptions":{
       headerShown:true,
       header:()=> HeaderWithBack("Courses", navigate, "screenUniversity", 
@@ -62,7 +59,6 @@ const ScreenCourseListing = (props) => {
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }}, goBack);
-    renderFilterFields();
     return function cleanup() { } 
   }, []);
 
@@ -164,16 +160,16 @@ const ScreenCourseListing = (props) => {
             </Pressable>
           </View>
           <View style={[styles.filterFieldContainer]}>
-            <OutlineInput
-              value={keyword}
-              onChangeText={(e) => setKeyword(e)}
-              label="Keyword Search"
-              activeValueColor="#6c63fe"
-              activeBorderColor="#6c63fe"
-              activeLabelColor="#6c63fe"
-              passiveBorderColor="#bbb7ff"
-              passiveLabelColor="#bbb7ff"
-              passiveValueColor="#bbb7ff"
+            <InputOutline
+              ref={keywordRef}
+              onChangeText={txt => keyword.current = txt}
+              error={keywordErrorMsg} // wont take effect until a message is passed
+              placeholder={"Keyword Search"}
+              trailingIcon={()=>{
+                return(
+                  <Icon name={'magnify'} color={'white'} size={30} />
+                )
+              }}
             />
           </View>
 
@@ -378,13 +374,17 @@ const ScreenCourseListing = (props) => {
       if(academicLevel.length > 0){
         and_counter++;
       }
-      // entryQualifications.forEach(element => {
-      //   filter += "&filter[and]["+and_counter+"][admission_criteria][]="+element
-      // });
       subDisciplines.forEach(element => {
         filter += "&filter[and]["+and_counter+"][sub_disciplines][]="+element
       });
       if(subDisciplines.length > 0){
+        and_counter++;
+      }
+      if(!isEmpty(trim(keyword.current))){
+        filter += "&filter[and]["+and_counter+"][or][0][name][like][]="+trim(keyword.current)
+        filter += "&filter[and]["+and_counter+"][or][1][disciplines][like][]="+trim(keyword.current)
+        filter += "&filter[and]["+and_counter+"][or][2][sub_disciplines][like][]="+trim(keyword.current)
+        filter += "&filter[and]["+and_counter+"][or][3][tags][like][]="+trim(keyword.current)
         and_counter++;
       }
       WebApi.listCourses(page, filter).then((res)=>{
@@ -422,6 +422,14 @@ const ScreenCourseListing = (props) => {
 
   return (
     <SafeAreaView style={{flex:1}}>
+      <NavigationEvents
+        onWillFocus={()=>{
+          renderFilterFields();
+        }}
+        onWillBlur={()=>{
+          slidingUpPanelRef.current.hide();
+        }}
+      />
       <View style={styles.container}>
         { renderList() }
       </View>

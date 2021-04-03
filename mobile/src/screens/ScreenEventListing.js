@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { View, Dimensions, StyleSheet, Text, Pressable, Modal, Button, ScrollView } from 'react-native';
+import { View, Dimensions, StyleSheet, Text, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderWithCustomButtons, StyleConstant } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
 import WebApi from '@helpers/WebApi';
-import Constants from '@helpers/Constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SlidingUpPanel from 'rn-sliding-up-panel';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
-import OutlineInput from 'react-native-outline-input';
 import DatePicker from 'react-native-date-picker'
 import randomcolor from 'randomcolor';
 import { padStart } from 'lodash';
 import { GlobalContext } from '@helpers/Settings';
+import { isEmpty, trim } from 'lodash';
+import { InputOutline } from 'react-native-input-outline';
+import { NavigationEvents } from 'react-navigation';
 
 const ScreenEventListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -30,7 +30,9 @@ const ScreenEventListing = (props) => {
   const [isCalendarVisible, setIsCalendarVisible] = useState(true);
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-  const [keyword, setKeyword ] = useState("");
+  // const [keyword, setKeyword ] = useState("");
+  const keywordRef = useRef(null);
+  const keyword = useRef("");
   const [keywordErrorMsg, setKeywordErrorMsg ] = useState("");
 
   const [filterStartDate , setFilterStartDate] = useState(new Date("2021-03-01"));
@@ -54,7 +56,6 @@ const ScreenEventListing = (props) => {
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }});
-    renderFilterFields();
     return function cleanup() { } 
   }, []);
 
@@ -104,16 +105,16 @@ const ScreenEventListing = (props) => {
           </View>
           
           <View style={[styles.filterFieldContainer]}>
-            <OutlineInput
-              value={keyword}
-              onChangeText={(e) => setKeyword(e)}
-              label="Keyword Search"
-              activeValueColor="#6c63fe"
-              activeBorderColor="#6c63fe"
-              activeLabelColor="#6c63fe"
-              passiveBorderColor="#bbb7ff"
-              passiveLabelColor="#bbb7ff"
-              passiveValueColor="#bbb7ff"
+            <InputOutline
+              ref={keywordRef}
+              onChangeText={txt => keyword.current = txt}
+              error={keywordErrorMsg} // wont take effect until a message is passed
+              placeholder={"Keyword Search"}
+              trailingIcon={()=>{
+                return(
+                  <Icon name={'magnify'} color={'white'} size={30} />
+                )
+              }}
             />
           </View>
 
@@ -222,6 +223,15 @@ const ScreenEventListing = (props) => {
       filter += "&filter[and]["+and_counter+"][end_at][lte]="+(new Date(filterEndDate).getTime() / 1000)
       and_counter++;
 
+      console.log("keyword.current", keyword.current)
+      if(!isEmpty(trim(keyword.current))){
+        filter += "&filter[and]["+and_counter+"][or][0][name][like][]="+trim(keyword.current)
+        filter += "&filter[and]["+and_counter+"][or][1][description][like][]="+trim(keyword.current)
+        filter += "&filter[and]["+and_counter+"][or][2][tags][like][]="+trim(keyword.current)
+        filter += "&filter[and]["+and_counter+"][or][3][venue][like][]="+trim(keyword.current)
+        and_counter++;
+      }
+
       WebApi.listEvents(page, filter).then((res)=>{
         if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
@@ -289,6 +299,14 @@ const ScreenEventListing = (props) => {
 
   return (
     <SafeAreaView style={{flex:1}}>
+      <NavigationEvents
+        onWillFocus={()=>{
+          renderFilterFields();
+        }}
+        onWillBlur={()=>{
+          slidingUpPanelRef.current.hide();
+        }}
+      />
       <View style={styles.container}>
         <View style={[styles.calendarContainer]}>
           <Calendar
