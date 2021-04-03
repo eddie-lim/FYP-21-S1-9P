@@ -4,7 +4,7 @@ import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/My
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
-import { StoreSettings, GlobalContext } from '@helpers/Settings';
+import { StoreSettings, GlobalContext, Settings } from '@helpers/Settings';
 import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
@@ -62,17 +62,26 @@ const ScreenLogin = (props) => {
         var access_token = accessToken_res.data.access_token;
         StoreSettings.store(StoreSettings.ACCESS_TOKEN, access_token)
         .then(()=>{
-          StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
-          .then(()=>{
-            toggleActivityIndicator(false)
-            navigate("screenLanding")
+          WebApi.getProfile().then((profile_res)=>{
+            Settings.store(Settings.USER_PROFILE, profile_res.data[0]); 
+            StoreSettings.store(StoreSettings.IS_LOGGED_IN, "true")
+            .then(()=>{
+              toggleActivityIndicator(false)
+              navigate("screenLanding")
+            })
+          }).catch((err)=>{
+            setPasswordErrorMsg("Incorrect email or password");
+            toggleActivityIndicator(false);
+            return
           })
         })
       }).catch((err)=>{
+        setPasswordErrorMsg("Incorrect email or password");
         toggleActivityIndicator(false);
         return
       })
     }).catch((err)=>{
+      setPasswordErrorMsg("Incorrect email or password");
       toggleActivityIndicator(false);
       return
     })

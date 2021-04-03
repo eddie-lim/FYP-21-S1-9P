@@ -4,8 +4,8 @@ import { HomeHeader, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyl
 import LottieView from 'lottie-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
-import {StoreSettings} from '@helpers/Settings';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
+import { StoreSettings, Settings } from '@helpers/Settings';
 import { NavigationEvents } from 'react-navigation';
 import WebApi from '@helpers/WebApi';
 
@@ -23,7 +23,13 @@ const ScreenLanding = (props) => {
     getFeaturedItems();
     StoreSettings.get(StoreSettings.IS_LOGGED_IN)
     .then((res)=>{
-      setLoggedIn(res)
+      setLoggedIn(res);
+      if(res == true || res == "true"){
+        WebApi.getProfile().then((profile_res)=>{
+          console.log(profile_res.data[0]);
+          Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
+        })
+      }
       props.navigation.setParams({"navOptions":{
         headerShown:true,
         header:()=> HomeHeader(navigate,res)

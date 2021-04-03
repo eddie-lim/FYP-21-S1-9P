@@ -134,12 +134,14 @@ class UserProfile extends ActiveRecord
         return [
             'firstname',
             'lastname',
+            'mobile',
+            'highest_qualification',
+            'school_id',
             'subscribe_newsletter',
             'country_code',
             'nationality',
-            'awarding_institute',
             'year_of_graduation',
-            'mobile',
+            'awarding_institute',
         ];
     }
 }

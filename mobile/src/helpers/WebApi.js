@@ -26,6 +26,7 @@ const STATUS_UNPROCESSABLE_ENTITY = 422;
 */
 //ref: https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
 axios.interceptors.request.use(config => {
+  // console.log("axios.request", config.url)
   return config;
 }, error => {
   return Promise.reject(error);
@@ -34,7 +35,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async (response) => {
     return response;
   }, error => {
-    return Promise.reject(error.response);
+    return Promise.reject(error);
   }
 );
 
@@ -114,8 +115,8 @@ const WebApi = {
   getFeaturedItems: async() => {
     return callApi(GET_METHOD, '/v1/site/get-featured-items');
   },
-  getProfile: async(id) => {
-    return callApi(GET_METHOD, '/user');
+  getProfile: async() => {
+    return callApi(GET_METHOD, '/user?expand=userProfile');
   },
 
   // Filter Values
@@ -126,6 +127,10 @@ const WebApi = {
     return callApi(GET_METHOD, '/events/filter-values');
   },
 
+
+  postEnquiries: async(school_id, enquiry) => {
+    return callApi(POST_METHOD, '/enquiries');
+  },
 };
 
 export default WebApi;

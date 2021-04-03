@@ -427,7 +427,9 @@ const ScreenCourseListing = (props) => {
           renderFilterFields();
         }}
         onWillBlur={()=>{
-          slidingUpPanelRef.current.hide();
+          if(slidingUpPanelRef.current != null){
+            slidingUpPanelRef.current.hide();
+          }
         }}
       />
       <View style={styles.container}>

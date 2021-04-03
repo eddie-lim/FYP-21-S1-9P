@@ -9,9 +9,8 @@ const GlobalContext = createContext({});
 
 //ephemeral settings
 class Settings {
-    // user/me
-    static USER_ID = 'user_id';
-    static USER_EMAIL = 'user_email';
+    // user profile
+    static USER_PROFILE = 'user_profile';
     
     static defaultSettings = [];
 
@@ -22,8 +21,7 @@ class Settings {
 
     static reset = () => {
         this.defaultSettings = [];
-        this.defaultSettings[this.USER_ID] = "";
-        this.defaultSettings[this.USER_EMAIL] = "";
+        this.defaultSettings[this.USER_PROFILE] = {};
         
         global.settings = this.defaultSettings;
     }    

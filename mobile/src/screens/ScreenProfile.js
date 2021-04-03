@@ -4,12 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
-import { StoreSettings, GlobalContext } from '@helpers/Settings';
+import { Settings, GlobalContext } from '@helpers/Settings';
 import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
-import OutlineInput from 'react-native-outline-input';
+// import InputOutline from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
+import { InputOutline } from 'react-native-input-outline';
 
 const ScreenProfile = (props) => {
   const { toggleActivityIndicator } = useContext(GlobalContext);
@@ -41,6 +42,18 @@ const ScreenProfile = (props) => {
       header:()=> HeaderWithBack("My Profile", navigate, "screenLanding")
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
+
+    var profile = Settings.get(Settings.USER_PROFILE);
+    setFirstName(profile.userProfile.firstname);
+    setLastName(profile.userProfile.lastname);
+    setEmail(profile.email);
+    setCountryCode(profile.userProfile.country_code);
+    setMobileNumber(profile.userProfile.mobile);
+    setHighestQualification(profile.userProfile.highest_qualification);
+    setNationality(profile.userProfile.nationality);
+    setHighestQualificationInstitute(profile.userProfile.awarding_institute);
+    setYearOfGraduation(profile.userProfile.year_of_graduation);
+
     return function cleanup() { } 
   }, []);
 
@@ -70,10 +83,10 @@ const ScreenProfile = (props) => {
           <LottieView style={{height: 250}} source={require('@assets/animation/user-profile-50124.json')} autoPlay={true} loop={true} />
 
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={firstName}
               onChangeText={(e) => setFirstName(e)}
-              label="First Name"
+              placeholder="First Name"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -84,10 +97,10 @@ const ScreenProfile = (props) => {
           </View>
 
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={lastName}
               onChangeText={(e) => setLastName(e)}
-              label="Last Name"
+              placeholder="Last Name"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -98,10 +111,10 @@ const ScreenProfile = (props) => {
           </View>
 
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={email}
               onChangeText={(e) => setEmail(e)}
-              label="Email"
+              placeholder="Email"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -112,10 +125,10 @@ const ScreenProfile = (props) => {
           </View>
           
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={countryCode}
               onChangeText={(e) => setCountryCode(e)}
-              label="Country Code"
+              placeholder="Country Code"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -126,10 +139,10 @@ const ScreenProfile = (props) => {
           </View>
           
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={mobileNumber}
               onChangeText={(e) => setMobileNumber(e)}
-              label="Mobile Number"
+              placeholder="Mobile Number"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -140,10 +153,10 @@ const ScreenProfile = (props) => {
           </View>
           
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={nationality}
               onChangeText={(e) => setNationality(e)}
-              label="Nationality"
+              placeholder="Nationality"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -154,10 +167,10 @@ const ScreenProfile = (props) => {
           </View>
           
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={highestQualification}
               onChangeText={(e) => setHighestQualification(e)}
-              label="Highest Qualification"
+              placeholder="Highest Qualification"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -168,10 +181,10 @@ const ScreenProfile = (props) => {
           </View>
           
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={highestQualificationInstitute}
               onChangeText={(e) => setHighestQualificationInstitute(e)}
-              label="Awarding Institute"
+              placeholder="Awarding Institute"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
@@ -182,10 +195,10 @@ const ScreenProfile = (props) => {
           </View>
           
           <View style={[styles.container]}>
-            <OutlineInput
+            <InputOutline
               value={yearOfGraduation}
               onChangeText={(e) => setYearOfGraduation(e)}
-              label="Year of Graduation"
+              placeholder="Year of Graduation"
               activeValueColor="#6c63fe"
               activeBorderColor="#6c63fe"
               activeLabelColor="#6c63fe"
