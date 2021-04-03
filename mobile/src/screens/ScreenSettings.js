@@ -47,6 +47,18 @@ const ScreenSettings = (props) => {
       if(IS_LOGGED_IN === "true" || IS_LOGGED_IN === true){
       setSettings(previousState => [...previousState, 
         {
+          "title": "Change Password",
+          "icon": <Icon name={'lock'} size={24} color={StyleConstant.mutedTextColor}/>,
+          "action" : ()=>{
+            // StoreSettings.store(StoreSettings.IS_LOGGED_IN, "false")
+            // .then(()=>{
+            //   navigate("screenLanding")
+            // })
+            alert("WIP")
+          },
+          'type': "button"
+        },
+        {
           "title": "Logout",
           "icon": <Icon name={'logout'} size={24} color={StyleConstant.mutedTextColor}/>,
           "action" : ()=>{
@@ -56,7 +68,8 @@ const ScreenSettings = (props) => {
             })
           },
           'type': "button"
-        }]);
+        }
+      ]);
       }
     })
     return function cleanup() { 
