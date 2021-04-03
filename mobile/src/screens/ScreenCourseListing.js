@@ -62,11 +62,11 @@ const ScreenCourseListing = (props) => {
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }}, goBack);
-    renderDropDownPicker();
+    renderFilterFields();
     return function cleanup() { } 
   }, []);
 
-  renderDropDownPicker = () =>{
+  renderFilterFields = () =>{
     WebApi.getCourseFilterValues().then((res)=>{  
       var ModeOfStudyItems = [];
       var ModeOfStudyValues = []
@@ -80,7 +80,6 @@ const ScreenCourseListing = (props) => {
           icon: () => <Icon name={element} size={18} color="#900" />,
         })
       }
-      console.log("ModeOfStudyValues",ModeOfStudyValues)
       setModeOfStudy(ModeOfStudyValues)
 
       var DisciplinesItems = [];
@@ -145,7 +144,6 @@ const ScreenCourseListing = (props) => {
       }
       setSubDisciplines(SubDisciplinesValues);
 
-      console.log("initSlidingPanel",modeOfStudy, disciplines, universityParters, academicLevel, subDisciplines)
       initSlidingPanel(
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.panalContainer} onTouchStart={() => {
@@ -355,7 +353,6 @@ const ScreenCourseListing = (props) => {
   getList = (page = 1)=>{
     if(!refreshing){
       var filter = "";
-      console.log("getList",modeOfStudy, disciplines, universityParters, academicLevel, subDisciplines);
       var and_counter = 0;
       modeOfStudy.forEach(element => {
         filter += "&filter[and]["+and_counter+"][mode_of_study][]="+element
@@ -391,7 +388,6 @@ const ScreenCourseListing = (props) => {
         and_counter++;
       }
       WebApi.listCourses(page, filter).then((res)=>{
-        // console.log("res.data.length",res.data.length)
         if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }

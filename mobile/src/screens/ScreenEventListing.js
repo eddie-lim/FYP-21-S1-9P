@@ -12,7 +12,7 @@ import SlidingUpPanel from 'rn-sliding-up-panel';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
 import OutlineInput from 'react-native-outline-input';
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-date-picker'
 import randomcolor from 'randomcolor';
 import { padStart } from 'lodash';
 import { GlobalContext } from '@helpers/Settings';
@@ -33,21 +33,16 @@ const ScreenEventListing = (props) => {
   const [keyword, setKeyword ] = useState("");
   const [keywordErrorMsg, setKeywordErrorMsg ] = useState("");
 
-  const [filterStartDate , setFilterStartDate] = useState();
-  const [filterEndDate, setFilterEndDate] = useState();
+  const [filterStartDate , setFilterStartDate] = useState(new Date("2021-03-01"));
+  const [filterEndDate, setFilterEndDate] = useState(new Date("2021-06-30"));
 
-  const TypeOfEvents_part_time_and_full_time = "part_time_and_full_time";
-  const TypeOfEvents_full_time = "full_time";
-  const TypeOfEvents_part_time = "part_time";
-  const TypeOfEventsIcons = {};
   const [TypeOfEvents, setTypeOfEvents] = useState([]);
   const TypeOfEventsRef = useRef(null);
 
-  TypeOfEventsIcons[TypeOfEvents_part_time_and_full_time] = "circle-half-full";
-  TypeOfEventsIcons[TypeOfEvents_full_time] = "circle";
-  TypeOfEventsIcons[TypeOfEvents_part_time] = "circle-half";
+  const [universityParters, setUniversityParters] = useState([]);
+  const universityPartersRef = useRef(null);
 
-  const [selectedDate, setSelectedDate] = useState(Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const markedDatesRef = useRef({});
   const calendarRef = useRef(null);
 
@@ -59,10 +54,44 @@ const ScreenEventListing = (props) => {
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }});
-    initSlidingPanel(
+    renderFilterFields();
+    return function cleanup() { } 
+  }, []);
+
+  renderFilterFields = () =>{
+    WebApi.getEventFilterValues().then((res)=>{
+      var TypeOfEventsItems = [];
+      var TypeOfEventsValues = []
+      for (let index = 0; index < res.data.type.length; index++) {
+        const item = res.data.type[index];
+        TypeOfEventsValues.push(item)
+        TypeOfEventsItems.push({
+          label: item, // capitalise and remove underscore
+          value: item,
+          icon: () => <Icon name={"school"} size={18} color="#900" />,
+        })
+      }
+      setTypeOfEvents(TypeOfEventsValues)
+      
+      var UniversityPartersItems = [];
+      var UniversityPartersValues = []
+      for (let index = 0; index < res.data.universityParters.length; index++) {
+        const item = res.data.universityParters[index];
+        var uni = JSON.parse(item);
+        UniversityPartersValues.push(uni.value)
+        UniversityPartersItems.push({
+          label: uni.label, // capitalise and remove underscore
+          value: uni.value,
+          icon: () => <Icon name={"book-open-variant"} size={18} color="#900" />,
+        })
+      }
+      setUniversityParters(UniversityPartersValues)
+
+      initSlidingPanel(
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.panalContainer} onTouchStart={() => {
           TypeOfEventsRef.current.close();
+          universityPartersRef.current.close();
         }}>
           <View style={[styles.filterHeader]}>
             <Text style={[styles.filterHeaderText]}>Filters</Text>
@@ -73,15 +102,95 @@ const ScreenEventListing = (props) => {
               <Icon name={'check-circle-outline'} color={'white'} size={28} />
             </Pressable>
           </View>
-          {/* {renderFilteredResults()} */}
-          {renderFilterFields()}
+          
+          <View style={[styles.filterFieldContainer]}>
+            <OutlineInput
+              value={keyword}
+              onChangeText={(e) => setKeyword(e)}
+              label="Keyword Search"
+              activeValueColor="#6c63fe"
+              activeBorderColor="#6c63fe"
+              activeLabelColor="#6c63fe"
+              passiveBorderColor="#bbb7ff"
+              passiveLabelColor="#bbb7ff"
+              passiveValueColor="#bbb7ff"
+            />
+          </View>
+
+          <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
+            <Text>Types of Events</Text>
+            <DropDownPicker
+              controller={instance => TypeOfEventsRef.current = instance}
+              placeholder="Types of Events"
+              items={TypeOfEventsItems}
+              defaultValue={TypeOfEventsValues}
+              multiple={true}
+              multipleText="%d items have been selected."
+              containerStyle={{height: 40}}
+              style={[styles.DropDownPickerStyle]}
+              itemStyle={[styles.DropDownPickerItemStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+              onChangeItem={item => setTypeOfEvents(item)}
+              onOpen={() => {
+                // TypeOfEventsRef.current.close();
+                universityPartersRef.current.close();
+              }}
+            />
+          </View>
+          
+          <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 8000})]}>
+            <Text>University Parters</Text>
+            <DropDownPicker
+              controller={instance => universityPartersRef.current = instance}
+              placeholder="University Parters"
+              items={UniversityPartersItems}
+              defaultValue={UniversityPartersValues}
+              multiple={true}
+              multipleText="%d items have been selected."
+              containerStyle={{height: 40}}
+              style={[styles.DropDownPickerStyle]}
+              itemStyle={[styles.DropDownPickerItemStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+              onChangeItem={item => universityPartersRef(item)}
+              onOpen={() => {
+                TypeOfEventsRef.current.close();
+                // universityPartersRef.current.close();
+              }}
+            />
+          </View>
+
+          <View style={[styles.filterFieldContainer]}>
+            <Text>Start Date</Text>
+            <DatePicker
+              date={filterStartDate}
+              onDateChange={setFilterStartDate}
+              mode={"date"}
+              maximumDate={new Date("2021-06-30")}
+              minimumDate={new Date("2021-03-01")}
+            />
+          </View>
+
+          <View style={[styles.filterFieldContainer]}>
+            <Text>End Date</Text>
+            <DatePicker
+              date={filterEndDate}
+              onDateChange={setFilterEndDate}
+              mode={"date"}
+              maximumDate={new Date("2021-06-30")}
+              minimumDate={new Date("2021-03-01")}
+            />
+          </View>
+        
         </View>
       </ScrollView>, slidingUpPanelRef)
-    return function cleanup() { } 
-  }, []);
+    }).catch((err)=>{
+      return null;
+    })
+  }
 
   handleReset = () =>{
     TypeOfEventsRef.current.reset();
+    universityPartersRef.current.reset();
     refreshList();
   }
 
@@ -91,21 +200,41 @@ const ScreenEventListing = (props) => {
   }
 
   // FLATLIST FUNCTIONS ---- START
-  getList = (page = 0)=>{
+  getList = (page = 1)=>{
     if(!refreshing){
       var filter = "";
+      var and_counter = 0;
       TypeOfEvents.forEach(element => {
-        filter += "&filter[type][]="+element
+        filter += "&filter[and]["+and_counter+"][type][]="+element
       });
+      if(TypeOfEvents.length > 0){
+        and_counter++;
+      }
+      universityParters.forEach(element => {
+        filter += "&filter[and]["+and_counter+"][school_id][]="+element
+      });
+      if(universityParters.length > 0){
+        and_counter++;
+      }
+      
+      filter += "&filter[and]["+and_counter+"][start_at][gte]="+(new Date(filterStartDate).getTime() / 1000)
+      and_counter++;
+      filter += "&filter[and]["+and_counter+"][end_at][lte]="+(new Date(filterEndDate).getTime() / 1000)
+      and_counter++;
+
       WebApi.listEvents(page, filter).then((res)=>{
         if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
-        res.data.forEach(element => {
+        if(page = 1){
+          markedDatesRef.current = JSON.parse(JSON.stringify({}));
+        }
+        for (let index = 0; index < res.data.length; index++) {
+          const element = res.data[index];
           var start = new Date(element.start_at * 1000);
-          var start_date = start.getFullYear()+"-"+padStart(start.getMonth(),2,"0")+"-"+start.getDate();
+          var start_date = start.getFullYear()+"-"+padStart(start.getMonth()+1,2,"0")+"-"+start.getDate();
           var end = new Date(element.end_at * 1000);
-          var end_date = end.getFullYear()+"-"+padStart(end.getMonth(),2,"0")+"-"+end.getDate();
+          var end_date = end.getFullYear()+"-"+padStart(end.getMonth()+1,2,"0")+"-"+end.getDate();
           var dates = markedDatesRef.current;
           var color = randomcolor();
           if(dates.hasOwnProperty(start_date)){
@@ -125,14 +254,15 @@ const ScreenEventListing = (props) => {
             }
           }
           markedDatesRef.current = JSON.parse(JSON.stringify(dates));
-        });
 
-        const d = (page === 0)? res.data : [...data, ...res.data];
+          res.data[index].color = color;
+        }
+
+        const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-        console.log(err)
-          return
+        return
       })
     }
   }
@@ -142,7 +272,7 @@ const ScreenEventListing = (props) => {
         <View>
           <View style={styles.card}>
             <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, padding: 5}}>
-              <Icon style={{marginHorizontal: 10}} name="party-popper" size={28} color={StyleConstant.primaryColor}/>
+              <Icon style={{marginHorizontal: 10}} name="party-popper" size={28} color={item.color}/>
               <View style={styles.midContent}>
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.name}</Text>
                 <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>Held at {item.venue}</Text>
@@ -157,111 +287,6 @@ const ScreenEventListing = (props) => {
   const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)*0.5);
   // FLATLIST FUNCTIONS ---- END
 
-  renderFilterFields = () =>{
-    var TypeOfEventsItems = []; 
-    for (const key in TypeOfEventsIcons) {
-      if (Object.hasOwnProperty.call(TypeOfEventsIcons, key)) {
-        const element = TypeOfEventsIcons[key];
-        TypeOfEventsItems.push({
-          label: key, // capitalise and remove underscore
-          value: key,
-          icon: () => <Icon name={element} size={18} color="#900" />,
-        })
-      }
-    }
-
-    return (
-      <>
-        <View style={[styles.filterFieldContainer]}>
-          <OutlineInput
-            value={keyword}
-            onChangeText={(e) => setKeyword(e)}
-            label="Keyword Search"
-            activeValueColor="#6c63fe"
-            activeBorderColor="#6c63fe"
-            activeLabelColor="#6c63fe"
-            passiveBorderColor="#bbb7ff"
-            passiveLabelColor="#bbb7ff"
-            passiveValueColor="#bbb7ff"
-          />
-        </View>
-
-        <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
-          <Text>Types of Events</Text>
-          <DropDownPicker
-            controller={instance => TypeOfEventsRef.current = instance}
-            placeholder="Types of Events"
-            items={TypeOfEventsItems}
-            defaultValue={Object.keys(TypeOfEventsIcons)}
-            multiple={true}
-            multipleText="%d items have been selected."
-            containerStyle={{height: 40}}
-            style={[styles.DropDownPickerStyle]}
-            itemStyle={[styles.DropDownPickerItemStyle]}
-            dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-            onChangeItem={item => setTypeOfEvents(item)}
-            onOpen={() => {
-              // TypeOfEventsRef.current.close();
-            }}
-          />
-        </View>
-        
-        <View style={[styles.filterFieldContainer]}>
-          <DatePicker
-            style={{width: "100%"}}
-            date={filterStartDate}
-            mode="date"
-            placeholder="select start date"
-            format="YYYY-MM-DD"
-            minDate="2021-01-01"
-            maxDate="2021-06-01"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            customStyles={{
-              dateIcon: {
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0
-              },
-              dateInput: {
-                marginLeft: 36
-              }
-              // ... You can check the source to find the other keys.
-            }}
-            onDateChange={(date) => {setFilterStartDate(date)}}
-          />
-        </View>
-
-        <View style={[styles.filterFieldContainer]}>
-          <DatePicker
-            style={{width: "100%"}}
-            date={filterEndDate}
-            mode="date"
-            placeholder="select end date"
-            format="YYYY-MM-DD"
-            minDate="2021-01-01"
-            maxDate="2021-06-01"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            customStyles={{
-              dateIcon: {
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0
-              },
-              dateInput: {
-                marginLeft: 36
-              }
-              // ... You can check the source to find the other keys.
-            }}
-            onDateChange={(date) => {setFilterEndDate(date)}}
-          />
-        </View>
-      </>
-    )
-  }
   return (
     <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
@@ -275,17 +300,14 @@ const ScreenEventListing = (props) => {
             // Handler which gets executed on day press. Default = undefined
             onDayPress={(day) => {
               setSelectedDate(day.dateString)
-              console.log('selected day', day)
             }}
             // Handler which gets executed on day long press. Default = undefined
             onDayLongPress={(day) => {
-              console.log('selected day', day)
             }}
             // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
             monthFormat={'yyyy MM'}
             // Handler which gets executed when visible month changes in calendar. Default = undefined
             onMonthChange={(month) => {
-              console.log('month changed', month)
             }}
             // Replace default arrows with custom ones (direction can be 'left' or 'right')
             renderArrow={(direction) => (<Icon name={'arrow-'+direction} color={'black'} size={28} />)}
@@ -323,7 +345,6 @@ const ScreenEventListing = (props) => {
             markedDates={markedDatesRef.current}
             // Callback which gets executed when visible months change in scroll view. Default = undefined
             onVisibleMonthsChange={(months) => {
-              console.log('now these months are visible', months);
             }}
             // Max amount of months allowed to scroll to the past. Default = 50
             pastScrollRange={3}

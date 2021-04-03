@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use common\models\Events;
 
 use api\components\CustomHttpException;
@@ -50,6 +51,15 @@ class EventsController extends \api\controllers\RestControllerBase
         return new ActiveDataProvider([
             'query' => $query,
         ]);
+    }
+
+    public function actionFilterValues(){
+        $courses = Events::find()->select(['type', 'school_id', "CONCAT('{\"label\":\"',university_partners.name,'\",','\"value\":\"',school_id,'\"}') AS universityParters"])->where(['events.status'=>MyCustomActiveRecord::STATUS_ENABLED])->joinWith('school')->asArray()->all();
+        $o = (object)[];
+        $types = array_values(array_unique(ArrayHelper::getColumn($courses, "type")));
+        $o->type = count($types) == 1 && empty($types[0]) ? [] : $types; 
+        $o->universityParters = array_values(array_unique(ArrayHelper::getColumn($courses, "universityParters")));
+        Yii::$app->api->sendSuccessResponse($o);
     }
 
     /*public function actionIndex(){

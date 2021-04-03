@@ -89,6 +89,7 @@ const WebApi = {
     return callApi(GET_METHOD, '/courses?page='+page+filter);
   },
   listEvents: async(page, filter) => {
+    console.log("listEvents", '/events?page='+page+filter)
     return callApi(GET_METHOD, '/events?page='+page+filter);
   },
   listFaq: async(page) => {
@@ -118,9 +119,12 @@ const WebApi = {
     return callApi(GET_METHOD, '/user');
   },
 
-  //
-  getCourseFilterValues: async(id) => {
+  // Filter Values
+  getCourseFilterValues: async() => {
     return callApi(GET_METHOD, '/courses/filter-values');
+  },
+  getEventFilterValues: async() => {
+    return callApi(GET_METHOD, '/events/filter-values');
   },
 
 };

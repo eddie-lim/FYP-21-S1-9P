@@ -42,7 +42,7 @@ export default useCustomFlatListFunc = (dataUrl, callback=null, result, seperato
                     setIsLastPage(true);
                     setPage(0)
                 } 
-                const d =  (page === 0) ? resJson.data : [...data, ...resJson.data];
+                const d =  (page === 1) ? resJson.data : [...data, ...resJson.data];
                 Utils.log(resJson);
                 setData(d);
                 if (callback) { setTimeout(callback,1000); }

@@ -42,7 +42,6 @@ class CoursesController extends \api\controllers\RestControllerBase
                 return $filter;
             }
         }
-        // print_r($filterCondition); exit();
 
         $query = Courses::find();
         if ($filterCondition !== null) {

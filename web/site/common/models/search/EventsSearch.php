@@ -18,8 +18,8 @@ class EventsSearch extends Events
     public function rules()
     {
         return [
-            [['id', 'school_id', 'start_at', 'end_at', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['session', 'name', 'description', 'venue', 'tags', 'notes', 'status'], 'safe'],
+            [['id', 'start_at', 'end_at', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['session', 'name', 'description', 'venue', 'tags', 'notes', 'status', 'school_id'], 'safe'],
         ];
     }
 

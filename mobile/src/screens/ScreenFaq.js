@@ -27,13 +27,13 @@ const ScreenFaq = (props) => {
   }, []);
 
   // FLATLIST FUNCTIONS ---- START
-  getList = (page = 0)=>{
+  getList = (page = 1)=>{
     if(!refreshing){
       WebApi.listFaq(page).then((res)=>{
         if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
-        const d = (page === 0)? res.data : [...data, ...res.data];
+        const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
