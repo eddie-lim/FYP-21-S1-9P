@@ -50,11 +50,10 @@ const ScreenSettings = (props) => {
           "title": "Change Password",
           "icon": <Icon name={'lock'} size={24} color={StyleConstant.mutedTextColor}/>,
           "action" : ()=>{
-            // StoreSettings.store(StoreSettings.IS_LOGGED_IN, "false")
-            // .then(()=>{
-            //   navigate("screenLanding")
-            // })
-            alert("WIP")
+            StoreSettings.store(StoreSettings.IS_LOGGED_IN, "false")
+            .then(()=>{
+              navigate("screenChangePassword")
+            })
           },
           'type': "button"
         },

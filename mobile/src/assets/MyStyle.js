@@ -76,18 +76,20 @@ const HomeHeader = (navigate, logged_in = null)=>{
   const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
   // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
   // const logged_in = false;
+  var user_profile = (Settings.get(Settings.USER_PROFILE)).userProfile;
+  var user_name = user_profile.firstname; // + " " lastname
   
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
         <Pressable onPress={() => {navigate('screenProfile')}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
           <Icon name={'account-circle'} size={25} color={'white'}/>
-          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Profile'}</Text>
+          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{user_name}</Text>
         </Pressable>
       )
     } else {
       return (
-        <Pressable onPress={() => {navigate('screenLogin')}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
+        <Pressable onPress={() => {navigate('screenLogin', {source:"screenLanding"})}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
           <Icon name={'login'} size={25} color={'white'}/>
           <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Login'}</Text>
         </Pressable>

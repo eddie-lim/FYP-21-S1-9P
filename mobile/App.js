@@ -26,7 +26,8 @@ import ScreenProfile from '@screens/ScreenProfile';
 import ScreenForgetPassword from '@screens/ScreenForgetPassword';
 import ScreenWebview from '@screens/ScreenWebview';
 import ScreenEnquiryForm from '@screens/ScreenEnquiryForm';
-
+import ScreenChangePassword from '@screens/ScreenChangePassword';
+import ScreenEventRegistration from '@screens/ScreenEventRegistration';
 
 //##############################################
 
@@ -35,6 +36,7 @@ const LandingStack = createStackNavigator({
   screenLogin: ScreenLogin,
   screenRegister: ScreenRegister,
   screenForgetPassword: ScreenForgetPassword,
+  screenChangePassword: ScreenChangePassword,
   screenProfile: ScreenProfile,
   screenSettings: ScreenSettings,
 }, { initialRouteName: 'screenLanding', defaultNavigationOptions:{headerShown:false} });
@@ -52,6 +54,7 @@ LandingStack.navigationOptions = ({ navigation }) => {
 const EventStack = createStackNavigator({
   screenEventListing: ScreenEventListing,
   screenEventDetail: ScreenEventDetail,
+  screenEventRegistration: ScreenEventRegistration,
 }, { initialRouteName: 'screenEventListing', defaultNavigationOptions:{headerShown:false} });
 
 //##############################################
@@ -118,21 +121,12 @@ const MainBottomTab= createBottomTabNavigator({
     navigationOptions:{
       tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Home</Text>),
       tabBarIcon: ({ focused }) =>{
-        if(focused){
-          return(
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Image source={require('@assets/img/sim-global-education-logo-sm.png')} style={{width:44,height: 17, marginTop:4}}/>
-              <Text style={{fontSize: 12, color: StyleConstant.primaryColor, alignSelf: 'center', paddingTop:3}}>Open House</Text>
-            </View>
-          )
-        } else {
-          return(
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Icon name={'home'} color={StyleConstant.mutedText} size={24} />
-              <Text style={{fontSize: 12, color: StyleConstant.mutedText, alignSelf: 'center'}}>Home</Text>
-            </View>
-          )
-        }
+        return(
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Image source={require('@assets/img/sim-global-education-logo-sm.png')} style={{width:44,height: 17, marginTop:4}}/>
+            <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center', paddingTop:3}}>Open House</Text>
+          </View>
+        )
       },
     }
   },

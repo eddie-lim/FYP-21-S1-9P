@@ -62,6 +62,11 @@ const ScreenRegister = (props) => {
     if (passwordConfirm == '') {
       setPasswordConfirmErrorMsg("Please confirm your password");
       hasError = true;
+    } else {
+      if(password != passwordConfirm){
+        setPasswordConfirmErrorMsg("Please make sure your passwords match");
+        hasError = true;
+      }
     }
     if (!Utils.isEmail(email.trim())) {
       setEmailErrorMsg("Email is not valid");

@@ -12,7 +12,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { isEmpty, trim } from 'lodash';
 
-const ScreenEnquiryForm = (props) => {
+const ScreenEventRegistration = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
 
@@ -157,16 +157,16 @@ const ScreenEnquiryForm = (props) => {
               <Text style={styles.errorText}>{enquiryErrorMsg}</Text>
             </View>
             
-            {<Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="upload" mode="contained" onPress={() => handleSubmit()}>
+            {/* <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="upload" mode="contained" onPress={() => handleSubmit()}>
               Submit!
-            </Button>}
+            </Button> */}
           </>
         )
       }
     } else if(loggedIn === false) {
       return(
         <View style={{marginTop:100, }}>
-          <Button style={{width:'80%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEnquiryForm"})}>
+          <Button style={{width:'80%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventRegistration"})}>
             Please login first
           </Button>
         </View>
@@ -189,7 +189,7 @@ const ScreenEnquiryForm = (props) => {
   );
 }
 
-export default withScreenBase(ScreenEnquiryForm, ScreenBaseType.MAIN);
+export default withScreenBase(ScreenEventRegistration, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   container: { width:"80%",  marginTop: 10, marginBottom: 10 },

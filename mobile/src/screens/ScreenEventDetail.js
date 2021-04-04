@@ -52,7 +52,7 @@ const ScreenEventDetail = (props) => {
  }
 
   handleRegister = () => {
-
+    navigate("screenEventRegistration", {event_data:item});
   }
 
   renderSectionTitle = (section) => {

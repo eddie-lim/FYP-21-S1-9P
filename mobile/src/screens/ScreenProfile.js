@@ -229,9 +229,9 @@ const ScreenProfile = (props) => {
             />
           </View>
 
-          {/* <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleUpdate()}>
+          {<Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleUpdate()}>
             Update
-          </Button> */}
+          </Button>}
         </View>
       </ScrollView>
     </SafeAreaView>
