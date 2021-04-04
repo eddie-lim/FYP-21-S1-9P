@@ -72,6 +72,7 @@ class UserProfile extends ActiveRecord
             [['locale'], 'string', 'max' => 32],
             [['country_code'], 'string', 'max' => 45],
             ['picture', 'safe'],
+            [['mobile', 'highest_qualification', 'nationality', 'awarding_institute', 'country_code'], 'default', 'value'=>""],
             // [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
