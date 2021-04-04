@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\models\Events;
+use common\components\MyCustomActiveRecord;
 
 /**
  * This is the model class for table "events_registration".
@@ -16,7 +18,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class EventsRegistration extends \yii\db\ActiveRecord
+class EventsRegistration extends MyCustomActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -35,8 +37,12 @@ class EventsRegistration extends \yii\db\ActiveRecord
             [['event_id'], 'required'],
             [['event_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['notes', 'status'], 'string'],
-            [['updated_at'], 'unique'],
         ];
+    }
+
+    public function getEvent()
+    {
+        return $this->hasOne(Events::class, ['id' => 'event_id']);
     }
 
     /**
