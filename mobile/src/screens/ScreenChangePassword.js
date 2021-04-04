@@ -66,7 +66,7 @@ const ScreenChangePassword = (props) => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         
-        <LottieView style={{height: 250}} source={require('@assets/animation/forget-password-16766.json')} autoPlay={true} loop={true} />
+        <LottieView style={{height: 200}} source={require('@assets/animation/change-pw-8654.json')} autoPlay={true} loop={true} />
 
         
         <View style={[styles.container]}>
@@ -101,8 +101,8 @@ const ScreenChangePassword = (props) => {
           <Text style={styles.errorText}>{passwordConfirmErrorMsg}</Text>
         </View>
 
-        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="account-plus" mode="contained" onPress={() => handleRegister()}>
-          Create Account!
+        <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="lock-reset" mode="contained" onPress={() => handleChange()}>
+          Change!
         </Button>
 
       </View>

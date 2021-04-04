@@ -52,6 +52,10 @@ const ScreenLanding = (props) => {
                 return
               })
             }
+            props.navigation.setParams({"navOptions":{
+              headerShown:true,
+              header:()=> HomeHeader(navigate,res,"")
+            }});
           })
         }}
       />

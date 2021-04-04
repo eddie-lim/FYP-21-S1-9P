@@ -56,9 +56,9 @@ const ScreenEventRegistration = (props) => {
 
   handleRemove = () =>{
     toggleActivityIndicator(true, "Removing...");
-    console.log("deleteEventsRegistration data", registeredData.id)
+    // console.log("deleteEventsRegistration data", registeredData.id)
     WebApi.deleteEventsRegistration(registeredData.id).then((res)=>{
-      console.log("deleteEventsRegistration res", res.data)
+      // console.log("deleteEventsRegistration res", res.data)
       toggleActivityIndicator(false);
       Alert.alert(
         "Success!",
@@ -72,7 +72,7 @@ const ScreenEventRegistration = (props) => {
         ]
       );
     }).catch((err)=>{
-      console.log("deleteEventsRegistration err", err)
+      // console.log("deleteEventsRegistration err", err)
       toggleActivityIndicator(false);
       return;
     })
