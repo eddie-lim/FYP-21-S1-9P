@@ -6,6 +6,8 @@ import axios from 'axios';
 const POST_METHOD = 'POST';
 const GET_METHOD = 'GET';
 const PATCH_METHOD = 'PATCH';
+const DELETE_METHOD = 'DELETE';
+
 
 const STATUS_OK = 200;
 const STATUS_BAD_REQUEST = 400;
@@ -47,12 +49,10 @@ callApi = async(method, endpoint, data, isMultipart = false) => {
   const token = await StoreSettings.get(StoreSettings.ACCESS_TOKEN);
   const headers = { 'Authorization': "Bearer " + token } 
   let formData = JSON.stringify(data);
+  headers['Content-Type'] = 'application/json';
   if (isMultipart) {
     headers['Content-Type'] = 'multipart/form-data';
     formData = data;
-  }
-  if(method == PATCH_METHOD || method == POST_METHOD){
-    headers['Content-Type'] = 'application/json';
   }
   
   const config = {
@@ -101,6 +101,9 @@ const WebApi = {
   listUniversityPartners: async(page) => {
     return callApi(GET_METHOD, '/university-partners?page='+page);
   },
+  listEventsRegistration: async(event_id) => {
+    return callApi(GET_METHOD, '/events-registration?filter[event_id]='+event_id);
+  },
 
   // GET INDIVIDUAL
   getCourse: async(id) => {
@@ -130,14 +133,24 @@ const WebApi = {
     return callApi(GET_METHOD, '/events/filter-values');
   },
 
-
+  // Post
   postEnquiries: async(data) => {
     return callApi(POST_METHOD, '/enquiries', data);
   },
+  postEventsRegistration: async(data) => {
+    return callApi(POST_METHOD, '/events-registration', data);
+  },
+
+  // Patch
   patchProfile: async(data) => {
     const profile = Settings.get(Settings.USER_PROFILE);
     var user_id = profile.id;
     return callApi(PATCH_METHOD, '/user/'+user_id, data);
+  },
+
+  // Delete
+  deleteEventsRegistration: async(id) => {
+    return callApi(DELETE_METHOD, '/events-registration/'+ id);
   },
 };
 

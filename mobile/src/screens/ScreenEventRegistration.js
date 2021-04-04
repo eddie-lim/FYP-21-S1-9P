@@ -8,37 +8,39 @@ import { StoreSettings, GlobalContext, Settings } from '@helpers/Settings';
 import WebApi from '@helpers/WebApi';
 import { Button, TextInput } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { isEmpty, trim } from 'lodash';
 
 const ScreenEventRegistration = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
+  const event_data = useNavigationParam('event_data');
 
-  const [ school, setSchool ] = useState("");
-  const [ name, setName ] = useState("");
-  const [ email, setEmail ] = useState("");
-  const [ enquiry, setEnquiry ] = useState("");
-
-  const [ schoolErrorMsg, setSchoolErrorMsg ] = useState("");
-  const [ nameErrorMsg, setNameErrorMsg ] = useState("");
-  const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
-  const [ enquiryErrorMsg, setEnquiryErrorMsg ] = useState("");
-  const [ courseFilterValues, setCourseFilterValues ] = useState(null);
-
-  const universityPartersRef = useRef(null);
   const [ loggedIn, setLoggedIn ] = useState(null);
+  const [ hasRegistered, setHasRegistered ] = useState(null);
+  const [ registeredData, setRegisteredData ] = useState(null);
 
   useEffect(() => {
     StoreSettings.get(StoreSettings.IS_LOGGED_IN)
     .then((res)=>{
       var right_button = null;
       if(res == true || res == "true"){
-        setLoggedIn(true);
-        right_button = <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleSubmit()}>
-            <Icon name={'upload'} color={'white'} size={30} />
-          </Pressable>;
+        WebApi.listEventsRegistration(event_data.id).then((reg_res)=>{
+          setLoggedIn(true);
+          if(reg_res.data.length > 0){
+            // have record
+            setHasRegistered(true);
+            setRegisteredData(reg_res.data[0]);
+          } else {
+            // no record
+            setHasRegistered(false);
+            right_button = <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleSubmit()}>
+                <Icon name={'upload'} color={'white'} size={30} />
+              </Pressable>;
+          }
+            
+        }).catch((err)=>{
+          return
+        })
       }
 
       if(res == false || res == "false"){
@@ -46,51 +48,53 @@ const ScreenEventRegistration = (props) => {
       }
       props.navigation.setParams({"navOptions":{
         headerShown:true,
-        header:()=> HeaderWithBack("Enquiry Form", navigate, "screenQuestions", right_button)
+        header:()=> HeaderWithBack("Register", navigate, "screenEventDetail", right_button)
       }});
     });
-    WebApi.getCourseFilterValues().then((res)=>{
-      setCourseFilterValues(res);
-    })
     return function cleanup() { } 
   }, []);
 
-  handleSubmit = () =>{
-    setSchoolErrorMsg("")
-    setEnquiryErrorMsg("")
-    var hasError = false;
-    if(isEmpty(school)){
-      setSchoolErrorMsg("Please select an university")
-      hasError = true;
-    }
-    if(isEmpty(trim(enquiry))){
-      setEnquiryErrorMsg("Please write your enquiries")
-      hasError = true;
-    }
-    if(hasError){
-      return;
-    }
-    toggleActivityIndicator(true, "Submitting...");
-    // setTimeout(() => {
-    //   toggleActivityIndicator(false)
-    // }, 1000);
-    var user_id = (Settings.get(Settings.USER_PROFILE)).id;
-    var data = {
-      "user_id": user_id,
-      "school_id": school,
-      "enquiry": enquiry
-    }
-    // console.log("postEnquiries data", data)
-    WebApi.postEnquiries(data).then((res)=>{
-      // console.log("postEnquiries res", res.data)
+  handleRemove = () =>{
+    toggleActivityIndicator(true, "Removing...");
+    console.log("deleteEventsRegistration data", registeredData.id)
+    WebApi.deleteEventsRegistration(registeredData.id).then((res)=>{
+      console.log("deleteEventsRegistration res", res.data)
       toggleActivityIndicator(false);
       Alert.alert(
         "Success!",
-        "Your enquiry has been submitted successfully.\nOur friendly staff will get back to your via your registered email soon!\n\nThank you!",
+        "You have successfully removed interest for this event.\nThank you!",
         [
           {
             text: 'OK', onPress: async () => {
-              navigate("screenQuestions")
+              navigate("screenEventDetail")
+            }
+          },
+        ]
+      );
+    }).catch((err)=>{
+      console.log("deleteEventsRegistration err", err)
+      toggleActivityIndicator(false);
+      return;
+    })
+  }
+
+  handleSubmit = () =>{
+    toggleActivityIndicator(true, "Registering...");
+    var event_id = event_data.id;
+    var data = {
+      "event_id": event_id,
+    }
+    // console.log("postEventsRegistration data", data)
+    WebApi.postEventsRegistration(data).then((res)=>{
+      // console.log("postEventsRegistration res", res.data)
+      toggleActivityIndicator(false);
+      Alert.alert(
+        "Success!",
+        "You have successfully registered interest for this event.\nRemember to mark your calendar!",
+        [
+          {
+            text: 'OK', onPress: async () => {
+              navigate("screenEventDetail")
             }
           },
         ]
@@ -103,70 +107,35 @@ const ScreenEventRegistration = (props) => {
 
   renderForm = () => {
     if(loggedIn === true){
-      if(courseFilterValues!=null){
-        var res = courseFilterValues;
-        // console.log(res.data)
-        var UniversityPartersItems = [];
-        // var UniversityPartersValues = []
-        for (let index = 0; index < res.data.universityParters.length; index++) {
-          const item = res.data.universityParters[index];
-          var uni = JSON.parse(item);
-          // UniversityPartersValues.push(uni.value)
-          UniversityPartersItems.push({
-            label: uni.label, // capitalise and remove underscore
-            value: uni.value,
-            icon: () => <Icon name={"book-open-variant"} size={18} color="#900" />,
-          })
-        }
-        // setUniversityParters(UniversityPartersValues)
-    
-        return (
-          <>
-            <View style={[styles.container, (Platform.OS !== 'android' && {zIndex: 7000})]}>
-              <Text>Attention to</Text>
-              <DropDownPicker
-                controller={instance => universityPartersRef.current = instance}
-                placeholder="Pick an university"
-                items={UniversityPartersItems}
-                // defaultValue={Object.keys(universityPartersIcons)}
-                // multiple={true}
-                // multipleText="%d schools have been selected."
-                containerStyle={{height: 40}}
-                style={[styles.DropDownPickerStyle]}
-                itemStyle={[styles.DropDownPickerItemStyle]}
-                dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-                onChangeItem={item => setSchool(item.value)}
-              />
-              <Text style={styles.errorText}>{schoolErrorMsg}</Text>
-            </View>
-            
-            <View style={[styles.container]}>
-              <TextInput
-                value={enquiry}
-                onChangeText={(e) => setEnquiry(e)}
-                label="Enquiry"
-                activeValueColor="#6c63fe"
-                activeBorderColor="#6c63fe"
-                activeLabelColor="#6c63fe"
-                passiveBorderColor="#bbb7ff"
-                passiveLabelColor="#bbb7ff"
-                passiveValueColor="#bbb7ff"
-                multiline
-                numberOfLines={6}
-              />
-              <Text style={styles.errorText}>{enquiryErrorMsg}</Text>
-            </View>
-            
-            {/* <Button style={{width:'80%', marginBottom:20, height:60, justifyContent:'center', backgroundColor:"green" }} icon="upload" mode="contained" onPress={() => handleSubmit()}>
-              Submit!
-            </Button> */}
-          </>
+      if(hasRegistered === true && registeredData != null){
+        return( 
+          <View style={{width:'100%',marginTop:100, ...styles.container}}>
+            <Text>You have registered interest for {event_data.name} at {registeredData.created_at}</Text>
+            <Text>We look forward seeing you!</Text>
+            <Text> </Text>
+            <Text>In the event if you could not make it for the event, you may remove interest for this event any time.</Text>
+            <Text>Thank you!</Text>
+            <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"red" }} icon="calendar-remove" mode="contained" onPress={() => handleRemove()}>
+              Remove Interest 
+            </Button>
+          </View>      
+        )
+      } else if(hasRegistered === false){
+        return( 
+          <View style={{width:'100%',marginTop:100, ...styles.container}}>
+            <Text>{event_data.name}</Text>
+            <Text>{event_data.start_at} to {event_data.end_at}</Text>
+            <Text>{event_data.venue}</Text>
+            <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => handleSubmit()}>
+              Register Interest
+            </Button>
+          </View>      
         )
       }
     } else if(loggedIn === false) {
       return(
-        <View style={{marginTop:100, }}>
-          <Button style={{width:'80%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventRegistration"})}>
+        <View style={{width:'100%',marginTop:100, ...styles.container}}>
+          <Button style={{width:'80%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventListing"})}>
             Please login first
           </Button>
         </View>
@@ -179,7 +148,7 @@ const ScreenEventRegistration = (props) => {
       <ScrollView>
         <View onTouchStart={()=>{Keyboard.dismiss; }} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           
-          <LottieView style={{height: 175, marginTop:15}} source={require('@assets/animation/enquiry-33011.json')} autoPlay={true} loop={true} />
+          <LottieView style={{height: 175, marginTop:15}} source={require('@assets/animation/events-registration-11067.json')} autoPlay={true} loop={true} />
 
           { renderForm() }
 

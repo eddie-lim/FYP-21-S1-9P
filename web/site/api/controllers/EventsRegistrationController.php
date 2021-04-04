@@ -53,12 +53,14 @@ class EventsRegistrationController extends RestControllerBase
             }
         }
 
-        $query = EventsRegistration::find();
+        $query = EventsRegistration::find()
+        ->where(['created_by'=>Yii::$app->user->id]); // show only user's own data
         if ($filterCondition !== null) {
             $query->andWhere($filterCondition);
         }
 
         return new ActiveDataProvider([
+            // 'pagination' => false,
             'query' => $query,
         ]);
     }

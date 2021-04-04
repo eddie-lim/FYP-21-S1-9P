@@ -72,12 +72,10 @@ const HeaderStyleWithRight = {
   }
 };
 
-const HomeHeader = (navigate, logged_in = null)=>{
+const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
   // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
   // const logged_in = false;
-  var user_profile = (Settings.get(Settings.USER_PROFILE)).userProfile;
-  var user_name = user_profile.firstname; // + " " lastname
   
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){

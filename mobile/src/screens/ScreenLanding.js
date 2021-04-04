@@ -8,6 +8,7 @@ import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import { StoreSettings, Settings } from '@helpers/Settings';
 import { NavigationEvents } from 'react-navigation';
 import WebApi from '@helpers/WebApi';
+import { capitalize } from 'lodash';
 
 const ScreenLanding = (props) => {
   const { navigate } = useNavigation();
@@ -43,12 +44,14 @@ const ScreenLanding = (props) => {
               WebApi.getProfile().then((profile_res)=>{
                 // console.log(profile_res.data[0]);
                 Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
+                props.navigation.setParams({"navOptions":{
+                  headerShown:true,
+                  header:()=> HomeHeader(navigate,res, capitalize(profile_res.data[0].userProfile.firstname))
+                }});
+              }).catch((err)=>{
+                return
               })
             }
-            props.navigation.setParams({"navOptions":{
-              headerShown:true,
-              header:()=> HomeHeader(navigate,res)
-            }});
           })
         }}
       />

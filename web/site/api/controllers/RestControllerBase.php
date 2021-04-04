@@ -18,6 +18,11 @@ class RestControllerBase extends ActiveController
     public $enableCsrfValidation = false;
     public $headers;
 
+    // public $serializer = [
+    //     'class' => 'yii\rest\Serializer',
+    //     'collectionEnvelope' => 'items',
+    // ];
+    
     public static function allowedDomains() {
         return [
             //Need to allow * for iOS webview to work!!
