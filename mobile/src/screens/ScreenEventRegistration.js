@@ -134,11 +134,12 @@ const ScreenEventRegistration = (props) => {
       }
     } else if(loggedIn === false) {
       return(
-        <View style={{width:'100%',marginTop:100, ...styles.container}}>
+        <View style={{width:'100%'}}>
           <Button style={{width:'80%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventListing"})}>
             Please login first
           </Button>
         </View>
+        
       )
     }
   }
