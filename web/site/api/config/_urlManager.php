@@ -20,6 +20,7 @@ return [
         
         ['pattern'=>'courses/<action>', 'route'=>'courses/<action>'],
         ['pattern'=>'events/<action>', 'route'=>'events/<action>'],
+        ['pattern'=>'user/<action>', 'route'=>'user/<action>'],
         // ['pattern'=>'v1/user', 'route'=>'user/index'],
         // ['pattern'=>'v1/user/<action>', 'route'=>'user/<action>'],
         // ['pattern'=>'v1/courses', 'route'=>'courses/index'],

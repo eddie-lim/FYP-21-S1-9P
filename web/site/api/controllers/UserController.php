@@ -7,6 +7,11 @@ use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
 use common\models\User;
+use common\models\form\PasswordResetForm;
+use common\models\form\PasswordResetRequestForm;
+use common\models\form\PasswordChangeForm;
+use yii\web\ServerErrorHttpException;
+
 
 class UserController extends \api\controllers\RestControllerBase
 {
@@ -106,6 +111,28 @@ class UserController extends \api\controllers\RestControllerBase
         Yii::$app->api->sendSuccessResponse($res);
 
         // print_r(Yii::$app->request->post()); exit();
+    }
+
+    public function actionChangePassword(){
+        $model = new PasswordChangeForm();
+        if($model->load(["PasswordChangeForm"=>Yii::$app->request->post()])){
+            // print_r($model->attributes); exit();
+            if($model->validate() && $model->changePassword()){
+                Yii::$app->api->sendSuccessResponse('success');
+            }
+        }
+        throw new ServerErrorHttpException(json_encode($model->errors));
+    }
+
+    public function actionRequestResetPassword(){
+        $model = new PasswordResetRequestForm();
+        if($model->load(["PasswordResetRequestForm"=>Yii::$app->request->post()])){
+            // print_r($model->attributes); exit();
+            if($model->validate() && $model->sendEmail()){
+                Yii::$app->api->sendSuccessResponse('success');
+            }
+        }
+        throw new ServerErrorHttpException(json_encode($model->errors));
     }
 
     /*public function actionIndex(){

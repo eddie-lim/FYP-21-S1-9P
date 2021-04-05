@@ -48,7 +48,7 @@ class PasswordChangeForm extends Model
     
     public function validateCurrentPassword() {
         if (empty($this->current_password) || !is_string($this->current_password)) {
-            $this->addError('current_password', Yii::t('app', 'Password reset token cannot be blank.'));
+            $this->addError('current_password', Yii::t('app', 'Current password cannot be blank.'));
             return false;
         }        
 
