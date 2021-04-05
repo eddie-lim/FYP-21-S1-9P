@@ -7,7 +7,6 @@ use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
 use common\models\User;
-use common\models\form\PasswordResetForm;
 use common\models\form\PasswordResetRequestForm;
 use common\models\form\PasswordChangeForm;
 use yii\web\ServerErrorHttpException;

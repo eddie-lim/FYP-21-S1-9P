@@ -43,3 +43,50 @@ h3.active{
 	margin-top: 15px;
 	font-weight: bold;
 }
+.site-login .overview, .site-signup .overview, .site-request-password-reset .overview, .site-reset-password .overview {
+  margin: 30px auto 50px auto;
+  width: 100%;
+}
+.site-login .overview .form-holder, .site-signup .overview .form-holder, .site-request-password-reset .overview .form-holder, .site-reset-password .overview .form-holder {
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  border-radius: 5px;
+}
+.site-login .overview .form-holder .btn-custom, .site-signup .overview .form-holder .btn-custom, .site-request-password-reset .overview .form-holder .btn-custom, .site-reset-password .overview .form-holder .btn-custom {
+  font-size: 1.3em;
+  width: 70%;
+}
+.site-login .overview .form-holder .oauth-holder .btn-facebook, .site-signup .overview .form-holder .oauth-holder .btn-facebook, .site-request-password-reset .overview .form-holder .oauth-holder .btn-facebook, .site-reset-password .overview .form-holder .oauth-holder .btn-facebook {
+  width: 80%;
+  margin: 0 auto;
+}
+.site-login .overview .bottom-text, .site-signup .overview .bottom-text, .site-request-password-reset .overview .bottom-text, .site-reset-password .overview .bottom-text {
+  margin-top: 5px;
+  color: #999;
+}
+.site-login .overview .permission, .site-signup .overview .permission, .site-request-password-reset .overview .permission, .site-reset-password .overview .permission {
+  margin-top: 5px;
+}
+@media screen and (max-width: 768px) {
+  .site-login .overview, .site-signup .overview, .site-request-password-reset .overview, .site-reset-password .overview {
+    width: 100%;
+  }
+}
+.site-beta-feedback .container .submit-btn {
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  color: #0c4c23;
+  display: flex;
+  border-radius: 10px;
+  border: 0;
+  width: 200px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  font-family: "Open-Sans-Bold";
+  background: url(../img/yellow_texture_bg.png) center center;
+  background-size: cover;
+}

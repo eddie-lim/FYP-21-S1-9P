@@ -12,6 +12,7 @@ use yii\filters\PageCache;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Response;
+use common\models\form\PasswordResetForm;
 
 /**
  * Site controller
@@ -51,5 +52,30 @@ class SiteController extends Controller
     public function actionDownloadDocuments()
     {
         return $this->render('documents');
+    }
+
+    public function actionResetPassword($token)
+    {
+        $model = new PasswordResetForm();
+        $model->token = $token;
+        $msg = "";
+        if ($model->validateToken()) {
+            $msg = "Please enter a new password for <b>" . $model->email . "</b>.";
+        } else {   
+            return $this->render('invalidToken', ['model' => $model]);
+        }        
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+
+            return $this->render("result", [
+                "title" => "Password Reset Successful",
+                "msg" => "The password for <b>" . $model->email . "</b>. has been successfully reset."
+            ]);
+        } 
+
+        return $this->render('reset-password', [
+            'msg' => $msg,
+            'model' => $model,
+        ]);
     }
 }

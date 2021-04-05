@@ -77,9 +77,6 @@ class PasswordResetForm extends Model
         $user->password = $this->password;
         if($user && $user->save()) {
             $user->updateAttributes(['password' => $this->password]);
-            $user->updateAttributes(['account_status' => $user::ACCOUNT_STATUS_NORMAL]);
-            $user->updateAttributes(['email_status' => User::EMAIL_STATUS_VERIFIED]); 
-            $user->updateAttributes(['login_attempt' => 0]);
             $this->tokenModel->delete();
         } else {
             $this->addError('password', Yii::t('app', 'User does not exist.'));
