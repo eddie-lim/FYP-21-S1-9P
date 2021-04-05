@@ -1,0 +1,56 @@
+
+ref: 
+https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6
+https://blog.frd.mn/how-to-set-up-proper-startstop-services-ubuntu-debian-mac-windows/
+
+queue.service
+================================
+
+
+
+[Unit]
+Description=Yii2 Queue
+After=network.target
+After=mysqld.service
+After=php-fpm.service
+
+[Service]
+ExecStart=/usr/bin/php /var/www/html/console/yii queue/listen
+Type=simple
+KillMode=process
+Restart=always
+RestartSec=30
+User=ec2-user
+StartLimitBurst=5
+StartLimitInterval=10
+
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+================================
+
+cd /etc/systemd/system
+
+sudo systemctl enable queue
+sudo systemctl start queue
+sudo systemctl status queue.service
+sudo systemctl restart queue.service
+
+journalctl --unit=queue -n 100 --no-pager -f
+
+sudo systemctl restart  queue.service
+sudo systemctl daemon-reload
+
+sudo systemd-analyze verify queue.service
+systemctl list-unit-files --state=enabled
+systemctl list-units --type=service --state=running
+
+ps -ef | grep php
+
+
+
+
