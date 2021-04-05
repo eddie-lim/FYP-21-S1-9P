@@ -27,28 +27,7 @@ class PasswordResetRequestForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'validateRole'],
-            /*
-            //LOYNOTE:: dun check for if exist
-            ['email', 'exist',
-                'targetClass' => '\common\models\User',
-                'filter' => ['status' => ['or', User::STATUS_VERIFIED, User::STATUS_NOT_VERIFIED]],
-                'message' => 'There is no user with such email.'
-            ],
-            */
         ];
-    }
-
-    public function validateRole(){
-        $user = User::findOne([
-            'email' => $this->email,
-        ]);
-
-        if($user && ($user->isSuspended())){
-            $this->addError('email', Yii::t('frontend', 'This account has been suspended. For more info, please contact: ' . env('CONTACT_EMAIL')));
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -67,7 +46,6 @@ class PasswordResetRequestForm extends Model
             UserToken::deleteAll(['user_id'=>$user->id, 'type'=>UserToken::TYPE_PASSWORD_RESET]);
 
             $token = UserToken::create($user->id, UserToken::TYPE_PASSWORD_RESET, 20*60); //20mins
-	    //TODO:: WHERE is email queue job got this?
 
             Yii::$app->queue->delay(0)->push(new EmailQueueJob([
                 'to' => $this->email,
