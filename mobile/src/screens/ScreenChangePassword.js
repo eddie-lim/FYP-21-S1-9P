@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable, Keyboard } from 'react-native';
-import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
+import { View, Alert, StyleSheet, Text, Keyboard } from 'react-native';
+import { HeaderWithBack } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import { StoreSettings, GlobalContext } from '@helpers/Settings';
-import Utils from '@helpers/Utils';
 import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
@@ -14,12 +13,14 @@ import LottieView from 'lottie-react-native';
 const ScreenChangePassword = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
-
+  
+  const [ currentPassword, setCurrentPassword ] = useState("");
   const [ password, setPassword ] = useState("");
   const [ passwordConfirm, setPasswordConfirm ] = useState("");
 
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
   const [ passwordConfirmErrorMsg, setPasswordConfirmErrorMsg ] = useState("");
+  const [ currentPasswordErrorMsg, setCurrentPasswordConfirm ] = useState("");
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
@@ -32,8 +33,13 @@ const ScreenChangePassword = (props) => {
   handleChange = () =>{
     setPasswordErrorMsg('');
     setPasswordConfirmErrorMsg('');
+    setCurrentPasswordConfirm('');
     var hasError = false;
 
+    if (currentpassword == '') {
+      setCurrentPasswordConfirm("Please enter your current password");
+      hasError = true;
+    }
     if (password == '') {
       setPasswordErrorMsg("Please enter your password");
       hasError = true;
@@ -51,15 +57,41 @@ const ScreenChangePassword = (props) => {
       return;
     }
     toggleActivityIndicator(true, "Changing...");
-    setTimeout(() => {
-      toggleActivityIndicator(false)
-    }, 1000);
-    // WebApi.resetPassword(email).then((res)=>{
-    //   toggleActivityIndicator(true, "Logging in...");
-    // }).catch((err)=>{
-    //   toggleActivityIndicator(false)
-    //   return
-    // })
+    var data = {
+      "current_password": currentPassword,
+      "password": password,
+      "password_confirm": passwordConfirm
+    }
+    // console.log("postEnquiries data", data)
+    WebApi.postChangePassword(data).then((res)=>{
+      // console.log("postEnquiries res", res.data)
+      toggleActivityIndicator(false);
+      Alert.alert(
+        "Success!",
+        "You have successfully changed your password",
+        [
+          {
+            text: 'OK', onPress: async () => {
+              navigate("screenSettings")
+            }
+          },
+        ]
+      );
+    }).catch((err)=>{
+      toggleActivityIndicator(false);
+      Alert.alert(
+        "Failed",
+        "Wrong password. Please try again.",
+        [
+          {
+            text: 'OK', onPress:  () => {
+              return true;
+            }
+          },
+        ]
+      );
+      return;
+    })
   }
 
   return (
@@ -68,6 +100,21 @@ const ScreenChangePassword = (props) => {
         
         <LottieView style={{height: 200}} source={require('@assets/animation/change-pw-8654.json')} autoPlay={true} loop={true} />
 
+        <View style={[styles.container]}>
+          <OutlineInput
+            value={currentPassword}
+            onChangeText={(e) => setCurrentPassword(e)}
+            label="Current Password"
+            secureTextEntry={true}
+            activeValueColor="#6c63fe"
+            activeBorderColor="#6c63fe"
+            activeLabelColor="#6c63fe"
+            passiveBorderColor="#bbb7ff"
+            passiveLabelColor="#bbb7ff"
+            passiveValueColor="#bbb7ff"
+          />
+          <Text style={styles.errorText}>{currentPasswordErrorMsg}</Text>
+        </View>
         
         <View style={[styles.container]}>
           <OutlineInput

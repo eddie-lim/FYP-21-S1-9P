@@ -96,6 +96,17 @@ const ScreenEnquiryForm = (props) => {
         ]
       );
     }).catch((err)=>{
+      Alert.alert(
+        "Failed",
+        "Please try again.",
+        [
+          {
+            text: 'OK', onPress:  () => {
+              return true;
+            }
+          },
+        ]
+      );
       toggleActivityIndicator(false);
       return;
     })

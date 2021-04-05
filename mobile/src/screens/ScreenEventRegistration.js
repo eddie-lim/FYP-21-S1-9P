@@ -101,6 +101,17 @@ const ScreenEventRegistration = (props) => {
       );
     }).catch((err)=>{
       toggleActivityIndicator(false);
+      Alert.alert(
+        "Failed",
+        "Please try again.",
+        [
+          {
+            text: 'OK', onPress:  () => {
+              return true;
+            }
+          },
+        ]
+      );
       return;
     })
   }

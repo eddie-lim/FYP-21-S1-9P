@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, Dimensions, StyleSheet, ImageBackground, Text, TextInput, Pressable, Keyboard } from 'react-native';
+import { View, Alert, StyleSheet, Text, TextInput, Pressable, Keyboard } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -39,15 +39,38 @@ const ScreenForgetPassword = (props) => {
       return;
     }
     toggleActivityIndicator(true, "Reseting...");
-    setTimeout(() => {
-      toggleActivityIndicator(false)
-    }, 1000);
-    // WebApi.resetPassword(email).then((res)=>{
-    //   toggleActivityIndicator(true, "Logging in...");
-    // }).catch((err)=>{
-    //   toggleActivityIndicator(false)
-    //   return
-    // })
+    var data = {
+      "email": email
+    }
+    WebApi.postRequestResetPassword(data).then((res)=>{
+      // console.log("postEnquiries res", res.data)
+      toggleActivityIndicator(false);
+      Alert.alert(
+        "Success!",
+        "You have successfully requested your password to be reset.\nPlease check your email for instructions.",
+        [
+          {
+            text: 'OK', onPress: async () => {
+              navigate("screenLogin")
+            }
+          },
+        ]
+      );
+    }).catch((err)=>{
+      toggleActivityIndicator(false);
+      Alert.alert(
+        "Failed",
+        "Please try again.",
+        [
+          {
+            text: 'OK', onPress:  () => {
+              return true;
+            }
+          },
+        ]
+      );
+      return;
+    })
   }
 
   return (

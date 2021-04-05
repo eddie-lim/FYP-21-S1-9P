@@ -140,6 +140,12 @@ const WebApi = {
   postEventsRegistration: async(data) => {
     return callApi(POST_METHOD, '/events-registration', data);
   },
+  postChangePassword: async(data) => {
+    return callApi(POST_METHOD, '/change-password', data);
+  },
+  postRequestResetPassword: async(data) => {
+    return callApi(POST_METHOD, '/request-reset-password', data);
+  },
 
   // Patch
   patchProfile: async(data) => {
