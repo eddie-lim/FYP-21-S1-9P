@@ -5,7 +5,7 @@ $config = [
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage' => 'en-US',
     'language' => 'en-US',
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'queue'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
@@ -70,9 +70,27 @@ $config = [
 
         'mailer' => [
             'class' => yii\swiftmailer\Mailer::class,
+            'viewPath' => '@common/mail',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                
+                'host' =>  env('SMTP_HOST'),
+                'username' => env('SMTP_USERNAME'),
+                'password' => env('SMTP_PASSWORD'),
+                'port' => env('SMTP_PORT'),
+                'encryption' => 'tls',
+                
+                'streamOptions' => [ //for localhost testing
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'allow_self_signed' => true
+                    ],
+                ],
+            ],
             'messageConfig' => [
                 'charset' => 'UTF-8',
-                'from' => env('ADMIN_EMAIL')
+                'from' => env('ROBOT_EMAIL')
             ]
         ],
 
@@ -163,6 +181,7 @@ $config = [
             'class' => common\components\keyStorage\KeyStorage::class
         ],
 
+
         'urlManagerApi' => \yii\helpers\ArrayHelper::merge(
             [
                 'hostInfo' => Yii::getAlias('@apiUrl'),
@@ -170,36 +189,38 @@ $config = [
             ],
             require(Yii::getAlias('@api/config/_urlManager.php'))
         ),
-        'urlManagerBackend' => \yii\helpers\ArrayHelper::merge(
-            [
-                'hostInfo' => env('BACKEND_HOST_INFO'),
-                'baseUrl' => env('BACKEND_BASE_URL'),
-            ],
-            require(Yii::getAlias('@backend/config/_urlManager.php'))
-        ),
+
         'urlManagerFrontend' => \yii\helpers\ArrayHelper::merge(
             [
-                'hostInfo' => env('FRONTEND_HOST_INFO'),
-                'baseUrl' => env('FRONTEND_BASE_URL'),
+                'hostInfo' => Yii::getAlias('@frontendUrl'),
+                'baseUrl' => Yii::getAlias('@frontendUrl'),
             ],
             require(Yii::getAlias('@frontend/config/_urlManager.php'))
         ),
-        'urlManagerStorage' => \yii\helpers\ArrayHelper::merge(
+        'urlManagerBackend' => \yii\helpers\ArrayHelper::merge(
             [
-                'hostInfo' => env('STORAGE_HOST_INFO'),
-                'baseUrl' => env('STORAGE_BASE_URL'),
+                'hostInfo' => Yii::getAlias('@backendUrl'),
+                'baseUrl' => Yii::getAlias('@backendUrl'),
+
             ],
-            require(Yii::getAlias('@storage/config/_urlManager.php'))
+            require(Yii::getAlias('@backend/config/_urlManager.php'))
         ),
 
         'queue' => [
-            'class' => \yii\queue\file\Queue::class,
-            'path' => '@common/runtime/queue',
+            'class' => \yii\queue\db\Queue::class,
+            'db' => 'db', // DB connection component or its config 
+            'tableName' => '{{%sys_queue}}', // Table name
+            'channel' => 'default', // Queue channel key
+            'mutex' => \yii\mutex\MysqlMutex::class, // Mutex used to sync queries
+            'as log' => \yii\queue\LogBehavior::class,
+            'ttr' => 10, // Time To Retry next attempt (in seconds) 
+            'attempts' => 5, // Max number of attempts
         ],
     ],
     'params' => [
         'adminEmail' => env('ADMIN_EMAIL'),
         'robotEmail' => env('ROBOT_EMAIL'),
+        'emailName' => "FYP-21-S1-9P - SIM Open House",
         'availableLocales' => [
             'en-US' => 'English (US)',
             'ru-RU' => 'Русский (РФ)',
@@ -234,11 +255,11 @@ if (YII_ENV_DEV) {
     $config['components']['cache'] = [
         'class' => yii\caching\DummyCache::class
     ];
-    $config['components']['mailer']['transport'] = [
-        'class' => 'Swift_SmtpTransport',
-        'host' => env('SMTP_HOST'),
-        'port' => env('SMTP_PORT'),
-    ];
+    // $config['components']['mailer']['transport'] = [
+    //     'class' => 'Swift_SmtpTransport',
+    //     'host' => env('SMTP_HOST'),
+    //     'port' => env('SMTP_PORT'),
+    // ];
 }
 
 return $config;

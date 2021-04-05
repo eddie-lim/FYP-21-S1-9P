@@ -2,9 +2,11 @@
 
 namespace common\commands;
 
-use trntv\bus\interfaces\SelfHandlingCommand;
 use yii\base\BaseObject;
 use yii\swiftmailer\Message;
+use trntv\bus\interfaces\SelfHandlingCommand;
+use yii\web\ServerErrorHttpException;
+use Yii;
 
 /**
  * @author Eugene Terentev <eugene@terentev.net>
@@ -45,7 +47,16 @@ class SendEmailCommand extends BaseObject implements SelfHandlingCommand
      */
     public function init()
     {
-        $this->from = $this->from ?: \Yii::$app->params['robotEmail'];
+        $this->from = $this->from ?: [\Yii::$app->params['robotEmail'] => \Yii::$app->params['emailName']];
+        //->setFrom(['john@doe.com' => 'John Doe'])
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHtml()
+    {
+        return (bool) $this->html;
     }
 
     /**
@@ -54,6 +65,7 @@ class SendEmailCommand extends BaseObject implements SelfHandlingCommand
      */
     public function handle($command)
     {
+        //echo "executing email queue";
         if (!$command->body) {
             $message = \Yii::$app->mailer->compose($command->view, $command->params);
         } else {
@@ -67,14 +79,13 @@ class SendEmailCommand extends BaseObject implements SelfHandlingCommand
         $message->setFrom($command->from);
         $message->setTo($command->to ?: \Yii::$app->params['robotEmail']);
         $message->setSubject($command->subject);
-        return $message->send();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isHtml()
-    {
-        return (bool)$this->html;
+        $result = $message->send();
+        \Yii::info(json_encode($result));
+        if($result != 1){
+            return false;
+        } else {
+            //echo "...success\n";
+            return true;
+        }
     }
 }
