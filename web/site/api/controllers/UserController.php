@@ -21,7 +21,7 @@ class UserController extends \api\controllers\RestControllerBase
         return array_merge(parent::behaviors(), [
             'authenticator' => [
                 'class' => HttpBearerAuth::className(),
-                // 'except' => ['index'],
+                'except' => ['request-reset-password'],
             ],
         ]);
     }

@@ -42,8 +42,9 @@ const ScreenForgetPassword = (props) => {
     var data = {
       "email": email
     }
+    console.log("postRequestResetPassword res", data)
     WebApi.postRequestResetPassword(data).then((res)=>{
-      // console.log("postEnquiries res", res.data)
+      console.log("postRequestResetPassword res", res.data)
       toggleActivityIndicator(false);
       Alert.alert(
         "Success!",
@@ -57,6 +58,7 @@ const ScreenForgetPassword = (props) => {
         ]
       );
     }).catch((err)=>{
+      console.log("postRequestResetPassword err", err)
       toggleActivityIndicator(false);
       Alert.alert(
         "Failed",

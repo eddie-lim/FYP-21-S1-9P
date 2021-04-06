@@ -36,7 +36,7 @@ const ScreenChangePassword = (props) => {
     setCurrentPasswordConfirm('');
     var hasError = false;
 
-    if (currentpassword == '') {
+    if (currentPassword == '') {
       setCurrentPasswordConfirm("Please enter your current password");
       hasError = true;
     }
@@ -62,9 +62,9 @@ const ScreenChangePassword = (props) => {
       "password": password,
       "password_confirm": passwordConfirm
     }
-    // console.log("postEnquiries data", data)
+    console.log("postChangePassword data", data)
     WebApi.postChangePassword(data).then((res)=>{
-      // console.log("postEnquiries res", res.data)
+      console.log("postChangePassword res", res.data)
       toggleActivityIndicator(false);
       Alert.alert(
         "Success!",
@@ -78,6 +78,7 @@ const ScreenChangePassword = (props) => {
         ]
       );
     }).catch((err)=>{
+      console.log("postChangePassword err", err)
       toggleActivityIndicator(false);
       Alert.alert(
         "Failed",
