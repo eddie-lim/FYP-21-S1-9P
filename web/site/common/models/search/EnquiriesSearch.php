@@ -44,7 +44,7 @@ class EnquiriesSearch extends Enquiries
         $query = Enquiries::find();
 
         if(!Yii::$app->user->can(Yii::$app->user->identity::ROLE_SUPERADMIN)){
-            $query->where(['school_id'=>Yii::$app->user->identity->userProfile->school_id]);
+            $query->where(['or', ['school_id'=>Yii::$app->user->identity->userProfile->school_id], ['is','school_id', null], ['school_id'=> '']]);
         }
         
         $dataProvider = new ActiveDataProvider([
