@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { ShareStyle, HeaderStyleWithBack, StyleConstant, ShadowStyle } from '@assets/MyStyle';
-import { View, Text, StyleSheet, Image, Linking, TouchableOpacity, Dimensions } from 'react-native';
+import { ShareStyle, StyleConstant, ShadowStyle } from '@assets/MyStyle';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -16,6 +16,8 @@ export default useCustomDialog = () => {
   const imageWidth = (Dimensions.get('window').width) * 0.5;
   
   const showCustomDialog = (data, isVisible = true) => {
+    // Utils.log(data);
+    // console.log(data.body);
     setData(data);
     setVisible(isVisible);
   }
