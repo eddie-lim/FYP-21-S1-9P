@@ -94,6 +94,15 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
       )
     }
   }
+  renderSettingsButton = () =>{
+    if(logged_in === "true" || logged_in === true){
+      return(
+        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 15, bottom: 15}}>
+          <Icon name={'cog'} size={30} color={'white'}/>
+        </Pressable>
+      )
+    }
+  }
   return(
     <View style={{width: '100%', height: Platform.OS == 'ios' ? 160 : 130, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
       <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:10}}>
@@ -101,9 +110,7 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
       </View>
       <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {renderAccountButton()}
-        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 15, bottom: 15}}>
-          <Icon name={'cog'} size={30} color={'white'}/>
-        </Pressable>
+        {renderSettingsButton()}
       </View>
     </View>
   );

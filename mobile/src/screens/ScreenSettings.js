@@ -3,15 +3,17 @@ import { View, Dimensions, StyleSheet, BackHandler, Text, Pressable, FlatList, S
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
-import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {StoreSettings} from '@helpers/Settings';
+import { StoreSettings, Settings } from '@helpers/Settings';
+import WebApi from '@helpers/WebApi';
+import { NavigationEvents } from 'react-navigation';
 
 const ScreenSettings = (props) => {
   const { navigate, goBack } = useNavigation();
 
   const [isEnabledPushNotification, setIsEnabledPushNotification] = useState(false);
-  const [isEnabledNewsletterSubscription, setIsEnabledNewsletterSubscription] = useState(false);
+  const [isEnabledNewsletterSubscription, setIsEnabledNewsletterSubscription] = useState(parseInt((Settings.get(Settings.USER_PROFILE)).userProfile.subscribe_newsletter) == 1);
   const [settings, setSettings] = useState([
     {
       "title": "Push Notification",
@@ -32,6 +34,22 @@ const ScreenSettings = (props) => {
        setIsEnabledPushNotification(previousState => !previousState)
      } else {
        setIsEnabledNewsletterSubscription(previousState => !previousState)
+       var profile = Settings.get(Settings.USER_PROFILE);
+       subscription = isEnabledNewsletterSubscription ? 1 : 0;
+       console.log('subscription', subscription)
+       console.log('parseInt(profile.userProfile.subscribe_newsletter)', parseInt(profile.userProfile.subscribe_newsletter))
+       if(subscription != parseInt(profile.userProfile.subscribe_newsletter)){
+         var data = {"userProfile": {"subscribe_newsletter": subscription}};
+         console.log('patchProfile data', data)
+         WebApi.patchProfile(data).then((profile_res)=>{
+           console.log("patchProfile(data)",profile_res.data[0]);
+           Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
+           // navigate("screenLanding");
+         }).catch((err)=>{
+           console.log('patchProfile err', err)
+           return
+         })
+       }
      }
    };
  
@@ -41,7 +59,7 @@ const ScreenSettings = (props) => {
       header:()=> HeaderWithBack("Settings", navigate, "screenLanding")
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
-
+    console.log("aaa", parseInt((Settings.get(Settings.USER_PROFILE)).userProfile.subscribe_newsletter))
     StoreSettings.get(StoreSettings.IS_LOGGED_IN)
     .then((IS_LOGGED_IN)=>{
       if(IS_LOGGED_IN === "true" || IS_LOGGED_IN === true){
@@ -82,6 +100,11 @@ const ScreenSettings = (props) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}} style={{backgroundColor: 'white'}} showsVerticalScrollIndicator={false}>
+        <NavigationEvents
+          onWillBlur={()=>{
+            console.log("on will blur")
+          }}
+        />
         <View style={styles.container}>
           <View style={styles.flatlistHolder}>
             <Text style={styles.titleText}>Main</Text>
