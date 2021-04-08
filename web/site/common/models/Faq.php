@@ -38,7 +38,7 @@ class Faq extends MyCustomActiveRecord
     {
         return [
             [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['question', 'answer', 'tags', 'notes', 'status'], 'string'],
+            [['question', 'answer', 'notes', 'status'], 'string'],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
             ['tags', 'safe'],
         ];

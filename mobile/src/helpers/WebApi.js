@@ -90,16 +90,16 @@ const WebApi = {
 
   // LISTING
   listCourses: async(page, filter) => {
-    return callApi(GET_METHOD, '/courses?page='+page+filter);
+    return callApi(GET_METHOD, '/courses?sort=name&page='+page+filter);
   },
   listEvents: async(page, filter) => {
-    return callApi(GET_METHOD, '/events?page='+page+filter);
+    return callApi(GET_METHOD, '/events?sort=start_at&page='+page+filter);
   },
   listFaq: async(page) => {
     return callApi(GET_METHOD, '/faq?page='+page);
   },
   listUniversityPartners: async(page) => {
-    return callApi(GET_METHOD, '/university-partners?page='+page);
+    return callApi(GET_METHOD, '/university-partners?sort=continent&page='+page);
   },
   listEventsRegistration: async(event_id) => {
     return callApi(GET_METHOD, '/events-registration?filter[event_id]='+event_id);

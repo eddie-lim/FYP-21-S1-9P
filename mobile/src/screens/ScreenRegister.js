@@ -10,6 +10,7 @@ import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenRegister = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -99,6 +100,8 @@ const ScreenRegister = (props) => {
         return
       })
     }).catch((err)=>{
+      var msg = JSON.parse(err.message);
+      HelperFunctions.showToast(msg.message)
       toggleActivityIndicator(false)
       return
     })

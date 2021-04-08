@@ -30,28 +30,28 @@ const ScreenSettings = (props) => {
   ]);
 
   toggleSwitch = (title) => {
-     if(title == 'Push Notification'){
-       setIsEnabledPushNotification(previousState => !previousState)
-     } else {
-       setIsEnabledNewsletterSubscription(previousState => !previousState)
-       var profile = Settings.get(Settings.USER_PROFILE);
-       subscription = isEnabledNewsletterSubscription ? 1 : 0;
-       console.log('subscription', subscription)
-       console.log('parseInt(profile.userProfile.subscribe_newsletter)', parseInt(profile.userProfile.subscribe_newsletter))
-       if(subscription != parseInt(profile.userProfile.subscribe_newsletter)){
-         var data = {"userProfile": {"subscribe_newsletter": subscription}};
-         console.log('patchProfile data', data)
-         WebApi.patchProfile(data).then((profile_res)=>{
-           console.log("patchProfile(data)",profile_res.data[0]);
-           Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
-           // navigate("screenLanding");
-         }).catch((err)=>{
-           console.log('patchProfile err', err)
-           return
-         })
-       }
-     }
-   };
+    if(title == 'Push Notification'){
+      setIsEnabledPushNotification(previousState => !previousState)
+    } else {
+      setIsEnabledNewsletterSubscription(previousState => !previousState)
+      var profile = Settings.get(Settings.USER_PROFILE);
+      subscription = isEnabledNewsletterSubscription ? 1 : 0;
+      console.log('subscription', subscription)
+      console.log('parseInt(profile.userProfile.subscribe_newsletter)', parseInt(profile.userProfile.subscribe_newsletter))
+      if(subscription != parseInt(profile.userProfile.subscribe_newsletter)){
+        var data = {"userProfile": {"subscribe_newsletter": subscription}};
+        console.log('patchProfile data', data)
+        WebApi.patchProfile(data).then((profile_res)=>{
+          console.log("patchProfile(data)",profile_res.data[0]);
+          Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
+          // navigate("screenLanding");
+        }).catch((err)=>{
+          console.log('patchProfile err', err)
+          return
+        })
+      }
+    }
+  };
  
   useEffect(() => {
     props.navigation.setParams({"navOptions":{

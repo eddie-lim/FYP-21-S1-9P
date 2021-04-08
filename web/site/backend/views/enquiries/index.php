@@ -52,10 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'updated_at',
                     // 'updated_by',
                     
-                    [
-                        'class' => \common\widgets\ActionColumn::class, 
-                        'headerOptions' => ['width' => '20px']
-                    ],
+                    // [
+                    //     'class' => \common\widgets\ActionColumn::class, 
+                    //     'headerOptions' => ['width' => '20px']
+                    // ],
                 ],
             ]); ?>
     
