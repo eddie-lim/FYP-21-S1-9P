@@ -38,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
 
                     // 'id',
-                    // 'school_id',
                     [
                         'attribute' => 'school_id',
                         'format' => 'raw',
@@ -49,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'session',
                     'name',
+                    'type',
                     // 'description:ntext',
                     'venue',
                     // 'start_at:datetime',

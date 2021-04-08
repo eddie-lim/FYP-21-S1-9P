@@ -11,6 +11,7 @@ use common\components\MyCustomActiveRecord;
  *
  * @property int $id
  * @property int|null $school_id
+ * @property string|null $type
  * @property string|null $session
  * @property string|null $name
  * @property string|null $description
@@ -42,7 +43,7 @@ class Events extends MyCustomActiveRecord
     {
         return [
             [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['description', 'notes', 'status'], 'string'],
+            [['description', 'notes', 'status', 'type'], 'string'],
             [['session', 'venue'], 'string', 'max' => 128],
             [['name'], 'string', 'max' => 256],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
@@ -57,6 +58,7 @@ class Events extends MyCustomActiveRecord
     {
         return [
             'id' => 'ID',
+            'type' => 'Type',
             'school_id' => 'University',
             'session' => 'Session',
             'name' => 'Name',
@@ -87,6 +89,7 @@ class Events extends MyCustomActiveRecord
                 return $model->school->name;
             },
             'session',
+            'type',
             'description',
             'venue',
             'start_at',
