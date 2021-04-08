@@ -21,7 +21,20 @@ return [
         ],
         'api' => [
             'class' => 'api\components\Api',
-        ],        
+        ],
+        'response' => [
+            'class' => 'yii\web\Response',
+            'format' => \yii\web\Response::FORMAT_JSON,
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                $response->data = [
+                    'status' => $response->statusCode,
+                    'text' => $response->isSuccessful ? "OK" : $response->data['name'],
+                    'data' => $response->isSuccessful ? $response->data : json_decode($response->data['message']),
+                ];
+                return $response;
+            },
+        ],  
     /*
         'response' => [
             'format' => \yii\web\Response::FORMAT_JSON
