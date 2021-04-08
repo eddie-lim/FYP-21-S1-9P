@@ -17,11 +17,11 @@ const ScreenRegister = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
 
-  const [ firstName, setFirstName ] = useState("tester");
-  const [ lastName, setLastName ] = useState("one");
-  const [ email, setEmail ] = useState("eddielinoofficial@gmail.com");
-  const [ password, setPassword ] = useState("P@ssw0rd");
-  const [ passwordConfirm, setPasswordConfirm ] = useState("P@ssw0rd");
+  const [ firstName, setFirstName ] = useState("");
+  const [ lastName, setLastName ] = useState("");
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ passwordConfirm, setPasswordConfirm ] = useState("");
 
   const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState("");
   const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState("");
