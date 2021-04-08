@@ -8,7 +8,8 @@ import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import { StoreSettings, Settings } from '@helpers/Settings';
 import { NavigationEvents } from 'react-navigation';
 import WebApi from '@helpers/WebApi';
-import { capitalize } from 'lodash';
+import { capitalize, isArray } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenLanding = (props) => {
   const { navigate } = useNavigation();
@@ -29,6 +30,12 @@ const ScreenLanding = (props) => {
     WebApi.getFeaturedItems().then((res)=>{
       setFeaturedItems(res.data)
     }).catch((err)=>{
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       return
     })
   }
@@ -49,6 +56,12 @@ const ScreenLanding = (props) => {
                   header:()=> HomeHeader(navigate,res, capitalize(profile_res.data[0].userProfile.firstname))
                 }});
               }).catch((err)=>{
+                var error = err.data;
+                if(isArray(error)){
+                  HelperFunctions.showToast(error[0].message)
+                } else {
+                  HelperFunctions.showToast(error)
+                }
                 return
               })
             }

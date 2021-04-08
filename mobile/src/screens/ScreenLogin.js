@@ -10,6 +10,8 @@ import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
+import { isArray } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenLogin = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -74,19 +76,37 @@ const ScreenLogin = (props) => {
               navigate("screenLanding")
             })
           }).catch((err)=>{
-            setPasswordErrorMsg("Incorrect email or password");
+            // setPasswordErrorMsg("Incorrect email or password");
             toggleActivityIndicator(false);
+            var error = err.data;
+            if(isArray(error)){
+              HelperFunctions.showToast(error[0].message)
+            } else {
+              HelperFunctions.showToast(error)
+            }
             return
           })
         })
       }).catch((err)=>{
-        setPasswordErrorMsg("Incorrect email or password");
+        // setPasswordErrorMsg("Incorrect email or password");
         toggleActivityIndicator(false);
+        var error = err.data;
+        if(isArray(error)){
+          HelperFunctions.showToast(error[0].message)
+        } else {
+          HelperFunctions.showToast(error)
+        }
         return
       })
     }).catch((err)=>{
-      setPasswordErrorMsg("Incorrect email or password");
+      // setPasswordErrorMsg("Incorrect email or password");
       toggleActivityIndicator(false);
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       return
     })
     

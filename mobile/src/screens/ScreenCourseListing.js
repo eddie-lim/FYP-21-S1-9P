@@ -9,9 +9,10 @@ import WebApi from '@helpers/WebApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { GlobalContext } from '@helpers/Settings';
-import { isEmpty, trim } from 'lodash';
+import { isArray, isEmpty, trim } from 'lodash';
 import { InputOutline } from 'react-native-input-outline';
 import { NavigationEvents } from 'react-navigation';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenCourseListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -326,6 +327,12 @@ const ScreenCourseListing = (props) => {
         </View>
       </ScrollView>, slidingUpPanelRef)
     }).catch((err)=>{
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       return null;
     })
   }
@@ -387,14 +394,20 @@ const ScreenCourseListing = (props) => {
         filter += "&filter[and]["+and_counter+"][or][3][tags][like][]="+trim(keyword.current)
         and_counter++;
       }
-      WebApi.listCourses(page, filter).then((res)=>{
-        if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
+      WebApi.listCourses(page, filter).then((res,headers)=>{
+        if(parseInt(headers["x-pagination-total-count"]) < parseInt(headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
+        var error = err.data;
+        if(isArray(error)){
+          HelperFunctions.showToast(error[0].message)
+        } else {
+          HelperFunctions.showToast(error)
+        }
         return
       })
     }

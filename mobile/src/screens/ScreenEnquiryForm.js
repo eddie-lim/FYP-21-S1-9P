@@ -10,7 +10,8 @@ import { Button, TextInput } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { isEmpty, trim } from 'lodash';
+import { isArray, isEmpty, trim } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenEnquiryForm = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -96,6 +97,13 @@ const ScreenEnquiryForm = (props) => {
         ]
       );
     }).catch((err)=>{
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+        setEnquiryErrorMsg(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       Alert.alert(
         "Failed",
         "Please try again.",

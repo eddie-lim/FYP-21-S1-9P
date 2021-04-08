@@ -11,6 +11,8 @@ import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LottieView from 'lottie-react-native';
 import { InputOutline } from 'react-native-input-outline';
+import { isArray } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenProfile = (props) => {
   const { toggleActivityIndicator } = useContext(GlobalContext);
@@ -90,6 +92,12 @@ const ScreenProfile = (props) => {
       Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
       navigate("screenLanding");
     }).catch((err)=>{
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       // console.log('patchProfile', err)
       return
     }).finally(()=>{

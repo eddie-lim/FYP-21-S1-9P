@@ -11,11 +11,12 @@ import { Calendar } from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker'
 import randomcolor from 'randomcolor';
-import { padStart } from 'lodash';
+import { isArray, padStart } from 'lodash';
 import { GlobalContext } from '@helpers/Settings';
 import { isEmpty, trim } from 'lodash';
 import { InputOutline } from 'react-native-input-outline';
 import { NavigationEvents } from 'react-navigation';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenEventListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -185,6 +186,12 @@ const ScreenEventListing = (props) => {
         </View>
       </ScrollView>, slidingUpPanelRef)
     }).catch((err)=>{
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       return null;
     })
   }
@@ -232,8 +239,8 @@ const ScreenEventListing = (props) => {
         and_counter++;
       }
 
-      WebApi.listEvents(page, filter).then((res)=>{
-        if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
+      WebApi.listEvents(page, filter).then((res,headers)=>{
+        if(parseInt(headers["x-pagination-total-count"]) < parseInt(headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         if(page = 1){
@@ -272,6 +279,13 @@ const ScreenEventListing = (props) => {
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
+        console.log(err)
+        var error = err.data;
+        if(isArray(error)){
+          HelperFunctions.showToast(error[0].message)
+        } else {
+          HelperFunctions.showToast(error)
+        }
         return
       })
     }

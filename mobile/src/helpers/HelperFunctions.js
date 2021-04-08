@@ -2,12 +2,15 @@ import firebase from 'react-native-firebase';
 import Constants from '@helpers/Constants';
 import Toast from 'react-native-root-toast';
 import {Keyboard} from 'react-native';
+import { isEmpty, trim } from 'lodash';
 
 //place functions dependent of project here
 export default HelperFunctions = {
   showToast: (msg) => {
     Keyboard.dismiss();
-    Toast.show(msg, { duration:Toast.durations.LONG });
+    if (!isEmpty(trim(msg))) {
+      Toast.show(msg, { duration:Toast.durations.LONG });
+    }
   },
   showNotification: (notification) => {
     const notif = new firebase.notifications.Notification()

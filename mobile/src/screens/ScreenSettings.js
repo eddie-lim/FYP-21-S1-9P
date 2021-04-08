@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { StoreSettings, Settings } from '@helpers/Settings';
 import WebApi from '@helpers/WebApi';
 import { NavigationEvents } from 'react-navigation';
+import { isArray } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenSettings = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -36,17 +38,23 @@ const ScreenSettings = (props) => {
       setIsEnabledNewsletterSubscription(previousState => !previousState)
       var profile = Settings.get(Settings.USER_PROFILE);
       subscription = isEnabledNewsletterSubscription ? 1 : 0;
-      console.log('subscription', subscription)
-      console.log('parseInt(profile.userProfile.subscribe_newsletter)', parseInt(profile.userProfile.subscribe_newsletter))
+      // console.log('subscription', subscription)
+      // console.log('parseInt(profile.userProfile.subscribe_newsletter)', parseInt(profile.userProfile.subscribe_newsletter))
       if(subscription != parseInt(profile.userProfile.subscribe_newsletter)){
         var data = {"userProfile": {"subscribe_newsletter": subscription}};
-        console.log('patchProfile data', data)
+        // console.log('patchProfile data', data)
         WebApi.patchProfile(data).then((profile_res)=>{
-          console.log("patchProfile(data)",profile_res.data[0]);
+          // console.log("patchProfile(data)",profile_res.data[0]);
           Settings.store(Settings.USER_PROFILE, profile_res.data[0]);
           // navigate("screenLanding");
         }).catch((err)=>{
-          console.log('patchProfile err', err)
+          // console.log('patchProfile err', err)
+          var error = err.data;
+          if(isArray(error)){
+            HelperFunctions.showToast(error[0].message)
+          } else {
+            HelperFunctions.showToast(error)
+          }
           return
         })
       }
@@ -59,7 +67,7 @@ const ScreenSettings = (props) => {
       header:()=> HeaderWithBack("Settings", navigate, "screenLanding")
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
-    console.log("aaa", parseInt((Settings.get(Settings.USER_PROFILE)).userProfile.subscribe_newsletter))
+    // console.log("aaa", parseInt((Settings.get(Settings.USER_PROFILE)).userProfile.subscribe_newsletter))
     StoreSettings.get(StoreSettings.IS_LOGGED_IN)
     .then((IS_LOGGED_IN)=>{
       if(IS_LOGGED_IN === "true" || IS_LOGGED_IN === true){
@@ -102,7 +110,7 @@ const ScreenSettings = (props) => {
       <ScrollView contentContainerStyle={{flexGrow: 1}} style={{backgroundColor: 'white'}} showsVerticalScrollIndicator={false}>
         <NavigationEvents
           onWillBlur={()=>{
-            console.log("on will blur")
+            // console.log("on will blur")
           }}
         />
         <View style={styles.container}>

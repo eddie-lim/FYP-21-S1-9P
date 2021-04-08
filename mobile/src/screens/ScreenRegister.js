@@ -94,10 +94,22 @@ const ScreenRegister = (props) => {
           })
         }).catch((err)=>{
           toggleActivityIndicator(false)
+          var error = err.data;
+          if(isArray(error)){
+            HelperFunctions.showToast(error[0].message)
+          } else {
+            HelperFunctions.showToast(error)
+          }
           return
         })
       }).catch((err)=>{
         toggleActivityIndicator(false)
+        var error = err.data;
+        if(isArray(error)){
+          HelperFunctions.showToast(error[0].message)
+        } else {
+          HelperFunctions.showToast(error)
+        }
         return
       })
     }).catch((err)=>{

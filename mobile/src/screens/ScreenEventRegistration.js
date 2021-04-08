@@ -9,6 +9,8 @@ import WebApi from '@helpers/WebApi';
 import { Button, TextInput } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { isArray } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenEventRegistration = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -39,6 +41,12 @@ const ScreenEventRegistration = (props) => {
           }
             
         }).catch((err)=>{
+          var error = err.data;
+          if(isArray(error)){
+            HelperFunctions.showToast(error[0].message)
+          } else {
+            HelperFunctions.showToast(error)
+          }
           return
         })
       }
@@ -74,6 +82,12 @@ const ScreenEventRegistration = (props) => {
     }).catch((err)=>{
       // console.log("deleteEventsRegistration err", err)
       toggleActivityIndicator(false);
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       return;
     })
   }
@@ -101,6 +115,12 @@ const ScreenEventRegistration = (props) => {
       );
     }).catch((err)=>{
       toggleActivityIndicator(false);
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
       Alert.alert(
         "Failed",
         "Please try again.",

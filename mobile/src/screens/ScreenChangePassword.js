@@ -9,6 +9,8 @@ import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
+import { isArray } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenChangePassword = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -80,17 +82,23 @@ const ScreenChangePassword = (props) => {
     }).catch((err)=>{
       console.log("postChangePassword err", err)
       toggleActivityIndicator(false);
-      Alert.alert(
-        "Failed",
-        "Wrong password. Please try again.",
-        [
-          {
-            text: 'OK', onPress:  () => {
-              return true;
-            }
-          },
-        ]
-      );
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+      } else {
+        HelperFunctions.showToast(error)
+      }
+      // Alert.alert(
+      //   "Failed",
+      //   "Wrong password. Please try again.",
+      //   [
+      //     {
+      //       text: 'OK', onPress:  () => {
+      //         return true;
+      //       }
+      //     },
+      //   ]
+      // );
       return;
     })
   }

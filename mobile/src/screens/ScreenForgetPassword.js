@@ -10,6 +10,8 @@ import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
+import HelperFunctions from '@helpers/HelperFunctions';
+import { isArray } from 'lodash';
 
 const ScreenForgetPassword = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -60,6 +62,13 @@ const ScreenForgetPassword = (props) => {
     }).catch((err)=>{
       console.log("postRequestResetPassword err", err)
       toggleActivityIndicator(false);
+      var error = err.data;
+      if(isArray(error)){
+        HelperFunctions.showToast(error[0].message)
+        setEmailErrorMsg(error[0].message);
+      } else {
+        HelperFunctions.showToast(error)
+      }
       Alert.alert(
         "Failed",
         "Please try again.",

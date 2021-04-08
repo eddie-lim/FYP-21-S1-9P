@@ -9,7 +9,8 @@ import WebApi from '@helpers/WebApi';
 import Constants from '@helpers/Constants';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { toLower } from 'lodash';
+import { isArray, toLower } from 'lodash';
+import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenSchoolListing = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -38,15 +39,21 @@ const ScreenSchoolListing = (props) => {
   // FLATLIST FUNCTIONS ---- START
   getList = (page = 1)=>{
     if(!refreshing){
-      WebApi.listUniversityPartners(page).then((res)=>{
-        if(parseInt(res.headers["x-pagination-total-count"]) < parseInt(res.headers["x-pagination-per-page"])){
+      WebApi.listUniversityPartners(page).then((res,headers)=>{
+        if(parseInt(headers["x-pagination-total-count"]) < parseInt(headers["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
         setRefreshing(false);
       }).catch((err)=>{
-          return
+        var error = err.data;
+        if(isArray(error)){
+          HelperFunctions.showToast(error[0].message)
+        } else {
+          HelperFunctions.showToast(error)
+        }
+        return
       })
     }
   }
