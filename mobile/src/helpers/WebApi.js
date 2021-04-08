@@ -36,9 +36,11 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(async (response) => {
-    return response;
-  }, error => {
-    return Promise.reject(error);
+  // console.log("response", response)
+    return response.data;
+  }, (error) => {
+    // console.log('Response error', error.response.data);
+    return Promise.reject(error.response.data);
   }
 );
 

@@ -11,16 +11,17 @@ import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
 import HelperFunctions from '@helpers/HelperFunctions';
+import { forEach, isArray } from 'lodash';
 
 const ScreenRegister = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
 
-  const [ firstName, setFirstName ] = useState("");
-  const [ lastName, setLastName ] = useState("");
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [ passwordConfirm, setPasswordConfirm ] = useState("");
+  const [ firstName, setFirstName ] = useState("tester");
+  const [ lastName, setLastName ] = useState("one");
+  const [ email, setEmail ] = useState("eddielinoofficial@gmail.com");
+  const [ password, setPassword ] = useState("P@ssw0rd");
+  const [ passwordConfirm, setPasswordConfirm ] = useState("P@ssw0rd");
 
   const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState("");
   const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState("");
@@ -100,8 +101,39 @@ const ScreenRegister = (props) => {
         return
       })
     }).catch((err)=>{
-      var msg = JSON.parse(err.message);
-      HelperFunctions.showToast(msg.message)
+      // console.log("err", err)
+      var error = err.data;
+      if(isArray(error)){
+        forEach(error, function(item){
+          // console.log("item",item)
+          var field = item.field;
+          var message = item.message;
+
+          if (field == "firstname") {
+            HelperFunctions.showToast(message)
+            setFirstNameErrorMsg(message);
+          }
+          if (field == "lastname") {
+            HelperFunctions.showToast(message)
+            setLastNameErrorMsg(message);
+          }
+          if (field == "email") {
+            HelperFunctions.showToast(message)
+            setEmailErrorMsg(message);
+          }
+          if (field == "password") {
+            HelperFunctions.showToast(message)
+            setPasswordErrorMsg(message);
+          }
+          if (field == "password_confirm") {
+            HelperFunctions.showToast(message)
+            setPasswordConfirmErrorMsg(message);
+          } 
+        })
+      }
+      // var msg = JSON.parse(err.message);
+      // console.log("msg", msg)
+      // HelperFunctions.showToast(msg.message)
       toggleActivityIndicator(false)
       return
     })
