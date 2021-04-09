@@ -30,7 +30,12 @@ return [
                 $response->data = [
                     'status' => $response->statusCode,
                     'text' => $response->isSuccessful ? "OK" : $response->data['name'],
-                    'data' => $response->isSuccessful ? $response->data : json_decode($response->data['message']),
+                    'data' => $response->isSuccessful ? 
+                                (isset($response->data["items"]) && isset($response->data['_meta']) && isset($response->data['_links']) ?
+                                    $response->data['items']: $response->data) : 
+                                json_decode($response->data['message']),
+                    'meta' => isset($response->data["items"]) && isset($response->data['_meta']) && isset($response->data['_links']) ?
+                                    $response->data['_meta']: null,
                 ];
                 return $response;
             },

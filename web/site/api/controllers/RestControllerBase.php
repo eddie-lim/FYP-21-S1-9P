@@ -18,6 +18,10 @@ class RestControllerBase extends ActiveController
     public $enableCsrfValidation = false;
     public $headers;
 
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
+    ];
     // public $serializer = [
     //     'class' => 'yii\rest\Serializer',
     //     'collectionEnvelope' => 'items',
