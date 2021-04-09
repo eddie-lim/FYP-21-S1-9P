@@ -153,7 +153,7 @@ const ScreenEventListing = (props) => {
               style={[styles.DropDownPickerStyle]}
               itemStyle={[styles.DropDownPickerItemStyle]}
               dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-              onChangeItem={item => universityPartersRef(item)}
+              onChangeItem={item => setUniversityParters(item)}
               onOpen={() => {
                 TypeOfEventsRef.current.close();
                 // universityPartersRef.current.close();

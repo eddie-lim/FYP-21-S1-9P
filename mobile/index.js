@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppRegistry, StatusBar, LogBox} from 'react-native';
+import {AppRegistry, StatusBar, LogBox, Text} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import { GlobalContext } from '@helpers/Settings';
@@ -24,6 +24,7 @@ const AppTheme = () => {
             <GlobalContext.Provider value={{ toggleActivityIndicator, renderActivityIndicator, showCustomDialog, renderCustomDialog, initSlidingPanel }}>
                 <PaperProvider theme={DefaultTheme}>
                     <StatusBar backgroundColor={StyleConstant.primaryColor} />
+                    <Text>V1</Text>
                     <App/>
                 </PaperProvider>
                 { renderSlidingPanel() }
