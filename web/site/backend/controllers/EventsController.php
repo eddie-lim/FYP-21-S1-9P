@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Events;
 use common\models\search\EventsSearch;
+use common\models\search\EventsRegistrationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -50,8 +51,13 @@ class EventsController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new EventsRegistrationSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

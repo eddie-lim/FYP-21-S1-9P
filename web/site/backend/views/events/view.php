@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\grid\GridView;
 use yii\widgets\DetailView;
 
 /**
@@ -68,6 +69,46 @@ $this->params['breadcrumbs'][] = $this->title;
                     
                 ],
             ]) ?>
+        </div>
+        <div class="card-header border-top" style="border-bottom:none; ">
+            <h2>Users Registered</h2>
+        </div>
+        <div class="card-body">
+            <?php echo GridView::widget([
+                'layout' => "{items}\n{pager}",
+                'options' => [
+                    'class' => ['gridview', 'table-responsive'],
+                ],
+                'tableOptions' => [
+                    'class' => ['table', 'text-wrap', 'table-striped', 'table-bordered', 'mb-0'],
+                ],
+                'dataProvider' => $dataProvider,
+                // 'filterModel' => $searchModel,
+                'columns' => [
+                    [
+                        'class' => \yii\grid\SerialColumn::class, 
+                        'headerOptions' => ['width' => '20px']
+                    ],
+                    [
+                        'attribute' => 'created_by',
+                        'label'=>"User",
+                        'format' => 'raw',
+                        'value' => function ($model){
+                            return \common\models\User::getUserBlock($model->created_by);
+                        },
+                        'headerOptions' => ['width' => '250px'],
+                    ],
+                    [
+                        'attribute' => 'created_at',
+                        'label'=>"Registered At",
+                        'format' => 'datetime',
+                        'headerOptions' => ['width' => '250px'],
+                    ],
+                ],
+            ]); ?>
+        </div>
+        <div class="card-footer">
+            <?php echo getDataProviderSummary($dataProvider) ?>
         </div>
     </div>
 </div>
