@@ -27,15 +27,39 @@ return [
             'format' => \yii\web\Response::FORMAT_JSON,
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
+                $data = "";
+                if($response->isSuccessful){
+                    if(is_array($response->data)){
+                        if(isset($response->data["items"]) && isset($response->data['_meta']) && isset($response->data['_links'])){
+                            $data = $response->data['items'];
+                        } else {
+                            $data = $response->data;
+                        }
+                    } else {
+                        $data = $response->data;
+                    }
+                } else {
+                    if(is_array($response->data)){
+                            $data = $response->data[0];
+                    } else {
+                        $data = json_decode($response->data['message']);
+                    }
+                }
+
+                $meta = "";
+                if(is_array($response->data)){
+                    if(isset($response->data["items"]) && isset($response->data['_meta']) && isset($response->data['_links'])){
+                        $meta = $response->data['_meta'];
+                    } else {
+                        $meta = null;
+                    }
+                }
                 $response->data = [
                     'status' => $response->statusCode,
                     'text' => $response->isSuccessful ? "OK" : $response->data['name'],
-                    'data' => $response->isSuccessful ? 
-                                (isset($response->data["items"]) && isset($response->data['_meta']) && isset($response->data['_links']) ?
-                                    $response->data['items']: $response->data) : 
-                                json_decode($response->data['message']),
-                    'meta' => isset($response->data["items"]) && isset($response->data['_meta']) && isset($response->data['_links']) ?
-                                    $response->data['_meta']: null,
+                    'data' => $data,
+                    'meta' => $meta,
+                    // 'debug'=> ($event->sender->data),
                 ];
                 return $response;
             },
