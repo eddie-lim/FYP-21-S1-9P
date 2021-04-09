@@ -239,8 +239,8 @@ const ScreenEventListing = (props) => {
         and_counter++;
       }
 
-      WebApi.listEvents(page, filter).then((res,headers)=>{
-        if(parseInt(headers["x-pagination-total-count"]) < parseInt(headers["x-pagination-per-page"])){
+      WebApi.listEvents(page, filter).then((res)=>{
+        if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         if(page = 1){

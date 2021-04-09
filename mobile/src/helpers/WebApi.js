@@ -36,9 +36,8 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(async (response) => {
-  console.log("response", response.headers)
-    return response.data, response.headers;
-  }, (error) => {
+  return response.data;
+}, (error) => {
     // console.log('Response error', error.response.data);
     return Promise.reject(error.response.data);
   }

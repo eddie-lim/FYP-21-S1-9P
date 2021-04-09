@@ -394,8 +394,8 @@ const ScreenCourseListing = (props) => {
         filter += "&filter[and]["+and_counter+"][or][3][tags][like][]="+trim(keyword.current)
         and_counter++;
       }
-      WebApi.listCourses(page, filter).then((res,headers)=>{
-        if(parseInt(headers["x-pagination-total-count"]) < parseInt(headers["x-pagination-per-page"])){
+      WebApi.listCourses(page, filter).then((res)=>{
+        if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];

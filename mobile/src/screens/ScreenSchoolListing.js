@@ -39,8 +39,8 @@ const ScreenSchoolListing = (props) => {
   // FLATLIST FUNCTIONS ---- START
   getList = (page = 1)=>{
     if(!refreshing){
-      WebApi.listUniversityPartners(page).then((res,headers)=>{
-        if(parseInt(headers["x-pagination-total-count"]) < parseInt(headers["x-pagination-per-page"])){
+      WebApi.listUniversityPartners(page).then((res)=>{
+        if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
