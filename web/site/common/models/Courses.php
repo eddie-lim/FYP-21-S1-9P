@@ -48,7 +48,7 @@ class Courses extends MyCustomActiveRecord
     {
         return [
             [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['mode_of_study', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'notes', 'status'], 'string'],
+            [['mode_of_study', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'notes', 'status', 'entry_qualification'], 'string'],
             [['name'], 'string', 'max' => 512],
             [['disciplines', 'sub_disciplines', 'academic_level'], 'string', 'max' => 128],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
@@ -73,6 +73,7 @@ class Courses extends MyCustomActiveRecord
             'programme_structure' => 'Programme Structure',
             'admission_criteria' => 'Admission Criteria',
             'fees' => 'Fees',
+            'entry_qualification' => 'Entry Qualification',
             'exemptions' => 'Exemptions',
             'profiles' => 'Profiles',
             'assessments_exams' => 'Assessments Exams',
@@ -113,6 +114,7 @@ class Courses extends MyCustomActiveRecord
             'introduction',
             'programme_structure',
             'admission_criteria',
+            'entry_qualification',
             'fees',
             'exemptions',
             'profiles',

@@ -19,7 +19,7 @@ class CoursesSearch extends Courses
     {
         return [
             [['id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'mode_of_study', 'disciplines', 'sub_disciplines', 'academic_level', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'tags', 'notes', 'status', 'school_id'], 'safe'],
+            [['name', 'mode_of_study', 'disciplines', 'sub_disciplines', 'academic_level', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'tags', 'notes', 'status', 'school_id', 'entry_qualification'], 'safe'],
         ];
     }
 
@@ -66,6 +66,7 @@ class CoursesSearch extends Courses
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'mode_of_study', $this->mode_of_study])
+            ->andFilterWhere(['like', 'entry_qualification', $this->entry_qualification])
             ->andFilterWhere(['like', 'disciplines', $this->disciplines])
             ->andFilterWhere(['like', 'sub_disciplines', $this->sub_disciplines])
             ->andFilterWhere(['like', 'academic_level', $this->academic_level])

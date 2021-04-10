@@ -66,6 +66,28 @@ use yii\web\JsExpression;
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'assessments_exams')->textarea(['rows' => 3]) ?>
                     </div>
+                    <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'entry_qualification')->widget(Select2::classname(),
+                            [
+                                // 'theme' => Select2::THEME_MATERIAL,
+                                // 'data' => $model->getCommonTags(),
+                                'showToggleAll' => false,
+                                'options' => [
+                                    'placeholder' => 'Select existing entry qualification or add your own ...',
+                                    // 'multiple' => true,
+                                ],
+                                'pluginOptions' => [
+                                    'tags' => true,
+                                    'tokenSeparators' => [ ',' ],
+                                    'maximumInputLength' => 15,
+                                    'allowClear' => true,
+                                    'createTag' => new JsExpression("function({ term, data }) {
+                                        return { id: term.toLowerCase(), text: term.toLowerCase() };
+                                    }")
+                                ],
+                            ]
+                        ); ?>
+                    </div>
                 </div>
                 <hr>
                 <div class="row">

@@ -50,11 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'exemptions:ntext',
                     'profiles:ntext',
                     'assessments_exams:ntext',
+                    'entry_qualification',
                     'tags:ntext',
                     'notes:ntext',
                     'status',
                     'created_at:datetime',
-                    // 'created_by',
                     [
                         'attribute' => 'created_by',
                         'format' => 'raw',
