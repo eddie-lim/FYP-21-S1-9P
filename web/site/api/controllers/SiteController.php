@@ -95,7 +95,7 @@ class SiteController extends \api\controllers\RestControllerBase
         $auth_code = SysOAuthAuthorizationCode::isValid($authorization_code);
         if (!$auth_code) {
             $str =  Utility::jsonifyError("authorization_code", "Authorization Code is invalid or has expired.");
-            throw new CustomHttpException($str, CustomHttpException::UNAUTHORIZED, CustomHttpException::INVALID_OR_EXPIRED_TOKEN);
+            throw new CustomHttpException($str, CustomHttpException::UNAUTHORIZED);
         }
 
         $user_id = Yii::$app->api->getUserIdFromAuthorizationCode($authorization_code);

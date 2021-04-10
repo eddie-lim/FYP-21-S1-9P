@@ -40,9 +40,10 @@ return [
                     }
                 } else {
                     if(is_array($response->data)){
-                            $data = $response->data[0];
-                    } else {
                         $data = json_decode($response->data['message']);
+                    } else {
+                        $data = "$response->data";
+                        // $data = json_decode($response->data['message']);
                     }
                 }
 
