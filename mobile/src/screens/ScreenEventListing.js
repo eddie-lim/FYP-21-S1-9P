@@ -7,7 +7,7 @@ import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
 import WebApi from '@helpers/WebApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Calendar } from 'react-native-calendars';
+import { CalendarList } from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker'
 import randomcolor from 'randomcolor';
@@ -325,12 +325,12 @@ const ScreenEventListing = (props) => {
       />
       <View style={styles.container}>
         <View style={[styles.calendarContainer]}>
-          <Calendar
+          <CalendarList
             ref={calendarRef}
             // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
             minDate={'2021-01-01'}
             // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-            maxDate={'2021-05-30'}
+            maxDate={'2021-06-30'}
             // Handler which gets executed on day press. Default = undefined
             onDayPress={(day) => {
               setSelectedDate(day.dateString)
@@ -383,7 +383,7 @@ const ScreenEventListing = (props) => {
             // Max amount of months allowed to scroll to the past. Default = 50
             pastScrollRange={3}
             // Max amount of months allowed to scroll to the future. Default = 50
-            futureScrollRange={3}
+            futureScrollRange={2}
             // Enable or disable scrolling of calendar list
             scrollEnabled={true}
             // Enable or disable vertical scroll indicator. Default = false
