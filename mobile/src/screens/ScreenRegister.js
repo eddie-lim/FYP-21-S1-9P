@@ -124,23 +124,21 @@ const ScreenRegister = (props) => {
           if (field == "firstname") {
             HelperFunctions.showToast(message)
             setFirstNameErrorMsg(message);
-          }
-          if (field == "lastname") {
+          } else if (field == "lastname") {
             HelperFunctions.showToast(message)
             setLastNameErrorMsg(message);
-          }
-          if (field == "email") {
+          } else if (field == "email") {
             HelperFunctions.showToast(message)
             setEmailErrorMsg(message);
-          }
-          if (field == "password") {
+          } else if (field == "password") {
             HelperFunctions.showToast(message)
             setPasswordErrorMsg(message);
-          }
-          if (field == "password_confirm") {
+          } else if (field == "password_confirm") {
             HelperFunctions.showToast(message)
             setPasswordConfirmErrorMsg(message);
-          } 
+          } else {
+            HelperFunctions.showToast(message)
+          }
         })
       }
       // var msg = JSON.parse(err.message);

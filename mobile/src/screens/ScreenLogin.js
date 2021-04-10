@@ -10,7 +10,7 @@ import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
-import { isArray } from 'lodash';
+import { forEach, isArray } from 'lodash';
 import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenLogin = (props) => {
@@ -103,7 +103,20 @@ const ScreenLogin = (props) => {
       toggleActivityIndicator(false);
       var error = err.data;
       if(isArray(error)){
-        HelperFunctions.showToast(error[0].message)
+        forEach(error, function(item){
+          console.log("item",item)
+          var field = item.field;
+          var message = item.message;
+          if (field == "email") {
+            HelperFunctions.showToast(message)
+            setEmailErrorMsg(message);
+          } else if (field == "password") {
+            HelperFunctions.showToast(message)
+            setPasswordErrorMsg(message);
+          } else {
+            HelperFunctions.showToast(message)
+          }
+        })
       } else {
         HelperFunctions.showToast(error)
       }
