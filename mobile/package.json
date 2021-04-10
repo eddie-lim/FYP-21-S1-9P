@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-community/checkbox": "^0.5.7",
     "@react-native-community/netinfo": "^5.9.10",
     "@react-native-mapbox-gl/maps": "^8.1.0",
     "@turf/turf": "^6.3.0",
