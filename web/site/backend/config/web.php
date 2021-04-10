@@ -27,6 +27,11 @@ $config = [
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class,
         ],
     ],
+    'modules' => [
+        'gridview' => [
+            'class' => 'kartik\grid\Module',
+        ]
+    ],
     'as globalAccess' => [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
