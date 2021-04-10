@@ -92,23 +92,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 [
                     'class' => \common\widgets\ActionColumn::class,
-                    'template' => '{login} {view} {update} {delete}',
+                    'template' => '{view} {update} {delete}',
+                    // 'template' => '{login} {view} {update} {delete}',
                     'headerOptions' => ['width' => '20px'],
-                    'buttons' => [
-                        'login' => function ($url) {
-                            return Html::a(
-                                FAS::icon('sign-in-alt', ['aria' => ['hidden' => true], 'class' => ['fa-fw']]),
-                                $url,
-                                [
-                                    'title' => Yii::t('backend', 'Login'),
-                                    'class' => ['btn', 'btn-xs', 'btn-secondary']
-                                ]
-                            );
-                        },
-                    ],
-                    'visibleButtons' => [
-                        'login' => Yii::$app->user->can('administrator')
-                    ]
+                    // 'buttons' => [
+                    //     'login' => function ($url) {
+                    //         return Html::a(
+                    //             FAS::icon('sign-in-alt', ['aria' => ['hidden' => true], 'class' => ['fa-fw']]),
+                    //             $url,
+                    //             [
+                    //                 'title' => Yii::t('backend', 'Login'),
+                    //                 'class' => ['btn', 'btn-xs', 'btn-secondary']
+                    //             ]
+                    //         );
+                    //     },
+                    // ],
+                    // 'visibleButtons' => [
+                    //     'login' => Yii::$app->user->can('administrator')
+                    // ]
 
                 ],
             ],
