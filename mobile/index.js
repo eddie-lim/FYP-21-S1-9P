@@ -24,7 +24,6 @@ const AppTheme = () => {
             <GlobalContext.Provider value={{ toggleActivityIndicator, renderActivityIndicator, showCustomDialog, renderCustomDialog, initSlidingPanel }}>
                 <PaperProvider theme={DefaultTheme}>
                     <StatusBar backgroundColor={StyleConstant.primaryColor} />
-                    <Text>V2</Text>
                     <App/>
                 </PaperProvider>
                 { renderSlidingPanel() }
