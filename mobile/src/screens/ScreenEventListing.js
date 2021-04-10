@@ -248,9 +248,9 @@ const ScreenEventListing = (props) => {
         }
         for (let index = 0; index < res.data.length; index++) {
           const element = res.data[index];
-          var start = new Date(element.start_at * 1000);
+          var start = new Date((element.start_at - (60*60*8)) * 1000);
           var start_date = start.getFullYear()+"-"+padStart(start.getMonth()+1,2,"0")+"-"+start.getDate();
-          var end = new Date(element.end_at * 1000);
+          var end = new Date((element.end_at - (60*60*8)) * 1000);
           var end_date = end.getFullYear()+"-"+padStart(end.getMonth()+1,2,"0")+"-"+end.getDate();
           var dates = markedDatesRef.current;
           var color = randomcolor();
