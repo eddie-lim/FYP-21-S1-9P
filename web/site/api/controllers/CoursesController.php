@@ -54,7 +54,7 @@ class CoursesController extends \api\controllers\RestControllerBase
     }
 
     public function actionFilterValues(){
-        $courses = Courses::find()->select(['mode_of_study', 'disciplines', 'school_id', 'academic_level', 'admission_criteria', 'sub_disciplines', "CONCAT('{\"label\":\"',university_partners.name,'\",','\"value\":\"',school_id,'\"}') AS universityParters"])->where(['courses.status'=>MyCustomActiveRecord::STATUS_ENABLED])->joinWith('school')->asArray()->all();
+        $courses = Courses::find()->select(['mode_of_study', 'disciplines', 'school_id', 'academic_level', 'admission_criteria', 'sub_disciplines', 'entry_qualification', "CONCAT('{\"label\":\"',university_partners.name,'\",','\"value\":\"',school_id,'\"}') AS universityParters"])->where(['courses.status'=>MyCustomActiveRecord::STATUS_ENABLED])->joinWith('school')->asArray()->all();
         $o = (object)[];
         $o->mode_of_study = array_values(array_unique(ArrayHelper::getColumn($courses, "mode_of_study")));
         $o->disciplines = array_values(array_unique(ArrayHelper::getColumn($courses, "disciplines")));
@@ -62,6 +62,7 @@ class CoursesController extends \api\controllers\RestControllerBase
         // $o->admission_criteria = array_values(array_unique(ArrayHelper::getColumn($courses, "admission_criteria")));
         $o->sub_disciplines = array_values(array_unique(ArrayHelper::getColumn($courses, "sub_disciplines")));
         $o->universityParters = array_values(array_unique(ArrayHelper::getColumn($courses, "universityParters")));
+        $o->entry_qualification = array_values(array_unique(ArrayHelper::getColumn($courses, "entry_qualification")));
         Yii::$app->api->sendSuccessResponse($o);
     }
     /*public function actionIndex(){
