@@ -10,7 +10,7 @@ export default useSlidingPanel = () => {
   init = (jsx, ref) => { 
     setContent(
       <SlidingUpPanel
-        snappingPoints={[(Dimensions.get('window').height) * 0.2]}
+        snappingPoints={[(Dimensions.get('window').height) * 0.35]}
         friction={0.75}
         backdropOpacity={0}
         showBackdrop={false}
