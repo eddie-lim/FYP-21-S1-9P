@@ -92,8 +92,8 @@ const ScreenEventListing = (props) => {
       initSlidingPanel(
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.panalContainer} onTouchStart={() => {
-          TypeOfEventsRef.current.close();
-          universityPartersRef.current.close();
+          // TypeOfEventsRef.current.close();
+          // universityPartersRef.current.close();
         }}>
           <View style={[styles.filterHeader]}>
             <Text style={[styles.filterHeaderText]}>Filters</Text>

@@ -9,7 +9,7 @@ import WebApi from '@helpers/WebApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { GlobalContext } from '@helpers/Settings';
-import { isArray, isEmpty, trim } from 'lodash';
+import { forEach, isArray, isEmpty, trim, upperFirst, words } from 'lodash';
 import { InputOutline } from 'react-native-input-outline';
 import { NavigationEvents } from 'react-navigation';
 import HelperFunctions from '@helpers/HelperFunctions';
@@ -45,6 +45,9 @@ const ScreenCourseListing = (props) => {
   const [academicLevel, setAcademicLevel] = useState([]);
   const academicLevelRef = useRef(null);
 
+  const [entryQualifications, setEntryQualifications] = useState([]);
+  const entryQualificationsRef = useRef(null);
+
   const [subDisciplines, setSubDisciplines] = useState([]);
   const subDisciplinesRef = useRef(null);
 
@@ -72,7 +75,7 @@ const ScreenCourseListing = (props) => {
         const element = modeOfStudyIcons[item];
         ModeOfStudyValues.push(item)
         ModeOfStudyItems.push({
-          label: item, // capitalise and remove underscore
+          label: upperFirst(words(item).join(" ")), // capitalise and remove underscore
           value: item,
           icon: () => <Icon name={element} size={18} color="#900" />,
         })
@@ -85,7 +88,7 @@ const ScreenCourseListing = (props) => {
         const item = res.data.disciplines[index];
         DisciplinesValues.push(item)
         DisciplinesItems.push({
-          label: item, // capitalise and remove underscore
+          label: upperFirst(words(item).join(" ")), // capitalise and remove underscore
           value: item,
           icon: () => <Icon name={"book-open-variant"} size={18} color="#900" />,
         })
@@ -99,7 +102,7 @@ const ScreenCourseListing = (props) => {
         var uni = JSON.parse(item);
         UniversityPartersValues.push(uni.value)
         UniversityPartersItems.push({
-          label: uni.label, // capitalise and remove underscore
+          label: upperFirst(words(uni.label).join(" ")), // capitalise and remove underscore
           value: uni.value,
           icon: () => <Icon name={"book-open-variant"} size={18} color="#900" />,
         })
@@ -112,21 +115,25 @@ const ScreenCourseListing = (props) => {
         const item = res.data.academic_level[index];
         AcademicLevelValues.push(item)
         AcademicLevelItems.push({
-          label: item, // capitalise and remove underscore
+          label: upperFirst(words(item).join(" ")), // capitalise and remove underscore
           value: item,
           icon: () => <Icon name={"school"} size={18} color="#900" />,
         })
       }
       setAcademicLevel(AcademicLevelValues)
 
-      // var EntryQualificationsItems = []; 
-      // for (const key in entryQualificationsIcons) {
-      //   EntryQualificationsItems.push({
-      //     label: key, // capitalise and remove underscore
-      //     value: key,
-      //     icon: () => <Icon name={"certificate"} size={18} color="#900" />,
-      //   })
-      // }
+      var EntryQualificationsItems = [];
+      var EntryQualificationsValues = []
+      for (let index = 0; index < res.data.entry_qualification.length; index++) {
+        const item = res.data.entry_qualification[index];
+        EntryQualificationsValues.push(item)
+        EntryQualificationsItems.push({
+          label: upperFirst(words(item).join(" ")), // capitalise and remove underscore
+          value: item,
+          icon: () => <Icon name={"book-open-page-variant"} size={18} color="#900" />,
+        })
+      }
+      setEntryQualifications(EntryQualificationsValues);
 
       var SubDisciplinesItems = [];
       var SubDisciplinesValues = []
@@ -134,7 +141,7 @@ const ScreenCourseListing = (props) => {
         const item = res.data.sub_disciplines[index];
         SubDisciplinesValues.push(item)
         SubDisciplinesItems.push({
-          label: item, // capitalise and remove underscore
+          label: upperFirst(words(item).join(" ")), // capitalise and remove underscore
           value: item,
           icon: () => <Icon name={"book-open-page-variant"} size={18} color="#900" />,
         })
@@ -144,12 +151,12 @@ const ScreenCourseListing = (props) => {
       initSlidingPanel(
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.panalContainer} onTouchStart={() => {
-          modeOfStudyRef.current.close();
-          disciplinesRef.current.close();
-          universityPartersRef.current.close();
-          academicLevelRef.current.close();
+          // modeOfStudyRef.current.close();
+          // disciplinesRef.current.close();
+          // universityPartersRef.current.close();
+          // academicLevelRef.current.close();
           // entryQualificationsRef.current.close();
-          subDisciplinesRef.current.close();
+          // subDisciplinesRef.current.close();
         }}>
           <View style={[styles.filterHeader]}>
             <Text style={[styles.filterHeaderText]}>Filters</Text>
@@ -177,6 +184,7 @@ const ScreenCourseListing = (props) => {
           <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
             <Text>Mode of Study</Text>
             <DropDownPicker
+              zIndex={9000}
               controller={instance => modeOfStudyRef.current = instance}
               placeholder="Mode of Study"
               items={ModeOfStudyItems}
@@ -186,14 +194,15 @@ const ScreenCourseListing = (props) => {
               containerStyle={{height: 40}}
               style={[styles.DropDownPickerStyle]}
               itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle, (Platform.OS !== 'android' && {zIndex: 9000})]}
               onChangeItem={item => setModeOfStudy(item)}
+              dropDownMaxHeight={100}
               onOpen={() => {
                 // modeOfStudyRef.current.close();
                 disciplinesRef.current.close();
                 universityPartersRef.current.close();
                 academicLevelRef.current.close();
-                // entryQualificationsRef.current.close();
+                entryQualificationsRef.current.close();
                 subDisciplinesRef.current.close();
               }}
             />
@@ -202,6 +211,7 @@ const ScreenCourseListing = (props) => {
           <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 8000})]}>
             <Text>Disciplines</Text>
             <DropDownPicker
+              zIndex={8000}
               controller={instance => disciplinesRef.current = instance}
               placeholder="Disciplines"
               items={DisciplinesItems}
@@ -211,14 +221,15 @@ const ScreenCourseListing = (props) => {
               containerStyle={{height: 40}}
               style={[styles.DropDownPickerStyle]}
               itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle, (Platform.OS !== 'android' && {zIndex: 8000})]}
               onChangeItem={item => setDisciplines(item)}
+              dropDownMaxHeight={100}
               onOpen={() => {
                 modeOfStudyRef.current.close();
                 // disciplinesRef.current.close();
                 universityPartersRef.current.close();
                 academicLevelRef.current.close();
-                // entryQualificationsRef.current.close();
+                entryQualificationsRef.current.close();
                 subDisciplinesRef.current.close();
               }}
             />
@@ -227,6 +238,7 @@ const ScreenCourseListing = (props) => {
           <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 7000})]}>
             <Text>University Parters</Text>
             <DropDownPicker
+              zIndex={7000}
               controller={instance => universityPartersRef.current = instance}
               placeholder="University Parters"
               items={UniversityPartersItems}
@@ -236,14 +248,15 @@ const ScreenCourseListing = (props) => {
               containerStyle={{height: 40}}
               style={[styles.DropDownPickerStyle]}
               itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle, (Platform.OS !== 'android' && {zIndex: 7000})]}
               onChangeItem={item => setUniversityParters(item)}
+              dropDownMaxHeight={100}
               onOpen={() => {
                 modeOfStudyRef.current.close();
                 disciplinesRef.current.close();
                 // universityPartersRef.current.close();
                 academicLevelRef.current.close();
-                // entryQualificationsRef.current.close();
+                entryQualificationsRef.current.close();
                 subDisciplinesRef.current.close();
               }}
             />
@@ -252,6 +265,7 @@ const ScreenCourseListing = (props) => {
           <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 6000})]}>
             <Text>Academic Level</Text>
             <DropDownPicker
+              zIndex={6000}
               controller={instance => academicLevelRef.current = instance}
               placeholder="Academic Level"
               items={AcademicLevelItems}
@@ -261,47 +275,51 @@ const ScreenCourseListing = (props) => {
               containerStyle={{height: 40}}
               style={[styles.DropDownPickerStyle]}
               itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle, (Platform.OS !== 'android' && {zIndex: 6000})]}
               onChangeItem={item => setAcademicLevel(item)}
+              dropDownMaxHeight={100}
               onOpen={() => {
                 modeOfStudyRef.current.close();
                 disciplinesRef.current.close();
                 universityPartersRef.current.close();
                 // academicLevelRef.current.close();
+                entryQualificationsRef.current.close();
+                subDisciplinesRef.current.close();
+              }}
+            />
+          </View>
+          
+          <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 5000}) ]}>
+            <Text>Entry Qualifications</Text>
+            <DropDownPicker
+              zIndex={5000}
+              controller={instance => entryQualificationsRef.current = instance}
+              placeholder="Entry Qualifications"
+              items={EntryQualificationsItems}
+              defaultValue={EntryQualificationsValues}
+              multiple={true}
+              multipleText="%d items have been selected."
+              containerStyle={{height: 40}}
+              style={[styles.DropDownPickerStyle]}
+              itemStyle={[styles.DropDownPickerItemStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle, (Platform.OS !== 'android' && {zIndex: 5000})]}
+              onChangeItem={item => setEntryQualifications(item)}
+              dropDownMaxHeight={100}
+              onOpen={() => {
+                modeOfStudyRef.current.close();
+                disciplinesRef.current.close();
+                universityPartersRef.current.close();
+                academicLevelRef.current.close();
                 // entryQualificationsRef.current.close();
                 subDisciplinesRef.current.close();
               }}
             />
           </View>
           
-          {/* <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 5000})]}>
-            <Text>Entry Qualifications</Text>
-            <DropDownPicker
-              controller={instance => entryQualificationsRef.current = instance}
-              placeholder="Entry Qualifications"
-              items={EntryQualificationsItems}
-              defaultValue={Object.keys(entryQualificationsIcons)}
-              multiple={true}
-              multipleText="%d items have been selected."
-              containerStyle={{height: 40}}
-              style={[styles.DropDownPickerStyle]}
-              itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-              onChangeItem={item => setEntryQualifications(item)}
-              onOpen={() => {
-                modeOfStudyRef.current.close();
-                disciplinesRef.current.close();
-                universityPartersRef.current.close();
-                academicLevelRef.current.close();
-                entryQualificationsRef.current.close();
-                subDisciplinesRef.current.close();
-              }}
-            />
-          </View> */}
-          
           <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 4000})]}>
             <Text>Sub Disciplines</Text>
             <DropDownPicker
+              zIndex={4000}
               controller={instance => subDisciplinesRef.current = instance}
               placeholder="Sub Disciplines"
               items={SubDisciplinesItems}
@@ -311,15 +329,15 @@ const ScreenCourseListing = (props) => {
               containerStyle={{height: 40}}
               style={[styles.DropDownPickerStyle]}
               itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+              dropDownStyle={[styles.DropDownPickerDropDownStyle, (Platform.OS !== 'android' && {zIndex: 4000})]}
               onChangeItem={item => setSubDisciplines(item)}
-              dropDownMaxHeight={75}
+              dropDownMaxHeight={100}
               onOpen={() => {
                 modeOfStudyRef.current.close();
                 disciplinesRef.current.close();
                 universityPartersRef.current.close();
                 academicLevelRef.current.close();
-                // entryQualificationsRef.current.close();
+                entryQualificationsRef.current.close();
                 // subDisciplinesRef.current.close();
               }}
             />
@@ -327,6 +345,7 @@ const ScreenCourseListing = (props) => {
         </View>
       </ScrollView>, slidingUpPanelRef)
     }).catch((err)=>{
+      console.log(err)
       var error = err.data;
       if(isArray(error)){
         HelperFunctions.showToast(error[0].message)
@@ -342,7 +361,7 @@ const ScreenCourseListing = (props) => {
     disciplinesRef.current.reset();
     universityPartersRef.current.reset();
     academicLevelRef.current.reset();
-    // entryQualificationsRef.current.reset();
+    entryQualificationsRef.current.reset();
     subDisciplinesRef.current.reset();
     refreshList();
   }
@@ -381,8 +400,14 @@ const ScreenCourseListing = (props) => {
       if(academicLevel.length > 0){
         and_counter++;
       }
+      entryQualifications.forEach(element => {
+        filter += "&filter[and]["+and_counter+"][academic_level][]="+element
+      });
+      if(entryQualifications.length > 0){
+        and_counter++;
+      }
       subDisciplines.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][sub_disciplines][]="+element
+        filter += "&filter[and]["+and_counter+"][entry_qualification][]="+element
       });
       if(subDisciplines.length > 0){
         and_counter++;
