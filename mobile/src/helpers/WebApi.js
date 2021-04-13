@@ -91,6 +91,7 @@ const WebApi = {
 
   // LISTING
   listCourses: async(page, filter) => {
+    // console.log('/courses?sort=name&page='+page+filter)
     return callApi(GET_METHOD, '/courses?sort=name&page='+page+filter);
   },
   listEvents: async(page, filter) => {

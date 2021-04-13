@@ -36,14 +36,20 @@ const ScreenEventListing = (props) => {
   const keyword = useRef("");
   const [keywordErrorMsg, setKeywordErrorMsg ] = useState("");
 
-  const [filterStartDate , setFilterStartDate] = useState(new Date("2021-03-01"));
-  const [filterEndDate, setFilterEndDate] = useState(new Date("2021-06-30"));
+  const filterStartDateDefault = new Date("2021-01-01");
+  const filterEndDateDefault = new Date("2021-06-30");
+  const [filterStartDate , setFilterStartDate] = useState(filterStartDateDefault);
+  const [filterEndDate, setFilterEndDate] = useState(filterEndDateDefault);
 
   const [TypeOfEvents, setTypeOfEvents] = useState([]);
   const TypeOfEventsRef = useRef(null);
+  const TypeOfEventsDefault = useRef([]);
+  const TypeOfEventsItemsDefault = useRef([]);
 
   const [universityParters, setUniversityParters] = useState([]);
-  const universityPartersRef = useRef(null);
+  const universityPartnersRef = useRef(null);
+  const universityPartnersDefault = useRef([]);
+  const universityPartnersItemsDefault = useRef([]);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const markedDatesRef = useRef({});
@@ -57,7 +63,12 @@ const ScreenEventListing = (props) => {
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }});
-    return function cleanup() { } 
+    return function cleanup() {
+      if(slidingUpPanelRef.current != null){
+        slidingUpPanelRef.current.hide();
+        initSlidingPanel(<></>, null)
+      }
+    } 
   }, []);
 
   renderFilterFields = () =>{
@@ -74,7 +85,9 @@ const ScreenEventListing = (props) => {
         })
       }
       setTypeOfEvents(TypeOfEventsValues)
-      
+      TypeOfEventsDefault.current = TypeOfEventsValues;
+      TypeOfEventsItemsDefault.current = TypeOfEventsItems;
+
       var UniversityPartersItems = [];
       var UniversityPartersValues = []
       for (let index = 0; index < res.data.universityParters.length; index++) {
@@ -88,103 +101,106 @@ const ScreenEventListing = (props) => {
         })
       }
       setUniversityParters(UniversityPartersValues)
+      universityPartnersDefault.current = UniversityPartersValues;
+      universityPartnersItemsDefault.current = UniversityPartersItems;
 
-      initSlidingPanel(
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View style={styles.panalContainer} onTouchStart={() => {
-          // TypeOfEventsRef.current.close();
-          // universityPartersRef.current.close();
-        }}>
-          <View style={[styles.filterHeader]}>
-            <Text style={[styles.filterHeaderText]}>Filters</Text>
-            <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
-              <Icon name={'refresh'} color={'white'} size={28} />
-            </Pressable>
-            <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
-              <Icon name={'check-circle-outline'} color={'white'} size={28} />
-            </Pressable>
-          </View>
-          
-          <View style={[styles.filterFieldContainer]}>
-            <InputOutline
-              ref={keywordRef}
-              onChangeText={txt => keyword.current = txt}
-              error={keywordErrorMsg} // wont take effect until a message is passed
-              placeholder={"Keyword Search"}
-              trailingIcon={()=>{
-                return(
-                  <Icon name={'magnify'} color={'white'} size={30} />
-                )
-              }}
-            />
-          </View>
-
-          <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
-            <Text>Types of Events</Text>
-            <DropDownPicker
-              controller={instance => TypeOfEventsRef.current = instance}
-              placeholder="Types of Events"
-              items={TypeOfEventsItems}
-              defaultValue={TypeOfEventsValues}
-              multiple={true}
-              multipleText="%d items have been selected."
-              containerStyle={{height: 40}}
-              style={[styles.DropDownPickerStyle]}
-              itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-              onChangeItem={item => setTypeOfEvents(item)}
-              onOpen={() => {
-                // TypeOfEventsRef.current.close();
-                universityPartersRef.current.close();
-              }}
-            />
-          </View>
-          
-          <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 8000})]}>
-            <Text>University Parters</Text>
-            <DropDownPicker
-              controller={instance => universityPartersRef.current = instance}
-              placeholder="University Parters"
-              items={UniversityPartersItems}
-              defaultValue={UniversityPartersValues}
-              multiple={true}
-              multipleText="%d items have been selected."
-              containerStyle={{height: 40}}
-              style={[styles.DropDownPickerStyle]}
-              itemStyle={[styles.DropDownPickerItemStyle]}
-              dropDownStyle={[styles.DropDownPickerDropDownStyle]}
-              onChangeItem={item => setUniversityParters(item)}
-              onOpen={() => {
-                TypeOfEventsRef.current.close();
-                // universityPartersRef.current.close();
-              }}
-            />
-          </View>
-
-          <View style={[styles.filterFieldContainer]}>
-            <Text>Start Date</Text>
-            <DatePicker
-              date={filterStartDate}
-              onDateChange={setFilterStartDate}
-              mode={"date"}
-              maximumDate={new Date("2021-06-30")}
-              minimumDate={new Date("2021-03-01")}
-            />
-          </View>
-
-          <View style={[styles.filterFieldContainer]}>
-            <Text>End Date</Text>
-            <DatePicker
-              date={filterEndDate}
-              onDateChange={setFilterEndDate}
-              mode={"date"}
-              maximumDate={new Date("2021-06-30")}
-              minimumDate={new Date("2021-03-01")}
-            />
-          </View>
-        
+      initSlidingPanel(<>
+        <View style={[styles.filterHeader]}>
+          <Text style={[styles.filterHeaderText]}>Filters</Text>
+          <Pressable style={[styles.filterResetButton]} onPress={() => handleReset()}>
+            <Icon name={'refresh'} color={'white'} size={28} />
+          </Pressable>
+          <Pressable style={[styles.filterDoneButton]} onPress={() => handleFilter()}>
+            <Icon name={'check-circle-outline'} color={'white'} size={28} />
+          </Pressable>
         </View>
-      </ScrollView>, slidingUpPanelRef)
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <View style={styles.panalContainer} onTouchStart={() => {
+            // TypeOfEventsRef.current.close();
+            // universityPartnersRef.current.close();
+          }}>
+            
+            <View style={[styles.filterFieldContainer]}>
+              <InputOutline
+                ref={keywordRef}
+                onChangeText={txt => keyword.current = txt}
+                error={keywordErrorMsg} // wont take effect until a message is passed
+                placeholder={"Keyword Search"}
+                trailingIcon={()=>{
+                  return(
+                    <Icon name={'magnify'} color={'white'} size={30} />
+                  )
+                }}
+              />
+            </View>
+
+            <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 9000})]}>
+              <Text>Types of Events</Text>
+              <DropDownPicker
+                controller={instance => TypeOfEventsRef.current = instance}
+                placeholder="Types of Events"
+                items={TypeOfEventsItems}
+                defaultValue={TypeOfEventsValues}
+                multiple={true}
+                multipleText="%d items have been selected."
+                containerStyle={{height: 40}}
+                style={[styles.DropDownPickerStyle]}
+                itemStyle={[styles.DropDownPickerItemStyle]}
+                dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+                onChangeItem={item => setTypeOfEvents(item)}
+                onOpen={() => {
+                  // TypeOfEventsRef.current.close();
+                  universityPartnersRef.current.close();
+                }}
+              />
+            </View>
+            
+            <View style={[styles.filterFieldContainer, (Platform.OS !== 'android' && {zIndex: 8000})]}>
+              <Text>University Parters</Text>
+              <DropDownPicker
+                controller={instance => universityPartnersRef.current = instance}
+                placeholder="University Parters"
+                items={UniversityPartersItems}
+                defaultValue={UniversityPartersValues}
+                multiple={true}
+                multipleText="%d items have been selected."
+                containerStyle={{height: 40}}
+                style={[styles.DropDownPickerStyle]}
+                itemStyle={[styles.DropDownPickerItemStyle]}
+                dropDownStyle={[styles.DropDownPickerDropDownStyle]}
+                onChangeItem={item => setUniversityParters(item)}
+                onOpen={() => {
+                  TypeOfEventsRef.current.close();
+                  // universityPartnersRef.current.close();
+                }}
+              />
+            </View>
+
+            <View style={[styles.filterFieldContainer]}>
+              <Text>Start Date</Text>
+              <DatePicker
+                date={filterStartDate}
+                onDateChange={setFilterStartDate}
+                mode={"date"}
+                maximumDate={new Date("2021-06-30")}
+                minimumDate={new Date("2021-01-01")}
+              />
+            </View>
+
+            <View style={[styles.filterFieldContainer]}>
+              <Text>End Date</Text>
+              <DatePicker
+                date={filterEndDate}
+                onDateChange={setFilterEndDate}
+                mode={"date"}
+                maximumDate={new Date("2021-06-30")}
+                minimumDate={new Date("2021-01-01")}
+              />
+            </View>
+          
+          </View>
+        </ScrollView>
+      </>, slidingUpPanelRef)
     }).catch((err)=>{
       var error = err.data;
       if(isArray(error)){
@@ -197,8 +213,16 @@ const ScreenEventListing = (props) => {
   }
 
   handleReset = () =>{
-    TypeOfEventsRef.current.reset();
-    universityPartersRef.current.reset();
+    console.log("TypeOfEventsDefault.current", TypeOfEventsDefault.current)
+    console.log("universityPartnersDefault.current", universityPartnersDefault.current)
+    setTypeOfEvents(TypeOfEventsDefault.current)
+    setUniversityParters(universityPartnersDefault.current)
+    TypeOfEventsRef.current.selectItem(TypeOfEventsDefault.current);
+    universityPartnersRef.current.selectItem(universityPartnersDefault.current);
+    console.log("filterStartDateDefault", filterStartDateDefault)
+    console.log("filterEndDateDefault", filterEndDateDefault)
+    setFilterStartDate(filterStartDateDefault);
+    setFilterEndDate(filterEndDateDefault);
     refreshList();
   }
 
@@ -320,6 +344,7 @@ const ScreenEventListing = (props) => {
         onWillBlur={()=>{
           if(slidingUpPanelRef.current != null){
             slidingUpPanelRef.current.hide();
+            initSlidingPanel(<></>, null)
           }
         }}
       />
@@ -411,7 +436,7 @@ const styles = StyleSheet.create({
   sliderDoneButton: {position: 'absolute', right: 10, justifyContent: 'center'},
   calendarContainer: { width:"100%",  marginTop: 10, marginBottom: 10 },
   container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
-  panalContainer:{borderLeftColor:"black", borderRightColor:"black", borderTopWidth:1, borderLeftWidth:1, borderRightWidth:1, borderRadius:15, flex: 1, backgroundColor: 'white', alignItems: 'center', },
+  panalContainer:{flex: 1, backgroundColor: 'white', alignItems: 'center', },
   DropDownPickerStyle:{backgroundColor: '#fafafa'},
   DropDownPickerItemStyle:{justifyContent: 'flex-start'},
   DropDownPickerDropDownStyle:{backgroundColor: '#fafafa'},

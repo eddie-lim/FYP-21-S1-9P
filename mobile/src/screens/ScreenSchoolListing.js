@@ -9,7 +9,7 @@ import WebApi from '@helpers/WebApi';
 import Constants from '@helpers/Constants';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { isArray, toLower } from 'lodash';
+import { isArray, toLower, upperCase, upperFirst } from 'lodash';
 import HelperFunctions from '@helpers/HelperFunctions';
 
 const ScreenSchoolListing = (props) => {
@@ -26,6 +26,13 @@ const ScreenSchoolListing = (props) => {
     "australia" : "globe-asia",
     "singapore" : "globe-asia",
     "us" : "globe-americas",
+  }
+  const continentLabel = {
+    "europe" : "Europe",
+    "uk" : "United Kingdom",
+    "australia" : "Australia",
+    "singapore" : "Singapore",
+    "us" : "United States of Americas",
   }
 
   useEffect(() => {
@@ -66,7 +73,7 @@ const ScreenSchoolListing = (props) => {
               <FontAwesome5 style={{marginHorizontal: 10}} name={continentIcon[toLower(item.continent)]} size={28} color={StyleConstant.primaryColor}/>
               <View style={styles.midContent}>
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.name}</Text>
-                <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>{item.continent}</Text>
+                <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>{continentLabel[item.continent]}</Text>
               </View>
             </View>
           </View>

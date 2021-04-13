@@ -63,7 +63,12 @@ const ScreenCourseListing = (props) => {
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }}, goBack);
-    return function cleanup() { } 
+    return function cleanup() { 
+      if(slidingUpPanelRef.current != null){
+        slidingUpPanelRef.current.hide();
+        initSlidingPanel(<></>, null)
+      }
+    } 
   }, []);
 
   renderFilterFields = () =>{
@@ -401,13 +406,15 @@ const ScreenCourseListing = (props) => {
         and_counter++;
       }
       entryQualifications.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][academic_level][]="+element
+        if(element != null && element != 'null'){
+          filter += "&filter[and]["+and_counter+"][entry_qualification][]="+element          
+        }
       });
       if(entryQualifications.length > 0){
         and_counter++;
       }
       subDisciplines.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][entry_qualification][]="+element
+        filter += "&filter[and]["+and_counter+"][sub_disciplines][]="+element
       });
       if(subDisciplines.length > 0){
         and_counter++;
@@ -467,6 +474,7 @@ const ScreenCourseListing = (props) => {
         onWillBlur={()=>{
           if(slidingUpPanelRef.current != null){
             slidingUpPanelRef.current.hide();
+            initSlidingPanel(<></>, null)
           }
         }}
       />
