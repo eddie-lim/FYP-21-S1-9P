@@ -15,6 +15,7 @@ class EventsRegistrationSearch extends EventsRegistration
     /**
      * @inheritdoc
      */
+    private $event_id_filter;
     public function rules()
     {
         return [
@@ -32,6 +33,10 @@ class EventsRegistrationSearch extends EventsRegistration
         return Model::scenarios();
     }
 
+    public function setEventId($id) {
+        $this->event_id_filter = $id;
+    }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -42,6 +47,10 @@ class EventsRegistrationSearch extends EventsRegistration
     public function search($params)
     {
         $query = EventsRegistration::find();
+
+        if($this->event_id_filter) {
+            $query->andWhere(['event_id' => $this->event_id_filter]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -40,7 +40,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'id',
                     'options' => ['style' => 'width: 5%'],
                 ],
-                'username',
+                // 'username',
+                [
+                    'label' => 'Name',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $html = $model->publicIdentity;
+                        return $html;
+                    },
+                    'headerOptions' => ['width' => '150px'],
+                ],
                 'email:email',
                 [
                     'label' => 'Role',
@@ -75,7 +84,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'login_at',
-                    'format' => 'datetime',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $html = $model->login_at > 1500000 ? Yii::$app->formatter->asDateTime($model->login_at) : "<i class='text-muted'>No login record</i>";
+                        return $html;
+                    },
                     'filter' => DatePicker::widget([
                         'model' => $searchModel,
                         'attribute' => 'login_at',

@@ -39,7 +39,9 @@ class Faq extends MyCustomActiveRecord
         return [
             [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['question', 'answer', 'notes', 'status'], 'string'],
+            [['question', 'answer'], 'required'],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
+            ['school_id', 'default', 'value'=>Yii::$app->user->identity->userProfile->school_id],
             ['tags', 'safe'],
         ];
     }

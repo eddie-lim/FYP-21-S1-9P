@@ -27,13 +27,30 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'username',
-                    'auth_key',
+                    // 'username',
+                    // 'auth_key',
+                    [
+                        'label' => 'Name',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $html = $model->publicIdentity;
+                            return $html;
+                        },
+                        'headerOptions' => ['width' => '150px'],
+                    ],
                     'email:email',
                     'status',
                     'created_at:datetime',
                     'updated_at:datetime',
-                    'login_at:datetime',
+                    // 'login_at:datetime',
+                    [
+                        'attribute' => 'login_at',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $html = $model->login_at > 1500000 ? Yii::$app->formatter->asDateTime($model->login_at) : "<i class='text-muted'>No login record</i>";
+                            return $html;
+                        },
+                    ],
                 ],
             ]) ?>
         </div>

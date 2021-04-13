@@ -52,6 +52,7 @@ class EventsController extends Controller
     public function actionView($id)
     {
         $searchModel = new EventsRegistrationSearch();
+        $searchModel->setEventId($id);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
         return $this->render('view', [

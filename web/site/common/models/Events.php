@@ -43,10 +43,12 @@ class Events extends MyCustomActiveRecord
     {
         return [
             [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['description', 'session', 'venue', 'type'], 'required'],
             [['description', 'notes', 'status', 'type'], 'string'],
             [['session', 'venue'], 'string', 'max' => 128],
             [['name'], 'string', 'max' => 256],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
+            ['school_id', 'default', 'value'=>Yii::$app->user->identity->userProfile->school_id],
             [['tags', 'start_at', 'end_at'], 'safe'],
         ];
     }

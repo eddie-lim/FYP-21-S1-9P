@@ -23,14 +23,16 @@ use yii\web\JsExpression;
                 <?php echo $form->errorSummary($model); ?>
 
                 <div class="row">
-                    <div class="col-lg-4 col-xs-12">
-                        <?php echo $form->field($model, 'school_id')->widget(Select2::classname(), [
-                           'data' => ArrayHelper::map(UniversityPartners::find()->where(['status'=>MyCustomActiveRecord::STATUS_ENABLED])->all(), 'id', 'name'),
-                            'options' => ['placeholder' => 'Select University Partner ...'],
-                            'pluginOptions' => [
-                                'allowClear' => true ],
-                        ]) ?>
-                    </div>
+                    <?php if(empty(Yii::$app->user->identity->userProfile->school_id)): ?>
+                        <div class="col-lg-4 col-xs-12">
+                            <?php echo $form->field($model, 'school_id')->widget(Select2::classname(), [
+                               'data' => ArrayHelper::map(UniversityPartners::find()->where(['status'=>MyCustomActiveRecord::STATUS_ENABLED])->all(), 'id', 'name'),
+                                'options' => ['placeholder' => 'Select University Partner ...'],
+                                'pluginOptions' => [
+                                    'allowClear' => true ],
+                            ]) ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'type')->widget(Select2::classname(),
                             [

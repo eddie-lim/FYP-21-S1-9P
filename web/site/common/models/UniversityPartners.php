@@ -40,11 +40,14 @@ class UniversityPartners extends MyCustomActiveRecord
     {
         return [
             [['description', 'highlights', 'certifications', 'notes', 'status'], 'string'],
+            [['description', 'highlights', 'certifications', 'name', 'continent'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['continent'], 'string', 'max' => 32],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
             ['tags', 'safe'],
+            ['name', 'filter', 'filter' => 'trim'],
+            ['name', 'unique', 'targetClass' => SELF::class],
         ];
     }
 
