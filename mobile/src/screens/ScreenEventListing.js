@@ -11,7 +11,7 @@ import { CalendarList } from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DatePicker from 'react-native-date-picker'
 import randomcolor from 'randomcolor';
-import { isArray, padStart } from 'lodash';
+import { isArray, isEqual, padStart, upperFirst, words } from 'lodash';
 import { GlobalContext } from '@helpers/Settings';
 import { isEmpty, trim } from 'lodash';
 import { InputOutline } from 'react-native-input-outline';
@@ -79,7 +79,7 @@ const ScreenEventListing = (props) => {
         const item = res.data.type[index];
         TypeOfEventsValues.push(item)
         TypeOfEventsItems.push({
-          label: item, // capitalise and remove underscore
+          label: upperFirst(words(item).join(" ")) , // capitalise and remove underscore
           value: item,
           icon: () => <Icon name={"school"} size={18} color="#900" />,
         })
@@ -95,7 +95,7 @@ const ScreenEventListing = (props) => {
         var uni = JSON.parse(item);
         UniversityPartersValues.push(uni.value)
         UniversityPartersItems.push({
-          label: uni.label, // capitalise and remove underscore
+          label: upperFirst(words(uni.label).join(" ")), // capitalise and remove underscore
           value: uni.value,
           icon: () => <Icon name={"book-open-variant"} size={18} color="#900" />,
         })
@@ -213,12 +213,18 @@ const ScreenEventListing = (props) => {
   }
 
   handleReset = () =>{
-    console.log("TypeOfEventsDefault.current", TypeOfEventsDefault.current)
-    console.log("universityPartnersDefault.current", universityPartnersDefault.current)
-    setTypeOfEvents(TypeOfEventsDefault.current)
-    setUniversityParters(universityPartnersDefault.current)
-    TypeOfEventsRef.current.selectItem(TypeOfEventsDefault.current);
-    universityPartnersRef.current.selectItem(universityPartnersDefault.current);
+    if(!isEqual(TypeOfEvents, TypeOfEventsDefault.current)){
+      console.log("TypeOfEvents", TypeOfEvents)
+      console.log("TypeOfEventsDefault.current", TypeOfEventsDefault.current)
+      TypeOfEventsRef.current.selectItem(TypeOfEventsDefault.current);
+      setTypeOfEvents(TypeOfEventsDefault.current)
+    }
+    if(!isEqual(universityParters, universityPartnersDefault.current)){
+      console.log("universityParters", universityParters)
+      console.log("universityPartnersDefault.current", universityPartnersDefault.current)
+      universityPartnersRef.current.selectItem(universityPartnersDefault.current);
+      setUniversityParters(universityPartnersDefault.current)
+    }
     console.log("filterStartDateDefault", filterStartDateDefault)
     console.log("filterEndDateDefault", filterEndDateDefault)
     setFilterStartDate(filterStartDateDefault);

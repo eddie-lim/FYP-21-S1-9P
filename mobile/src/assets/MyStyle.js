@@ -73,7 +73,7 @@ const HeaderStyleWithRight = {
 };
 
 const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
-  const title = "V0.0.4\nBuilt @ 13th Apr 2021";
+  const title = "V0.0.5\nBuilt @ 15th Apr 2021";
   // const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
   // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
   // const logged_in = false;
