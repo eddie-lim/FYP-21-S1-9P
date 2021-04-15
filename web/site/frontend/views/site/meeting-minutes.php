@@ -10,10 +10,16 @@ $this->title = Yii::$app->name;
         <div class="tab-pane fade show active" id="minutes" role="tabpanel" aria-labelledby="minutes-tab">
 			<ul class="nav nav-pills flex-column col-2 d-inline-block text-center" style="vertical-align:top;" id="myTab" role="tablist">
 				<!-- <li class="nav-item">
-					<a class="nav-link active" id="meeting13-tab" data-toggle="tab" href="#meeting13" role="tab" aria-controls="meeting13" aria-selected="false">Meeting 13</a>
+					<a class="nav-link active" id="meeting15-tab" data-toggle="tab" href="#meeting15" role="tab" aria-controls="meeting15" aria-selected="false">Meeting 15</a>
 				</li> -->
 				<li class="nav-item">
-					<a class="nav-link active" id="meeting12-tab" data-toggle="tab" href="#meeting12" role="tab" aria-controls="meeting12" aria-selected="false">Meeting 12</a>
+					<a class="nav-link active" id="meeting14-tab" data-toggle="tab" href="#meeting14" role="tab" aria-controls="meeting14" aria-selected="false">Meeting 14</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="meeting13-tab" data-toggle="tab" href="#meeting13" role="tab" aria-controls="meeting13" aria-selected="false">Meeting 13</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="meeting12-tab" data-toggle="tab" href="#meeting12" role="tab" aria-controls="meeting12" aria-selected="false">Meeting 12</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="meeting11-tab" data-toggle="tab" href="#meeting11" role="tab" aria-controls="meeting11" aria-selected="false">Meeting 11</a>
@@ -50,10 +56,16 @@ $this->title = Yii::$app->name;
 				</li>
 			</ul>
 			<div class="tab-content col-9 d-inline-block" id="myTabContent">
-				<!-- <div class="tab-pane fade show active" id="meeting13" role="tabpanel" aria-labelledby="meeting13-tab">
-				    <?php // echo $this->render('meetings/meeting13.php') ?>
+				<!-- <div class="tab-pane fade show active" id="meeting15" role="tabpanel" aria-labelledby="meeting15-tab">
+				    <?php // echo $this->render('meetings/meeting15.php') ?>
 				</div> -->
-				<div class="tab-pane fade show active" id="meeting12" role="tabpanel" aria-labelledby="meeting12-tab">
+				<div class="tab-pane fade show active" id="meeting14" role="tabpanel" aria-labelledby="meeting14-tab">
+				    <?php echo $this->render('meetings/meeting14.php') ?>
+				</div>
+				<div class="tab-pane fade" id="meeting13" role="tabpanel" aria-labelledby="meeting13-tab">
+				    <?php echo $this->render('meetings/meeting13.php') ?>
+				</div>
+				<div class="tab-pane fade" id="meeting12" role="tabpanel" aria-labelledby="meeting12-tab">
 				    <?php echo $this->render('meetings/meeting12.php') ?>
 				</div>
 				<div class="tab-pane fade" id="meeting11" role="tabpanel" aria-labelledby="meeting11-tab">
