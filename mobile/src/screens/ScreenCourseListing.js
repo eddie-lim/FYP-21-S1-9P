@@ -9,7 +9,7 @@ import WebApi from '@helpers/WebApi';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { GlobalContext } from '@helpers/Settings';
-import { forEach, isArray, isEmpty, trim, upperFirst, words } from 'lodash';
+import { forEach, isArray, isEmpty, isEqual, trim, upperFirst, words } from 'lodash';
 import { InputOutline } from 'react-native-input-outline';
 import { NavigationEvents } from 'react-navigation';
 import HelperFunctions from '@helpers/HelperFunctions';
@@ -35,21 +35,27 @@ const ScreenCourseListing = (props) => {
   const modeOfStudyIcons = {};
   const [modeOfStudy, setModeOfStudy] = useState([]);
   const modeOfStudyRef = useRef(null);
+  const modeOfStudyDefault = useRef([]);
 
   const [disciplines, setDisciplines] = useState([]);
   const disciplinesRef = useRef(null);
+  const disciplinesDefault = useRef([]);
 
   const [universityParters, setUniversityParters] = useState([]);
   const universityPartersRef = useRef(null);
+  const universityPartnersDefault = useRef([]);
 
   const [academicLevel, setAcademicLevel] = useState([]);
   const academicLevelRef = useRef(null);
+  const academicLevelDefault = useRef([]);
 
   const [entryQualifications, setEntryQualifications] = useState([]);
   const entryQualificationsRef = useRef(null);
+  const entryQualificationsDefault = useRef([]);
 
   const [subDisciplines, setSubDisciplines] = useState([]);
   const subDisciplinesRef = useRef(null);
+  const subDisciplinesDefault = useRef([]);
 
   modeOfStudyIcons[modeOfStudy_part_time_and_full_time] = "circle-half-full";
   modeOfStudyIcons[modeOfStudy_full_time] = "circle";
@@ -86,6 +92,7 @@ const ScreenCourseListing = (props) => {
         })
       }
       setModeOfStudy(ModeOfStudyValues)
+      modeOfStudyDefault.current = ModeOfStudyValues;
 
       var DisciplinesItems = [];
       var DisciplinesValues = []
@@ -99,6 +106,7 @@ const ScreenCourseListing = (props) => {
         })
       }
       setDisciplines(DisciplinesValues)
+      disciplinesDefault.current = DisciplinesValues;
       
       var UniversityPartersItems = [];
       var UniversityPartersValues = []
@@ -113,6 +121,7 @@ const ScreenCourseListing = (props) => {
         })
       }
       setUniversityParters(UniversityPartersValues)
+      universityPartnersDefault.current = UniversityPartersValues;
 
       var AcademicLevelItems = [];
       var AcademicLevelValues = []
@@ -126,6 +135,7 @@ const ScreenCourseListing = (props) => {
         })
       }
       setAcademicLevel(AcademicLevelValues)
+      academicLevelDefault.current = AcademicLevelValues;
 
       var EntryQualificationsItems = [];
       var EntryQualificationsValues = []
@@ -139,6 +149,7 @@ const ScreenCourseListing = (props) => {
         })
       }
       setEntryQualifications(EntryQualificationsValues);
+      entryQualificationsDefault.current = EntryQualificationsValues;
 
       var SubDisciplinesItems = [];
       var SubDisciplinesValues = []
@@ -152,6 +163,7 @@ const ScreenCourseListing = (props) => {
         })
       }
       setSubDisciplines(SubDisciplinesValues);
+      subDisciplinesDefault.current = SubDisciplinesValues;
 
       initSlidingPanel(
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -362,12 +374,33 @@ const ScreenCourseListing = (props) => {
   }
 
   handleReset = () =>{
-    modeOfStudyRef.current.reset();
-    disciplinesRef.current.reset();
-    universityPartersRef.current.reset();
-    academicLevelRef.current.reset();
-    entryQualificationsRef.current.reset();
-    subDisciplinesRef.current.reset();
+    // modeOfStudyRef.current.reset();
+    // disciplinesRef.current.reset();
+    // universityPartersRef.current.reset();
+    // academicLevelRef.current.reset();
+    // entryQualificationsRef.current.reset();
+    // subDisciplinesRef.current.reset();
+    initSlidingPanel(<></>, null);
+    keyword.current = "";
+    if(!isEqual(modeOfStudy, modeOfStudyDefault.current)){
+      setModeOfStudy(modeOfStudyDefault.current)
+    }
+    if(!isEqual(disciplines, disciplinesDefault.current)){
+      setDisciplines(disciplinesDefault.current)
+    }
+    if(!isEqual(universityParters, universityPartnersDefault.current)){
+      setUniversityParters(universityPartnersDefault.current)
+    }
+    if(!isEqual(academicLevel, academicLevelDefault.current)){
+      setAcademicLevel(academicLevelDefault.current)
+    }
+    if(!isEqual(entryQualifications, entryQualificationsDefault.current)){
+      setEntryQualifications(entryQualificationsDefault.current)
+    }
+    if(!isEqual(subDisciplines, subDisciplinesDefault.current)){
+      setSubDisciplines(subDisciplinesDefault.current)
+    }
+    renderFilterFields();
     refreshList();
   }
 

@@ -213,22 +213,25 @@ const ScreenEventListing = (props) => {
   }
 
   handleReset = () =>{
+    initSlidingPanel(<></>, null);
+    keyword.current = "";
+    setFilterStartDate(filterStartDateDefault);
+    setFilterEndDate(filterEndDateDefault);
     if(!isEqual(TypeOfEvents, TypeOfEventsDefault.current)){
-      console.log("TypeOfEvents", TypeOfEvents)
-      console.log("TypeOfEventsDefault.current", TypeOfEventsDefault.current)
-      TypeOfEventsRef.current.selectItem(TypeOfEventsDefault.current);
+      // console.log("TypeOfEvents", TypeOfEvents)
+      // console.log("TypeOfEventsDefault.current", TypeOfEventsDefault.current)
+      // TypeOfEventsRef.current.selectItem(TypeOfEventsDefault.current);
       setTypeOfEvents(TypeOfEventsDefault.current)
     }
     if(!isEqual(universityParters, universityPartnersDefault.current)){
-      console.log("universityParters", universityParters)
-      console.log("universityPartnersDefault.current", universityPartnersDefault.current)
-      universityPartnersRef.current.selectItem(universityPartnersDefault.current);
+      // console.log("universityParters", universityParters)
+      // console.log("universityPartnersDefault.current", universityPartnersDefault.current)
+      // universityPartnersRef.current.selectItem(universityPartnersDefault.current);
       setUniversityParters(universityPartnersDefault.current)
     }
-    console.log("filterStartDateDefault", filterStartDateDefault)
-    console.log("filterEndDateDefault", filterEndDateDefault)
-    setFilterStartDate(filterStartDateDefault);
-    setFilterEndDate(filterEndDateDefault);
+    // console.log("filterStartDateDefault", filterStartDateDefault)
+    // console.log("filterEndDateDefault", filterEndDateDefault)
+    renderFilterFields();
     refreshList();
   }
 
