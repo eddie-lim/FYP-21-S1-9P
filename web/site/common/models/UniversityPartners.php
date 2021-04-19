@@ -40,10 +40,11 @@ class UniversityPartners extends MyCustomActiveRecord
     {
         return [
             [['description', 'highlights', 'certifications', 'notes', 'status'], 'string'],
-            [['description', 'highlights', 'certifications', 'name', 'continent'], 'required'],
+            [['description', 'highlights', 'certifications', 'name', 'continent', 'thumbnail_url'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['continent'], 'string', 'max' => 32],
+            [['thumbnail_url'], 'string', 'max' => 1028],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
             ['tags', 'safe'],
             ['name', 'filter', 'filter' => 'trim'],
@@ -70,6 +71,7 @@ class UniversityPartners extends MyCustomActiveRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'thumbnail_url' => 'Thumbnail URL',
         ];
     }
 
@@ -116,6 +118,7 @@ class UniversityPartners extends MyCustomActiveRecord
             'continent',
             'highlights',
             'certifications',
+            'thumbnail_url',
         ];
     }
 }

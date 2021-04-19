@@ -21,11 +21,14 @@ use yii\web\JsExpression;
             <div class="card-body">
                 <?php echo $form->errorSummary($model); ?>
                 <div class="row">
-                    <div class="col-lg-9 col-xs-12">
+                    <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     </div>
-                    <div class="col-lg-3 col-xs-12">
+                    <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'continent')->dropDownList(UniversityPartners::getAllContinents(), ['prompt' => '']) ?>
+                    </div>
+                    <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'thumbnail_url')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'description')->textarea(['rows' => 3]) ?>
@@ -35,7 +38,7 @@ use yii\web\JsExpression;
                     </div>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'certifications')->textarea(['rows' => 3]) ?>
-                    </div>   
+                    </div>
                 </div>
                 <hr>
                 <div class="row">

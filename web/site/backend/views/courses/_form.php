@@ -48,6 +48,9 @@ use yii\web\JsExpression;
                         <?php echo $form->field($model, 'academic_level')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'thumbnail_url')->textInput(['maxlength' => true]) ?>
+                    </div>
+                    <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'introduction')->textarea(['rows' => 3]) ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
@@ -67,6 +70,18 @@ use yii\web\JsExpression;
                     </div>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'assessments_exams')->textarea(['rows' => 3]) ?>
+                    </div>
+                    <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'application')->textarea(['rows' => 3]) ?>
+                    </div>
+                    <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'course_start_end_date')->textarea(['rows' => 3]) ?>
+                    </div>
+                    <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'scholarships_award')->textarea(['rows' => 3]) ?>
+                    </div>
+                    <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'overview')->textarea(['rows' => 3]) ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'entry_qualification')->widget(Select2::classname(),

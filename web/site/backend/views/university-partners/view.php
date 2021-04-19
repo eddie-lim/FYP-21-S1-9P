@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'continent',
                     'highlights:ntext',
                     'certifications:ntext',
+                    'thumbnail_url',
                     'tags:ntext',
                     'notes:ntext',
                     'status',

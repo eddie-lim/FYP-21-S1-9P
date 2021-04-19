@@ -48,10 +48,11 @@ class Courses extends MyCustomActiveRecord
     {
         return [
             [['school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['mode_of_study', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'notes', 'status', 'entry_qualification'], 'string'],
-            [['mode_of_study', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'entry_qualification', 'disciplines', 'sub_disciplines', 'academic_level'], 'required'],
+            [['mode_of_study', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'notes', 'status', 'entry_qualification', 'application', 'course_start_end_date', 'scholarships_award', 'overview', 'thumbnail_url'], 'string'],
+            [['mode_of_study', 'introduction', 'programme_structure', 'admission_criteria', 'fees', 'exemptions', 'profiles', 'assessments_exams', 'entry_qualification', 'disciplines', 'sub_disciplines', 'academic_level', 'application', 'course_start_end_date', 'scholarships_award', 'overview', 'thumbnail_url'], 'required'],
             [['name'], 'string', 'max' => 512],
             [['disciplines', 'sub_disciplines', 'academic_level'], 'string', 'max' => 128],
+            [['thumbnail_url'], 'string', 'max' => 1028],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
             ['tags', 'safe'],
 
@@ -92,6 +93,11 @@ class Courses extends MyCustomActiveRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'application' => 'Application',
+            'course_start_end_date' => 'Course Start and End Date',
+            'scholarships_award' => 'Scholarships and Award',
+            'overview' => 'Overview',
+            'thumbnail_url' => 'Thumbnail URL',
         ];
     }
 
@@ -127,6 +133,11 @@ class Courses extends MyCustomActiveRecord
             'exemptions',
             'profiles',
             'assessments_exams',
+            'application',
+            'course_start_end_date',
+            'scholarships_award',
+            'overview',
+            'thumbnail_url',
         ];
     }
 }
