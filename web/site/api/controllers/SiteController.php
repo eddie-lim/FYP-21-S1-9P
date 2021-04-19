@@ -119,7 +119,7 @@ class SiteController extends \api\controllers\RestControllerBase
             'course' => $course->attributes(),
             'event' => $event->attributes(),
             'university_partner' => $university_partner->attributes(),
-            'course_quiz_url' => 'https://quiz.simge.edu.sg/',
+            'course_quiz_url' => 'https://sim-programme-and-career-quiz.ifdemo.com/',
         ];
 
         Yii::$app->api->sendSuccessResponse($data);
