@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, BackHandler, StyleSheet, ScrollView, Text } from 'react-native';
-import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
+import { View, BackHandler, StyleSheet, ScrollView, Text, Image, Pressable } from 'react-native';
+import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle, ShareStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
@@ -8,6 +8,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import Collapsible from 'react-native-collapsible';
 import * as Animatable from 'react-native-animatable';
 import { capitalize, join, split, parseInt, map } from 'lodash';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ScreenCourseDetail = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -33,20 +34,20 @@ const ScreenCourseDetail = (props) => {
   */
   const source = useNavigationParam('source');
 
-  const [ nameIsCollapsible, setNameIsCollapsible ] = useState(false);
-  const [ universityIsCollapsible, setUniversityIsCollapsible ] = useState(false);
-  const [ modeOfStudyIsCollapsible, setModeOfStudyIsCollapsible ] = useState(false);
-  const [ disciplinesIsCollapsible, setDisciplinesIsCollapsible ] = useState(false);
-  const [ subDisciplinesIsCollapsible, setSubDisciplinesIsCollapsible ] = useState(false);
-  const [ academicLevelIsCollapsible, setAcademicLevelIsCollapsible ] = useState(false);
-  const [ introductionIsCollapsible, setIntroductionIsCollapsible ] = useState(false);
-  const [ programmeStructureIsCollapsible, setProgrammeStructureIsCollapsible ] = useState(false);
-  const [ admissionCriteriaIsCollapsible, setAdmissionCriteriaIsCollapsible ] = useState(false);
-  const [ entryQualificationIsCollapsible, setEntryQualificationIsCollapsible ] = useState(false);
-  const [ feesIsCollapsible, setFeesIsCollapsible ] = useState(false);
-  const [ exemptionsIsCollapsible, setExemptionsIsCollapsible ] = useState(false);
-  const [ profilesIsCollapsible, setProfilesIsCollapsible ] = useState(false);
-  const [ assessmentsExamsIsCollapsible, setAssessmentsExamsIsCollapsible ] = useState(false);
+  const [ nameIsCollapsible, setNameIsCollapsible ] = useState(true);
+  const [ universityIsCollapsible, setUniversityIsCollapsible ] = useState(true);
+  const [ modeOfStudyIsCollapsible, setModeOfStudyIsCollapsible ] = useState(true);
+  const [ disciplinesIsCollapsible, setDisciplinesIsCollapsible ] = useState(true);
+  const [ subDisciplinesIsCollapsible, setSubDisciplinesIsCollapsible ] = useState(true);
+  const [ academicLevelIsCollapsible, setAcademicLevelIsCollapsible ] = useState(true);
+  const [ introductionIsCollapsible, setIntroductionIsCollapsible ] = useState(true);
+  const [ programmeStructureIsCollapsible, setProgrammeStructureIsCollapsible ] = useState(true);
+  const [ admissionCriteriaIsCollapsible, setAdmissionCriteriaIsCollapsible ] = useState(true);
+  const [ entryQualificationIsCollapsible, setEntryQualificationIsCollapsible ] = useState(true);
+  const [ feesIsCollapsible, setFeesIsCollapsible ] = useState(true);
+  const [ exemptionsIsCollapsible, setExemptionsIsCollapsible ] = useState(true);
+  const [ profilesIsCollapsible, setProfilesIsCollapsible ] = useState(true);
+  const [ assessmentsExamsIsCollapsible, setAssessmentsExamsIsCollapsible ] = useState(true);
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
@@ -132,8 +133,53 @@ const ScreenCourseDetail = (props) => {
             renderContent={renderContent}
             onChange={updateSections}
           /> */}
-          <Text>{item.name}</Text>
-          <Text>Awarded by: {item.university}</Text>
+          <View>
+            <Text>{item.name}</Text>
+            <Text>Awarded by: {item.university}</Text>
+          </View>
+
+          <View>
+            <Text>Application</Text>
+            <View style={styles.greySeperator}/>
+            <Text>{item.application}</Text>
+          </View>
+
+          <View>
+            <Text>Course Start Date &amp; End Date</Text>
+            <View style={styles.greySeperator}/>
+            <Text>{item.course_start_end_date}</Text>
+          </View>
+
+          <View>
+            <Text>Fee</Text>
+            <View style={styles.greySeperator}/>
+            <Text>{item.fees}</Text>
+          </View>
+
+          <View>
+            <Text>Scholarships &amp; Awards</Text>
+            <View style={styles.greySeperator}/>
+            <Text>{item.scholarships_award}</Text>
+          </View>
+
+          <View>
+            <Text>Programme Overview</Text>
+            <View style={styles.greySeperator}/>
+            <Image source={{uri : item.thumbnail_url}} />
+            <Text>{item.overview}</Text>
+          </View>
+
+          <Pressable style={styles.accordionHeader} onPress={()=>setIntroductionIsCollapsible(previousState => !previousState)}>
+            <Text style={styles.accordionHeaderText}>Introduction</Text>
+            <Icon style={{marginTop: 10}} name={introductionIsCollapsible?'chevron-down':'chevron-right'} size={24} color={'black'}/>
+          </Pressable>
+          <Collapsible collapsed={introductionIsCollapsible}>
+            <Animatable.View>
+              <Animatable.Text>{item.introduction}</Animatable.Text>
+            </Animatable.View>
+          </Collapsible>
+
+
           <Collapsible collapsed={modeOfStudyIsCollapsible}>
             <Animatable.View>
               <Animatable.Text>{item.mode_of_study}</Animatable.Text>
@@ -154,11 +200,6 @@ const ScreenCourseDetail = (props) => {
               <Animatable.Text>{item.academic_level}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
-          <Collapsible collapsed={introductionIsCollapsible}>
-            <Animatable.View>
-              <Animatable.Text>{item.introduction}</Animatable.Text>
-            </Animatable.View>
-          </Collapsible>
           <Collapsible collapsed={programmeStructureIsCollapsible}>
             <Animatable.View>
               <Animatable.Text>{item.programme_structure}</Animatable.Text>
@@ -172,11 +213,6 @@ const ScreenCourseDetail = (props) => {
           <Collapsible collapsed={entryQualificationIsCollapsible}>
             <Animatable.View>
               <Animatable.Text>{item.entry_qualification}</Animatable.Text>
-            </Animatable.View>
-          </Collapsible>
-          <Collapsible collapsed={feesIsCollapsible}>
-            <Animatable.View>
-              <Animatable.Text>{item.fees}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
           <Collapsible collapsed={exemptionsIsCollapsible}>
@@ -207,6 +243,8 @@ const styles = StyleSheet.create({
   container: {flex: 1,backgroundColor: '#F5FCFF',paddingTop: Constants.statusBarHeight,},
   title: {textAlign: 'center',fontSize: 22,fontWeight: '300',marginBottom: 20,},
   header: {backgroundColor: '#F5FCFF',padding: 10,},
+  accordionHeader: {width: '100%', backgroundColor: StyleConstant.primaryColor, flexDirection: 'row', alignItems: 'center'},
+  accordionHeaderText: {color: StyleConstant.dark, fontSize: 16, marginTop: 10},
   headerText: {textAlign: 'center',fontSize: 16,fontWeight: '500',},
   content: {padding: 20,backgroundColor: '#fff',},
   active: {backgroundColor: 'rgba(255,255,255,1)',},
@@ -217,4 +255,5 @@ const styles = StyleSheet.create({
   selectTitle: {fontSize: 14,fontWeight: '500',padding: 10,},
   multipleToggle: {flexDirection: 'row',justifyContent: 'center',marginVertical: 30,alignItems: 'center',},
   multipleToggle__title: {fontSize: 16,marginRight: 8,},
+  greySeperator: {width: '100%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10},
 });
