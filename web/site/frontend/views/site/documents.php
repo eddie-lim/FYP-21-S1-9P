@@ -22,6 +22,9 @@ $this->title = Yii::$app->name;
     	<?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/project_prototype_slides.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?> Project Prototype Slides
     </div>
     <div class="">
-    	<?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/project_progress_report.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?> Project Progress Report
+        <?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/project_progress_report.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?> Project Progress Report
+    </div>
+    <div class="">
+        <?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/test_plan.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?> Test Plan
     </div>
 </div>
