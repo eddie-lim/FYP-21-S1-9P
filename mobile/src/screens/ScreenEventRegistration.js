@@ -159,7 +159,7 @@ const ScreenEventRegistration = (props) => {
             <Text>{event_data.name}</Text>
             <Text>{event_data.start_at} to {event_data.end_at}</Text>
             <Text>{event_data.venue}</Text>
-            <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => handleSubmit()}>
+            <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="calendar-plus" mode="contained" onPress={() => handleSubmit()}>
               Register Interest
             </Button>
           </View>      
@@ -167,8 +167,8 @@ const ScreenEventRegistration = (props) => {
       }
     } else if(loggedIn === false) {
       return(
-        <View style={{width:'100%'}}>
-          <Button style={{width:'80%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventListing"})}>
+        <View style={{width:'100%',marginTop:100, ...styles.container}}>
+          <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventListing"})}>
             Please login first
           </Button>
         </View>

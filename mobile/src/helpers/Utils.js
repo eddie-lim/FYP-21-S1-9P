@@ -40,7 +40,12 @@ export default Utils = {
   },
   timestampToCalendarTime: (timestamp) =>{
     let d = new Date(timestamp * 1000);
-    d = moment(d).format("DD/MM/YYYY HH:mm:ss");
+    d = moment(d).format("HH:mm");
+    return d;
+  },
+  timestampToCalendarDateTime: (timestamp) =>{
+    let d = new Date(timestamp * 1000);
+    d = moment(d).format("DD/MM/YYYY HH:mm");
     return d;
   },
   timestampToCalendarTime12Hrs: (timestamp) =>{
