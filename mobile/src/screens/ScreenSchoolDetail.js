@@ -18,7 +18,9 @@ const ScreenSchoolDetail = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("School Detail", navigate, source)
+      header:()=> HeaderWithBack("School Detail", ()=>{
+        navigate(source)
+      })
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
 

@@ -64,7 +64,9 @@ const ScreenSettings = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("Settings", navigate, "screenLanding")
+      header:()=> HeaderWithBack("Settings", ()=>{
+        navigate("screenLanding")
+      })
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
     // console.log("aaa", parseInt((Settings.get(Settings.USER_PROFILE)).userProfile.subscribe_newsletter))

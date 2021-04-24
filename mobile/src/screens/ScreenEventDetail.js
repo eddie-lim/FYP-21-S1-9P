@@ -15,11 +15,14 @@ const ScreenEventDetail = (props) => {
   const [ section, setSection ] = useState([]);
   const item = useNavigationParam('item');
   const source = useNavigationParam('source');
+  const courseDetailItem = useNavigationParam('courseDetailItem'); //screenCourseDetail
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("Event Detail", navigate, source,
+      header:()=> HeaderWithBack("Event Detail", ()=>{
+        navigate(source, {item:courseDetailItem})
+      },
       <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleRegister()}>
         <Icon name={'calendar-plus'} color={'white'} size={30} />
       </Pressable>)
@@ -47,7 +50,7 @@ const ScreenEventDetail = (props) => {
 
   handleBackHandler = ()=>{
    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
-   navigate("screenLanding");
+   navigate(source, {item:courseDetailItem});
    return true;
  }
 

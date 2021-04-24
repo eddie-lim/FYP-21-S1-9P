@@ -18,7 +18,7 @@ const StyleConstant = {
   mutedTextColor: "#cccccc",
 
   warnColor: "#ffee75",
-  bgGray: "#eeeeee",
+  bgGray: "#767676",
   tabGray: "#999",
   xmasRed: "#af0005",
   additionRed: "#c62828",
@@ -73,7 +73,7 @@ const HeaderStyleWithRight = {
 };
 
 const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
-  const title = "V0.0.6\nBuilt @ 19th Apr 2021";
+  const title = "V0.0.7\nBuilt @ 24th Apr 2021";
   // const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
   // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
   // const logged_in = false;
@@ -120,12 +120,12 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
 const ShadowStyle = { shadowColor: 'rgba(0,0,0,0.4)', shadowOffset: {height: 1, width: 1}, shadowOpacity: 1, shadowRadius: 1, elevation: 2 }
 const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' }
 
-const HeaderWithBack = (title, navigate, destination, headerRight=null)=>{
+const HeaderWithBack = (title, navigate, headerRight=null)=>{
   return(
     <View style={{...ShareStyle.curveThis, width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
       <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
-        <Pressable style={{position: 'absolute', left: 15, justifyContent: 'center'}} onPress={() => navigate(destination)}>
+        <Pressable style={{position: 'absolute', left: 15, justifyContent: 'center'}} onPress={() => navigate()}>
           <Icon name={'arrow-left'} color={'white'} size={30} />
         </Pressable>
         {headerRight}

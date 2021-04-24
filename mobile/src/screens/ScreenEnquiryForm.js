@@ -47,7 +47,9 @@ const ScreenEnquiryForm = (props) => {
       }
       props.navigation.setParams({"navOptions":{
         headerShown:true,
-        header:()=> HeaderWithBack("Enquiry Form", navigate, "screenQuestions", right_button)
+        header:()=> HeaderWithBack("Enquiry Form", ()=>{
+          navigate("screenQuestions")
+        }, right_button)
       }});
     });
     WebApi.getCourseFilterValues().then((res)=>{

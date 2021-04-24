@@ -56,7 +56,9 @@ const ScreenEventRegistration = (props) => {
       }
       props.navigation.setParams({"navOptions":{
         headerShown:true,
-        header:()=> HeaderWithBack("Register", navigate, "screenEventDetail", right_button)
+        header:()=> HeaderWithBack("Register", ()=>{
+          navigate("screenEventDetail")
+        }, right_button)
       }});
     });
     return function cleanup() { } 

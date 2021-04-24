@@ -32,7 +32,9 @@ const ScreenRegister = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("Register", navigate, "screenLogin")
+      header:()=> HeaderWithBack("Register", ()=>{
+        navigate("screenLogin")
+      })
     }});
     return function cleanup() { } 
   }, []);

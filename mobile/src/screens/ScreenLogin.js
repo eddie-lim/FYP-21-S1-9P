@@ -27,7 +27,9 @@ const ScreenLogin = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("Login", navigate, source)
+      header:()=> HeaderWithBack("Login", ()=>{
+        navigate(source)
+      })
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
     return function cleanup() {

@@ -41,7 +41,9 @@ const ScreenProfile = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("My Profile", navigate, "screenLanding",
+      header:()=> HeaderWithBack("My Profile", ()=>{
+        navigate("screenLanding")
+      },
       <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => handleUpdate()}>
         <Icon name={'content-save'} color={'white'} size={30} />
       </Pressable>)

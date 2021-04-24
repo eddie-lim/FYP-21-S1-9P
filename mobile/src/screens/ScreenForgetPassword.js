@@ -24,7 +24,9 @@ const ScreenForgetPassword = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("Reset Password", navigate, "screenLogin")
+      header:()=> HeaderWithBack("Reset Password", ()=>{
+        navigate("screenLogin")
+      })
     }});
     return function cleanup() { } 
   }, []);

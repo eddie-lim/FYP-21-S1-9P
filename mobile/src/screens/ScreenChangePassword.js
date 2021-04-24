@@ -27,7 +27,9 @@ const ScreenChangePassword = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("Change Password", navigate, "screenSettings")
+      header:()=> HeaderWithBack("Change Password", ()=>{
+        navigate("screenSettings")
+      })
     }});
     return function cleanup() { } 
   }, []);
