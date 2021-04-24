@@ -7,18 +7,20 @@ import {useNavigation, useNavigationParam} from 'react-navigation-hooks';
 import Accordion from 'react-native-collapsible/Accordion';
 import Collapsible from 'react-native-collapsible';
 import * as Animatable from 'react-native-animatable';
-import { capitalize, join, split, parseInt, map } from 'lodash';
+import { capitalize, join, split, parseInt, map, words, upperFirst } from 'lodash';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import WebApi from '@helpers/WebApi';
+import { Button } from 'react-native-paper';
 
 const ScreenCourseDetail = (props) => {
   const { navigate, goBack } = useNavigation();
-  const [ activeSections, setActiveSections ] = useState([0]);
-  const [ section, setSection ] = useState([]);
   const item = useNavigationParam('item');
-  /*
+  /*    TYPESCRIPT WOULD BE USEFUL HERE OH WELL
   id
   name
+  school_id
   university
+  university_thumbnail_url
   mode_of_study
   disciplines
   sub_disciplines
@@ -34,41 +36,32 @@ const ScreenCourseDetail = (props) => {
   */
   const source = useNavigationParam('source');
 
-  const [ nameIsCollapsible, setNameIsCollapsible ] = useState(true);
-  const [ universityIsCollapsible, setUniversityIsCollapsible ] = useState(true);
-  const [ modeOfStudyIsCollapsible, setModeOfStudyIsCollapsible ] = useState(true);
-  const [ disciplinesIsCollapsible, setDisciplinesIsCollapsible ] = useState(true);
-  const [ subDisciplinesIsCollapsible, setSubDisciplinesIsCollapsible ] = useState(true);
-  const [ academicLevelIsCollapsible, setAcademicLevelIsCollapsible ] = useState(true);
   const [ introductionIsCollapsible, setIntroductionIsCollapsible ] = useState(true);
   const [ programmeStructureIsCollapsible, setProgrammeStructureIsCollapsible ] = useState(true);
   const [ admissionCriteriaIsCollapsible, setAdmissionCriteriaIsCollapsible ] = useState(true);
-  const [ entryQualificationIsCollapsible, setEntryQualificationIsCollapsible ] = useState(true);
   const [ feesIsCollapsible, setFeesIsCollapsible ] = useState(true);
   const [ exemptionsIsCollapsible, setExemptionsIsCollapsible ] = useState(true);
   const [ profilesIsCollapsible, setProfilesIsCollapsible ] = useState(true);
   const [ assessmentsExamsIsCollapsible, setAssessmentsExamsIsCollapsible ] = useState(true);
 
+  const [ events, setEvents ] = useState(null);
+
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header:()=> HeaderWithBack("Course Detail", navigate, source)
+      header:()=> HeaderWithBack("Course Detail", ()=>{
+        navigate(source)
+      })
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
 
-    var item_keys = Object.keys(item);
-    setActiveSections(map(Object.keys(item_keys), parseInt));
-    var item_values = Object.values(item);
-    var items = [];
-    for (let i = 0; i < item_keys.length; i++) {
-      const item_key = capitalize(join(split(item_keys[i], "_"), " "));
-      const item_value = item_values[i];
-      items.push({
-        header:item_key,
-        content:item_value
-      })
-    }
-    setSection(items)
+    WebApi.listEvents(0, "&per-page=1&filter[and][0][school_id][]="+item.school_id)
+    .then((res)=>{
+      setEvents(res.data[0])
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
 
     return function cleanup() { 
       BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
@@ -79,6 +72,10 @@ const ScreenCourseDetail = (props) => {
    BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
    navigate(source);
    return true;
+  }
+
+  handleJoinEvent = () =>{
+    navigate("screenEventDetail", {item:events, source:"screenCourseDetail", courseDetailItem:item})
   }
   
   renderSectionTitle = (section) => {
@@ -116,121 +113,146 @@ const ScreenCourseDetail = (props) => {
     );
   };
 
-  updateSections = (activeSections) => {
-    setActiveSections(activeSections);
-  };
+  renderEvents = () =>{
+    if(events == null){
+      return (
+        <>
+          <Text style={{width:'100%', textAlign:'center'}}>No upcoming events related to this course.</Text>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <Text style={{fontWeight:'bold'}}>{events.name}</Text>
+          <Text>{events.description}</Text>
+          <Button style={{marginBottom:20, marginTop:20, height:60, justifyContent:'center', backgroundColor:"navy", color:'white' }} icon="door-open" mode="contained" onPress={() => handleJoinEvent()}>
+            Join Now
+          </Button>
+        </>
+      )
+    }
+  }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView style={{backgroundColor: 'rgba(245,252,255,1)'}}>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          {/* <Accordion
-            containerStyle={{width:'100%'}}
-            sections={section}
-            activeSections={activeSections}
-            // renderSectionTitle={renderSectionTitle}
-            renderHeader={renderHeader}
-            renderContent={renderContent}
-            onChange={updateSections}
-          /> */}
-          <View>
-            <Text>{item.name}</Text>
-            <Text>Awarded by: {item.university}</Text>
+          
+          <View style={styles.fixedContentContainer}>
+            <Text style={{fontSize:30}}>{item.name},&nbsp;{upperFirst(words(item.mode_of_study).join(" "))}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
+              <Text style={{fontSize:20, alignItems: 'center'}}>Awarded by:</Text>
+              <Image source={{uri : item.university_thumbnail_url}} />
+            </View>
           </View>
 
-          <View>
-            <Text>Application</Text>
+          <View style={styles.fixedContentContainer}>
+            <Text style={styles.fixedContentHeader}>Application</Text>
             <View style={styles.greySeperator}/>
             <Text>{item.application}</Text>
           </View>
 
-          <View>
-            <Text>Course Start Date &amp; End Date</Text>
+          <View style={styles.fixedContentContainer}>
+            <Text style={styles.fixedContentHeader}>Course Start Date &amp; End Date</Text>
             <View style={styles.greySeperator}/>
             <Text>{item.course_start_end_date}</Text>
           </View>
 
-          <View>
-            <Text>Fee</Text>
-            <View style={styles.greySeperator}/>
-            <Text>{item.fees}</Text>
-          </View>
-
-          <View>
-            <Text>Scholarships &amp; Awards</Text>
+          <View style={styles.fixedContentContainer}>
+            <Text style={styles.fixedContentHeader}>Scholarships &amp; Awards</Text>
             <View style={styles.greySeperator}/>
             <Text>{item.scholarships_award}</Text>
           </View>
 
-          <View>
-            <Text>Programme Overview</Text>
+          <View style={styles.fixedContentContainer}>
+            <Text style={styles.fixedContentHeader}>Programme Overview</Text>
             <View style={styles.greySeperator}/>
             <Image source={{uri : item.thumbnail_url}} />
             <Text>{item.overview}</Text>
           </View>
 
           <Pressable style={styles.accordionHeader} onPress={()=>setIntroductionIsCollapsible(previousState => !previousState)}>
+            <Icon style={styles.accordionHeaderLeftIcon} name={'grease-pencil'} size={16} color={'white'}/>
             <Text style={styles.accordionHeaderText}>Introduction</Text>
-            <Icon style={{marginTop: 10}} name={introductionIsCollapsible?'chevron-down':'chevron-right'} size={24} color={'black'}/>
+            <Icon style={styles.accordionHeaderRightIcon} name={introductionIsCollapsible?'chevron-down':'chevron-up'} size={20} color={'white'}/>
           </Pressable>
           <Collapsible collapsed={introductionIsCollapsible}>
-            <Animatable.View>
+            <Animatable.View style={styles.accordionBodyText}>
               <Animatable.Text>{item.introduction}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
 
-
-          <Collapsible collapsed={modeOfStudyIsCollapsible}>
-            <Animatable.View>
-              <Animatable.Text>{item.mode_of_study}</Animatable.Text>
-            </Animatable.View>
-          </Collapsible>
-          <Collapsible collapsed={disciplinesIsCollapsible}>
-            <Animatable.View>
-              <Animatable.Text>{item.disciplines}</Animatable.Text>
-            </Animatable.View>
-          </Collapsible>
-          <Collapsible collapsed={subDisciplinesIsCollapsible}>
-            <Animatable.View>
-              <Animatable.Text>{item.sub_disciplines}</Animatable.Text>
-            </Animatable.View>
-          </Collapsible>
-          <Collapsible collapsed={academicLevelIsCollapsible}>
-            <Animatable.View>
-              <Animatable.Text>{item.academic_level}</Animatable.Text>
-            </Animatable.View>
-          </Collapsible>
+          <Pressable style={styles.accordionHeader} onPress={()=>setProgrammeStructureIsCollapsible(previousState => !previousState)}>
+            <Icon style={styles.accordionHeaderLeftIcon} name={'sitemap'} size={16} color={'white'}/>
+            <Text style={styles.accordionHeaderText}>Programme Structure</Text>
+            <Icon style={styles.accordionHeaderRightIcon} name={programmeStructureIsCollapsible?'chevron-down':'chevron-up'} size={20} color={'white'}/>
+          </Pressable>
           <Collapsible collapsed={programmeStructureIsCollapsible}>
-            <Animatable.View>
+            <Animatable.View style={styles.accordionBodyText}>
               <Animatable.Text>{item.programme_structure}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
+
+          <Pressable style={styles.accordionHeader} onPress={()=>setAdmissionCriteriaIsCollapsible(previousState => !previousState)}>
+            <Icon style={styles.accordionHeaderLeftIcon} name={'newspaper-variant-multiple'} size={16} color={'white'}/>
+            <Text style={styles.accordionHeaderText}>Admission Criteria</Text>
+            <Icon style={styles.accordionHeaderRightIcon} name={admissionCriteriaIsCollapsible?'chevron-down':'chevron-up'} size={20} color={'white'}/>
+          </Pressable>
           <Collapsible collapsed={admissionCriteriaIsCollapsible}>
-            <Animatable.View>
+            <Animatable.View style={styles.accordionBodyText}>
               <Animatable.Text>{item.admission_criteria}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
-          <Collapsible collapsed={entryQualificationIsCollapsible}>
-            <Animatable.View>
-              <Animatable.Text>{item.entry_qualification}</Animatable.Text>
+
+          <Pressable style={styles.accordionHeader} onPress={()=>setFeesIsCollapsible(previousState => !previousState)}>
+            <Icon style={styles.accordionHeaderLeftIcon} name={'cash'} size={16} color={'white'}/>
+            <Text style={styles.accordionHeaderText}>Fees</Text>
+            <Icon style={styles.accordionHeaderRightIcon} name={feesIsCollapsible?'chevron-down':'chevron-up'} size={20} color={'white'}/>
+          </Pressable>
+          <Collapsible collapsed={feesIsCollapsible}>
+            <Animatable.View style={styles.accordionBodyText}>
+              <Animatable.Text>{item.fees}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
+
+          <Pressable style={styles.accordionHeader} onPress={()=>setExemptionsIsCollapsible(previousState => !previousState)}>
+            <Icon style={styles.accordionHeaderLeftIcon} name={'checkbox-marked-outline'} size={16} color={'white'}/>
+            <Text style={styles.accordionHeaderText}>Exemptions</Text>
+            <Icon style={styles.accordionHeaderRightIcon} name={exemptionsIsCollapsible?'chevron-down':'chevron-up'} size={20} color={'white'}/>
+          </Pressable>
           <Collapsible collapsed={exemptionsIsCollapsible}>
-            <Animatable.View>
+            <Animatable.View style={styles.accordionBodyText}>
               <Animatable.Text>{item.exemptions}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
+
+          <Pressable style={styles.accordionHeader} onPress={()=>setProfilesIsCollapsible(previousState => !previousState)}>
+            <Icon style={styles.accordionHeaderLeftIcon} name={'account-group'} size={16} color={'white'}/>
+            <Text style={styles.accordionHeaderText}>Profiles</Text>
+            <Icon style={styles.accordionHeaderRightIcon} name={profilesIsCollapsible?'chevron-down':'chevron-up'} size={20} color={'white'}/>
+          </Pressable>
           <Collapsible collapsed={profilesIsCollapsible}>
-            <Animatable.View>
+            <Animatable.View style={styles.accordionBodyText}>
               <Animatable.Text>{item.profiles}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
+
+          <Pressable style={styles.accordionHeader} onPress={()=>setAssessmentsExamsIsCollapsible(previousState => !previousState)}>
+            <Icon style={styles.accordionHeaderLeftIcon} name={'pencil'} size={16} color={'white'}/>
+            <Text style={styles.accordionHeaderText}>Assessments &amp; Exams</Text>
+            <Icon style={styles.accordionHeaderRightIcon} name={assessmentsExamsIsCollapsible?'chevron-down':'chevron-up'} size={20} color={'white'}/>
+          </Pressable>
           <Collapsible collapsed={assessmentsExamsIsCollapsible}>
-            <Animatable.View>
+            <Animatable.View style={styles.accordionBodyText}>
               <Animatable.Text>{item.assessments_exams}</Animatable.Text>
             </Animatable.View>
           </Collapsible>
 
+          <View style={styles.fixedContentContainer}>
+            <Text style={styles.fixedContentHeader}>Events &amp; Programme Briefings</Text>
+            <View style={styles.greySeperator}/>
+            {renderEvents()}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -243,8 +265,11 @@ const styles = StyleSheet.create({
   container: {flex: 1,backgroundColor: '#F5FCFF',paddingTop: Constants.statusBarHeight,},
   title: {textAlign: 'center',fontSize: 22,fontWeight: '300',marginBottom: 20,},
   header: {backgroundColor: '#F5FCFF',padding: 10,},
+  accordionBodyText: {width: '90%', flexDirection: 'row', alignItems: 'center', marginTop:15, marginBottom:15},
   accordionHeader: {width: '100%', backgroundColor: StyleConstant.primaryColor, flexDirection: 'row', alignItems: 'center'},
-  accordionHeaderText: {color: StyleConstant.dark, fontSize: 16, marginTop: 10},
+  accordionHeaderText: {color: 'white', fontSize: 16, marginTop: 10, marginBottom:10, marginLeft:10},
+  accordionHeaderLeftIcon:{marginTop: 10, marginBottom: 10, marginLeft:10},
+  accordionHeaderRightIcon:{marginTop: 10, marginBottom: 10, position: 'absolute', right: 10},
   headerText: {textAlign: 'center',fontSize: 16,fontWeight: '500',},
   content: {padding: 20,backgroundColor: '#fff',},
   active: {backgroundColor: 'rgba(255,255,255,1)',},
@@ -256,4 +281,6 @@ const styles = StyleSheet.create({
   multipleToggle: {flexDirection: 'row',justifyContent: 'center',marginVertical: 30,alignItems: 'center',},
   multipleToggle__title: {fontSize: 16,marginRight: 8,},
   greySeperator: {width: '100%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10},
+  fixedContentContainer: {width: '90%', marginTop:10, marginBottom:10},
+  fixedContentHeader:{fontSize:18, color:'navy', fontWeight:'bold'}
 });
