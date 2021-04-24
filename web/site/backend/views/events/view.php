@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     'description:ntext',
                     'venue',
+                    'thumbnail_url',
                     'start_at:datetime',
                     'end_at:datetime',
                     'tags:ntext',

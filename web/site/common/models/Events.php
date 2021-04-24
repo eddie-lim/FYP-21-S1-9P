@@ -47,6 +47,7 @@ class Events extends MyCustomActiveRecord
             [['description', 'notes', 'status', 'type'], 'string'],
             [['session', 'venue'], 'string', 'max' => 128],
             [['name'], 'string', 'max' => 256],
+            [['thumbnail_url'], 'string', 'max' => 1028],
             ['status', 'default', 'value'=>MyCustomActiveRecord::STATUS_ENABLED],
             ['school_id', 'default', 'value'=>Yii::$app->user->identity->userProfile->school_id],
             [['tags', 'start_at', 'end_at'], 'safe'],
@@ -75,6 +76,7 @@ class Events extends MyCustomActiveRecord
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'thumbnail_url' => 'Thumbnail URL',
         ];
     }
 
@@ -90,12 +92,16 @@ class Events extends MyCustomActiveRecord
             'university' => function ($model) {
                 return $model->school->name;
             },
+            'university_thumbnail_url' => function ($model) {
+                return $model->school->thumbnail_url;
+            },
             'session',
             'type',
             'description',
             'venue',
             'start_at',
             'end_at',
+            'thumbnail_url',
         ];
     }
 }

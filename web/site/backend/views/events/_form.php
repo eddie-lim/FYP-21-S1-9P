@@ -58,6 +58,9 @@ use yii\web\JsExpression;
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'session')->textInput(['maxlength' => true]) ?>
                     </div>
+                    <div class="col-lg-4 col-xs-12">
+                        <?php echo $form->field($model, 'thumbnail_url')->textInput(['maxlength' => true]) ?>
+                    </div>
                     <div class="col-lg-6 col-xs-12">
                         <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     </div>
