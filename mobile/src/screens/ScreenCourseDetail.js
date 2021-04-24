@@ -77,53 +77,18 @@ const ScreenCourseDetail = (props) => {
   handleJoinEvent = () =>{
     navigate("screenEventDetail", {item:events, source:"screenCourseDetail", courseDetailItem:item})
   }
-  
-  renderSectionTitle = (section) => {
-    return (
-      <View style={styles.content}>
-        <Text>{section.title}</Text>
-      </View>
-    );
-  };
-
-  renderHeader = (section, _, isActive) => {
-    return (
-      <Animatable.View
-        duration={300}
-        transition="backgroundColor"
-        style={[styles.header, isActive ? styles.active : styles.inactive]}>
-        <Text style={styles.headerText}>{section.header}</Text>
-      </Animatable.View>
-    );
-  };
-
-  renderContent = (section, _, isActive) => {
-    return (
-      <Animatable.View
-        duration={300}
-        transition="backgroundColor"
-        style={[styles.content, isActive ? styles.active : styles.inactive]}>
-        <Animatable.Text
-          duration={500}
-          easing="ease-out"
-          animation={isActive ? 'bounceIn' : false}>
-          {section.content}
-        </Animatable.Text>
-      </Animatable.View>
-    );
-  };
 
   renderEvents = () =>{
     if(events == null){
       return (
         <>
-          <Text style={{width:'100%', textAlign:'center'}}>No upcoming events related to this course.</Text>
+          <Text style={{width:'100%', textAlign:'center', marginBottom:20, marginTop:20}}>No upcoming events related to this course.</Text>
         </>
       )
     } else {
       return (
         <>
-          <Text style={{fontWeight:'bold'}}>{events.name}</Text>
+          <Text style={{fontWeight:'bold', marginTop:10}}>{events.name}</Text>
           <Text>{events.description}</Text>
           <Button style={{marginBottom:20, marginTop:20, height:60, justifyContent:'center', backgroundColor:"navy", color:'white' }} icon="door-open" mode="contained" onPress={() => handleJoinEvent()}>
             Join Now
@@ -134,41 +99,43 @@ const ScreenCourseDetail = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <ScrollView style={{backgroundColor: 'rgba(245,252,255,1)'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView style={{backgroundColor: 'white'}}>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           
           <View style={styles.fixedContentContainer}>
             <Text style={{fontSize:30}}>{item.name},&nbsp;{upperFirst(words(item.mode_of_study).join(" "))}</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center', alignContent: 'center'}}>
-              <Text style={{fontSize:20, alignItems: 'center'}}>Awarded by:</Text>
-              <Image source={{uri : item.university_thumbnail_url}} />
+            <View style={{marginTop:15, flexDirection:'row', flexWrap:'wrap'}}>
+              <Text style={{fontSize:20, alignItems: 'center', width:'40%'}}>Awarded by:</Text>
+              <View style={{height:50, width:'50%'}}>
+                <Image style={{width:'100%', height:'100%', resizeMode: "contain"}} source={{uri : item.university_thumbnail_url}} />
+              </View>
             </View>
           </View>
 
           <View style={styles.fixedContentContainer}>
             <Text style={styles.fixedContentHeader}>Application</Text>
             <View style={styles.greySeperator}/>
-            <Text>{item.application}</Text>
+            <Text style={styles.fixedContentBody}>{item.application}</Text>
           </View>
 
           <View style={styles.fixedContentContainer}>
             <Text style={styles.fixedContentHeader}>Course Start Date &amp; End Date</Text>
             <View style={styles.greySeperator}/>
-            <Text>{item.course_start_end_date}</Text>
+            <Text style={styles.fixedContentBody}>{item.course_start_end_date}</Text>
           </View>
 
           <View style={styles.fixedContentContainer}>
             <Text style={styles.fixedContentHeader}>Scholarships &amp; Awards</Text>
             <View style={styles.greySeperator}/>
-            <Text>{item.scholarships_award}</Text>
+            <Text style={styles.fixedContentBody}>{item.scholarships_award}</Text>
           </View>
 
           <View style={styles.fixedContentContainer}>
             <Text style={styles.fixedContentHeader}>Programme Overview</Text>
             <View style={styles.greySeperator}/>
             <Image source={{uri : item.thumbnail_url}} />
-            <Text>{item.overview}</Text>
+            <Text style={styles.fixedContentBody}>{item.overview}</Text>
           </View>
 
           <Pressable style={styles.accordionHeader} onPress={()=>setIntroductionIsCollapsible(previousState => !previousState)}>
@@ -262,25 +229,13 @@ const ScreenCourseDetail = (props) => {
 export default withScreenBase(ScreenCourseDetail, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  container: {flex: 1,backgroundColor: '#F5FCFF',paddingTop: Constants.statusBarHeight,},
-  title: {textAlign: 'center',fontSize: 22,fontWeight: '300',marginBottom: 20,},
-  header: {backgroundColor: '#F5FCFF',padding: 10,},
   accordionBodyText: {width: '90%', flexDirection: 'row', alignItems: 'center', marginTop:15, marginBottom:15},
   accordionHeader: {width: '100%', backgroundColor: StyleConstant.primaryColor, flexDirection: 'row', alignItems: 'center'},
   accordionHeaderText: {color: 'white', fontSize: 16, marginTop: 10, marginBottom:10, marginLeft:10},
   accordionHeaderLeftIcon:{marginTop: 10, marginBottom: 10, marginLeft:10},
   accordionHeaderRightIcon:{marginTop: 10, marginBottom: 10, position: 'absolute', right: 10},
-  headerText: {textAlign: 'center',fontSize: 16,fontWeight: '500',},
-  content: {padding: 20,backgroundColor: '#fff',},
-  active: {backgroundColor: 'rgba(255,255,255,1)',},
-  inactive: {backgroundColor: 'rgba(245,252,255,1)',},
-  selectors: {marginBottom: 10,flexDirection: 'row',justifyContent: 'center',},
-  selector: {backgroundColor: '#F5FCFF',padding: 10,},
-  activeSelector: {fontWeight: 'bold',},
-  selectTitle: {fontSize: 14,fontWeight: '500',padding: 10,},
-  multipleToggle: {flexDirection: 'row',justifyContent: 'center',marginVertical: 30,alignItems: 'center',},
-  multipleToggle__title: {fontSize: 16,marginRight: 8,},
   greySeperator: {width: '100%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10},
   fixedContentContainer: {width: '90%', marginTop:10, marginBottom:10},
-  fixedContentHeader:{fontSize:18, color:'navy', fontWeight:'bold'}
+  fixedContentHeader:{fontSize:18, color:'navy', fontWeight:'bold'},
+  fixedContentBody:{marginTop:10},
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions, StyleSheet, BackHandler, Text, ScrollView } from 'react-native';
+import { View, Image, StyleSheet, BackHandler, Text, ScrollView, Dimensions } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -10,8 +10,6 @@ import { capitalize, join, split, parseInt, map } from 'lodash';
 
 const ScreenSchoolDetail = (props) => {
   const { navigate, goBack } = useNavigation();
-  const [ activeSections, setActiveSections ] = useState([0]);
-  const [ section, setSection ] = useState([]);
   const item = useNavigationParam('item');
   const source = useNavigationParam('source');
 
@@ -24,20 +22,6 @@ const ScreenSchoolDetail = (props) => {
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
 
-    var item_keys = Object.keys(item);
-    setActiveSections(map(Object.keys(item_keys), parseInt));
-    var item_values = Object.values(item);
-    var items = [];
-    for (let i = 0; i < item_keys.length; i++) {
-      const item_key = capitalize(join(split(item_keys[i], "_"), " "));
-      const item_value = item_values[i];
-      items.push({
-        header:item_key,
-        content:item_value
-      })
-    }
-    setSection(items)
-
     return function cleanup() { 
       BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
     } 
@@ -48,58 +32,33 @@ const ScreenSchoolDetail = (props) => {
    navigate("screenLanding");
    return true;
  }
-  
-  renderSectionTitle = (section) => {
-    return (
-      <View style={styles.content}>
-        <Text>{section.title}</Text>
-      </View>
-    );
-  };
-
-  renderHeader = (section, _, isActive) => {
-    return (
-      <Animatable.View
-        duration={300}
-        transition="backgroundColor"
-        style={[styles.header, isActive ? styles.active : styles.inactive]}>
-        <Text style={styles.headerText}>{section.header}</Text>
-      </Animatable.View>
-    );
-  };
-
-  renderContent = (section, _, isActive) => {
-    return (
-      <Animatable.View
-        duration={300}
-        transition="backgroundColor"
-        style={[styles.content, isActive ? styles.active : styles.inactive]}>
-        <Animatable.Text
-          duration={500}
-          easing="ease-out"
-          animation={isActive ? 'bounceIn' : false}>
-          {section.content}
-        </Animatable.Text>
-      </Animatable.View>
-    );
-  };
-
-  updateSections = (activeSections) => {
-    setActiveSections(activeSections);
-  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView style={{backgroundColor: 'rgba(245,252,255,1)'}}>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <Accordion
-          containerStyle={{width:'100%'}}
-          sections={section}
-          activeSections={activeSections}
-          renderHeader={renderHeader}
-          renderContent={renderContent}
-          onChange={updateSections}
-        />
+
+          <View style={styles.fixedContentContainer}>
+            <View style={{height:100, marginTop:15, marginBottom:15}}>
+              <Image style={{width:'100%', height:'100%', resizeMode: "contain"}} source={{uri : item.thumbnail_url}} />
+            </View>
+            <Text style={styles.fixedContentHeader}>{item.name+"\nOverview"}</Text>
+            <View style={styles.greySeperator}/>
+            <Text style={styles.fixedContentBody}>{item.description}</Text>
+          </View>
+
+          <View style={styles.fixedContentContainer}>
+            <Text style={styles.fixedContentHeader}>Highlights</Text>
+            <View style={styles.greySeperator}/>
+            <Text style={styles.fixedContentBody}>{item.highlights}</Text>
+          </View>
+
+          <View style={styles.fixedContentContainer}>
+            <Text style={styles.fixedContentHeader}>Certifications</Text>
+            <View style={styles.greySeperator}/>
+            <Text style={styles.fixedContentBody}>{item.certifications}</Text>
+          </View>
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -109,17 +68,8 @@ const ScreenSchoolDetail = (props) => {
 export default withScreenBase(ScreenSchoolDetail, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  container: {flex: 1,backgroundColor: '#F5FCFF',paddingTop: Constants.statusBarHeight,},
-  title: {textAlign: 'center',fontSize: 22,fontWeight: '300',marginBottom: 20,},
-  header: {backgroundColor: '#F5FCFF',padding: 10,},
-  headerText: {textAlign: 'center',fontSize: 16,fontWeight: '500',},
-  content: {padding: 20,backgroundColor: '#fff',},
-  active: {backgroundColor: 'rgba(255,255,255,1)',},
-  inactive: {backgroundColor: 'rgba(245,252,255,1)',},
-  selectors: {marginBottom: 10,flexDirection: 'row',justifyContent: 'center',},
-  selector: {backgroundColor: '#F5FCFF',padding: 10,},
-  activeSelector: {fontWeight: 'bold',},
-  selectTitle: {fontSize: 14,fontWeight: '500',padding: 10,},
-  multipleToggle: {flexDirection: 'row',justifyContent: 'center',marginVertical: 30,alignItems: 'center',},
-  multipleToggle__title: {fontSize: 16,marginRight: 8,},
+  greySeperator: {width: '100%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10},
+  fixedContentContainer: {width: '90%', marginTop:10, marginBottom:10},
+  fixedContentHeader:{fontSize:18, color:'navy', fontWeight:'bold'},
+  fixedContentBody:{marginTop:10},
 });

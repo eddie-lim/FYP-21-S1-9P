@@ -99,6 +99,7 @@ const ScreenSchoolListing = (props) => {
 export default withScreenBase(ScreenSchoolListing, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
+  container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
   viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
   seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
   imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
