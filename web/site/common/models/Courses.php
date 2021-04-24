@@ -118,8 +118,12 @@ class Courses extends MyCustomActiveRecord
         return [
             'id',
             'name',
+            'school_id',
             'university' => function ($model) {
                 return $model->school->name;
+            },
+            'university_thumbnail_url' => function ($model) {
+                return $model->school->thumbnail_url;
             },
             'mode_of_study',
             'disciplines',
