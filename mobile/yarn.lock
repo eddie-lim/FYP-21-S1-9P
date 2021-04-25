@@ -7394,6 +7394,11 @@ react-native-outline-input@^1.0.8:
   resolved "https://registry.yarnpkg.com/react-native-outline-input/-/react-native-outline-input-1.0.8.tgz#9831544c5e4c6217d2910577a33d5e38fb18aaae"
   integrity sha512-7fwP6nn/MC83gjFZIK++HdLcnIN1c/aLT1bdbHQK2BvNZ5IXtXCRcQAIFTJaRHKL0uTEa1BMfdXvrsS3b4mk9Q==
 
+react-native-pager-view@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.1.5.tgz#711599b6e74ccf922c7dc6e4a8efb7e8ca90775a"
+  integrity sha512-Z2mW1Rz6Mzh2IDKL7KFi/s1BkZxpuGzRhmvYXWVN/TXDcEC8m3wIdCJOccDawbaQ1NXg2pIdACzmfHpO/tbo+w==
+
 react-native-paper@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-4.7.2.tgz#a40d1da87af5b030d45b525313cd703d490876ff"

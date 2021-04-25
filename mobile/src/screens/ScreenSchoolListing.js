@@ -90,8 +90,12 @@ const ScreenSchoolListing = (props) => {
   return (
     <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
-        <View>
-          
+        <View style={styles.fixedContentContainer}>
+          <Text style={styles.fixedContentHeader}>University Partners &amp; SIM GE</Text>
+          <View style={styles.greySeperator}/>
+          <Text style={{...styles.fixedContentBody, color:StyleConstant.primaryColor}}>Your Global Edge starts here</Text>
+          <Text style={styles.fixedContentBody}>Reputable Partners. Top-notch Faculty.</Text>
+          <Text style={styles.fixedContentBody}>SIM GE offers over 80 academic programmes ranging from diploma to bachelor and postgraduate degrees through partnerships with some of the finest universities across the globe. You will be taught by highly qualified and dedicated local and international faculty. Fusing Asian practices with international perspectives for a truly global outlook, our programmes will enable you to gain from the best of all worlds.</Text>
         </View>
         { renderList() }
       </View>
@@ -102,5 +106,9 @@ const ScreenSchoolListing = (props) => {
 export default withScreenBase(ScreenSchoolListing, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
+  container:{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'},
+  greySeperator: {width: '100%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10},
+  fixedContentContainer: {width: '90%', marginTop:10, marginBottom:10},
+  fixedContentHeader:{fontSize:18, color:'navy', fontWeight:'bold'},
+  fixedContentBody:{marginTop:10},
 });

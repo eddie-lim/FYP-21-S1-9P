@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet, Platform, ImageBackground, Image, Pressable } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Settings, StoreSettings, GlobalContext } from '@helpers/Settings';
+import PagerView from 'react-native-pager-view';
 
 const StyleConstant = {
   primaryColor: "#009369",
@@ -73,10 +74,28 @@ const HeaderStyleWithRight = {
 };
 
 const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
+  const viewPagerRef = useRef(null);
+  const [ viewPagerSliderState, setViewPagerSliderState ] = useState(null);
+  var currentViewPagerPage = 0;
   const title = "V0.0.7\nBuilt @ 24th Apr 2021";
   // const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
   // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
   // const logged_in = false;
+  if(viewPagerSliderState==null){
+    var viewPagerSlider = setInterval(function(){
+      if(viewPagerRef.current != null){
+        // 0 - 6
+        viewPagerRef.current.setPage(currentViewPagerPage);
+        if (currentViewPagerPage >= 6) {
+          currentViewPagerPage = 0;
+        } else {
+          currentViewPagerPage ++;
+        }
+      }
+    }, 5000);
+    setViewPagerSliderState(viewPagerSlider)
+  }
+  // clearInterval(viewPagerSlider);
   
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
@@ -105,9 +124,31 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
     }
   }
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 160 : 130, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 180 : 150, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
       <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:10}}>
-        <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text>
+        <PagerView ref={viewPagerRef} style={{height: '100%', width: '100%'}} initialPage={0}>
+          <View key="1">
+            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
+          </View>
+          <View key="2">
+            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/10/Web-Banner-for-counter2.png"}} />
+          </View>
+          <View key="3">
+            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Web_Banner_Create_Big-R2.jpg"}} />
+          </View>
+          <View key="4">
+            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/SIM-Music-Quiz-Mega-banner-V2.png"}} />
+          </View>
+          <View key="5">
+            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Official-Web-Banner-eDM.png"}} />
+          </View>
+          <View key="6">
+            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Nursing-Webinar-GE-Event-Homepage-Banner-1440-x-600.png"}} />
+          </View>
+          <View key="7">
+            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/03-3567-GE-PC-2_Mega-bnr-1440x400.jpg"}} />
+          </View>
+        </PagerView>
       </View>
       <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         {renderAccountButton()}
