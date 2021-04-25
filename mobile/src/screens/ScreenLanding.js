@@ -95,7 +95,7 @@ const ScreenLanding = (props) => {
   renderFlatListItem = ({ item, index }) => {
     return (
       <View style = {{ width: (Dimensions.get('window').width)*0.8, height: (Dimensions.get('window').height)*0.15, borderColor:"black", borderWidth:0, borderRadius:10, marginLeft:index == 0 ? 15 : 0, marginRight:15, marginBottom:10, backgroundColor: '#ededed'}}>
-        <Image source={{uri:item.thumbnail_url}} style={{width:'100%', height:'70%', resizeMode:'contain', paddingLeft:5, paddingRight:5, paddingTop:5, borderTopLeftRadius:10, borderTopRightRadius:10}} />
+        <Image source={{uri:item.thumbnail_url}} style={{width:'100%', height:'70%', resizeMode:'cover', paddingLeft:5, paddingRight:5, paddingTop:5, borderTopLeftRadius:10, borderTopRightRadius:10}} />
         <View style={{backgroundColor:StyleConstant.secondaryColor, width:'100%', height:'30%', borderBottomRightRadius:10, borderBottomLeftRadius:10, paddingLeft:5, paddingRight:5, paddingTop:5}}>
           <Text numberOfLines={1} style={{textAlign:'center', color:StyleConstant.secondaryTextColor}}>{item.name}</Text>
         </View>
@@ -141,25 +141,25 @@ const ScreenLanding = (props) => {
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
             <PagerView ref={viewPagerRef} style={{height: '100%', width: '100%'}} initialPage={0}>
               <View key="1">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
+                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
               </View>
               <View key="2">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/10/Web-Banner-for-counter2.png"}} />
+                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/10/Web-Banner-for-counter2.png"}} />
               </View>
               <View key="3">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Web_Banner_Create_Big-R2.jpg"}} />
+                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Web_Banner_Create_Big-R2.jpg"}} />
               </View>
               <View key="4">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/SIM-Music-Quiz-Mega-banner-V2.png"}} />
+                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/SIM-Music-Quiz-Mega-banner-V2.png"}} />
               </View>
               <View key="5">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Official-Web-Banner-eDM.png"}} />
+                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Official-Web-Banner-eDM.png"}} />
               </View>
               <View key="6">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Nursing-Webinar-GE-Event-Homepage-Banner-1440-x-600.png"}} />
+                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Nursing-Webinar-GE-Event-Homepage-Banner-1440-x-600.png"}} />
               </View>
               <View key="7">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/03-3567-GE-PC-2_Mega-bnr-1440x400.jpg"}} />
+                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/03-3567-GE-PC-2_Mega-bnr-1440x400.jpg"}} />
               </View>
             </PagerView>
           </View>
