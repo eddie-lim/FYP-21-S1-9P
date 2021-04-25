@@ -341,7 +341,7 @@ const ScreenEventListing = (props) => {
       </Pressable>
     )
   }
-  const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)*0.5);
+  const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)*0.45);
   // FLATLIST FUNCTIONS ---- END
 
   return (

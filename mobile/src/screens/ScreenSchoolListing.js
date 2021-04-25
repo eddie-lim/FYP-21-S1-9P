@@ -84,12 +84,15 @@ const ScreenSchoolListing = (props) => {
       </Pressable>
     )
   }
-  const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)-80);
+  const [refreshList, renderList] = CustomFlatList(getList, data, renderItem, "No information found", refreshing, isLastPage, 1, flatListRef, "course", (Dimensions.get('window').height)*0.5);
   // FLATLIST FUNCTIONS ---- END
 
   return (
     <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
+        <View>
+          
+        </View>
         { renderList() }
       </View>
     </SafeAreaView>
@@ -100,11 +103,4 @@ export default withScreenBase(ScreenSchoolListing, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
-  viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
-  seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
-  imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
-  topHolder: {flexDirection: 'row', position: 'absolute', right: 10, top: 10},
-  logoHolder: {width: '90%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center'},
-  logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
-  centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'}
 });
