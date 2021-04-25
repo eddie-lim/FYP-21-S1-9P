@@ -7,7 +7,7 @@ $this->title = Yii::$app->name;
 ?>
 <div class="site-index">
 	<div class="jumbotron">
-		Intro text for the team here
+		We are the team doing SIM Open House APP
 	</div>
 
     <ul class="list-inline d-flex justify-content-between">
