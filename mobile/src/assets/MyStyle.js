@@ -1,20 +1,20 @@
 import React, { useRef, useState } from 'react';
-import { Text, View, StyleSheet, Platform, ImageBackground, Image, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Platform, Image, Pressable } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Settings, StoreSettings, GlobalContext } from '@helpers/Settings';
 import PagerView from 'react-native-pager-view';
 
 const StyleConstant = {
   primaryColor: "#009369",
-  primaryColorLight: "#00c48c",
-  primaryColorDark: "#1b5e20",
-  primaryTextColor: "#000000",
+  // primaryColor: "#009369",
+  primaryColorLight: "#4fc497",
+  primaryColorDark: "#00643e",
+  primaryTextColor: "#ffffff",
 
-  secondaryColor: "#fbc02d",
-  secondaryColorWithAlpha: '#fbc02dda',
-  secondaryColorLight: "#fff263",
-  secondaryColorDark: "#c49000",  
+  secondaryColor: "#0a2f4f",
+  secondaryColorWithAlpha: '#0a2f4fda',
+  secondaryColorLight: "#3c587b",
+  secondaryColorDark: "#000427",  
   secondaryTextColor: "#ffffff",
   mutedTextColor: "#cccccc",
 
@@ -74,28 +74,10 @@ const HeaderStyleWithRight = {
 };
 
 const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
-  const viewPagerRef = useRef(null);
-  const [ viewPagerSliderState, setViewPagerSliderState ] = useState(null);
-  var currentViewPagerPage = 0;
   const title = "V0.0.7\nBuilt @ 24th Apr 2021";
   // const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
   // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
   // const logged_in = false;
-  if(viewPagerSliderState==null){
-    var viewPagerSlider = setInterval(function(){
-      if(viewPagerRef.current != null){
-        // 0 - 6
-        viewPagerRef.current.setPage(currentViewPagerPage);
-        if (currentViewPagerPage >= 6) {
-          currentViewPagerPage = 0;
-        } else {
-          currentViewPagerPage ++;
-        }
-      }
-    }, 5000);
-    setViewPagerSliderState(viewPagerSlider)
-  }
-  // clearInterval(viewPagerSlider);
   
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
@@ -117,7 +99,7 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   renderSettingsButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 15, bottom: 15}}>
+        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 20, bottom: 10}}>
           <Icon name={'cog'} size={30} color={'white'}/>
         </Pressable>
       )
@@ -125,34 +107,15 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   }
   return(
     <View style={{width: '100%', height: Platform.OS == 'ios' ? 180 : 150, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:10}}>
-        <PagerView ref={viewPagerRef} style={{height: '100%', width: '100%'}} initialPage={0}>
-          <View key="1">
-            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
-          </View>
-          <View key="2">
-            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/10/Web-Banner-for-counter2.png"}} />
-          </View>
-          <View key="3">
-            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Web_Banner_Create_Big-R2.jpg"}} />
-          </View>
-          <View key="4">
-            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/SIM-Music-Quiz-Mega-banner-V2.png"}} />
-          </View>
-          <View key="5">
-            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Official-Web-Banner-eDM.png"}} />
-          </View>
-          <View key="6">
-            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Nursing-Webinar-GE-Event-Homepage-Banner-1440-x-600.png"}} />
-          </View>
-          <View key="7">
-            <Image style={{width:'100%', height:'100%', maxHeight:Platform.OS == 'ios' ? 180 : 150, resizeMode:'contain'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/03-3567-GE-PC-2_Mega-bnr-1440x400.jpg"}} />
-          </View>
-        </PagerView>
+      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:0, backgroundColor:'white', borderBottomLeftRadius:30, /*borderBottomRightRadius:30*/}}>
+        <Image style={{height: '75%', width: '100%', resizeMode:'contain'}} source={require('@assets/img/openhouse-logo.png')} />
+        {/* <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text> */}
       </View>
-      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '30%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{backgroundColor:'white', width: '100%', height: '35%',}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30}}>
         {renderAccountButton()}
         {renderSettingsButton()}
+      </View>
       </View>
     </View>
   );
@@ -198,7 +161,7 @@ const ShareStyle = StyleSheet.create({
   txtBold : { fontWeight: 'bold' },
   txtRegular : {},
   textShadow: { textShadowColor: 'rgba(0,0,0,0.75)', textShadowOffset: {width: 1, height: 1}, textShadowRadius: 5 },
-  curveThis: {borderBottomLeftRadius:30, borderBottomRightRadius:30, }
+  curveThis: {borderBottomLeftRadius:20, borderBottomRightRadius:20, }
 });
 /*
 const MyThemeReactPaper = {

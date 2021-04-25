@@ -39,6 +39,17 @@ const LandingStack = createStackNavigator({
   screenChangePassword: ScreenChangePassword,
   screenProfile: ScreenProfile,
   screenSettings: ScreenSettings,
+
+
+  screenEventListing: ScreenEventListing,
+  screenEventDetail: ScreenEventDetail,
+  screenEventRegistration: ScreenEventRegistration,
+
+  // screenUniversity: ScreenUniversity,
+  screenCourseListing: ScreenCourseListing,
+  screenSchoolListing: ScreenSchoolListing,
+  screenCourseDetail: ScreenCourseDetail,
+  screenSchoolDetail: ScreenSchoolDetail,
 }, { initialRouteName: 'screenLanding', defaultNavigationOptions:{headerShown:false} });
 
 LandingStack.navigationOptions = ({ navigation }) => {
@@ -92,18 +103,18 @@ const QuestionsStack = createStackNavigator({
 //##############################################
 
 const MainBottomTab= createBottomTabNavigator({
-  university: {
-    screen: UniversityStack,
-    navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>),
-      tabBarIcon: ({ focused }) =>(
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'school'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>
-        </View>
-      ),
-    }
-  },
+  // university: {
+  //   screen: UniversityStack,
+  //   navigationOptions:{
+  //     tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>),
+  //     tabBarIcon: ({ focused }) =>(
+  //       <View style={{alignItems: 'center', justifyContent: 'center'}}>
+  //         <Icon name={'school'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
+  //         <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>
+  //       </View>
+  //     ),
+  //   }
+  // },
   map: {
     screen: MapStack,
     navigationOptions:{
@@ -130,18 +141,18 @@ const MainBottomTab= createBottomTabNavigator({
       },
     }
   },
-  event: {
-    screen: EventStack,
-    navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>),
-      tabBarIcon: ({ focused }) =>(
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'calendar'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>
-        </View>
-      ),
-    }
-  },
+  // event: {
+  //   screen: EventStack,
+  //   navigationOptions:{
+  //     tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>),
+  //     tabBarIcon: ({ focused }) =>(
+  //       <View style={{alignItems: 'center', justifyContent: 'center'}}>
+  //         <Icon name={'calendar'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
+  //         <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>
+  //       </View>
+  //     ),
+  //   }
+  // },
   questions: {
     screen: QuestionsStack,
     navigationOptions:{

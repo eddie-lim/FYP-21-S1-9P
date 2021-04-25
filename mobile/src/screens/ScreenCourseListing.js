@@ -65,7 +65,8 @@ const ScreenCourseListing = (props) => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
       header:()=> HeaderWithBack("Courses", ()=>{
-        navigate("screenUniversity")
+        // navigate("screenUniversity")
+        navigate("screenLanding")
       }, 
       <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
         <Icon name={'filter-variant'} color={'white'} size={30} />

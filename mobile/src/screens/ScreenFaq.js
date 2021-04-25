@@ -84,11 +84,6 @@ const ScreenFaq = (props) => {
 export default withScreenBase(ScreenFaq, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  viewHolder: { flex: 1, alignItems: 'stretch', flexDirection: 'column', backgroundColor: '#ffffff' },
-  seperator: {width: '90%', height: 1.5, backgroundColor: 'gray', alignSelf: 'center', marginTop: 30},
-  imgBg: {width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center'},
-  topHolder: {flexDirection: 'row', position: 'absolute', right: 10, top: 10},
-  logoHolder: {width: '90%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center'},
-  logo: {width: (Dimensions.get('window').width) * 0.8, height: ((Dimensions.get('window').width) * 0.8)/3},
-  centerContent: {width: '100%', height: (Dimensions.get('window').height) * 0.55, justifyContent: 'space-between'}
+  container:{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'},
+  card:{marginBottom:15}
 });

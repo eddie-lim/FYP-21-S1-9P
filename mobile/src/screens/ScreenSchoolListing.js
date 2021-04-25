@@ -39,7 +39,8 @@ const ScreenSchoolListing = (props) => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
       header:()=> HeaderWithBack("University Partners", ()=>{
-        navigate("screenUniversity")
+        // navigate("screenUniversity")
+        navigate("screenLanding")
       })
     }});
     return function cleanup() { } 

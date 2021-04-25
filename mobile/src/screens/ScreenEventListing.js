@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, Dimensions, StyleSheet, Text, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeaderWithCustomButtons, StyleConstant } from '@assets/MyStyle';
+import { HeaderWithCustomButtons, StyleConstant, HeaderWithBack } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import { useNavigation } from 'react-navigation-hooks';
 import CustomFlatList from '@components/CustomFlatList';
@@ -58,10 +58,17 @@ const ScreenEventListing = (props) => {
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
-      header: ()=>HeaderWithCustomButtons('Events', null, 
+      header:()=> HeaderWithBack("Events", ()=>{
+        // navigate("screenUniversity")
+        navigate("screenLanding")
+      }, 
       <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
+      // header: ()=>HeaderWithCustomButtons('Events', null, 
+      // <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
+      //   <Icon name={'filter-variant'} color={'white'} size={30} />
+      // </Pressable>)
     }});
     return function cleanup() {
       if(slidingUpPanelRef.current != null){
