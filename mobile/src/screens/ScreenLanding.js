@@ -27,7 +27,7 @@ const ScreenLanding = (props) => {
 
   const viewPagerRef = useRef(null);
   const [ viewPagerSliderState, setViewPagerSliderState ] = useState(null);
-  var currentViewPagerPage = 0;
+  var currentViewPagerPage = useRef(0);
 
   useEffect(() => {
     getFeaturedItems();
@@ -38,12 +38,12 @@ const ScreenLanding = (props) => {
       var viewPagerSlider = setInterval(function(){
         if(viewPagerRef.current != null){
           // 0 - 6
-          viewPagerRef.current.setPage(currentViewPagerPage);
-          if (currentViewPagerPage >= 6) {
-            currentViewPagerPage = 0;
+          if (currentViewPagerPage.current >= 6) {
+            currentViewPagerPage.current = 0;
           } else {
-            currentViewPagerPage ++;
+            currentViewPagerPage.current ++;
           }
+          viewPagerRef.current.setPage(currentViewPagerPage.current);
         }
       }, 5000);
       setViewPagerSliderState(viewPagerSlider)
@@ -139,7 +139,7 @@ const ScreenLanding = (props) => {
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', marginTop:20, paddingBottom:5}}>
           
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
-            <PagerView ref={viewPagerRef} style={{height: '100%', width: '100%'}} initialPage={0}>
+            <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; console.log("onPageSelected",e.nativeEvent.position) }} style={{height: '100%', width: '100%'}} initialPage={0}>
               <View key="1">
                 <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
               </View>
