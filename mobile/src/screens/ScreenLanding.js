@@ -92,14 +92,14 @@ const ScreenLanding = (props) => {
     })
   }
 
-  renderFlatListItem = ({ item, index }) => {
+  renderFlatListItem = ({ item, index }, endpoint) => {
     return (
-      <View style = {{ width: (Dimensions.get('window').width)*0.8, height: (Dimensions.get('window').height)*0.15, borderColor:"black", borderWidth:0, borderRadius:10, marginLeft:index == 0 ? 15 : 0, marginRight:15, marginBottom:10, backgroundColor: '#ededed'}}>
+      <Pressable onPress={()=>{ navigate(endpoint, {item:item, source:"screenLanding"}) }} style = {{ width: (Dimensions.get('window').width)*0.8, height: (Dimensions.get('window').height)*0.15, borderColor:"black", borderWidth:0, borderRadius:10, marginLeft:index == 0 ? 15 : 0, marginRight:15, marginBottom:10, backgroundColor: '#ededed'}}>
         <Image source={{uri:item.thumbnail_url}} style={{width:'100%', height:'70%', resizeMode:'cover', paddingLeft:5, paddingRight:5, paddingTop:5, borderTopLeftRadius:10, borderTopRightRadius:10}} />
         <View style={{backgroundColor:StyleConstant.secondaryColor, width:'100%', height:'30%', borderBottomRightRadius:10, borderBottomLeftRadius:10, paddingLeft:5, paddingRight:5, paddingTop:5}}>
           <Text numberOfLines={1} style={{textAlign:'center', color:StyleConstant.secondaryTextColor}}>{item.name}</Text>
         </View>
-      </View>
+      </Pressable>
     )
   }
 
@@ -176,7 +176,7 @@ const ScreenLanding = (props) => {
               pagingEnabled={true}
               showsHorizontalScrollIndicator={true}
               data={events}
-              renderItem={item => renderFlatListItem(item)}
+              renderItem={item => renderFlatListItem(item, "screenEventDetail")}
               keyExtractor={i => i.id}
               style={styles.flatListContainer}
             />
@@ -195,7 +195,7 @@ const ScreenLanding = (props) => {
               pagingEnabled={true}
               showsHorizontalScrollIndicator={true}
               data={courses}
-              renderItem={item => renderFlatListItem(item)}
+              renderItem={item => renderFlatListItem(item, "screenCourseDetail")}
               keyExtractor={i => i.id}
               style={styles.flatListContainer}
             />
@@ -214,7 +214,7 @@ const ScreenLanding = (props) => {
               pagingEnabled={true}
               showsHorizontalScrollIndicator={true}
               data={universityPartners}
-              renderItem={item => renderFlatListItem(item)}
+              renderItem={item => renderFlatListItem(item, "screenSchoolDetail")}
               keyExtractor={i => i.id}
               style={styles.flatListContainer}
             />
