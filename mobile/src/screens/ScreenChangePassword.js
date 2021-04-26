@@ -18,9 +18,9 @@ const ScreenChangePassword = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
   
-  const [ currentPassword, setCurrentPassword ] = useState("password");
-  const [ password, setPassword ] = useState("12345678");
-  const [ passwordConfirm, setPasswordConfirm ] = useState("12345678");
+  const [ currentPassword, setCurrentPassword ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ passwordConfirm, setPasswordConfirm ] = useState("");
 
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
   const [ passwordConfirmErrorMsg, setPasswordConfirmErrorMsg ] = useState("");
