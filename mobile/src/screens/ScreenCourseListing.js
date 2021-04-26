@@ -72,6 +72,7 @@ const ScreenCourseListing = (props) => {
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }}, goBack);
+    renderFilterFields();
     return function cleanup() { 
       if(slidingUpPanelRef.current != null){
         slidingUpPanelRef.current.hide();
@@ -505,12 +506,12 @@ const ScreenCourseListing = (props) => {
     <SafeAreaView style={{flex:1}}>
       <NavigationEvents
         onWillFocus={()=>{
-          renderFilterFields();
+          // renderFilterFields();
         }}
         onWillBlur={()=>{
           if(slidingUpPanelRef.current != null){
             slidingUpPanelRef.current.hide();
-            initSlidingPanel(<></>, null)
+            // initSlidingPanel(<></>, null)
           }
         }}
       />
