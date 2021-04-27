@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { View, Dimensions, StyleSheet, FlatList, Text, ImageBackground, Image, Pressable, ScrollView } from 'react-native';
 import { HomeHeader, StyleConstant, fabStyle, ShadowStyle, ShareStyle } from '@assets/MyStyle';
 import LottieView from 'lottie-react-native';
@@ -11,6 +11,7 @@ import WebApi from '@helpers/WebApi';
 import { capitalize, isArray, shuffle } from 'lodash';
 import HelperFunctions from '@helpers/HelperFunctions';
 import PagerView from 'react-native-pager-view';
+import { Placeholder, PlaceholderMedia, PlaceholderLine, ShineOverlay } from "rn-placeholder";
 
 const ScreenLanding = (props) => {
   const { navigate } = useNavigation();
@@ -103,6 +104,94 @@ const ScreenLanding = (props) => {
     )
   }
 
+  renderFlatListPlaceholder = () =>{
+    return(
+      <View style={{flexDirection:'row'}}>
+        <Placeholder
+          style={{width: (Dimensions.get('window').width)*0.8, height: (Dimensions.get('window').height)*0.15, marginLeft: 15, marginRight:15, marginTop:15}}
+          Animation={ShineOverlay}
+        >
+          <PlaceholderMedia style={{width:"100%", height:'70%', borderRadius:10}} />
+          <PlaceholderLine style={{position:'absolute', bottom:0, borderRadius:10}} />
+        </Placeholder>
+
+        <Placeholder
+          style={{width: (Dimensions.get('window').width)*0.8, height: (Dimensions.get('window').height)*0.15, marginTop:15}}
+          Animation={ShineOverlay}
+        >
+          <PlaceholderMedia style={{width:"100%", height:'70%', borderRadius:10}} />
+          <PlaceholderLine style={{position:'absolute', bottom:0, borderRadius:10}} />
+        </Placeholder>
+      </View>
+    )
+  }
+
+  renderEventFlatList = () =>{
+    if(events.length == 0){
+      return(
+        <>
+          {renderFlatListPlaceholder()}
+        </>
+      )
+    } else {
+      return(
+        <FlatList
+          horizontal
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={true}
+          data={events}
+          renderItem={item => renderFlatListItem(item, "screenEventDetail")}
+          keyExtractor={i => i.id}
+          style={styles.flatListContainer}
+        />
+      )
+    }
+  }
+
+  renderCourseFlatList = () =>{
+    if(courses.length == 0){
+      return(
+        <>
+          {renderFlatListPlaceholder()}
+        </>
+      )
+    } else {
+      return(
+        <FlatList
+          horizontal
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={true}
+          data={courses}
+          renderItem={item => renderFlatListItem(item, "screenCourseDetail")}
+          keyExtractor={i => i.id}
+          style={styles.flatListContainer}
+        />
+      )
+    }
+  }
+
+  renderUniPartnerFlatList = () =>{
+    if(universityPartners.length == 0){
+      return(
+        <>
+          {renderFlatListPlaceholder()}
+        </>
+      )
+    } else {
+      return(
+        <FlatList
+          horizontal
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={true}
+          data={universityPartners}
+          renderItem={item => renderFlatListItem(item, "screenSchoolDetail")}
+          keyExtractor={i => i.id}
+          style={styles.flatListContainer}
+        />
+      )
+    }
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <NavigationEvents
@@ -171,15 +260,8 @@ const ScreenLanding = (props) => {
                 <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
               </Pressable>
             </View>
-            <FlatList
-              horizontal
-              pagingEnabled={true}
-              showsHorizontalScrollIndicator={true}
-              data={events}
-              renderItem={item => renderFlatListItem(item, "screenEventDetail")}
-              keyExtractor={i => i.id}
-              style={styles.flatListContainer}
-            />
+            
+            { useMemo( renderEventFlatList, [events]) }
             <View style={styles.greySeperator}/>
           </View>
 
@@ -190,15 +272,8 @@ const ScreenLanding = (props) => {
                 <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
               </Pressable>
             </View>
-            <FlatList
-              horizontal
-              pagingEnabled={true}
-              showsHorizontalScrollIndicator={true}
-              data={courses}
-              renderItem={item => renderFlatListItem(item, "screenCourseDetail")}
-              keyExtractor={i => i.id}
-              style={styles.flatListContainer}
-            />
+
+            { useMemo( renderCourseFlatList, [courses]) }
             <View style={styles.greySeperator}/>
           </View>
 
@@ -209,15 +284,8 @@ const ScreenLanding = (props) => {
                 <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
               </Pressable>
             </View>
-            <FlatList
-              horizontal
-              pagingEnabled={true}
-              showsHorizontalScrollIndicator={true}
-              data={universityPartners}
-              renderItem={item => renderFlatListItem(item, "screenSchoolDetail")}
-              keyExtractor={i => i.id}
-              style={styles.flatListContainer}
-            />
+
+            { useMemo( renderUniPartnerFlatList, [universityPartners]) }
           </View>
 
         </View>

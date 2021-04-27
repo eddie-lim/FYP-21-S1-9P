@@ -279,6 +279,7 @@ const ScreenEventListing = (props) => {
         and_counter++;
       }
 
+      setRefreshing(true);
       WebApi.listEvents(page, filter).then((res)=>{
         if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
           setIsLastPage(true);
@@ -317,7 +318,6 @@ const ScreenEventListing = (props) => {
 
         const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
-        setRefreshing(false);
       }).catch((err)=>{
         console.log(err)
         var error = err.data;
@@ -327,6 +327,8 @@ const ScreenEventListing = (props) => {
           HelperFunctions.showToast(error)
         }
         return
+      }).finally(()=>{
+        setRefreshing(false);
       })
     }
   }

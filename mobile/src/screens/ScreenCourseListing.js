@@ -463,13 +463,13 @@ const ScreenCourseListing = (props) => {
         filter += "&filter[and]["+and_counter+"][or][3][tags][like][]="+trim(keyword.current)
         and_counter++;
       }
+      setRefreshing(true);
       WebApi.listCourses(page, filter).then((res)=>{
         if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
-        setRefreshing(false);
       }).catch((err)=>{
         var error = err.data;
         if(isArray(error)){
@@ -478,6 +478,8 @@ const ScreenCourseListing = (props) => {
           HelperFunctions.showToast(error)
         }
         return
+      }).finally(()=>{
+        setRefreshing(false);
       })
     }
   }

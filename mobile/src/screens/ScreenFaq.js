@@ -33,13 +33,13 @@ const ScreenFaq = (props) => {
   // FLATLIST FUNCTIONS ---- START
   getList = (page = 1)=>{
     if(!refreshing){
+      setRefreshing(true);
       WebApi.listFaq(page).then((res)=>{
         if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
-        setRefreshing(false);
       }).catch((err)=>{
         var error = err.data;
         if(isArray(error)){
@@ -48,6 +48,8 @@ const ScreenFaq = (props) => {
           HelperFunctions.showToast(error)
         }
         return
+      }).finally(()=>{
+        setRefreshing(false);
       })
     }
   }
@@ -84,6 +86,6 @@ const ScreenFaq = (props) => {
 export default withScreenBase(ScreenFaq, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  container:{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'},
+  container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
   card:{marginBottom:15}
 });

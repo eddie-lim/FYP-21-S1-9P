@@ -49,13 +49,13 @@ const ScreenSchoolListing = (props) => {
   // FLATLIST FUNCTIONS ---- START
   getList = (page = 1)=>{
     if(!refreshing){
+      setRefreshing(true);
       WebApi.listUniversityPartners(page).then((res)=>{
         if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
-        setRefreshing(false);
       }).catch((err)=>{
         var error = err.data;
         if(isArray(error)){
@@ -64,6 +64,8 @@ const ScreenSchoolListing = (props) => {
           HelperFunctions.showToast(error)
         }
         return
+      }).finally(()=>{
+        setRefreshing(false);
       })
     }
   }
@@ -98,6 +100,8 @@ const ScreenSchoolListing = (props) => {
           <Text style={styles.fixedContentBody}>Reputable Partners. Top-notch Faculty.</Text>
           <Text style={styles.fixedContentBody}>SIM GE offers over 80 academic programmes ranging from diploma to bachelor and postgraduate degrees through partnerships with some of the finest universities across the globe. You will be taught by highly qualified and dedicated local and international faculty. Fusing Asian practices with international perspectives for a truly global outlook, our programmes will enable you to gain from the best of all worlds.</Text>
         </View>
+      </View>
+      <View style={styles.flatListContainer}>
         { renderList() }
       </View>
     </SafeAreaView>
@@ -112,4 +116,5 @@ const styles = StyleSheet.create({
   fixedContentContainer: {width: '90%', marginTop:10, marginBottom:10},
   fixedContentHeader:{fontSize:18, color:'navy', fontWeight:'bold'},
   fixedContentBody:{marginTop:10},
+  flatListContainer:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
 });

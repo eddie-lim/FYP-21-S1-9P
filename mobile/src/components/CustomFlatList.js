@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View, Text, RefreshControl } from 'react-native';
 import { StyleConstant } from '@assets/MyStyle';
+import { Placeholder, PlaceholderMedia, PlaceholderLine, ShineOverlay } from "rn-placeholder";
 
 export default CustomFlatList = (callApi, data_state, renderItem, emptyListString, refreshing, lastPage, numCol = 1, reference, type, flatlistHeight=400) => {
     const [ page, setPage ] = useState(1);
@@ -15,9 +16,79 @@ export default CustomFlatList = (callApi, data_state, renderItem, emptyListStrin
     }
 
     render = () => {
-        // if(refreshing){
-        //     return Render.renderPlaceHolder(type);
-        // } else{
+        if(refreshing){
+            return (
+                <View style={{marginLeft:15, marginRight:15, marginTop:15, width:'100%'}}>
+                    <Placeholder
+                    Animation={ShineOverlay}
+                    Left={PlaceholderMedia}
+                    >
+                        <PlaceholderLine width={50} />
+                        <PlaceholderLine width={20} />
+                    </Placeholder>
+
+                    <View style={styles.greySeperator}/>
+
+                    <Placeholder
+                    Animation={ShineOverlay}
+                    Left={PlaceholderMedia}
+                    >
+                        <PlaceholderLine width={50} />
+                        <PlaceholderLine width={20} />
+                    </Placeholder>
+
+                    <View style={styles.greySeperator}/>
+
+                    <Placeholder
+                    Animation={ShineOverlay}
+                    Left={PlaceholderMedia}
+                    >
+                        <PlaceholderLine width={50} />
+                        <PlaceholderLine width={20} />
+                    </Placeholder>
+
+                    <View style={styles.greySeperator}/>
+
+                    <Placeholder
+                    Animation={ShineOverlay}
+                    Left={PlaceholderMedia}
+                    >
+                        <PlaceholderLine width={50} />
+                        <PlaceholderLine width={20} />
+                    </Placeholder>
+                    
+                    <View style={styles.greySeperator}/>
+
+                    <Placeholder
+                    Animation={ShineOverlay}
+                    Left={PlaceholderMedia}
+                    >
+                        <PlaceholderLine width={50} />
+                        <PlaceholderLine width={20} />
+                    </Placeholder>
+                    
+                    <View style={styles.greySeperator}/>
+
+                    <Placeholder
+                    Animation={ShineOverlay}
+                    Left={PlaceholderMedia}
+                    >
+                        <PlaceholderLine width={50} />
+                        <PlaceholderLine width={20} />
+                    </Placeholder>
+                    
+                    <View style={styles.greySeperator}/>
+
+                    <Placeholder
+                    Animation={ShineOverlay}
+                    Left={PlaceholderMedia}
+                    >
+                        <PlaceholderLine width={50} />
+                        <PlaceholderLine width={20} />
+                    </Placeholder>
+                </View>
+            )
+        } else{
             return <FlatList
             ListEmptyComponent={
                 <View style={{flex: 1, height: flatlistHeight, alignItems: 'center', justifyContent: 'center'}}>
@@ -35,7 +106,7 @@ export default CustomFlatList = (callApi, data_state, renderItem, emptyListStrin
             onEndReachedThreshold={0.1}
             extraData={(item)=> item.selected}
             />
-        // }
+        }
     }
 
     return [handleRefresh, render];
@@ -45,5 +116,6 @@ const styles = StyleSheet.create({
     listEmptyComponent: {width: '100%', height: 100, flex: 1, alignItems: 'center', justifyContent: 'center',alignSelf: 'center'},
     placeHolder: {width: 40, borderRadius: 20, margin: 5, height: 40},  
     row: { flex: 1, justifyContent: "space-between" },
+    greySeperator: {width: '90%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10, marginBottom: 10},
 });
   
