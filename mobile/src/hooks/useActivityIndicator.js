@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Dimensions, StyleSheet } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Modal from "react-native-modal";
+import LottieView from 'lottie-react-native';
 
 export default useActivityIndicator = () => { 
   //causing error
@@ -9,20 +11,34 @@ export default useActivityIndicator = () => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState("Loading...");
   
-  toggle = (flag, text = null) => { 
-    setVisible(flag); 
-    if(text != null){
-      setMessage(text);} else {setMessage("Loading...");
-    } 
+  toggle = (flag, text = null) => {
+    if(flag == false){
+      setTimeout(() => {
+        setVisible(flag);
+      }, 1234);
+    } else {
+      setVisible(flag);
+      if(text != null){
+        setMessage(text);} else {setMessage("Loading...");
+      } 
+    }
   };
 
   render = () => {
     return (
-      <Spinner
-        visible={visible}
-        textContent={message}
-        textStyle={styles.spinnerTextStyle}
-      />
+      // <Spinner
+      //   visible={visible}
+      //   textContent={message}
+      //   textStyle={styles.spinnerTextStyle}
+      // />
+      <Modal key={id} visible={visible} animationIn={'fadeIn'} animationOut={'fadeOut'} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#00000070', margin: 0}}
+        deviceWidth={(Dimensions.get('window').width)}
+        deviceHeight={(Dimensions.get('window').height)}
+        hardwareAccelerated={true}
+      >
+        <LottieView style={{height: 200}} source={require('@assets/animation/lego-loader-410.json')} autoPlay={true} loop={true} />
+        {/* <LottieView style={{height: 200}} source={require('@assets/animation/ripple-loading-448.json')} autoPlay={true} loop={true} /> */}
+      </Modal>
     );
   }
 
