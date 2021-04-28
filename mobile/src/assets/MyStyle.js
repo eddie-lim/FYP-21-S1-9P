@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PagerView from 'react-native-pager-view';
 
 const StyleConstant = {
-  primaryColor: "#009369",
+  primaryColor: "#009067",
   // primaryColor: "#009369",
   primaryColorLight: "#4fc497",
   primaryColorDark: "#00643e",

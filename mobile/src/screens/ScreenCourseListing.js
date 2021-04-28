@@ -465,7 +465,7 @@ const ScreenCourseListing = (props) => {
       }
       setRefreshing(true);
       WebApi.listCourses(page, filter).then((res)=>{
-        if(parseInt(res.meta["totalCount"]) < parseInt(res.meta["perPage"])){
+        if(parseInt(res.meta["currentPage"]) >= parseInt(res.meta["pageCount"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];

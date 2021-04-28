@@ -281,7 +281,7 @@ const ScreenEventListing = (props) => {
 
       setRefreshing(true);
       WebApi.listEvents(page, filter).then((res)=>{
-        if(parseInt(res.meta["totalCount"]) < parseInt(res.meta["perPage"])){
+        if(parseInt(res.meta["currentPage"]) >= parseInt(res.meta["pageCount"])){
           setIsLastPage(true);
         }
         if(page = 1){

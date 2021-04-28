@@ -7,7 +7,8 @@ export default CustomFlatList = (callApi, data_state, renderItem, emptyListStrin
     const [ page, setPage ] = useState(1);
 
     useEffect(() => {
-        if(!lastPage){ callApi(); }
+        console.log("callApi page", page)
+        if(!lastPage){ callApi(page); }
     }, [page]);
     
     handleRefresh = async () => {
@@ -16,7 +17,7 @@ export default CustomFlatList = (callApi, data_state, renderItem, emptyListStrin
     }
 
     render = () => {
-        if(refreshing){
+        if(refreshing && page == 1){
             return (
                 <View style={{marginLeft:15, marginRight:15, marginTop:15, width:'100%'}}>
                     <Placeholder

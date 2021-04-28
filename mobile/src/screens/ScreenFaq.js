@@ -32,10 +32,11 @@ const ScreenFaq = (props) => {
 
   // FLATLIST FUNCTIONS ---- START
   getList = (page = 1)=>{
+    console.log("getList page", page)
     if(!refreshing){
       setRefreshing(true);
-      WebApi.listFaq(page).then((res)=>{
-        if(parseInt(res.meta["totalCount"]) < parseInt(res.meta["perPage"])){
+      WebApi.listFaq(page).then((res)=>{        
+        if(parseInt(res.meta["currentPage"]) >= parseInt(res.meta["pageCount"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
