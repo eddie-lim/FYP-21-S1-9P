@@ -228,7 +228,7 @@ const ScreenLanding = (props) => {
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', marginTop:20, paddingBottom:5}}>
           
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
-            <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; console.log("onPageSelected",e.nativeEvent.position) }} style={{height: '100%', width: '100%'}} initialPage={0}>
+            <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; }} style={{height: '100%', width: '100%'}} initialPage={0}>
               <View key="1">
                 <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
               </View>
@@ -302,8 +302,8 @@ const styles = StyleSheet.create({
     width: 1
   }},
   greySeperator: {width: '100%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10},
-  flatListHeaderLeft:{fontSize:18, color:'navy', fontWeight:'bold', marginLeft:15},
-  flatListHeaderRight:{fontSize:14, color:'#6e6e6e', fontWeight:'bold', marginRight:15},
+  flatListHeaderLeft:{fontSize:18, color:'black', fontWeight:'bold', marginLeft:15},
+  flatListHeaderRight:{fontSize:14, color:'navy', fontWeight:'bold', marginRight:15},
   flatListContainer:{width: '100%', height:(Dimensions.get('window').height)*0.17, marginTop:15, marginBottom:5},
   flatListHeaderContainer:{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop:15},
 });
