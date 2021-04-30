@@ -75,7 +75,7 @@
 				<li class="no-bullet">
 					<ul>
 						<li style="list-style-type: square;">Learning Objectives – how to create mobile app, how to learn mobile programming, how to design the databases, how to manage time and assign the tasks</li>
-						<li style="list-style-type: square;">Product Objectives – about developing SIM object house app, providing two interfaces for students and admins</li>
+						<li style="list-style-type: square;">Product Objectives – about developing SIM open house app, providing two interfaces for students and admins</li>
 					</ul>
 				</li>
 				<li>Research – summary of all the research by the team regarding functional requirements (one slide is enough)</li>
