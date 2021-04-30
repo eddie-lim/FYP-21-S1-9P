@@ -8,6 +8,7 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 
 $this->beginContent('@frontend/views/layouts/_clear.php');
+$this->render('_meta-tag');
 ?>
 <header>
     <?php NavBar::begin([

@@ -234,6 +234,19 @@ $config = [
             'hu-HU' => 'Magyar',
         ],
         'bsVersion' => '4.x', // bootstrap version
+
+
+        'meta_copyright' => ['property' => 'copyright', 'content'=>'FYP-21-S1-9P - SIM Open House'],
+        'meta_author' => ['property' => 'author', 'content'=>'admin, '.env('ADMIN_EMAIL')],
+        'meta_reply-to' => ['property' => 'reply-to', 'content'=>env('ADMIN_EMAIL')],
+        'meta_description' => ['property' => 'description', 'content' => 'We are a group of final year students working on our final year project which is to develop a SIM open house mobile application.'],
+        'meta_keywords' => ['property' => 'keyword', 'content' => 'FYP-21-S1-9P - SIM Open House'],
+        'og_url' => ['property' => 'og:url', 'content' => 'https://protect.instaprotection.com/'],
+        'og_title' => ['property' => 'og:title', 'content' => 'FYP-21-S1-9P - SIM Open House'],
+        'og_description' => ['property' => 'og:description', 'content' => 'We are a group of final year students working on our final year project which is to develop a SIM open house mobile application.'],
+        'og_image' => ['property' => 'og:image', 'content' => 'https://fyp21s19p.link/favicon.png'],
+        'og_type' => ['property' => 'og:type', 'content' => 'website'],
+        'og_locale' => ['property' => 'og:image', 'content' => 'en_US'],
     ],
 ];
 
