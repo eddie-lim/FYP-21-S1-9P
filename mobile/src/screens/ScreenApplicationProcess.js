@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Linking, StyleSheet, ImageBackground, Text, Image, ScrollView } from 'react-native';
+import { View, Dimensions, StyleSheet, ImageBackground, Text, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -30,9 +30,7 @@ const ScreenApplicationProcess = (props) => {
           <View style={{width:'80%', marginTop: 15}}>
             <Text style={{color:StyleConstant.primaryColor, width:'100%', fontSize:20, fontWeight:'bold'}}>Step 2</Text>
             <Image source={require('@assets/img/process_step2.jpg')} style={{width: 300, height: 120, marginTop: 10, alignSelf: 'center', resizeMode:'contain'}} />
-            <Text style={{color:"black", width:'100%', textAlign:'center'}}>Click&nbsp;
-            <Text style={{color:'blue', fontWeight:'bold'}} onPress={()=> Linking.openURL('https://simconnect.simge.edu.sg/psp/paprd/EMPLOYEE/HRMS/s/WEBLIB_EOPPB.ISCRIPT1.FieldFormula.Iscript_SM_Redirect?cmd=login&languageCd=ENG&')}>here</Text>
-            &nbsp;to start your application</Text>
+            <Text style={{color:"black", width:'100%', textAlign:'center'}}>Click here to start your application</Text>
           </View>
           
           <View style={{width:'80%', marginTop: 15}}>

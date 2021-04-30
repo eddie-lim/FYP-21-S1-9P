@@ -76,10 +76,6 @@ const ScreenRegister = (props) => {
       setEmailErrorMsg("Email is not valid");
       hasError = true;
     }
-    if (!Utils.testPasswordStrength(password)) {
-      setPasswordErrorMsg("Password must contain 8 or more characters with at least 1 UPPER case character and 1 lower case character");
-      hasError = true;
-    }
     if(hasError){
       return;
     }

@@ -100,10 +100,6 @@ export default Utils = {
     var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(email);
   },
-  testPasswordStrength: (pw) => {
-    var regex = /^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])\S*$/;
-    return regex.test(pw);
-  },
   bytesToGigabytes: (bytes) => {
     var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     if (bytes == 0) return 0;

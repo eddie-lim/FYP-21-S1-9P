@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Dimensions, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, Dimensions, StyleSheet, ImageBackground, Text } from 'react-native';
 import { HeaderWithBack, StyleConstant, fabStyle, ShadowStyle } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -21,14 +21,10 @@ const ScreenFaqDetail = (props) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
-        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'80%'}}>
-          <Text style={{color:"black", fontSize:20, marginBottom:20}}>{item.question}</Text>
-          <ScrollView>
-            <View>
-              <Text style={{color:"black"}}>{item.answer}</Text>
-            </View>
-          </ScrollView>
-        </View>
+      <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'80%'}}>
+        <Text style={{color:"black", fontSize:20, marginBottom:20}}>{item.question}</Text>
+        <Text style={{color:"black"}}>{item.answer}</Text>
+      </View>
     </SafeAreaView>
   );
 }
