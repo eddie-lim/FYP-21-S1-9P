@@ -9,7 +9,7 @@ use yii\bootstrap4\Breadcrumbs;
 
 $this->beginContent('@frontend/views/layouts/base.php');
 ?>
-<div class="container">
+<div class="container p-0">
 
     <?php echo Breadcrumbs::widget([
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

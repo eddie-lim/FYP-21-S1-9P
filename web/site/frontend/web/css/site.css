@@ -90,3 +90,60 @@ h3.active{
   background: url(../img/yellow_texture_bg.png) center center;
   background-size: cover;
 }
+
+.row::after {
+  /*content: "";*/
+  clear: both;
+  display: table;
+}
+.team-box {
+  position:relative;
+  display:block;
+  background:#ffffff;
+  padding:25px 25px 15px;
+  margin:10px 0px 15px;
+  text-align:center; 
+  border:1px solid #ECECEC;
+  box-shadow:0px 3px 6px #C0C0C0;
+}
+.hero-image-container{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/bannerImage.jpg'); background-size: cover; min-height:400px; height: auto; width: 100%; position: relative;
+}
+.hero-image-text{
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.content-section{
+  display: flex;
+  text-align: center;
+  height: 375px;
+}
+.mobile-section {
+  display: none;
+}
+.info-body{
+  padding: 0px 10px;
+}
+.info-image{
+  width:100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media only screen and (max-width: 768px) {
+  .mobile-section {
+    display: block;
+  }
+  .non-mobile-section {
+    display: none;
+  }
+  .content-section{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+  }
+}
