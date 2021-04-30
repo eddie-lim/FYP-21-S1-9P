@@ -58,7 +58,7 @@ class Maintenance extends Component implements BootstrapInterface
             $enabled = $this->enabled;
         }
         if ($enabled) {
-            $this->maintenanceText = $this->maintenanceText ?: Yii::t('common', 'Down to maintenance.');
+            $this->maintenanceText = $this->maintenanceText ?: Yii::t('common', 'Down for maintenance.');
             if ($this->catchAllRoute === null) {
                 $app->controllerMap['maintenance'] = [
                     'class' => MaintenanceController::class,
