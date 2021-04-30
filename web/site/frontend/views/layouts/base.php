@@ -14,11 +14,11 @@ $this->beginContent('@frontend/views/layouts/_clear.php');
         'brandLabel' => "FYP-21-S1-9P",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => ['navbar-dark', 'bg-dark', 'navbar-expand-md'],
+            'class' => ['navbar-dark', 'bg-dark', 'navbar-expand-md', 'font-weight-bold', 'shadow-lg'],
         ],
     ]); ?>
     <?php echo Nav::widget([
-        'options' => ['class' => ['navbar-nav', 'justify-content-end', 'ml-auto']],
+        'options' => ['class' => ['navbar-nav', 'justify-content-end', 'ml-auto', 'font-weight-bold']],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Meeting Minutes', 'url' => ['/site/meeting-minutes']],
