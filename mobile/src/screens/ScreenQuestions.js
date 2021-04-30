@@ -21,7 +21,7 @@ const ScreenQuestions = (props) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
       <ScrollView>
-        <View style={{flex : 1, marginTop:50, marginBottom:50, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flex : 1, marginTop:15, marginBottom:50, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <Pressable style={{}} onPress={() => navigate("screenFaq")}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Frequently Asked Questions</Text>

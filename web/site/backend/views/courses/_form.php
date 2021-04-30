@@ -91,12 +91,12 @@ use yii\web\JsExpression;
                                 'showToggleAll' => false,
                                 'options' => [
                                     'placeholder' => 'Select existing entry qualification or add your own ...',
-                                    // 'multiple' => true,
+                                    'multiple' => true,
                                 ],
                                 'pluginOptions' => [
                                     'tags' => true,
                                     'tokenSeparators' => [ ',' ],
-                                    'maximumInputLength' => 15,
+                                    'maximumInputLength' => 21,
                                     'allowClear' => true,
                                     'createTag' => new JsExpression("function({ term, data }) {
                                         return { id: term.toLowerCase(), text: term.toLowerCase() };

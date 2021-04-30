@@ -9,8 +9,10 @@ import WebApi from '@helpers/WebApi';
 import { Button } from 'react-native-paper';
 import OutlineInput from 'react-native-outline-input';
 import LottieView from 'lottie-react-native';
-import { isArray } from 'lodash';
+import { forEach, isArray } from 'lodash';
 import HelperFunctions from '@helpers/HelperFunctions';
+import { isObject } from '@turf/helpers';
+import Utils from '@helpers/Utils';
 
 const ScreenChangePassword = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -48,6 +50,10 @@ const ScreenChangePassword = (props) => {
       setPasswordErrorMsg("Please enter your password");
       hasError = true;
     }
+    if (!Utils.testPasswordStrength(password)) {
+      setPasswordErrorMsg("Password must contain 8 or more characters with at least 1 UPPER case character and 1 lower case character");
+      hasError = true;
+    }
     if (passwordConfirm == '') {
       setPasswordConfirmErrorMsg("Please confirm your password");
       hasError = true;
@@ -82,11 +88,26 @@ const ScreenChangePassword = (props) => {
         ]
       );
     }).catch((err)=>{
-      console.log("postChangePassword err", err)
+      // console.log("postChangePassword err", err)
       toggleActivityIndicator(false);
       var error = err.data;
-      if(isArray(error)){
-        HelperFunctions.showToast(error[0].message)
+      if(isArray(error) || isObject(error)){
+        forEach(error, function(message, field){
+          // console.log("forEach(field", field)
+          // console.log("forEach(message", message)
+          if (field == "password") {
+            HelperFunctions.showToast(message)
+            setPasswordErrorMsg(message);
+          } else if (field == "password_confirm") {
+            HelperFunctions.showToast(message)
+            setPasswordConfirmErrorMsg(message);
+          } else if (field == "current_password") {
+            HelperFunctions.showToast(message)
+            setCurrentPasswordConfirm(message);
+          } else {
+            HelperFunctions.showToast(message)
+          }
+        });
       } else {
         HelperFunctions.showToast(error)
       }
@@ -106,7 +127,7 @@ const ScreenChangePassword = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView onTouchStart={Keyboard.dismiss} style={{flex: 1, backgroundColor: '#fff'}}>
       <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         
         <LottieView style={{height: 200}} source={require('@assets/animation/change-pw-8654.json')} autoPlay={true} loop={true} />
