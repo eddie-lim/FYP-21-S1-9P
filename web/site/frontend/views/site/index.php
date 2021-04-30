@@ -59,7 +59,7 @@ $this->title = Yii::$app->name;
                 </div>
                 <h5>Eddie Lim Ting Han</h5>
                 <h6>Software Developer</h6>
-                <h6>BIT</h6>
+                <h6>Bachelor of Information Technology</h6>
             </div>
         </div>
         <div class="col-md-4">
@@ -69,7 +69,7 @@ $this->title = Yii::$app->name;
                 </div>
                 <h5>Idonta Bangun</h5>
                 <h6>Performance Tester</h6>
-                <h6>BIT</h6>
+                <h6>Bachelor of Information Technology</h6>
             </div>
         </div>
         <div class="col-md-4">
@@ -79,7 +79,7 @@ $this->title = Yii::$app->name;
                 </div>
                 <h5>Irene Phue Mon Wai</h5>
                 <h6>IT Business Analyst</h6>
-                <h6>BIT</h6>
+                <h6>Bachelor of Information Technology</h6>
             </div>
         </div>
         <div class="col-md-4">
@@ -89,7 +89,7 @@ $this->title = Yii::$app->name;
                 </div>
                 <h5>Tian Meishuang</h5>
                 <h6>Nurse</h6>
-                <h6>DDS</h6>
+                <h6>Bachelor of Computer Science (Digital Systems Security)</h6>
             </div>
         </div>
         <div class="col-md-4">
@@ -99,7 +99,7 @@ $this->title = Yii::$app->name;
                 </div>
                 <h5>William Tay Teck Shuo</h5>
                 <h6>IT Security</h6>
-                <h6>DDS</h6>
+                <h6>Bachelor of Computer Science (Digital Systems Security)</h6>
             </div>
         </div>
     </div>
