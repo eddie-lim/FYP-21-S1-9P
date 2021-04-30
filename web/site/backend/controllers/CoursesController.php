@@ -66,6 +66,7 @@ class CoursesController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->tags = json_encode($model->tags);
+            $model->entry_qualification = json_encode($model->entry_qualification);
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -85,9 +86,11 @@ class CoursesController extends Controller
     {
         $model = $this->findModel($id);
         $model->tags = json_decode($model->tags);
+        $model->entry_qualification = json_decode($model->entry_qualification);
 
         if ($model->load(Yii::$app->request->post())) {
             $model->tags = json_encode($model->tags);
+            $model->entry_qualification = json_encode($model->entry_qualification);
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }

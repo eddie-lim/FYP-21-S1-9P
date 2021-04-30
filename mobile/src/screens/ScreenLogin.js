@@ -21,14 +21,15 @@ const ScreenLogin = (props) => {
   const [ password, setPassword ] = useState("");
   const [ emailErrorMsg, setEmailErrorMsg ] = useState("");
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState("");
-
+  
   const source = useNavigationParam('source');
+  const event_data = useNavigationParam('event_data');
 
   useEffect(() => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
       header:()=> HeaderWithBack("Login", ()=>{
-        navigate(source)
+        navigate(source, {item:event_data})
       })
     }});
     BackHandler.addEventListener('hardwareBackPress', handleBackHandler);
@@ -39,7 +40,7 @@ const ScreenLogin = (props) => {
 
   handleBackHandler = ()=>{
     BackHandler.removeEventListener('hardwareBackPress', handleBackHandler);
-    navigate(source);
+    navigate(source, {item:event_data});
     return true;
   }
 

@@ -65,12 +65,14 @@ const ScreenCourseListing = (props) => {
     props.navigation.setParams({"navOptions":{
       headerShown:true,
       header:()=> HeaderWithBack("Courses", ()=>{
-        navigate("screenUniversity")
+        // navigate("screenUniversity")
+        navigate("screenLanding")
       }, 
       <Pressable style={{position: 'absolute', right: 15, justifyContent: 'center'}} onPress={() => slidingUpPanelRef.current.show()}>
         <Icon name={'filter-variant'} color={'white'} size={30} />
       </Pressable>)
     }}, goBack);
+    renderFilterFields();
     return function cleanup() { 
       if(slidingUpPanelRef.current != null){
         slidingUpPanelRef.current.hide();
@@ -461,13 +463,13 @@ const ScreenCourseListing = (props) => {
         filter += "&filter[and]["+and_counter+"][or][3][tags][like][]="+trim(keyword.current)
         and_counter++;
       }
+      setRefreshing(true);
       WebApi.listCourses(page, filter).then((res)=>{
-        if(parseInt(res.meta["x-pagination-total-count"]) < parseInt(res.meta["x-pagination-per-page"])){
+        if(parseInt(res.meta["currentPage"]) >= parseInt(res.meta["pageCount"])){
           setIsLastPage(true);
         }
         const d = (page === 1)? res.data : [...data, ...res.data];
         setData(d);
-        setRefreshing(false);
       }).catch((err)=>{
         var error = err.data;
         if(isArray(error)){
@@ -476,6 +478,8 @@ const ScreenCourseListing = (props) => {
           HelperFunctions.showToast(error)
         }
         return
+      }).finally(()=>{
+        setRefreshing(false);
       })
     }
   }
@@ -504,12 +508,12 @@ const ScreenCourseListing = (props) => {
     <SafeAreaView style={{flex:1}}>
       <NavigationEvents
         onWillFocus={()=>{
-          renderFilterFields();
+          // renderFilterFields();
         }}
         onWillBlur={()=>{
           if(slidingUpPanelRef.current != null){
             slidingUpPanelRef.current.hide();
-            initSlidingPanel(<></>, null)
+            // initSlidingPanel(<></>, null)
           }
         }}
       />

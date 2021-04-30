@@ -11,6 +11,7 @@ import LottieView from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { isArray } from 'lodash';
 import HelperFunctions from '@helpers/HelperFunctions';
+import Utils from '@helpers/Utils';
 
 const ScreenEventRegistration = (props) => {
   const { navigate, goBack } = useNavigation();
@@ -142,24 +143,24 @@ const ScreenEventRegistration = (props) => {
     if(loggedIn === true){
       if(hasRegistered === true && registeredData != null){
         return( 
-          <View style={{width:'100%',marginTop:100, ...styles.container}}>
-            <Text>You have registered interest for {event_data.name} at {registeredData.created_at}</Text>
+          <View style={styles.container}>
+            <Text>You have registered interest for {event_data.name} at {Utils.timestampToCalendarDateTime(registeredData.created_at)}</Text>
             <Text>We look forward seeing you!</Text>
             <Text> </Text>
             <Text>In the event if you could not make it for the event, you may remove interest for this event any time.</Text>
             <Text>Thank you!</Text>
-            <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"red" }} icon="calendar-remove" mode="contained" onPress={() => handleRemove()}>
+            <Button style={{...styles.button, backgroundColor:"red" }} icon="calendar-remove" mode="contained" onPress={() => handleRemove()}>
               Remove Interest 
             </Button>
           </View>      
         )
       } else if(hasRegistered === false){
         return( 
-          <View style={{width:'100%',marginTop:100, ...styles.container}}>
+          <View style={styles.container}>
             <Text>{event_data.name}</Text>
-            <Text>{event_data.start_at} to {event_data.end_at}</Text>
+            <Text>{Utils.timestampToCalendarDateTime(event_data.start_at)} to {Utils.timestampToCalendarDateTime(event_data.end_at)}</Text>
             <Text>{event_data.venue}</Text>
-            <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="calendar-plus" mode="contained" onPress={() => handleSubmit()}>
+            <Button style={{...styles.button, backgroundColor:"orange" }} icon="calendar-plus" mode="contained" onPress={() => handleSubmit()}>
               Register Interest
             </Button>
           </View>      
@@ -167,8 +168,8 @@ const ScreenEventRegistration = (props) => {
       }
     } else if(loggedIn === false) {
       return(
-        <View style={{width:'100%',marginTop:100, ...styles.container}}>
-          <Button style={{width:'100%', height:60, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventListing"})}>
+        <View style={styles.container}>
+          <Button style={{...styles.button, justifyContent:'center', backgroundColor:"orange" }} icon="login" mode="contained" onPress={() => navigate("screenLogin", {source:"screenEventDetail", event_data:event_data})}>
             Please login first
           </Button>
         </View>
@@ -195,9 +196,6 @@ const ScreenEventRegistration = (props) => {
 export default withScreenBase(ScreenEventRegistration, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
-  container: { width:"80%",  marginTop: 10, marginBottom: 10 },
-  errorText:{color:'red'},
-  DropDownPickerStyle:{backgroundColor: '#fafafa'},
-  DropDownPickerItemStyle:{justifyContent: 'flex-start'},
-  DropDownPickerDropDownStyle:{backgroundColor: '#fafafa'},
+  container: { marginTop:100, width:"80%",  marginTop: 15, marginBottom: 15 },
+  button:{width:'100%', height:60, justifyContent:'center'}
 });
