@@ -26,7 +26,7 @@
     </style>
     
     <body>
-        <div class="col-md-12" style="background-image: url('img/bannerImage.jpg'); background-size: cover;height:400px">
+        <div class="col-md-12" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/bannerImage.jpg'); background-size: cover;height:400px">
             <div class="container">
                 <div class="row">   
                     <div class="col-md-12 mb-4 text-center" style = "color: white; padding-top:64px">
