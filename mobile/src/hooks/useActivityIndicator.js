@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Dimensions, StyleSheet } from 'react-native';
+import { Text, Dimensions, StyleSheet } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from "react-native-modal";
 import LottieView from 'lottie-react-native';
@@ -37,6 +37,7 @@ export default useActivityIndicator = () => {
         hardwareAccelerated={true}
       >
         <LottieView style={{height: 200}} source={require('@assets/animation/lego-loader-410.json')} autoPlay={true} loop={true} />
+        <Text style={{color:'white'}}>{message}</Text>
         {/* <LottieView style={{height: 200}} source={require('@assets/animation/ripple-loading-448.json')} autoPlay={true} loop={true} /> */}
       </Modal>
     );

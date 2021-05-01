@@ -77,7 +77,7 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenProfile')}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
+        <Pressable onPress={() => {navigate('screenProfile')}} style={{height:25, position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
           <Icon name={'account-circle'} size={25} color={'white'}/>
           <Text style={{color: 'white', fontSize:20, marginStart:10}}>{user_name}</Text>
         </Pressable>
