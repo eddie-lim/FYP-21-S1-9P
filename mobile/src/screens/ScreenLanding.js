@@ -273,7 +273,6 @@ const ScreenLanding = (props) => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <NavigationEvents
         onWillBlur={()=>{
-
           props.navigation.setParams({"navOptions":{
             headerShown:false,
           }});

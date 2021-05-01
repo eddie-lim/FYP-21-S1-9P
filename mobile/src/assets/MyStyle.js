@@ -77,16 +77,16 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenProfile')}} style={{height:25, position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
-          <Icon name={'account-circle'} size={25} color={'white'}/>
-          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{user_name}</Text>
+        <Pressable onPress={() => {navigate('screenProfile')}} style={{height:Platform.OS == 'ios' ? 40 : 25, position: 'absolute', left: 15, bottom:Platform.OS == 'ios' ? 0 : 15, flexDirection: 'row'}}>
+          <Icon name={'account-circle'} size={30} color={'white'}/>
+          <Text style={{color: 'white', fontSize:24, marginStart:10}}>{user_name}</Text>
         </Pressable>
       )
     } else {
       return (
-        <Pressable onPress={() => {navigate('screenLogin', {source:"screenLanding"})}} style={{height:25, position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
-          <Icon name={'login'} size={25} color={'white'}/>
-          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Login'}</Text>
+        <Pressable onPress={() => {navigate('screenLogin', {source:"screenLanding"})}} style={{ height:Platform.OS == 'ios' ? 40 : 30, position: 'absolute', left: 15, bottom: Platform.OS == 'ios' ? 0 : 15, flexDirection: 'row'}}>
+          <Icon name={'login'} size={30} color={'white'}/>
+          <Text style={{color: 'white', fontSize:24, marginStart:10}}>{'Login'}</Text>
         </Pressable>
       )
     }
@@ -94,7 +94,7 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   renderSettingsButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenSettings')}} style={{height:30, position: 'absolute', right: 20, bottom: 10}}>
+        <Pressable onPress={() => {navigate('screenSettings')}} style={{height:Platform.OS == 'ios' ? 40 : 30, position: 'absolute', right: 20, bottom: Platform.OS == 'ios' ? 0 : 10}}>
           <Icon name={'cog'} size={30} color={'white'}/>
         </Pressable>
       )
