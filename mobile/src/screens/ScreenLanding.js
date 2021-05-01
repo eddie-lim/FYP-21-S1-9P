@@ -22,6 +22,9 @@ const ScreenLanding = (props) => {
   const [ courses, setCourses ] = useState([]);
   const [ events, setEvents ] = useState([]);
 
+  const scrollViewRef = useRef(null);
+  const [ scrollViewFlashState, setScrollViewFlashState ] = useState(null);
+
   const viewPagerRef = useRef(null);
   const [ viewPagerSliderState, setViewPagerSliderState ] = useState(null);
   var currentViewPagerPage = useRef(0);
@@ -45,9 +48,19 @@ const ScreenLanding = (props) => {
       }, 5000);
       setViewPagerSliderState(viewPagerSlider)
     }
+
+    if(scrollViewFlashState==null){
+      var scrollViewFlash = setInterval(function(){
+        if(scrollViewRef.current != null){
+          scrollViewRef.current.flashScrollIndicators()
+        }
+      }, 2345);
+      setScrollViewFlashState(scrollViewFlash)
+    }
     
     return function cleanup() {
       clearInterval(viewPagerSlider);
+      clearInterval(scrollViewFlash);
     } 
   }, []);
 
@@ -193,28 +206,48 @@ const ScreenLanding = (props) => {
     renderFeaturedItems = () => {
       if(featuredItems.length == 0){
         return(
-          <Placeholder
-            style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}
-            Animation={Shine}
-          >
-            <PlaceholderLine style={{borderRadius:10, height:'100%'}} />
-          </Placeholder>
+          <>
+            <Placeholder
+              style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15, marginBottom:(Dimensions.get('window').height)*0.02}}
+              Animation={Shine}
+            >
+              <PlaceholderLine style={{borderRadius:10, height:'100%'}} />
+            </Placeholder>
+
+            <Placeholder
+              style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}
+              Animation={Shine}
+            >
+              <PlaceholderLine style={{borderRadius:10, height:'100%'}} />
+            </Placeholder>
+          </>
         )
       } else {
         return(
-          <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}>
-            <Pressable onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
-              <Icon name={'clipboard-text'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
-              <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>TAKE OUR QUIZ</Text>
-              <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
-            </Pressable>
-          </View>
+          <>
+            <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15, marginBottom:(Dimensions.get('window').height)*0.02}}>
+              <Pressable onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
+                <Icon name={'school'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
+                <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>Visit SIM GE Home Page</Text>
+                <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
+              </Pressable>
+            </View>
+
+
+            <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}>
+              <Pressable onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
+                <Icon name={'clipboard-text'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
+                <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>TAKE OUR QUIZ</Text>
+                <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
+              </Pressable>
+            </View>
+          </>
         )
       }
     }
 
     return(
-      <View style={{backgroundColor:StyleConstant.primaryColor, height:(Dimensions.get('window').height)*0.1}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, height:(Dimensions.get('window').height)*0.175}}>
         <View style={{height:'100%', backgroundColor:'white', borderTopRightRadius:30, alignItems: 'center', flex: 1, justifyContent:'center'}}>
           { renderFeaturedItems() }
         </View>
@@ -254,10 +287,11 @@ const ScreenLanding = (props) => {
           })
         }}
       />
-      <ScrollView>
-        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', marginTop:20, paddingBottom:5}}>
-        
-          { useMemo(renderCourseQuiz, [featuredItems]) }
+      <View style={{marginTop:20}}>
+        { useMemo(renderCourseQuiz, [featuredItems]) }
+      </View>
+      <ScrollView ref={scrollViewRef}>
+        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', paddingBottom:15}}>
 
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
             <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; }} style={{height: '100%', width: '100%'}} initialPage={0}>
@@ -311,10 +345,9 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>Events</Text>
+              <Text style={styles.flatListHeaderLeft}>Events&nbsp;<Icon name={'calendar-multiple'} size={16} color={'black'}/></Text>
               <Pressable onPress={()=>navigate("screenEventListing")}>
                 <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
-                
               </Pressable>
             </View>
             
@@ -324,7 +357,7 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>Courses</Text>
+              <Text style={styles.flatListHeaderLeft}>Courses&nbsp;<Icon name={'book-open-page-variant'} size={16} color={'black'}/></Text>
               <Pressable onPress={()=>navigate("screenCourseListing")}>
                 <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
@@ -336,7 +369,7 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>University Partners</Text>
+              <Text style={styles.flatListHeaderLeft}>University Partners&nbsp;<Icon name={'domain'} size={16} color={'black'}/></Text>
               <Pressable onPress={()=>navigate("screenSchoolListing")}>
                 <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>

@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet, Platform, Image, Pressable } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import PagerView from 'react-native-pager-view';
 
 const StyleConstant = {
   primaryColor: "#009067",
@@ -74,10 +73,6 @@ const HeaderStyleWithRight = {
 };
 
 const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
-  const title = "V0.0.7\nBuilt @ 24th Apr 2021";
-  // const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
-  // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
-  // const logged_in = false;
   
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
@@ -107,9 +102,12 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   }
   return(
     <View style={{width: '100%', height: Platform.OS == 'ios' ? 180 : 150, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+      
       <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:0, backgroundColor:'white', borderBottomLeftRadius:30, /*borderBottomRightRadius:30*/}}>
-        <Image style={{height: '75%', width: '100%', resizeMode:'contain'}} source={require('@assets/img/openhouse-logo.png')} />
-        {/* <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text> */}
+          <Pressable style={{width:'100%', height:'100%', paddingTop:15}} onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})}>
+            <Image style={{height: '80%', width: '100%', resizeMode:'contain'}} source={require('@assets/img/openhouse-logo.png')} />
+          {/* <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text> */}
+        </Pressable>
       </View>
       <View style={{backgroundColor:'white', width: '100%', height: '35%',}}>
       <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30, borderBottomLeftRadius:30}}>

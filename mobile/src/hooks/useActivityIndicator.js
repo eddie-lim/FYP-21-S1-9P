@@ -15,7 +15,7 @@ export default useActivityIndicator = () => {
     if(flag == false){
       setTimeout(() => {
         setVisible(flag);
-      }, 1234);
+      }, 567);
     } else {
       setVisible(flag);
       if(text != null){
