@@ -18,7 +18,7 @@ const ScreenUniversity = (props) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
+    <View style={{flex: 1, backgroundColor: '#efefef'}}>
       <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Pressable onPress={() => navigate("screenCourseListing")}>
           <View elevation={5} style={[styles.cardContainer]}>
@@ -33,7 +33,7 @@ const ScreenUniversity = (props) => {
           </View>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

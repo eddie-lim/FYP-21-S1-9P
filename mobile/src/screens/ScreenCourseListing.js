@@ -505,7 +505,7 @@ const ScreenCourseListing = (props) => {
   // FLATLIST FUNCTIONS ---- END
 
   return (
-    <SafeAreaView style={{flex:1}}>
+    <View style={{flex:1}}>
       <NavigationEvents
         onWillFocus={()=>{
           // renderFilterFields();
@@ -520,7 +520,7 @@ const ScreenCourseListing = (props) => {
       <View style={styles.container}>
         { renderList() }
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

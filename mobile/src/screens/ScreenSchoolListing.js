@@ -91,7 +91,7 @@ const ScreenSchoolListing = (props) => {
   // FLATLIST FUNCTIONS ---- END
 
   return (
-    <SafeAreaView style={{flex:1}}>
+    <View style={{flex:1}}>
       <View style={styles.container}>
         <View style={styles.fixedContentContainer}>
           <Text style={styles.fixedContentHeader}>University Partners &amp; SIM GE</Text>
@@ -104,7 +104,7 @@ const ScreenSchoolListing = (props) => {
       <View style={styles.flatListContainer}>
         { renderList() }
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

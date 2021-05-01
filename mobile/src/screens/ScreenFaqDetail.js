@@ -20,7 +20,7 @@ const ScreenFaqDetail = (props) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
+    <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center'}}>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width:'80%'}}>
           <Text style={{color:"black", fontSize:20, marginBottom:20}}>{item.question}</Text>
           <ScrollView>
@@ -29,7 +29,7 @@ const ScreenFaqDetail = (props) => {
             </View>
           </ScrollView>
         </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

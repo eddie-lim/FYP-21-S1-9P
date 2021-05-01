@@ -236,21 +236,21 @@ const ScreenLanding = (props) => {
         return(
           <>
             <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-              <Pressable style={{ elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})}>
+              <Pressable style={{ ...ShadowStyle, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})}>
                 <Icon name={"school"}  size={30} color={StyleConstant.primaryColor} />
               </Pressable>
               <Text style={{marginTop:5}}>SIM GE</Text>
             </View>
 
             <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-              <Pressable style={{ elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>
+              <Pressable style={{ ...ShadowStyle, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>
                 <Icon name={"clipboard-text"}  size={30} color={StyleConstant.primaryColor} />
               </Pressable>
               <Text style={{marginTop:5}}>Quiz</Text>
             </View>
 
             <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-              <Pressable style={{ elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenEnquiryForm", {source:"screenLanding"})}>
+              <Pressable style={{ ...ShadowStyle, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenEnquiryForm", {source:"screenLanding"})}>
                 <Icon name={"comment-question"}  size={30} color={StyleConstant.primaryColor} />
               </Pressable>
               <Text style={{marginTop:5}}>Enquiry Form</Text>
@@ -270,8 +270,14 @@ const ScreenLanding = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <NavigationEvents
+        onWillBlur={()=>{
+
+          props.navigation.setParams({"navOptions":{
+            headerShown:false,
+          }});
+        }}
         onWillFocus={()=>{
           StoreSettings.get(StoreSettings.IS_LOGGED_IN)
           .then((res)=>{
@@ -394,7 +400,7 @@ const ScreenLanding = (props) => {
 
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

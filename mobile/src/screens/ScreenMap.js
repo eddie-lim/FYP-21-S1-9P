@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, Pressable, Text, Image, Linking } from 'react-native';
-import { StyleConstant, ShadowStyle } from '@assets/MyStyle';
+import { View, Pressable, Text, Image, Linking, Platform } from 'react-native';
+import { StyleConstant, ShadowStyle, HeaderWithCustomButtons } from '@assets/MyStyle';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
 import Environment from '@helpers/Environment';
@@ -215,7 +215,8 @@ const ScreenMap = (props) => {
   useEffect(() => {
     MapboxGL.setAccessToken(Environment.MAPBOX_KEY);
     props.navigation.setParams({"navOptions":{
-      headerShown: false
+      headerShown: true,
+      header:()=> HeaderWithCustomButtons("Map")
     }});
     return function cleanup() { } 
   }, []);
@@ -253,9 +254,9 @@ const ScreenMap = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <View style={styles.container}>
-        <MapboxGL.MapView ref={mapViewRef} style={styles.map} onWillStartRenderingMap={()=>{ toggleActivityIndicator(true, "Setting Up Map...") }} onDidFinishRenderingMapFully={handleOnDidFinishRenderingMapFully}>
+        <MapboxGL.MapView ref={mapViewRef} style={styles.map} onWillStartRenderingMap={()=>{ toggleActivityIndicator(true) }} onDidFinishRenderingMapFully={handleOnDidFinishRenderingMapFully}>
 
             <MapboxGL.RasterSource id="onemap-source" tileSize={256} url={"https://maps-a.onemap.sg/v3/Original_HD/{z}/{x}/{y}.png"} >
                 <MapboxGL.BackgroundLayer id="bg-layer" style={styles.background} />
@@ -278,23 +279,23 @@ const ScreenMap = (props) => {
 
         </MapboxGL.MapView>
 
-        <View style={{position: 'absolute', paddingLeft: 10, paddingRight: 10, left: 120, borderRadius: 10, bottom: 5, flexDirection: 'row', backgroundColor: 'white'}}>
+        <View style={{position: 'absolute', paddingLeft: 10, paddingRight: 10, left: Platform.OS == 'ios'? 100 : 120, borderRadius: 10, bottom: Platform.OS == 'ios'? 10 : 5, flexDirection: 'row', backgroundColor: 'white'}}>
           <Image style={{width: 16, height: 16}} source={{uri:'https://www.onemap.gov.sg/docs/maps/images/new-onemap-logo_150x150.png'}} />
           <Text style={{marginLeft: 5, color: StyleConstant.primaryColor}} onPress={()=>{Linking.openURL("https://www.onemap.sg/home/")}}>OneMap</Text>
         </View>
 
-        <View style={{width: '100%', position: 'absolute', bottom:80, right:5}}>
+        <View style={{width: '100%', position: 'absolute', bottom:Platform.OS == 'ios'? 100 :80, right:5}}>
           <Pressable onPress={()=>{navigate("screenWebview", {url:'https://www.simge.edu.sg/discover-sim-ge/modern-learning-spaces/', source:"screenMap", headerName:"Modern Learning Spaces"})}} style={styles.locationBtn}>
             <Icon name={'format-list-bulleted-square'} size={30} style={Platform.OS == 'android' || {width: 30, height: 30}} color={'white'}/>
           </Pressable>
         </View>
-        <View style={{width: '100%', position: 'absolute', bottom:20, right:5}}>
+        <View style={{width: '100%', position: 'absolute', bottom:Platform.OS == 'ios'? 40 :20, right:5}}>
           <Pressable onPress={handleOnPressMyLocation} style={styles.locationBtn}>
             <Icon name={'domain'} size={30} style={Platform.OS == 'android' || {width: 30, height: 30}} color={'white'}/>
           </Pressable>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

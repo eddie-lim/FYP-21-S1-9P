@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { StyleSheet, BackHandler } from 'react-native';
+import { StyleSheet, BackHandler, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderWithBack } from '@assets/MyStyle';
 import { withScreenBase, ScreenBaseType } from '@screens/withScreenBase';
@@ -35,20 +35,20 @@ const ScreenWebview = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <WebView
         onLoadEnd={()=>{
           toggleActivityIndicator(false)
         }}
         onLoadProgress={({ nativeEvent }) => {
-          if(nativeEvent.progress > 0.7){
+          if(nativeEvent.progress > 0.49){
             toggleActivityIndicator(false)
           }
         }}
         source={{ uri: url }}
         // style={{ marginTop: 20 }}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 

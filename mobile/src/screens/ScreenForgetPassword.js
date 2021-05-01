@@ -87,7 +87,7 @@ const ScreenForgetPassword = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         
         <LottieView style={{height: 250}} source={require('@assets/animation/forget-password-16766.json')} autoPlay={true} loop={true} />
@@ -112,7 +112,7 @@ const ScreenForgetPassword = (props) => {
         </Button>
 
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

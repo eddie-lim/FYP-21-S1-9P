@@ -101,19 +101,18 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
     }
   }
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 180 : 150, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 180 : 150, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 50 : 0}}>
       
-      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:0, backgroundColor:'white', borderBottomLeftRadius:30, /*borderBottomRightRadius:30*/}}>
+      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:0, backgroundColor:'white', borderBottomLeftRadius:30}}>
           <Pressable style={{width:'100%', height:'100%', paddingTop:15}} onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})}>
             <Image style={{height: '80%', width: '100%', resizeMode:'contain'}} source={require('@assets/img/openhouse-logo.png')} />
-          {/* <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text> */}
         </Pressable>
       </View>
-      <View style={{backgroundColor:'white', width: '100%', height: '35%',}}>
-      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30, borderBottomLeftRadius:30}}>
-        {renderAccountButton()}
-        {renderSettingsButton()}
-      </View>
+      <View style={{backgroundColor:'white', width: '100%', height: '35%'}}>
+        <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%',flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30}}>
+          {renderAccountButton()}
+          {renderSettingsButton()}
+        </View>
       </View>
     </View>
   );
@@ -124,8 +123,8 @@ const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center'
 
 const HeaderWithBack = (title, navigate, headerRight=null)=>{
   return(
-    <View style={{...ShareStyle.curveThis, width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 100 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 50 : 0}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
         <Pressable style={{position: 'absolute', left: 15, justifyContent: 'center'}} onPress={() => navigate()}>
           <Icon name={'arrow-left'} color={'white'} size={30} />
@@ -137,8 +136,8 @@ const HeaderWithBack = (title, navigate, headerRight=null)=>{
 }
 const HeaderWithCustomButtons = (title, headerLeft=null, headerRight=null)=>{
   return(
-    <View style={{...ShareStyle.curveThis, width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 100 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 50 : 0}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
         {headerLeft}
         {headerRight}

@@ -19,7 +19,7 @@ const ScreenQuestions = (props) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
+    <View style={{flex: 1, backgroundColor: '#efefef'}}>
       <ScrollView>
         <View style={{flex : 1, marginTop:15, marginBottom:50, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <Pressable style={{}} onPress={() => navigate("screenFaq")}>
@@ -48,7 +48,7 @@ const ScreenQuestions = (props) => {
           </Pressable>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
