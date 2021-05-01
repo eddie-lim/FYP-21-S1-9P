@@ -203,7 +203,7 @@ const ScreenLanding = (props) => {
       } else {
         return(
           <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}>
-            <Pressable onPress={() => navigate("screenWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
+            <Pressable onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
               <Icon name={'clipboard-text'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
               <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>TAKE OUR QUIZ</Text>
               <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
@@ -262,47 +262,47 @@ const ScreenLanding = (props) => {
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
             <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; }} style={{height: '100%', width: '100%'}} initialPage={0}>
               <View key="1">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://app.micepad.co/sim2/register/PersonalConsultationsAprMay2021", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://app.micepad.co/sim2/register/PersonalConsultationsAprMay2021", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/03-3657-GE-PC_Mega-bnr-1920x700.jpg"}} />
                 </Pressable>
               </View>
               <View key="2">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://app.micepad.co/sim2/register/USYDNursingWebinar2021", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://app.micepad.co/sim2/register/USYDNursingWebinar2021", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Nursing-Webinar-GE-Event-Homepage-Banner-1440-x-600.png"}} />
                 </Pressable>
               </View>
               <View key="3">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://app.micepad.co/sim2/register/RMITConsultations", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://app.micepad.co/sim2/register/RMITConsultations", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/RMIT-Consultations-GE-Mega-Banner.png"}} />
                 </Pressable>
               </View>
               <View key="4">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://sim-programme-and-career-quiz.ifdemo.com/", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://sim-programme-and-career-quiz.ifdemo.com/", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/SIM-Music-Quiz-Mega-banner-V2.png"}} />
                 </Pressable>
               </View>
               <View key="5">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://simrec.custhelp.com/ci/documents/detail/2/SIMGE_ConsultationReg_Purpose", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://simrec.custhelp.com/ci/documents/detail/2/SIMGE_ConsultationReg_Purpose", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/10/Web-Banner-for-counter2.png"}} />
                 </Pressable>
               </View>
               <View key="6">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://simrec.custhelp.com/ci/documents/detail/2/SIMGE_Campus_Tour_Reg_On_Site", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://simrec.custhelp.com/ci/documents/detail/2/SIMGE_Campus_Tour_Reg_On_Site", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
                 </Pressable>
               </View>
               <View key="7">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://www.simge.edu.sg/programmes/university-partners-sim-ge/university-of-london/", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://www.simge.edu.sg/programmes/university-partners-sim-ge/university-of-london/", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/UOL-Achievement.jpg"}} />
                 </Pressable>
               </View>
               <View key="8">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://www.simge.edu.sg/student-life/student-ambassador-programme/sim-podcast/", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://www.simge.edu.sg/student-life/student-ambassador-programme/sim-podcast/", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Official-Web-Banner-eDM.png"}} />
                 </Pressable>
               </View>
               <View key="9">
-                <Pressable onPress={() => navigate("screenWebview", {url:"https://www.simge.edu.sg/", source:"screenLanding", headerName:""})}>
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://www.simge.edu.sg/", source:"screenLanding", headerName:""})}>
                   <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/07/CampusClosure-Covid_280720_GE-website.jpg"}} />
                 </Pressable>
               </View>

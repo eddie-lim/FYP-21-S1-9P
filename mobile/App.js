@@ -50,33 +50,17 @@ const LandingStack = createStackNavigator({
   screenSchoolListing: ScreenSchoolListing,
   screenCourseDetail: ScreenCourseDetail,
   screenSchoolDetail: ScreenSchoolDetail,
+
+  screenLandingWebview: ScreenWebview,
 }, { initialRouteName: 'screenLanding', defaultNavigationOptions:{headerShown:false} });
 
 LandingStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   for (let i = 0; i < navigation.state.routes.length; i++) {
-    if (navigation.state.routes[i].routeName == "screenLogin" || navigation.state.routes[i].routeName == "screenRegister" || navigation.state.routes[i].routeName == "screenForgetPassword" || navigation.state.routes[i].routeName == "screenProfile" || navigation.state.routes[i].routeName == "screenSettings") { tabBarVisible = false; }
+    if (navigation.state.routes[i].routeName == "screenLogin" || navigation.state.routes[i].routeName == "screenRegister" || navigation.state.routes[i].routeName == "screenForgetPassword" || navigation.state.routes[i].routeName == "screenProfile" || navigation.state.routes[i].routeName == "screenSettings" || navigation.state.routes[i].routeName == "screenLandingWebview") { tabBarVisible = false; }
   }
   return { tabBarVisible };
 };
-
-//##############################################
-
-const EventStack = createStackNavigator({
-  screenEventListing: ScreenEventListing,
-  screenEventDetail: ScreenEventDetail,
-  screenEventRegistration: ScreenEventRegistration,
-}, { initialRouteName: 'screenEventListing', defaultNavigationOptions:{headerShown:false} });
-
-//##############################################
-
-const UniversityStack = createStackNavigator({
-  screenUniversity: ScreenUniversity,
-  screenCourseListing: ScreenCourseListing,
-  screenSchoolListing: ScreenSchoolListing,
-  screenCourseDetail: ScreenCourseDetail,
-  screenSchoolDetail: ScreenSchoolDetail,
-}, { initialRouteName: 'screenUniversity', defaultNavigationOptions:{headerShown:false} });
 
 //##############################################
 
@@ -103,18 +87,6 @@ const QuestionsStack = createStackNavigator({
 //##############################################
 
 const MainBottomTab= createBottomTabNavigator({
-  // university: {
-  //   screen: UniversityStack,
-  //   navigationOptions:{
-  //     tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>),
-  //     tabBarIcon: ({ focused }) =>(
-  //       <View style={{alignItems: 'center', justifyContent: 'center'}}>
-  //         <Icon name={'school'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-  //         <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>
-  //       </View>
-  //     ),
-  //   }
-  // },
   map: {
     screen: MapStack,
     navigationOptions:{
@@ -141,18 +113,6 @@ const MainBottomTab= createBottomTabNavigator({
       },
     }
   },
-  // event: {
-  //   screen: EventStack,
-  //   navigationOptions:{
-  //     tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>),
-  //     tabBarIcon: ({ focused }) =>(
-  //       <View style={{alignItems: 'center', justifyContent: 'center'}}>
-  //         <Icon name={'calendar'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-  //         <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>
-  //       </View>
-  //     ),
-  //   }
-  // },
   questions: {
     screen: QuestionsStack,
     navigationOptions:{
