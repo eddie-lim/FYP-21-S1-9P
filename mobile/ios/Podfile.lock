@@ -338,11 +338,13 @@ PODS:
     - Mapbox-iOS-SDK (~> 5.9.0)
     - React
     - React-Core
-  - react-native-netinfo (5.9.10):
+  - react-native-netinfo (6.0.0):
+    - React-Core
+  - react-native-pager-view (5.1.5):
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
-  - react-native-webview (11.3.2):
+  - react-native-webview (11.4.0):
     - React-Core
   - React-RCTActionSheet (0.63.4):
     - React-Core/RCTActionSheetHeaders (= 0.63.4)
@@ -508,6 +510,7 @@ DEPENDENCIES:
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -604,6 +607,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-mapbox-gl/maps"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-webview:
@@ -694,9 +699,10 @@ SPEC CHECKSUMS:
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-date-picker: 242eec7af56cea5fb2706d5db5d3837060b3884b
   react-native-mapbox-gl: eec7e5be5b874cfceb79fcfe24d595411015153a
-  react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
+  react-native-netinfo: e849fc21ca2f4128a5726c801a82fc6f4a6db50d
+  react-native-pager-view: c0c3833fbf06f3c63fb0ef8c4125bf1363b073d8
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
-  react-native-webview: 71567b6bf3d4e55914e580d720cc8f7df64af817
+  react-native-webview: 4dfb534e9600b87fe667c5ca4fe09149383218b9
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
   React-RCTBlob: a97d378b527740cc667e03ebfa183a75231ab0f0
