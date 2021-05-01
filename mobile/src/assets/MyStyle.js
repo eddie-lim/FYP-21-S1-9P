@@ -15,7 +15,7 @@ const StyleConstant = {
   secondaryColorLight: "#3c587b",
   secondaryColorDark: "#000427",  
   secondaryTextColor: "#ffffff",
-  mutedTextColor: "#cccccc",
+  mutedTextColor: "grey",
 
   warnColor: "#ffee75",
   bgGray: "#767676",
@@ -84,7 +84,7 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
       )
     } else {
       return (
-        <Pressable onPress={() => {navigate('screenLogin', {source:"screenLanding"})}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
+        <Pressable onPress={() => {navigate('screenLogin', {source:"screenLanding"})}} style={{height:25, position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
           <Icon name={'login'} size={25} color={'white'}/>
           <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Login'}</Text>
         </Pressable>
@@ -94,7 +94,7 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   renderSettingsButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 20, bottom: 10}}>
+        <Pressable onPress={() => {navigate('screenSettings')}} style={{height:30, position: 'absolute', right: 20, bottom: 10}}>
           <Icon name={'cog'} size={30} color={'white'}/>
         </Pressable>
       )

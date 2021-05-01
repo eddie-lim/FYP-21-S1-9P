@@ -90,7 +90,6 @@ const ScreenLanding = (props) => {
 
   getFeaturedItems = ()=>{
     WebApi.getFeaturedItems().then((res)=>{
-      console.log("res.data", res.data)
       setFeaturedItems(res.data)
     }).catch((err)=>{
       var error = err.data;
@@ -237,7 +236,7 @@ const ScreenLanding = (props) => {
             <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}>
               <Pressable onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
                 <Icon name={'clipboard-text'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
-                <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>TAKE OUR QUIZ</Text>
+                <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>Take Our Quiz</Text>
                 <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
               </Pressable>
             </View>
@@ -345,7 +344,7 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>Events&nbsp;<Icon name={'calendar-multiple'} size={16} color={'black'}/></Text>
+              <Text style={styles.flatListHeaderLeft}><Icon name={'calendar-multiple'} size={16} color={'black'}/>&nbsp;Events</Text>
               <Pressable onPress={()=>navigate("screenEventListing")}>
                 <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
@@ -357,7 +356,7 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>Courses&nbsp;<Icon name={'book-open-page-variant'} size={16} color={'black'}/></Text>
+              <Text style={styles.flatListHeaderLeft}><Icon name={'book-open-page-variant'} size={16} color={'black'}/>&nbsp;Courses</Text>
               <Pressable onPress={()=>navigate("screenCourseListing")}>
                 <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
@@ -369,7 +368,7 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>University Partners&nbsp;<Icon name={'domain'} size={16} color={'black'}/></Text>
+              <Text style={styles.flatListHeaderLeft}><Icon name={'domain'} size={16} color={'black'}/>&nbsp;University Partners</Text>
               <Pressable onPress={()=>navigate("screenSchoolListing")}>
                 <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>

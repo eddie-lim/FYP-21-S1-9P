@@ -90,11 +90,11 @@ const MainBottomTab= createBottomTabNavigator({
   map: {
     screen: MapStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Map</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Map</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'map'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Map</Text>
+          <Icon name={'map'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor} size={24} />
+          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Map</Text>
         </View>
       ),
     }
@@ -102,12 +102,12 @@ const MainBottomTab= createBottomTabNavigator({
   landing: {
     screen: LandingStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Home</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Home</Text>),
       tabBarIcon: ({ focused }) =>{
         return(
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <Image source={require('@assets/img/sim-global-education-logo-sm.png')} style={{width:44,height: 17, marginTop:4}}/>
-            <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center', paddingTop:3}}>Open House</Text>
+            <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center', paddingTop:3}}>Open House</Text>
           </View>
         )
       },
@@ -116,11 +116,11 @@ const MainBottomTab= createBottomTabNavigator({
   questions: {
     screen: QuestionsStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Information</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Information</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'information'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Information</Text>
+          <Icon name={'information'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor} size={24} />
+          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Information</Text>
         </View>
       ),
     }
