@@ -40,6 +40,11 @@ const ScreenWebview = (props) => {
         onLoadEnd={()=>{
           toggleActivityIndicator(false)
         }}
+        onLoadProgress={({ nativeEvent }) => {
+          if(nativeEvent.progress > 0.7){
+            toggleActivityIndicator(false)
+          }
+        }}
         source={{ uri: url }}
         // style={{ marginTop: 20 }}
       />
