@@ -11,17 +11,13 @@ import WebApi from '@helpers/WebApi';
 import { capitalize, isArray, shuffle } from 'lodash';
 import HelperFunctions from '@helpers/HelperFunctions';
 import PagerView from 'react-native-pager-view';
-import { Placeholder, PlaceholderMedia, PlaceholderLine, ShineOverlay } from "rn-placeholder";
+import { Placeholder, PlaceholderMedia, PlaceholderLine, ShineOverlay, Shine } from "rn-placeholder";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ScreenLanding = (props) => {
   const { navigate } = useNavigation();
   const [ loggedIn, setLoggedIn ] = useState(null);
-  const [ featuredItems, setFeaturedItems ] = useState({
-    course:[],
-    event:[],
-    university_partner:[],
-    course_quiz_url:[],
-  })
+  const [ featuredItems, setFeaturedItems ] = useState([])
   const [ universityPartners, setUniversityPartners ] = useState([]);
   const [ courses, setCourses ] = useState([]);
   const [ events, setEvents ] = useState([]);
@@ -81,6 +77,7 @@ const ScreenLanding = (props) => {
 
   getFeaturedItems = ()=>{
     WebApi.getFeaturedItems().then((res)=>{
+      console.log("res.data", res.data)
       setFeaturedItems(res.data)
     }).catch((err)=>{
       var error = err.data;
@@ -192,6 +189,39 @@ const ScreenLanding = (props) => {
     }
   }
 
+  renderCourseQuiz = () =>{
+    renderFeaturedItems = () => {
+      if(featuredItems.length == 0){
+        return(
+          <Placeholder
+            style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}
+            Animation={Shine}
+          >
+            <PlaceholderLine style={{borderRadius:10, height:'100%'}} />
+          </Placeholder>
+        )
+      } else {
+        return(
+          <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}>
+            <Pressable onPress={() => navigate("screenWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
+              <Icon name={'clipboard-text'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
+              <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>TAKE OUR QUIZ</Text>
+              <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
+            </Pressable>
+          </View>
+        )
+      }
+    }
+
+    return(
+      <View style={{backgroundColor:StyleConstant.primaryColor, height:(Dimensions.get('window').height)*0.1}}>
+        <View style={{height:'100%', backgroundColor:'white', borderTopRightRadius:30, alignItems: 'center', flex: 1, justifyContent:'center'}}>
+          { renderFeaturedItems() }
+        </View>
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <NavigationEvents
@@ -226,7 +256,9 @@ const ScreenLanding = (props) => {
       />
       <ScrollView>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', marginTop:20, paddingBottom:5}}>
-          
+        
+          { useMemo(renderCourseQuiz, [featuredItems]) }
+
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
             <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; }} style={{height: '100%', width: '100%'}} initialPage={0}>
               <View key="1">
@@ -257,7 +289,8 @@ const ScreenLanding = (props) => {
             <View style={styles.flatListHeaderContainer}>
               <Text style={styles.flatListHeaderLeft}>Events</Text>
               <Pressable onPress={()=>navigate("screenEventListing")}>
-                <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
+                <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
+                
               </Pressable>
             </View>
             
@@ -269,7 +302,7 @@ const ScreenLanding = (props) => {
             <View style={styles.flatListHeaderContainer}>
               <Text style={styles.flatListHeaderLeft}>Courses</Text>
               <Pressable onPress={()=>navigate("screenCourseListing")}>
-                <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
+                <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
             </View>
 
@@ -281,7 +314,7 @@ const ScreenLanding = (props) => {
             <View style={styles.flatListHeaderContainer}>
               <Text style={styles.flatListHeaderLeft}>University Partners</Text>
               <Pressable onPress={()=>navigate("screenSchoolListing")}>
-                <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
+                <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
             </View>
 

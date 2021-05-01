@@ -112,7 +112,7 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
         {/* <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text> */}
       </View>
       <View style={{backgroundColor:'white', width: '100%', height: '35%',}}>
-      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30, borderBottomLeftRadius:30}}>
         {renderAccountButton()}
         {renderSettingsButton()}
       </View>
