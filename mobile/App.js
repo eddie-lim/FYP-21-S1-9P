@@ -66,8 +66,16 @@ LandingStack.navigationOptions = ({ navigation }) => {
 
 const MapStack = createStackNavigator({
   screenMap: ScreenMap,
+  screenMapWebview: ScreenWebview,
 }, { initialRouteName: 'screenMap', defaultNavigationOptions:{headerShown:false} });
 
+MapStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  for (let i = 0; i < navigation.state.routes.length; i++) {
+    if (navigation.state.routes[i].routeName == "screenMapWebview") { tabBarVisible = false; }
+  }
+  return { tabBarVisible };
+};
 //##############################################
 
 const WebviewStack = createStackNavigator({
@@ -82,8 +90,17 @@ const QuestionsStack = createStackNavigator({
   screenFaq: ScreenFaq,
   screenFaqDetail: ScreenFaqDetail,
   screenEnquiryForm: ScreenEnquiryForm,
+
+  screenQuestionsWebview: ScreenWebview,
 }, { initialRouteName: 'screenQuestions'});
 
+QuestionsStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  for (let i = 0; i < navigation.state.routes.length; i++) {
+    if (navigation.state.routes[i].routeName == "screenQuestionsWebview") { tabBarVisible = false; }
+  }
+  return { tabBarVisible };
+};
 //##############################################
 
 const MainBottomTab= createBottomTabNavigator({
@@ -125,7 +142,7 @@ const MainBottomTab= createBottomTabNavigator({
       ),
     }
   },
-}, { initialRouteName: 'landing', resetOnBlur:true, tabBarOptions: {showLabel: false, style: {height: 60}} });
+}, { initialRouteName: 'landing', resetOnBlur:false, tabBarOptions: {showLabel: false, style: {height: 60}} });
 
 //##############################################
 

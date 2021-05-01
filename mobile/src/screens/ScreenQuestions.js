@@ -40,7 +40,7 @@ const ScreenQuestions = (props) => {
               <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/enquiry-form-27620.json')} autoPlay={true} loop={true} />
             </View>
           </Pressable>
-          <Pressable style={{marginTop:15}} onPress={() => navigate("screenWebview", {url:"https://www.sim.edu.sg/contact-info/Pages/ContactUs.aspx", source:"screenQuestions", headerName:"Contact Us"})}>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenQuestionsWebview", {url:"https://www.sim.edu.sg/contact-info/Pages/ContactUs.aspx", source:"screenQuestions", headerName:"Contact Us"})}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Contact Us</Text>
               <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/contact-us-45056.json')} autoPlay={true} loop={true} />

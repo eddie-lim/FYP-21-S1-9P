@@ -285,7 +285,7 @@ const ScreenMap = (props) => {
         </View>
 
         <View style={{width: '100%', position: 'absolute', bottom:Platform.OS == 'ios'? 100 :80, right:5}}>
-          <Pressable onPress={()=>{navigate("screenWebview", {url:'https://www.simge.edu.sg/discover-sim-ge/modern-learning-spaces/', source:"screenMap", headerName:"Modern Learning Spaces"})}} style={styles.locationBtn}>
+          <Pressable onPress={()=>{navigate("screenMapWebview", {url:'https://www.simge.edu.sg/discover-sim-ge/modern-learning-spaces/', source:"screenMap", headerName:"Modern Learning Spaces"})}} style={styles.locationBtn}>
             <Icon name={'format-list-bulleted-square'} size={30} style={Platform.OS == 'android' || {width: 30, height: 30}} color={'white'}/>
           </Pressable>
         </View>
