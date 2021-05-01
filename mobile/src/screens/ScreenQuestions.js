@@ -34,7 +34,7 @@ const ScreenQuestions = (props) => {
               <LottieView style={{height: 160, position:'absolute', bottom:0}} source={require('@assets/animation/appprocess-28321.json')} autoPlay={true} loop={true} />
             </View>
           </Pressable>
-          <Pressable style={{marginTop:15}} onPress={() => navigate("screenEnquiryForm")}>
+          <Pressable style={{marginTop:15}} onPress={() => navigate("screenEnquiryForm", {source:"screenQuestions"})}>
             <View elevation={5} style={[styles.cardContainer]}>
               <Text style={{ position:'absolute', color:"black", top:10}}>Enquiry Form</Text>
               <LottieView style={{height: 150, position:'absolute', bottom:0}} source={require('@assets/animation/enquiry-form-27620.json')} autoPlay={true} loop={true} />

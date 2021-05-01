@@ -206,39 +206,54 @@ const ScreenLanding = (props) => {
       if(featuredItems.length == 0){
         return(
           <>
-            <Placeholder
-              style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15, marginBottom:(Dimensions.get('window').height)*0.02}}
-              Animation={Shine}
-            >
-              <PlaceholderLine style={{borderRadius:10, height:'100%'}} />
-            </Placeholder>
-
-            <Placeholder
-              style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}
-              Animation={Shine}
-            >
-              <PlaceholderLine style={{borderRadius:10, height:'100%'}} />
-            </Placeholder>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Placeholder
+                style={{elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'#fff', borderRadius:50}}
+                Animation={Shine}
+              >
+                <PlaceholderMedia style={{borderRadius:50, height:'100%', width:'100%'}} />
+              </Placeholder>
+            </View>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Placeholder
+                style={{elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'#fff', borderRadius:50}}
+                Animation={Shine}
+              >
+                <PlaceholderMedia style={{borderRadius:50, height:'100%', width:'100%'}} />
+              </Placeholder>
+            </View>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Placeholder
+                style={{elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'#fff', borderRadius:50}}
+                Animation={Shine}
+              >
+                <PlaceholderMedia style={{borderRadius:50, height:'100%', width:'100%'}} />
+              </Placeholder>
+            </View>
           </>
         )
       } else {
         return(
           <>
-            <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15, marginBottom:(Dimensions.get('window').height)*0.02}}>
-              <Pressable onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
-                <Icon name={'school'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
-                <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>Visit SIM GE Home Page</Text>
-                <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Pressable style={{ elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})}>
+                <Icon name={"school"}  size={30} color={StyleConstant.primaryColor} />
               </Pressable>
+              <Text style={{marginTop:5}}>SIM GE</Text>
             </View>
 
-
-            <View style={{width: (Dimensions.get('window').width), height: (Dimensions.get('window').height)*0.05, paddingRight:15, paddingLeft:15}}>
-              <Pressable onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})} style={{backgroundColor:StyleConstant.secondaryColor, borderRadius:10, height:'100%', flexDirection:'row', alignItems: 'center', flex: 1, paddingLeft:15}}>
-                <Icon name={'clipboard-text'} size={(Dimensions.get('window').height)*0.02} color={'white'}/>
-                <Text style={{color:StyleConstant.secondaryTextColor, marginLeft:5}}>Take Our Quiz</Text>
-                <Icon name={'chevron-right-circle-outline'} style={{position:'absolute', right:15}} size={(Dimensions.get('window').height)*0.025} color={'white'}/>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Pressable style={{ elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>
+                <Icon name={"clipboard-text"}  size={30} color={StyleConstant.primaryColor} />
               </Pressable>
+              <Text style={{marginTop:5}}>Quiz</Text>
+            </View>
+
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Pressable style={{ elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenEnquiryForm", {source:"screenLanding"})}>
+                <Icon name={"comment-question"}  size={30} color={StyleConstant.primaryColor} />
+              </Pressable>
+              <Text style={{marginTop:5}}>Enquiry Form</Text>
             </View>
           </>
         )
@@ -246,8 +261,8 @@ const ScreenLanding = (props) => {
     }
 
     return(
-      <View style={{backgroundColor:StyleConstant.primaryColor, height:(Dimensions.get('window').height)*0.175}}>
-        <View style={{height:'100%', backgroundColor:'white', borderTopRightRadius:30, alignItems: 'center', flex: 1, justifyContent:'center'}}>
+      <View style={{backgroundColor:'white', height:(Dimensions.get('window').height)*0.125}}>
+        <View style={{height:'100%', backgroundColor:'white', alignItems: 'center', flex: 1, justifyContent:'space-evenly', flexDirection:'row'}}>
           { renderFeaturedItems() }
         </View>
       </View>
@@ -286,11 +301,8 @@ const ScreenLanding = (props) => {
           })
         }}
       />
-      <View style={{marginTop:20}}>
-        { useMemo(renderCourseQuiz, [featuredItems]) }
-      </View>
       <ScrollView ref={scrollViewRef}>
-        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', paddingBottom:15}}>
+        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', paddingBottom:15, marginTop:20}}>
 
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
             <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; }} style={{height: '100%', width: '100%'}} initialPage={0}>
@@ -341,6 +353,9 @@ const ScreenLanding = (props) => {
               </View>
             </PagerView>
           </View>
+
+          { useMemo(renderCourseQuiz, [featuredItems]) }
+          <View style={styles.greySeperator}/>
 
           <View>
             <View style={styles.flatListHeaderContainer}>

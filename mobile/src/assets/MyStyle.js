@@ -15,7 +15,7 @@ const StyleConstant = {
   secondaryColorLight: "#3c587b",
   secondaryColorDark: "#000427",  
   secondaryTextColor: "#ffffff",
-  mutedTextColor: "grey",
+  mutedTextColor: "#bebebe",
 
   warnColor: "#ffee75",
   bgGray: "#767676",

@@ -87,6 +87,20 @@ const QuestionsStack = createStackNavigator({
 //##############################################
 
 const MainBottomTab= createBottomTabNavigator({
+  landing: {
+    screen: LandingStack,
+    navigationOptions:{
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Home</Text>),
+      tabBarIcon: ({ focused }) =>{
+        return(
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Image source={focused ? require('@assets/img/sim-global-education-logo-sm.png') : require('@assets/img/sim-global-education-logo-sm_grey.png')} style={{width:44,height: 17, marginTop:4}}/>
+            <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center', paddingTop:3}}>Home</Text>
+          </View>
+        )
+      },
+    }
+  },
   map: {
     screen: MapStack,
     navigationOptions:{
@@ -97,20 +111,6 @@ const MainBottomTab= createBottomTabNavigator({
           <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Map</Text>
         </View>
       ),
-    }
-  },
-  landing: {
-    screen: LandingStack,
-    navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Home</Text>),
-      tabBarIcon: ({ focused }) =>{
-        return(
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Image source={require('@assets/img/sim-global-education-logo-sm.png')} style={{width:44,height: 17, marginTop:4}}/>
-            <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center', paddingTop:3}}>Open House</Text>
-          </View>
-        )
-      },
     }
   },
   questions: {
