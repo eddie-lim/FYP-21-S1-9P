@@ -37,7 +37,7 @@ use yii\web\JsExpression;
                         <?php echo $form->field($model, 'type')->widget(Select2::classname(),
                             [
                                 // 'theme' => Select2::THEME_MATERIAL,
-                                // 'data' => $model->getCommonTags(),
+                                'data' => $model::getCommonAttr('type'),
                                 'showToggleAll' => false,
                                 'options' => [
                                     'placeholder' => 'Select existing event type or add your own ...',
@@ -56,7 +56,26 @@ use yii\web\JsExpression;
                         ); ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
-                        <?php echo $form->field($model, 'session')->textInput(['maxlength' => true]) ?>
+                        <?php echo $form->field($model, 'session')->widget(Select2::classname(),
+                            [
+                                // 'theme' => Select2::THEME_MATERIAL,
+                                'data' => $model::getCommonAttr('session'),
+                                'showToggleAll' => false,
+                                'options' => [
+                                    'placeholder' => 'Select existing session or add your own ...',
+                                    // 'multiple' => true,
+                                ],
+                                'pluginOptions' => [
+                                    'tags' => true,
+                                    'tokenSeparators' => [ ',', ' ' ],
+                                    'maximumInputLength' => 15,
+                                    'allowClear' => true,
+                                    'createTag' => new JsExpression("function({ term, data }) {
+                                        return { id: term.toLowerCase(), text: term.toLowerCase() };
+                                    }")
+                                ],
+                            ]
+                        ); ?>
                     </div>
                     <div class="col-lg-4 col-xs-12">
                         <?php echo $form->field($model, 'thumbnail_url')->textInput(['maxlength' => true]) ?>
@@ -98,7 +117,7 @@ use yii\web\JsExpression;
                         <?php echo $form->field($model, 'tags')->widget(Select2::classname(),
                             [
                                 'theme' => Select2::THEME_MATERIAL,
-                                // 'data' => $model->getCommonTags(),
+                                'data' => $model::getCommonAttr('tags'),
                                 'showToggleAll' => false,
                                 'options' => [
                                     'placeholder' => 'Select common tags or add your own ...',
