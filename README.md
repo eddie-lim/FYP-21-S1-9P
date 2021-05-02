@@ -68,7 +68,7 @@ As there are already existing similar applications available for use in the mark
 
 7. Duplicate the environment file in the project's base directory **.env.dist** and rename it as **.env**
 
-8. Open up [phpMyAdmin](http://localhost/phpmyadmin/) and import the [schema](https://github.com/eddie-lim/FYP-21-S1-9P/blob/master/_info/schema.sql) provided under the **_info** directory
+8. Open up [phpMyAdmin](http://localhost/phpmyadmin/) and import the [schema](https://github.com/eddie-lim/FYP-21-S1-9P/blob/master/_info/openhouse-schema.sql) provided under the **_info** directory
 
 9. Go to localhost [CMS](http://admin.openhouse.localhost/)
 
