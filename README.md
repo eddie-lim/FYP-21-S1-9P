@@ -1,6 +1,8 @@
-![UOW logo](./readme_pictures/uow_logo.png) ![SIM logo](./readme_pictures/sim_logo.png)
 
-# FYP-21-S1-9P - SIM Open House [![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](https://www.yiiframework.com/) [![React-Native](https://img.shields.io/badge/Powered_by-React_Native_Framework-green.svg?style=flat)](https://reactnative.dev/) [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/eddie-lim/FYP-21-S1-9P/blob/master/LICENSE.md)
+<img src="./readme_pictures/uow_logo.png" alt="drawing" width="200"/> <img src="./readme_pictures/sim_logo.png" alt="drawing" width="200"/>
+
+# FYP-21-S1-9P - SIM Open House
+[![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](https://www.yiiframework.com/) [![React-Native](https://img.shields.io/badge/Powered_by-React_Native_Framework-green.svg?style=flat)](https://reactnative.dev/) [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/eddie-lim/FYP-21-S1-9P/blob/master/LICENSE.md)
 
 ## Table of Contents
 - [Project summary](#project-summary)
@@ -87,4 +89,4 @@ Refer to [Getting Started](https://reactnative.dev/docs/getting-started) documen
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/eddie-lim/FYP-21-S1-9P/blob/master/LICENSE.md) file for details
