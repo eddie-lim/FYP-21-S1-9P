@@ -418,49 +418,67 @@ const ScreenCourseListing = (props) => {
     if(!refreshing){
       var filter = "";
       var and_counter = 0;
-      modeOfStudy.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][mode_of_study][]="+element
-      });
-      if(modeOfStudy.length > 0){
-        and_counter++;
-      }
-      disciplines.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][disciplines][]="+element
-      });
-      if(disciplines.length > 0){
-        and_counter++;
-      }
-      universityParters.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][school_id][]="+element
-      });
-      if(universityParters.length > 0){
-        and_counter++;
-      }
-      academicLevel.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][academic_level][]="+element
-      });
-      if(academicLevel.length > 0){
-        and_counter++;
-      }
-      entryQualifications.forEach(element => {
-        if(element != null && element != 'null'){
-          filter += "&filter[and]["+and_counter+"][entry_qualification][]="+element          
+      if(modeOfStudyDefault.current.length != modeOfStudy.length){
+        modeOfStudy.forEach(element => {
+          filter += "&filter[and]["+and_counter+"][mode_of_study][]="+element
+        });
+        if(modeOfStudy.length > 0){
+          and_counter++;
         }
-      });
-      if(entryQualifications.length > 0){
-        and_counter++;
       }
-      subDisciplines.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][sub_disciplines][]="+element
-      });
-      if(subDisciplines.length > 0){
-        and_counter++;
+
+      if(disciplinesDefault.current.length != disciplines.length){
+        disciplines.forEach(element => {
+          filter += "&filter[and]["+and_counter+"][disciplines][]="+element
+        });
+        if(disciplines.length > 0){
+          and_counter++;
+        }
       }
+
+      if(universityPartnersDefault.current.length != universityParters.length){
+        universityParters.forEach(element => {
+          filter += "&filter[and]["+and_counter+"][school_id][]="+element
+        });
+        if(universityParters.length > 0){
+          and_counter++;
+        }
+      }
+
+      if(academicLevelDefault.current.length != academicLevel.length){
+        academicLevel.forEach(element => {
+          filter += "&filter[and]["+and_counter+"][academic_level][]="+element
+        });
+        if(academicLevel.length > 0){
+          and_counter++;
+        }
+      }
+
+      if(entryQualificationsDefault.current.length != entryQualifications.length){
+        entryQualifications.forEach(element => {
+          if(element != null && element != 'null'){
+            filter += "&filter[and]["+and_counter+"][entry_qualification][]="+element          
+          }
+        });
+        if(entryQualifications.length > 0){
+          and_counter++;
+        }
+      }
+
+      if(subDisciplinesDefault.current.length != subDisciplines.length){
+        subDisciplines.forEach(element => {
+          filter += "&filter[and]["+and_counter+"][sub_disciplines][]="+element
+        });
+        if(subDisciplines.length > 0){
+          and_counter++;
+        }
+      }
+
       if(!isEmpty(trim(keyword.current))){
-        filter += "&filter[and]["+and_counter+"][or][0][name][like][]="+trim(keyword.current)
-        filter += "&filter[and]["+and_counter+"][or][1][disciplines][like][]="+trim(keyword.current)
-        filter += "&filter[and]["+and_counter+"][or][2][sub_disciplines][like][]="+trim(keyword.current)
-        filter += "&filter[and]["+and_counter+"][or][3][tags][like][]="+trim(keyword.current)
+        filter += "&filter[and]["+and_counter+"][or][0][name][like][]="+trim(keyword.current).toLowerCase()
+        filter += "&filter[and]["+and_counter+"][or][1][disciplines][like][]="+trim(keyword.current).toLowerCase()
+        filter += "&filter[and]["+and_counter+"][or][2][sub_disciplines][like][]="+trim(keyword.current).toLowerCase()
+        filter += "&filter[and]["+and_counter+"][or][3][tags][like][]="+trim(keyword.current).toLowerCase()
         and_counter++;
       }
       setRefreshing(true);
