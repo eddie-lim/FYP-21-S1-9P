@@ -50,40 +50,32 @@ const LandingStack = createStackNavigator({
   screenSchoolListing: ScreenSchoolListing,
   screenCourseDetail: ScreenCourseDetail,
   screenSchoolDetail: ScreenSchoolDetail,
+
+  screenLandingWebview: ScreenWebview,
 }, { initialRouteName: 'screenLanding', defaultNavigationOptions:{headerShown:false} });
 
 LandingStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   for (let i = 0; i < navigation.state.routes.length; i++) {
-    if (navigation.state.routes[i].routeName == "screenLogin" || navigation.state.routes[i].routeName == "screenRegister" || navigation.state.routes[i].routeName == "screenForgetPassword" || navigation.state.routes[i].routeName == "screenProfile" || navigation.state.routes[i].routeName == "screenSettings") { tabBarVisible = false; }
+    if (navigation.state.routes[i].routeName == "screenLogin" || navigation.state.routes[i].routeName == "screenRegister" || navigation.state.routes[i].routeName == "screenForgetPassword" || navigation.state.routes[i].routeName == "screenProfile" || navigation.state.routes[i].routeName == "screenSettings" || navigation.state.routes[i].routeName == "screenLandingWebview") { tabBarVisible = false; }
   }
   return { tabBarVisible };
 };
 
 //##############################################
 
-const EventStack = createStackNavigator({
-  screenEventListing: ScreenEventListing,
-  screenEventDetail: ScreenEventDetail,
-  screenEventRegistration: ScreenEventRegistration,
-}, { initialRouteName: 'screenEventListing', defaultNavigationOptions:{headerShown:false} });
-
-//##############################################
-
-const UniversityStack = createStackNavigator({
-  screenUniversity: ScreenUniversity,
-  screenCourseListing: ScreenCourseListing,
-  screenSchoolListing: ScreenSchoolListing,
-  screenCourseDetail: ScreenCourseDetail,
-  screenSchoolDetail: ScreenSchoolDetail,
-}, { initialRouteName: 'screenUniversity', defaultNavigationOptions:{headerShown:false} });
-
-//##############################################
-
 const MapStack = createStackNavigator({
   screenMap: ScreenMap,
+  screenMapWebview: ScreenWebview,
 }, { initialRouteName: 'screenMap', defaultNavigationOptions:{headerShown:false} });
 
+MapStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  for (let i = 0; i < navigation.state.routes.length; i++) {
+    if (navigation.state.routes[i].routeName == "screenMapWebview") { tabBarVisible = false; }
+  }
+  return { tabBarVisible };
+};
 //##############################################
 
 const WebviewStack = createStackNavigator({
@@ -98,69 +90,54 @@ const QuestionsStack = createStackNavigator({
   screenFaq: ScreenFaq,
   screenFaqDetail: ScreenFaqDetail,
   screenEnquiryForm: ScreenEnquiryForm,
+
+  screenQuestionsWebview: ScreenWebview,
 }, { initialRouteName: 'screenQuestions'});
 
+QuestionsStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  for (let i = 0; i < navigation.state.routes.length; i++) {
+    if (navigation.state.routes[i].routeName == "screenQuestionsWebview") { tabBarVisible = false; }
+  }
+  return { tabBarVisible };
+};
 //##############################################
 
 const MainBottomTab= createBottomTabNavigator({
-  // university: {
-  //   screen: UniversityStack,
-  //   navigationOptions:{
-  //     tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>),
-  //     tabBarIcon: ({ focused }) =>(
-  //       <View style={{alignItems: 'center', justifyContent: 'center'}}>
-  //         <Icon name={'school'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-  //         <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>University</Text>
-  //       </View>
-  //     ),
-  //   }
-  // },
-  map: {
-    screen: MapStack,
-    navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Map</Text>),
-      tabBarIcon: ({ focused }) =>(
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'map'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Map</Text>
-        </View>
-      ),
-    }
-  },
   landing: {
     screen: LandingStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Home</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Home</Text>),
       tabBarIcon: ({ focused }) =>{
         return(
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Image source={require('@assets/img/sim-global-education-logo-sm.png')} style={{width:44,height: 17, marginTop:4}}/>
-            <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center', paddingTop:3}}>Open House</Text>
+            <Image source={focused ? require('@assets/img/sim-global-education-logo-sm.png') : require('@assets/img/sim-global-education-logo-sm_grey.png')} style={{width:44,height: 17, marginTop:4}}/>
+            <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center', paddingTop:3}}>Home</Text>
           </View>
         )
       },
     }
   },
-  // event: {
-  //   screen: EventStack,
-  //   navigationOptions:{
-  //     tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>),
-  //     tabBarIcon: ({ focused }) =>(
-  //       <View style={{alignItems: 'center', justifyContent: 'center'}}>
-  //         <Icon name={'calendar'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-  //         <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Events</Text>
-  //       </View>
-  //     ),
-  //   }
-  // },
+  map: {
+    screen: MapStack,
+    navigationOptions:{
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Map</Text>),
+      tabBarIcon: ({ focused }) =>(
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Icon name={'map'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor} size={24} />
+          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Map</Text>
+        </View>
+      ),
+    }
+  },
   questions: {
     screen: QuestionsStack,
     navigationOptions:{
-      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Information</Text>),
+      tabBarLabel: ({ focused }) =>(<Text style={{fontSize: 9, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Information</Text>),
       tabBarIcon: ({ focused }) =>(
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Icon name={'information'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedText} size={24} />
-          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedText, alignSelf: 'center'}}>Information</Text>
+          <Icon name={'information'} color={focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor} size={24} />
+          <Text style={{fontSize: 12, color: focused ? StyleConstant.primaryColor : StyleConstant.mutedTextColor, alignSelf: 'center'}}>Information</Text>
         </View>
       ),
     }

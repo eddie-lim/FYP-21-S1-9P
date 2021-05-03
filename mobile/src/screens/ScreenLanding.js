@@ -11,20 +11,19 @@ import WebApi from '@helpers/WebApi';
 import { capitalize, isArray, shuffle } from 'lodash';
 import HelperFunctions from '@helpers/HelperFunctions';
 import PagerView from 'react-native-pager-view';
-import { Placeholder, PlaceholderMedia, PlaceholderLine, ShineOverlay } from "rn-placeholder";
+import { Placeholder, PlaceholderMedia, PlaceholderLine, ShineOverlay, Shine } from "rn-placeholder";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ScreenLanding = (props) => {
   const { navigate } = useNavigation();
   const [ loggedIn, setLoggedIn ] = useState(null);
-  const [ featuredItems, setFeaturedItems ] = useState({
-    course:[],
-    event:[],
-    university_partner:[],
-    course_quiz_url:[],
-  })
+  const [ featuredItems, setFeaturedItems ] = useState([])
   const [ universityPartners, setUniversityPartners ] = useState([]);
   const [ courses, setCourses ] = useState([]);
   const [ events, setEvents ] = useState([]);
+
+  const scrollViewRef = useRef(null);
+  const [ scrollViewFlashState, setScrollViewFlashState ] = useState(null);
 
   const viewPagerRef = useRef(null);
   const [ viewPagerSliderState, setViewPagerSliderState ] = useState(null);
@@ -38,8 +37,8 @@ const ScreenLanding = (props) => {
     if(viewPagerSliderState==null){
       var viewPagerSlider = setInterval(function(){
         if(viewPagerRef.current != null){
-          // 0 - 6
-          if (currentViewPagerPage.current >= 6) {
+          // 0 - 8
+          if (currentViewPagerPage.current >= 8) {
             currentViewPagerPage.current = 0;
           } else {
             currentViewPagerPage.current ++;
@@ -49,9 +48,19 @@ const ScreenLanding = (props) => {
       }, 5000);
       setViewPagerSliderState(viewPagerSlider)
     }
+
+    if(scrollViewFlashState==null){
+      var scrollViewFlash = setInterval(function(){
+        if(scrollViewRef.current != null){
+          scrollViewRef.current.flashScrollIndicators()
+        }
+      }, 2345);
+      setScrollViewFlashState(scrollViewFlash)
+    }
     
     return function cleanup() {
       clearInterval(viewPagerSlider);
+      clearInterval(scrollViewFlash);
     } 
   }, []);
 
@@ -192,9 +201,82 @@ const ScreenLanding = (props) => {
     }
   }
 
+  renderCourseQuiz = () =>{
+    renderFeaturedItems = () => {
+      if(featuredItems.length == 0){
+        return(
+          <>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Placeholder
+                style={{elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'#fff', borderRadius:50}}
+                Animation={Shine}
+              >
+                <PlaceholderMedia style={{borderRadius:50, height:'100%', width:'100%'}} />
+              </Placeholder>
+            </View>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Placeholder
+                style={{elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'#fff', borderRadius:50}}
+                Animation={Shine}
+              >
+                <PlaceholderMedia style={{borderRadius:50, height:'100%', width:'100%'}} />
+              </Placeholder>
+            </View>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Placeholder
+                style={{elevation:5, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'#fff', borderRadius:50}}
+                Animation={Shine}
+              >
+                <PlaceholderMedia style={{borderRadius:50, height:'100%', width:'100%'}} />
+              </Placeholder>
+            </View>
+          </>
+        )
+      } else {
+        return(
+          <>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Pressable style={{ ...ShadowStyle, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})}>
+                <Icon name={"school"}  size={30} color={StyleConstant.primaryColor} />
+              </Pressable>
+              <Text style={{marginTop:5}}>SIM GE</Text>
+            </View>
+
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Pressable style={{ ...ShadowStyle, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenLandingWebview", {url:featuredItems.course_quiz_url, source:"screenLanding", headerName:"Course Quiz"})}>
+                <Icon name={"clipboard-text"}  size={30} color={StyleConstant.primaryColor} />
+              </Pressable>
+              <Text style={{marginTop:5}}>Quiz</Text>
+            </View>
+
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+              <Pressable style={{ ...ShadowStyle, alignItems:'center', justifyContent:'center', width:50, height:50, backgroundColor:'white', borderRadius:50}} onPress={() => navigate("screenEnquiryForm", {source:"screenLanding"})}>
+                <Icon name={"comment-question"}  size={30} color={StyleConstant.primaryColor} />
+              </Pressable>
+              <Text style={{marginTop:5}}>Enquiry Form</Text>
+            </View>
+          </>
+        )
+      }
+    }
+
+    return(
+      <View style={{backgroundColor:'white', height:(Dimensions.get('window').height)*0.125}}>
+        <View style={{height:'100%', backgroundColor:'white', alignItems: 'center', flex: 1, justifyContent:'space-evenly', flexDirection:'row'}}>
+          { renderFeaturedItems() }
+        </View>
+      </View>
+    )
+  }
+
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <NavigationEvents
+        onWillBlur={()=>{
+          props.navigation.setParams({"navOptions":{
+            headerShown:false,
+          }});
+        }}
         onWillFocus={()=>{
           StoreSettings.get(StoreSettings.IS_LOGGED_IN)
           .then((res)=>{
@@ -224,40 +306,67 @@ const ScreenLanding = (props) => {
           })
         }}
       />
-      <ScrollView>
-        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', marginTop:20, paddingBottom:5}}>
-          
+      <ScrollView ref={scrollViewRef}>
+        <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', paddingBottom:15, marginTop:20}}>
+
           <View style={{height: 160, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
             <PagerView ref={viewPagerRef} onPageSelected={(e)=>{ currentViewPagerPage.current = e.nativeEvent.position; }} style={{height: '100%', width: '100%'}} initialPage={0}>
               <View key="1">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://app.micepad.co/sim2/register/PersonalConsultationsAprMay2021", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/03-3657-GE-PC_Mega-bnr-1920x700.jpg"}} />
+                </Pressable>
               </View>
               <View key="2">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/10/Web-Banner-for-counter2.png"}} />
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://app.micepad.co/sim2/register/USYDNursingWebinar2021", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Nursing-Webinar-GE-Event-Homepage-Banner-1440-x-600.png"}} />
+                </Pressable>
               </View>
               <View key="3">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Web_Banner_Create_Big-R2.jpg"}} />
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://app.micepad.co/sim2/register/RMITConsultations", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/RMIT-Consultations-GE-Mega-Banner.png"}} />
+                </Pressable>
               </View>
               <View key="4">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/SIM-Music-Quiz-Mega-banner-V2.png"}} />
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://sim-programme-and-career-quiz.ifdemo.com/", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/SIM-Music-Quiz-Mega-banner-V2.png"}} />
+                </Pressable>
               </View>
               <View key="5">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Official-Web-Banner-eDM.png"}} />
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://simrec.custhelp.com/ci/documents/detail/2/SIMGE_ConsultationReg_Purpose", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/10/Web-Banner-for-counter2.png"}} />
+                </Pressable>
               </View>
               <View key="6">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Nursing-Webinar-GE-Event-Homepage-Banner-1440-x-600.png"}} />
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://simrec.custhelp.com/ci/documents/detail/2/SIMGE_Campus_Tour_Reg_On_Site", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/02/01-3560-LE_Campus-tour_web-banner_sj_v01_onsite1440x600-2A.png"}} />
+                </Pressable>
               </View>
               <View key="7">
-                <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/03-3567-GE-PC-2_Mega-bnr-1440x400.jpg"}} />
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://www.simge.edu.sg/programmes/university-partners-sim-ge/university-of-london/", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/UOL-Achievement.jpg"}} />
+                </Pressable>
+              </View>
+              <View key="8">
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://www.simge.edu.sg/student-life/student-ambassador-programme/sim-podcast/", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2021/04/Official-Web-Banner-eDM.png"}} />
+                </Pressable>
+              </View>
+              <View key="9">
+                <Pressable onPress={() => navigate("screenLandingWebview", {url:"https://www.simge.edu.sg/", source:"screenLanding", headerName:""})}>
+                  <Image style={{width:'100%', height:'100%', maxHeight:150, resizeMode:'cover'}} source={{uri:"https://www.simge.edu.sg/wp-content/uploads/2020/07/CampusClosure-Covid_280720_GE-website.jpg"}} />
+                </Pressable>
               </View>
             </PagerView>
           </View>
 
+          { useMemo(renderCourseQuiz, [featuredItems]) }
+          <View style={styles.greySeperator}/>
+
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>Events</Text>
+              <Text style={styles.flatListHeaderLeft}><Icon name={'calendar-multiple'} size={16} color={'black'}/>&nbsp;Events</Text>
               <Pressable onPress={()=>navigate("screenEventListing")}>
-                <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
+                <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
             </View>
             
@@ -267,9 +376,9 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>Courses</Text>
+              <Text style={styles.flatListHeaderLeft}><Icon name={'book-open-page-variant'} size={16} color={'black'}/>&nbsp;Courses</Text>
               <Pressable onPress={()=>navigate("screenCourseListing")}>
-                <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
+                <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
             </View>
 
@@ -279,9 +388,9 @@ const ScreenLanding = (props) => {
 
           <View>
             <View style={styles.flatListHeaderContainer}>
-              <Text style={styles.flatListHeaderLeft}>University Partners</Text>
+              <Text style={styles.flatListHeaderLeft}><Icon name={'domain'} size={16} color={'black'}/>&nbsp;University Partners</Text>
               <Pressable onPress={()=>navigate("screenSchoolListing")}>
-                <Text style={styles.flatListHeaderRight}>View All &gt;</Text>
+                <Text style={styles.flatListHeaderRight}>View All <Icon name={'chevron-right-circle-outline'} size={(Dimensions.get('window').height)*0.02} color={'navy'}/></Text>
               </Pressable>
             </View>
 
@@ -290,7 +399,7 @@ const ScreenLanding = (props) => {
 
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

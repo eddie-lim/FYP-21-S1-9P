@@ -108,7 +108,7 @@ const ScreenSettings = (props) => {
   }
   
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}} style={{backgroundColor: 'white'}} showsVerticalScrollIndicator={false}>
         <NavigationEvents
           onWillBlur={()=>{
@@ -153,7 +153,7 @@ const ScreenSettings = (props) => {
           </View>
         </View>   
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

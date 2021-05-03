@@ -18,7 +18,7 @@ const ScreenApplicationProcess = (props) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingBottom:15}}>
           <View style={{width:'80%', marginTop: 15}}>
@@ -52,6 +52,8 @@ const ScreenApplicationProcess = (props) => {
             <Image source={require('@assets/img/process_step5.png')} style={{width: 120, height: 120, marginTop: 10, alignSelf: 'center', resizeMode:'contain'}} />
             <Text style={{color:"black", width:'100%', textAlign:'center'}}>Check your email for your application outcome.</Text>
           </View>
+
+          <View style={styles.greySeperator}/>
           
           <View style={{width:'80%', marginTop: 15}}>
             <Text style={{color:StyleConstant.primaryColor, width:'100%', fontSize:20, fontWeight:'bold'}}>Application Fees</Text>
@@ -62,12 +64,12 @@ const ScreenApplicationProcess = (props) => {
           
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 export default withScreenBase(ScreenApplicationProcess, ScreenBaseType.MAIN);
 
-const styles = StyleSheet.create({
-  
+const styles = StyleSheet.create({  
+  greySeperator: {width: '100%', height: 1, backgroundColor: StyleConstant.bgGray, marginTop: 10},
 });

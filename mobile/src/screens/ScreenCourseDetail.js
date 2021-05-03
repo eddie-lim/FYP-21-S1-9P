@@ -99,7 +99,7 @@ const ScreenCourseDetail = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView style={{backgroundColor: 'white'}}>
         <View style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           
@@ -222,7 +222,7 @@ const ScreenCourseDetail = (props) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

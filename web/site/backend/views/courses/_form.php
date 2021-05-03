@@ -87,7 +87,7 @@ use yii\web\JsExpression;
                         <?php echo $form->field($model, 'entry_qualification')->widget(Select2::classname(),
                             [
                                 // 'theme' => Select2::THEME_MATERIAL,
-                                // 'data' => $model->getCommonTags(),
+                                'data' => $model->getCommonAttr('entry_qualification'),
                                 'showToggleAll' => false,
                                 'options' => [
                                     'placeholder' => 'Select existing entry qualification or add your own ...',
@@ -115,7 +115,7 @@ use yii\web\JsExpression;
                         <?php echo $form->field($model, 'tags')->widget(Select2::classname(),
                             [
                                 'theme' => Select2::THEME_MATERIAL,
-                                // 'data' => $model->getCommonTags(),
+                                'data' => $model->getCommonAttr('tags'),
                                 'showToggleAll' => false,
                                 'options' => [
                                     'placeholder' => 'Select common tags or add your own ...',

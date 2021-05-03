@@ -91,12 +91,12 @@ const ScreenSchoolListing = (props) => {
   // FLATLIST FUNCTIONS ---- END
 
   return (
-    <SafeAreaView style={{flex:1}}>
+    <View style={{flex:1}}>
       <View style={styles.container}>
         <View style={styles.fixedContentContainer}>
           <Text style={styles.fixedContentHeader}>University Partners &amp; SIM GE</Text>
           <View style={styles.greySeperator}/>
-          <Text style={{...styles.fixedContentBody, color:StyleConstant.primaryColor}}>Your Global Edge starts here</Text>
+          <Text style={styles.fixedContentBody}>Your Global Edge starts here</Text>
           <Text style={styles.fixedContentBody}>Reputable Partners. Top-notch Faculty.</Text>
           <Text style={styles.fixedContentBody}>SIM GE offers over 80 academic programmes ranging from diploma to bachelor and postgraduate degrees through partnerships with some of the finest universities across the globe. You will be taught by highly qualified and dedicated local and international faculty. Fusing Asian practices with international perspectives for a truly global outlook, our programmes will enable you to gain from the best of all worlds.</Text>
         </View>
@@ -104,7 +104,7 @@ const ScreenSchoolListing = (props) => {
       <View style={styles.flatListContainer}>
         { renderList() }
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
