@@ -16,6 +16,7 @@ import HelperFunctions from '@helpers/HelperFunctions';
 const ScreenEnquiryForm = (props) => {
   const { navigate, goBack } = useNavigation();
   const { toggleActivityIndicator } = useContext(GlobalContext);
+  const source = useNavigationParam('source');
 
   const [ school, setSchool ] = useState("");
   const [ name, setName ] = useState("");
@@ -48,7 +49,7 @@ const ScreenEnquiryForm = (props) => {
       props.navigation.setParams({"navOptions":{
         headerShown:true,
         header:()=> HeaderWithBack("Enquiry Form", ()=>{
-          navigate("screenQuestions")
+          navigate(source)
         }, right_button)
       }});
     });
@@ -93,7 +94,7 @@ const ScreenEnquiryForm = (props) => {
         [
           {
             text: 'OK', onPress: async () => {
-              navigate("screenQuestions")
+              navigate(source)
             }
           },
         ]
@@ -196,7 +197,7 @@ const ScreenEnquiryForm = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView>
         <View onTouchStart={()=>{Keyboard.dismiss; }} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           
@@ -206,7 +207,7 @@ const ScreenEnquiryForm = (props) => {
 
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

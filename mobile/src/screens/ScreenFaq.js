@@ -59,10 +59,10 @@ const ScreenFaq = (props) => {
       <Pressable onPress={ () => navigate("screenFaqDetail", {item:item, data: data})}>
         <View>
           <View style={styles.card}>
-            <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, padding: 5}}>
+            <View style={{flexDirection:'row', alignItems: 'center', flex: 1}}>
               {/* <Icon style={{marginHorizontal: 10}} name={modeOfStudyIcon[item.mode_of_study]} size={28} color={StyleConstant.primaryColor}/> */}
               <View style={styles.midContent}>
-                <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>{item.question}</Text>
+                <Text style={styles.title} numberOfLines={1} ellipsizeMode={'tail'}>&bull;&nbsp;{item.question}</Text>
                 {/* <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode={'tail'}>Awarded by {item.school_id}</Text> */}
               </View>
             </View>
@@ -76,11 +76,11 @@ const ScreenFaq = (props) => {
   // FLATLIST FUNCTIONS ---- END
 
   return (
-    <SafeAreaView style={{flex:1}}>
+    <View style={{flex:1}}>
       <View style={styles.container}>
         { renderList() }
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -88,5 +88,6 @@ export default withScreenBase(ScreenFaq, ScreenBaseType.MAIN);
 
 const styles = StyleSheet.create({
   container:{ flex: 1, alignItems: 'stretch', backgroundColor: 'white'},
-  card:{marginBottom:15}
+  card:{marginBottom:15, marginTop:15, marginLeft:5, marginRight:5},
+  inboxSeperator: {position: 'absolute', bottom: 0, width: '95%', alignSelf: 'center', marginLeft: 'auto', marginRight: 'auto', backgroundColor: StyleConstant.bgGray, height: 1},
 });

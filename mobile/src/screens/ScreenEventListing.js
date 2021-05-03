@@ -252,17 +252,22 @@ const ScreenEventListing = (props) => {
     if(!refreshing){
       var filter = "";
       var and_counter = 0;
-      TypeOfEvents.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][type][]="+element
-      });
-      if(TypeOfEvents.length > 0){
-        and_counter++;
+      if(TypeOfEventsDefault.current.length != TypeOfEvents.length){
+        TypeOfEvents.forEach(element => {
+          filter += "&filter[and]["+and_counter+"][type][]="+element
+        });
+        if(TypeOfEvents.length > 0){
+          and_counter++;
+        }
       }
-      universityParters.forEach(element => {
-        filter += "&filter[and]["+and_counter+"][school_id][]="+element
-      });
-      if(universityParters.length > 0){
-        and_counter++;
+
+      if(universityPartnersDefault.current.length != universityParters.length){
+        universityParters.forEach(element => {
+          filter += "&filter[and]["+and_counter+"][school_id][]="+element
+        });
+        if(universityParters.length > 0){
+          and_counter++;
+        }
       }
       
       filter += "&filter[and]["+and_counter+"][start_at][gte]="+(new Date(filterStartDate).getTime() / 1000)
@@ -354,7 +359,7 @@ const ScreenEventListing = (props) => {
   // FLATLIST FUNCTIONS ---- END
 
   return (
-    <SafeAreaView style={{flex:1}}>
+    <View style={{flex:1}}>
       <NavigationEvents
         onWillFocus={()=>{
           renderFilterFields();
@@ -439,7 +444,7 @@ const ScreenEventListing = (props) => {
         </View>
         { renderList() }
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

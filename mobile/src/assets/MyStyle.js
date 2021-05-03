@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet, Platform, Image, Pressable } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import PagerView from 'react-native-pager-view';
 
 const StyleConstant = {
   primaryColor: "#009067",
@@ -16,7 +15,7 @@ const StyleConstant = {
   secondaryColorLight: "#3c587b",
   secondaryColorDark: "#000427",  
   secondaryTextColor: "#ffffff",
-  mutedTextColor: "#cccccc",
+  mutedTextColor: "#bebebe",
 
   warnColor: "#ffee75",
   bgGray: "#767676",
@@ -74,24 +73,20 @@ const HeaderStyleWithRight = {
 };
 
 const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
-  const title = "V0.0.7\nBuilt @ 24th Apr 2021";
-  // const title = "Create Your Own Future.\nBe A #FUTUREMAKER";
-  // const logged_in = await StoreSettings.get(StoreSettings.IS_LOGGED_IN);
-  // const logged_in = false;
   
   renderAccountButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenProfile')}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
-          <Icon name={'account-circle'} size={25} color={'white'}/>
-          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{user_name}</Text>
+        <Pressable onPress={() => {navigate('screenProfile')}} style={{height:Platform.OS == 'ios' ? 40 : 25, position: 'absolute', left: 15, bottom:Platform.OS == 'ios' ? 0 : 15, flexDirection: 'row'}}>
+          <Icon name={'account-circle'} size={30} color={'white'}/>
+          <Text style={{color: 'white', fontSize:24, marginStart:10}}>{user_name}</Text>
         </Pressable>
       )
     } else {
       return (
-        <Pressable onPress={() => {navigate('screenLogin', {source:"screenLanding"})}} style={{position: 'absolute', left: 15, bottom: 15, flexDirection: 'row'}}>
-          <Icon name={'login'} size={25} color={'white'}/>
-          <Text style={{color: 'white', fontSize:20, marginStart:10}}>{'Login'}</Text>
+        <Pressable onPress={() => {navigate('screenLogin', {source:"screenLanding"})}} style={{ height:Platform.OS == 'ios' ? 40 : 30, position: 'absolute', left: 15, bottom: Platform.OS == 'ios' ? 0 : 15, flexDirection: 'row'}}>
+          <Icon name={'login'} size={30} color={'white'}/>
+          <Text style={{color: 'white', fontSize:24, marginStart:10}}>{'Login'}</Text>
         </Pressable>
       )
     }
@@ -99,23 +94,25 @@ const HomeHeader = (navigate, logged_in = null, user_name = null)=>{
   renderSettingsButton = () =>{
     if(logged_in === "true" || logged_in === true){
       return(
-        <Pressable onPress={() => {navigate('screenSettings')}} style={{position: 'absolute', right: 20, bottom: 10}}>
+        <Pressable onPress={() => {navigate('screenSettings')}} style={{height:Platform.OS == 'ios' ? 40 : 30, position: 'absolute', right: 20, bottom: Platform.OS == 'ios' ? 0 : 10}}>
           <Icon name={'cog'} size={30} color={'white'}/>
         </Pressable>
       )
     }
   }
   return(
-    <View style={{width: '100%', height: Platform.OS == 'ios' ? 180 : 150, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:0, backgroundColor:'white', borderBottomLeftRadius:30, /*borderBottomRightRadius:30*/}}>
-        <Image style={{height: '75%', width: '100%', resizeMode:'contain'}} source={require('@assets/img/openhouse-logo.png')} />
-        {/* <Text style={{color: 'white', fontSize:20, textAlign:'center'}} >{title}</Text> */}
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 180 : 150, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 50 : 0}}>
+      
+      <View style={{height: '80%', width: '100%',justifyContent: 'center', alignItems: 'center', marginBottom:0, backgroundColor:'white', borderBottomLeftRadius:30}}>
+          <Pressable style={{width:'100%', height:'100%', paddingTop:15}} onPress={() => navigate("screenLandingWebview", {url:'https://www.simge.edu.sg/', source:"screenLanding", headerName:"SIM GE"})}>
+            <Image style={{height: '80%', width: '100%', resizeMode:'contain'}} source={require('@assets/img/openhouse-logo.png')} />
+        </Pressable>
       </View>
-      <View style={{backgroundColor:'white', width: '100%', height: '35%',}}>
-      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30}}>
-        {renderAccountButton()}
-        {renderSettingsButton()}
-      </View>
+      <View style={{backgroundColor:'white', width: '100%', height: '35%'}}>
+        <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%',flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderTopRightRadius:30}}>
+          {renderAccountButton()}
+          {renderSettingsButton()}
+        </View>
       </View>
     </View>
   );
@@ -126,8 +123,8 @@ const fabStyle = { width: 40, height: 40, borderRadius: 20, alignItems: 'center'
 
 const HeaderWithBack = (title, navigate, headerRight=null)=>{
   return(
-    <View style={{...ShareStyle.curveThis, width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 100 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 50 : 0}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
         <Pressable style={{position: 'absolute', left: 15, justifyContent: 'center'}} onPress={() => navigate()}>
           <Icon name={'arrow-left'} color={'white'} size={30} />
@@ -139,8 +136,8 @@ const HeaderWithBack = (title, navigate, headerRight=null)=>{
 }
 const HeaderWithCustomButtons = (title, headerLeft=null, headerRight=null)=>{
   return(
-    <View style={{...ShareStyle.curveThis, width: '100%', height: Platform.OS == 'ios' ? 85 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 30 : 0}}>
-      <View style={{...ShareStyle.curveThis, backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{width: '100%', height: Platform.OS == 'ios' ? 100 : 55, backgroundColor: StyleConstant.primaryColor, paddingTop: Platform.OS == 'ios' ? 50 : 0}}>
+      <View style={{backgroundColor:StyleConstant.primaryColor, width: '100%', height: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{alignSelf: 'center', color: 'white', fontSize:20}}>{title}</Text>
         {headerLeft}
         {headerRight}

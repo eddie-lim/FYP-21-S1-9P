@@ -127,7 +127,7 @@ const ScreenChangePassword = (props) => {
   }
 
   return (
-    <SafeAreaView onTouchStart={Keyboard.dismiss} style={{flex: 1, backgroundColor: '#fff'}}>
+    <View onTouchStart={Keyboard.dismiss} style={{flex: 1, backgroundColor: '#fff'}}>
       <View onTouchStart={Keyboard.dismiss} style={{flex : 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         
         <LottieView style={{height: 200}} source={require('@assets/animation/change-pw-8654.json')} autoPlay={true} loop={true} />
@@ -185,7 +185,7 @@ const ScreenChangePassword = (props) => {
         </Button>
 
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
