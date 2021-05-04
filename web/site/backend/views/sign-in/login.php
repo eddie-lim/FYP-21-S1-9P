@@ -26,7 +26,7 @@ $this->params['body-class'] = 'login-page';
                     {input}
                     <div class="input-group-append"><span class="input-group-text"><span class="fas fa-user"></span></span></div>
                 </div>',
-            ]) ?>
+            ])->label('Email') ?>
             <?php echo $form->field($model, 'password', [
                 'inputTemplate' => '<div class="input-group">
                     {input}
