@@ -26,6 +26,14 @@ $config = [
             'authTimeout' => YII_ENV_DEV ? 4*60*60 : 15*60, //idle timeout - 15 mins
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class,
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js' => ['https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'],
+                    'jsOptions' => ['type' => 'text/javascript'],
+                ],
+            ],
+        ],
     ],
     'modules' => [
         'gridview' => [
