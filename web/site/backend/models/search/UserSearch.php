@@ -13,6 +13,9 @@ use yii\data\ActiveDataProvider;
 class UserSearch extends User
 {
     private $newsletterSubscriptionsMode = false;
+    private $viewSimStaffMode = false;
+    private $viewUniPartnerStaffMode = false;
+    private $viewStudentMode = false;
     public $item_name;
     /**
      * @inheritdoc
@@ -38,6 +41,15 @@ class UserSearch extends User
     public function setNewsletterSubscriptionsMode(){
         $this->newsletterSubscriptionsMode = true;
     }
+    public function setViewSimStaffMode(){
+        $this->viewSimStaffMode = true;
+    }
+    public function setViewUniPartnerStaffMode(){
+        $this->viewUniPartnerStaffMode = true;
+    }
+    public function setViewStudentMode(){
+        $this->viewStudentMode = true;
+    }
 
     /**
      * Creates data provider instance with search query applied
@@ -49,6 +61,18 @@ class UserSearch extends User
 
         if(!Yii::$app->user->can(User::ROLE_SUPERADMIN)){
             $query->andFilterWhere(['or', ['not', ['rbac_auth_assignment.item_name'=> User::ROLE_SUPERADMIN]]])->orderBy(['rbac_auth_assignment.created_at' => SORT_DESC]);
+        }
+
+        if($this->viewSimStaffMode){
+            $query->andFilterWhere(['rbac_auth_assignment.item_name'=> User::ROLE_ADMINISTRATOR]);
+        }
+        
+        if($this->viewUniPartnerStaffMode){
+            $query->andFilterWhere(['rbac_auth_assignment.item_name'=> User::ROLE_MANAGER]);
+        }
+        
+        if($this->viewStudentMode){
+            $query->andFilterWhere(['rbac_auth_assignment.item_name'=> User::ROLE_USER]);
         }
 
         if($this->newsletterSubscriptionsMode){

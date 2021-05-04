@@ -41,6 +41,43 @@ class UserController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'page' => 'all'
+        ]);
+    }
+    public function actionSimStaff()
+    {
+        $searchModel = new UserSearch();
+        $searchModel->setViewSimStaffMode();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'page' => 'sim-staff'
+        ]);
+    }
+    public function actionUniversityPartners()
+    {
+        $searchModel = new UserSearch();
+        $searchModel->setViewUniPartnerStaffMode();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'page' => 'university-partners'
+        ]);
+    }
+    public function actionStudent()
+    {
+        $searchModel = new UserSearch();
+        $searchModel->setViewStudentMode();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'page' => 'student'
         ]);
     }
 

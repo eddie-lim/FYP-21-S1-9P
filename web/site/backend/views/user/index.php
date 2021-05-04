@@ -7,6 +7,7 @@ use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use rmrevin\yii\fontawesome\FAS;
+use backend\widgets\TabMenuUserWidget;
 
 /**
  * @var yii\web\View $this
@@ -18,6 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="card">
+    <?php
+        echo TabMenuUserWidget::widget(['page'=>$page]);
+    ?>
     <div class="card-header">
         <?php echo Html::a(FAS::icon('user-plus').' '.Yii::t('backend', 'Add New {modelClass}', [
             'modelClass' => 'User',
