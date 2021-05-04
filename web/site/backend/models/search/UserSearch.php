@@ -17,6 +17,7 @@ class UserSearch extends User
     private $viewUniPartnerStaffMode = false;
     private $viewStudentMode = false;
     public $item_name;
+    public $name;
     /**
      * @inheritdoc
      */
@@ -24,8 +25,8 @@ class UserSearch extends User
     {
         return [
             [['id', 'status'], 'integer'],
-            [['created_at', 'updated_at', 'login_at', 'item_name'], 'default', 'value' => null],
-            [['username', 'auth_key', 'password_hash', 'email', 'item_name'], 'safe'],
+            [['created_at', 'updated_at', 'login_at', 'item_name', 'name'], 'default', 'value' => null],
+            [['username', 'auth_key', 'password_hash', 'email', 'item_name', 'name'], 'safe'],
         ];
     }
 
@@ -57,7 +58,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find()->join('LEFT JOIN','rbac_auth_assignment','rbac_auth_assignment.user_id = id');
+        $query = User::find()->join('LEFT JOIN','rbac_auth_assignment','rbac_auth_assignment.user_id = id')->join('LEFT JOIN','user_profile','user_profile.user_id = id');
 
         if(!Yii::$app->user->can(User::ROLE_SUPERADMIN)){
             $query->andFilterWhere(['or', ['not', ['rbac_auth_assignment.item_name'=> User::ROLE_SUPERADMIN]]])->orderBy(['rbac_auth_assignment.created_at' => SORT_DESC]);
@@ -76,9 +77,7 @@ class UserSearch extends User
         }
 
         if($this->newsletterSubscriptionsMode){
-            $query->andWhere([]);
-            $query->join('LEFT JOIN','user_profile','user_profile.user_id = id')
-            ->andWhere(['user_profile.subscribe_newsletter' => 1]);
+            $query->andWhere(['user_profile.subscribe_newsletter' => 1]);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -115,7 +114,8 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'rbac_auth_assignment.item_name', $this->item_name]);
+            ->andFilterWhere(['like', 'rbac_auth_assignment.item_name', $this->item_name])
+            ->andFilterWhere(['or', ['like', 'user_profile.firstname', $this->name], ['like', 'user_profile.lastname', $this->name]]);
 
         return $dataProvider;
     }

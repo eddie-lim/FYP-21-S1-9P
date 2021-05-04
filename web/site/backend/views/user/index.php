@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'label' => 'Name',
                     'format' => 'raw',
+                    'attribute' => 'name',
                     'value' => function ($model) {
                         $html = $model->publicIdentity;
                         return $html;
@@ -58,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'label' => 'Role',
                     'format' => 'raw',
+                    'filter'=> User::getAllocatableRoles(),
                     'attribute' => 'item_name',
                     'value' => function ($model) {
                         $html = User::getUserRole($model->id);
