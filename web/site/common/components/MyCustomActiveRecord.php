@@ -84,25 +84,24 @@ class MyCustomActiveRecord extends \yii\db\ActiveRecord {
 
     public static function getCommonAttr($attr){
         // var_dump(static::find()->select([$attr])->asArray()->all()); exit();
-        $all_tags = ArrayHelper::map(static::find()->select([$attr])->asArray()->all(), $attr, $attr);
+        $all_tags = ArrayHelper::map(static::find()->select([$attr])->groupBy([$attr])->asArray()->all(), $attr, $attr);
         $new = [];
         foreach ($all_tags as $value) {
             $val = json_decode(trim($value));
             if(is_array($val)){
                 foreach ($val as $v) {
                     if(!empty($v) && isset($v)){
-                        $new[] = $v;
+                        $new[$v] = $v;
                     }
                 }
             } else if(!empty($value) && isset($value) && $value !== '""'){
-                $new[] = $value;
+                $new[$value] = $value;
             }
         }
-        $unique = array_unique($new);
-        sort($unique);
+        ksort($new);
         // var_dump($new); exit();
 
-        return $unique;
+        return $new;
     }
 
 
