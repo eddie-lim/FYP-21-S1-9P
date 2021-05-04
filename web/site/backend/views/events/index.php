@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\Events;
 
 /**
  * @var yii\web\View $this
@@ -45,12 +46,25 @@ $this->params['breadcrumbs'][] = $this->title;
                             return \common\models\UniversityPartners::getUniversityBlock($model->school_id);
                         },
                         'headerOptions' => ['width' => '250px'],
+                        'visible'=>Yii::$app->user->can(\common\models\User::ROLE_SUPERADMIN),
                     ],
-                    'session',
+                    // 'session',
+                    [
+                        'attribute' => 'session',
+                        'filter'=> Events::getCommonAttr('session'),
+                    ],
                     'name',
-                    'type',
+                    // 'type',
+                    [
+                        'attribute' => 'type',
+                        'filter'=> Events::getCommonAttr('type'),
+                    ],
                     // 'description:ntext',
-                    'venue',
+                    // 'venue',
+                    [
+                        'attribute' => 'venue',
+                        'filter'=> Events::getCommonAttr('venue'),
+                    ],
                     // 'start_at:datetime',
                     // 'end_at:datetime',
                     // 'tags:ntext',

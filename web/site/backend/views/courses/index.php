@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use \common\models\Courses;
 
 /**
  * @var yii\web\View $this
@@ -46,9 +47,29 @@ $this->params['breadcrumbs'][] = $this->title;
                             return \common\models\UniversityPartners::getUniversityBlock($model->school_id);
                         },
                         'headerOptions' => ['width' => '250px'],
+                        'visible'=>Yii::$app->user->can(\common\models\User::ROLE_SUPERADMIN),
                     ],
                     'name',
-                    'mode_of_study',
+                    // 'mode_of_study',
+                    [
+                        'attribute' => 'mode_of_study',
+                        'filter'=> Courses::getAllModeOfStudy(),
+                        'value' => function ($model){
+                            return Courses::getAllModeOfStudy()[$model->mode_of_study];
+                        },
+                    ],
+                    [
+                        'attribute' => 'disciplines',
+                        'filter'=> Courses::getCommonAttr('disciplines'),
+                    ],
+                    [
+                        'attribute' => 'sub_disciplines',
+                        'filter'=> Courses::getCommonAttr('sub_disciplines'),
+                    ],
+                    [
+                        'attribute' => 'academic_level',
+                        'filter'=> Courses::getCommonAttr('academic_level'),
+                    ],
                     // 'disciplines',
                     // 'sub_disciplines',
                     // 'academic_level',

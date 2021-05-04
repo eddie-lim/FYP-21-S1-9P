@@ -51,8 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'attribute' => 'name',
                     'value' => function ($model) {
-                        $html = $model->publicIdentity;
-                        return $html;
+                        return User::getUserBlock($model->id);
                     },
                     'headerOptions' => ['width' => '150px'],
                 ],

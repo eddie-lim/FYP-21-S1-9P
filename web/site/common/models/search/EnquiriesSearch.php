@@ -12,6 +12,7 @@ use common\models\Enquiries;
  */
 class EnquiriesSearch extends Enquiries
 {
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,8 @@ class EnquiriesSearch extends Enquiries
     {
         return [
             [['id', 'user_id', 'school_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['enquiry', 'notes', 'status'], 'safe'],
+            [['user_name'], 'default', 'value' => null],
+            [['enquiry', 'notes', 'status', 'user_name'], 'safe'],
         ];
     }
 
@@ -41,10 +43,11 @@ class EnquiriesSearch extends Enquiries
      */
     public function search($params)
     {
-        $query = Enquiries::find();
+        $query = Enquiries::find()
+        ->join('LEFT JOIN','user_profile','user_profile.user_id = enquiries.user_id');
 
         if(!Yii::$app->user->can(Yii::$app->user->identity::ROLE_SUPERADMIN)){
-            $query->where(['or', ['school_id'=>Yii::$app->user->identity->userProfile->school_id], ['is','school_id', null], ['school_id'=> '']]);
+            $query->where(['or', ['enquiries.school_id'=>Yii::$app->user->identity->userProfile->school_id], ['is','enquiries.school_id', null], ['enquiries.school_id'=> '']]);
         }
         
         $dataProvider = new ActiveDataProvider([
@@ -57,8 +60,8 @@ class EnquiriesSearch extends Enquiries
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'school_id' => $this->school_id,
+            'enquiries.user_id' => $this->user_id,
+            'enquiries.school_id' => $this->school_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
@@ -67,7 +70,8 @@ class EnquiriesSearch extends Enquiries
 
         $query->andFilterWhere(['like', 'enquiry', $this->enquiry])
             ->andFilterWhere(['like', 'notes', $this->notes])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['or', ['like', 'user_profile.firstname', $this->user_name], ['like', 'user_profile.lastname', $this->user_name]]);
 
         return $dataProvider;
     }

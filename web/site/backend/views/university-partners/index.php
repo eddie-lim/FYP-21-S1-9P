@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use \common\models\UniversityPartners;
 
 /**
  * @var yii\web\View $this
@@ -40,7 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'id',
                     'name',
                     // 'description:ntext',
-                    'continent',
+                    // 'continent',
+                    [
+                        'attribute' => 'continent',
+                        'filter'=> UniversityPartners::getAllContinents(),
+                        'value' => function ($model){
+                            return UniversityPartners::getAllContinents()[$model->continent];
+                        },
+                    ],
                     // 'highlights:ntext',
                     // 'certifications:ntext',
                     // 'tags:ntext',

@@ -5,6 +5,8 @@ namespace common\models;
 use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
 use yii\db\ActiveRecord;
+use common\models\User;
+use common\models\UniversityPartners;
 
 /**
  * This is the model class for table "user_profile".
@@ -107,6 +109,10 @@ class UserProfile extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getUniversityPartners(){
+        return $this->hasOne(UniversityPartners::className(), ['id' => 'school_id']);
     }
 
     /**
