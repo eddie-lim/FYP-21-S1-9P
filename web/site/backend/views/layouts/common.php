@@ -356,7 +356,7 @@ $logEntries[] = [
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2"> 
-                    <?php if(strpos($this->title, Yii::$app->user->identity->userProfile->universityPartners->name) === false): ?>
+                    <?php if(isset(Yii::$app->user->identity->userProfile->universityPartners) && strpos($this->title, Yii::$app->user->identity->userProfile->universityPartners->name) === false): ?>
                         <div class="col-12">
                             <h2 class="m-0 text-dark"><?php echo Yii::$app->user->identity->userProfile->universityPartners->name ?></h2>
                         </div>
