@@ -39,7 +39,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
 
                     // 'id',
-                    'name',
+                    // 'name',
+                    [
+                        'attribute' => 'name',
+                        'format'=>'raw',
+                        'value' => function ($model){
+                            $html = "";
+                            $html .= "<p>";
+                            $html .= $model->name;
+                            $html .= "</p>";
+                            $html .= isset($model->thumbnail_url) ? '<img style="width:200px; height:auto; object-fit:fit;" src="'.$model->thumbnail_url.'" />' : "";
+
+                            return $html;
+                        },
+                    ],
                     // 'description:ntext',
                     // 'continent',
                     [

@@ -49,7 +49,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         'headerOptions' => ['width' => '250px'],
                         'visible'=>Yii::$app->user->can(\common\models\User::ROLE_SUPERADMIN),
                     ],
-                    'name',
+                    // 'name',
+                    [
+                        'attribute' => 'name',
+                        'format'=>'raw',
+                        'value' => function ($model){
+                            $html = "";
+                            $html .= "<p>";
+                            $html .= $model->name;
+                            $html .= "</p>";
+                            $html .= isset($model->thumbnail_url) ? '<img style="width:200px; height:auto; object-fit:fit;" src="'.$model->thumbnail_url.'" />' : "";
+
+                            return $html;
+                        },
+                    ],
                     // 'mode_of_study',
                     [
                         'attribute' => 'mode_of_study',
