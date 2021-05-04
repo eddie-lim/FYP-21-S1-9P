@@ -3,6 +3,7 @@
 use common\grid\EnumColumn;
 use common\components\MyCustomActiveRecord;
 use common\models\User;
+use common\models\UniversityPartners;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -55,7 +56,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'headerOptions' => ['width' => '150px'],
                 ],
-                'email:email',
+                [
+                    'format' => 'email',
+                    'attribute' => 'email',
+                    'headerOptions' => ['width' => '150px'],
+                ],
                 [
                     'label' => 'Role',
                     'format' => 'raw',
@@ -65,7 +70,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         $html = User::getUserRole($model->id);
                         return $html;
                     },
-                    'headerOptions' => ['width' => '150px'],
+                    'headerOptions' => ['width' => '100px'],
+                ],
+                [
+                    'label' => 'Assigned to',
+                    'format' => 'raw',
+                    'filter'=> UniversityPartners::getCommonAttr("name"),
+                    'attribute' => 'uni_name',
+                    'value' => function ($model) {
+                        if(isset($model->userProfile->school_id)){
+                            return UniversityPartners::getUniversityBlock($model->userProfile->school_id);
+                        } else {
+                            return "-";
+                        }
+                    },
+                    'headerOptions' => ['width' => '200px'],
                 ],
                 // [
                 //     'class' => EnumColumn::class,
@@ -87,6 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'endDate' => '0d',
                         ]
                     ]),
+                    'headerOptions' => ['width' => '200px'],
                 ],
                 [
                     'attribute' => 'login_at',
@@ -106,6 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'endDate' => '0d',
                         ]
                     ]),
+                    'headerOptions' => ['width' => '200px'],
                 ],
                 // 'updated_at',
 
