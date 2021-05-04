@@ -5,7 +5,7 @@
  * @var common\models\UniversityPartners $model
  */
 
-$this->title = 'Update University Partners: ' . ' ' . $model->name;
+$this->title = 'Update ' . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'University Partners', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
