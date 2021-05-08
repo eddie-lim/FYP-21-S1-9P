@@ -16,7 +16,7 @@ $this->title = Yii::$app->name;
     	<?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/technical_design_manual.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?>&nbsp;<i class="fas fa-cloud"></i>&nbsp;Technical Design Manual
     </div>
     <div class="">
-    	<?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/preliminary_user_manual.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?>&nbsp;<i class="fas fa-book"></i>&nbsp;Preliminary User Manual
+    	<?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/user_manual.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?>&nbsp;<i class="fas fa-book"></i>&nbsp;User Manual
     </div>
     <div class="">
     	<?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/project_prototype_slides.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?>&nbsp;<i class="fas fa-file-powerpoint"></i>&nbsp;Project Prototype Slides
@@ -25,6 +25,6 @@ $this->title = Yii::$app->name;
         <?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/project_progress_report.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?>&nbsp;<i class="fas fa-tasks"></i>&nbsp;Project Progress Report
     </div>
     <div class="">
-        <?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/test_plan.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?>&nbsp;<i class="fas fa-check-double"></i>&nbsp;Test Plan
+        <?php echo Html::a('<span class="fas fa-download fa-sm"></span>', ['/doc/test_summary_and_plan.pdf'], ['class' => 'btn btn-sm btn-success mt-3 mr-1', 'target'=>"_blank"]) ?>&nbsp;<i class="fas fa-check-double"></i>&nbsp;Test Summary & Plan
     </div>
 </div>
