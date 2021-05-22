@@ -154,3 +154,65 @@ h3.active{
     height: 100%;
   }
 }
+.site-activate .container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 25px;
+}
+.site-activate .container .title {
+  margin-top: 0;
+}
+.site-activate .container .hint-holder {
+  position: relative;
+  margin: 10px auto;
+}
+.site-activate .container .hint-holder canvas {
+  width: 100%;
+  background: #dadee0;
+}
+.site-activate .container .hint-holder .hint-bg {
+  position: absolute;
+  background: #ff6b00;
+  opacity: 0.9;
+  width: 100%;
+  bottom: 5px;
+  text-align: center;
+}
+.site-activate .container .hint-holder .hint-bg p {
+  font-size: 25px;
+  margin-top: 5px;
+  color: #333333;
+}
+.site-activate .container .photo-container {
+  width: 100%;
+}
+.site-activate .container .photo-container img {
+  width: 33%;
+}
+.site-activate .container .instruction {
+  text-align: center;
+}
+.site-activate .container .instruction img.appstore {
+  margin: 10px 0 20px 0;
+  display: inline-block;
+  width: 127px;
+  height: 44px;
+}
+.site-activate .container .instruction img.googleplay {
+  margin: 10px 0 20px 0;
+  display: inline-block;
+  width: 148px;
+  height: 44px;
+}
+.site-activate .container .instruction img.screen {
+  margin: 10px 0 20px 0;
+  border: 1px solid #333;
+  display: inline-block;
+  width: 150px;
+}
+@media screen and (max-width: 768px) {
+  .site-activate .container h1 {
+    font-size: 26px;
+  }
+}
