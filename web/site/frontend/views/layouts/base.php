@@ -25,6 +25,13 @@ $this->render('_meta-tag');
             ['label' => 'Meeting Minutes', 'url' => ['/site/meeting-minutes']],
             ['label' => 'Documents', 'url' => ['/site/download-documents']],
             ['label' => 'App', 'url' => ['/site/app']],
+            [
+                'label' => 'GitHub Repository', 
+                'url' => 'https://github.com/eddie-lim/FYP-21-S1-9P',
+                'linkOptions' => [
+                    'target' => '_blank'
+                ]
+            ],
         ]
     ]); ?>
     <?php NavBar::end(); ?>
