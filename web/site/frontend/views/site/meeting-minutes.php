@@ -9,11 +9,11 @@ $this->title = Yii::$app->name;
     <div class="card-body p-0 mt-3">
         <div class="tab-pane fade show active" id="minutes" role="tabpanel" aria-labelledby="minutes-tab">
 			<ul class="nav nav-pills flex-column col-2 d-inline-block text-center" style="vertical-align:top;" id="myTab" role="tablist">
-				<!-- <li class="nav-item">
-					<a class="nav-link active" id="meeting17-tab" data-toggle="tab" href="#meeting17" role="tab" aria-controls="meeting17" aria-selected="false">Meeting 17</a>
-				</li> -->
 				<li class="nav-item">
-					<a class="nav-link active" id="meeting19-tab" data-toggle="tab" href="#meeting19" role="tab" aria-controls="meeting19" aria-selected="false">Meeting 19</a>
+					<a class="nav-link active" id="meeting20-tab" data-toggle="tab" href="#meeting20" role="tab" aria-controls="meeting20" aria-selected="false">Meeting 20</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="meeting19-tab" data-toggle="tab" href="#meeting19" role="tab" aria-controls="meeting19" aria-selected="false">Meeting 19</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="meeting18-tab" data-toggle="tab" href="#meeting18" role="tab" aria-controls="meeting18" aria-selected="false">Meeting 18</a>
@@ -71,10 +71,10 @@ $this->title = Yii::$app->name;
 				</li>
 			</ul>
 			<div class="tab-content col-9 d-inline-block" id="myTabContent">
-				<!-- <div class="tab-pane fade show active" id="meeting17" role="tabpanel" aria-labelledby="meeting17-tab">
-				    <?php // echo $this->render('meetings/meeting17.php') ?>
-				</div> -->
-				<div class="tab-pane fade show active" id="meeting19" role="tabpanel" aria-labelledby="meeting19-tab">
+				<div class="tab-pane fade show active" id="meeting20" role="tabpanel" aria-labelledby="meeting20-tab">
+				    <?php echo $this->render('meetings/meeting20.php') ?>
+				</div>
+				<div class="tab-pane fade" id="meeting19" role="tabpanel" aria-labelledby="meeting19-tab">
 				    <?php echo $this->render('meetings/meeting19.php') ?>
 				</div>
 				<div class="tab-pane fade" id="meeting18" role="tabpanel" aria-labelledby="meeting18-tab">
