@@ -26,7 +26,7 @@ class TabMenuUserWidget extends Widget
             $active1 = "active";
         } else if ($this->page == "sim-staff") {
             $active2 = "active";
-        } else if ($this->page == "uni-partners") {
+        } else if ($this->page == "university-partners") {
             $active3 = "active";
         } else if ($this->page == "student") {
             $active4 = "active";

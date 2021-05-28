@@ -13,14 +13,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-view">
     <div class="card">
         <div class="card-header">
-            <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ],
-            ]) ?>
+            <?php 
+                if(Yii::$app->user->can(\common\models\User::ROLE_ADMINISTRATOR)){
+                    echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                    echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
+                        'class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
+                            'method' => 'post',
+                        ],
+                    ]);
+                }
+            ?>
         </div>
         <div class="card-body p-0">
             <?php echo DetailView::widget([

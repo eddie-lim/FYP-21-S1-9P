@@ -73,7 +73,9 @@ $config = [
             ],
             [
                 'controllers' => ['user'],
-                'allow' => false,
+                'allow' => true,
+                'roles' => ['manager'],
+                'actions' => ['view'],
             ],
             [
                 'allow' => true,
